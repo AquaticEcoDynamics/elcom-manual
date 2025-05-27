@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Section 3 Pre-Processor | ELCOM manual</title>
+<meta name="author" content="">
+<meta name="description" content="3.1 Introduction The ELCOM pre-processor is used to convert the user’s three-dimensional data of lake bathymetry, boundary forcing sections, and grid structure into one-dimensional vectors used by...">
+<meta name="generator" content="bookdown 0.34 with bs4_book()">
+<meta property="og:title" content="Section 3 Pre-Processor | ELCOM manual">
+<meta property="og:type" content="book">
+<meta property="og:description" content="3.1 Introduction The ELCOM pre-processor is used to convert the user’s three-dimensional data of lake bathymetry, boundary forcing sections, and grid structure into one-dimensional vectors used by...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Section 3 Pre-Processor | ELCOM manual">
+<meta name="twitter:description" content="3.1 Introduction The ELCOM pre-processor is used to convert the user’s three-dimensional data of lake bathymetry, boundary forcing sections, and grid structure into one-dimensional vectors used by...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.0/transition.js"></script><script src="libs/bs3compat-0.5.0/tabs.js"></script><script src="libs/bs3compat-0.5.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">ELCOM manual</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Welcome</a></li>
+<li><a class="" href="intro.html"><span class="header-section-number">2</span> Introduction</a></li>
+<li><a class="active" href="pre.html"><span class="header-section-number">3</span> Pre-Processor</a></li>
+<li><a class="" href="elcom.html"><span class="header-section-number">4</span> ELCOM Operartion</a></li>
+<li><a class="" href="notation.html"><span class="header-section-number">5</span> Notation</a></li>
+<li><a class="" href="applications.html"><span class="header-section-number">6</span> Applications</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="pre" class="section level1" number="3">
+<h1>
+<span class="header-section-number">Section 3</span> Pre-Processor<a class="anchor" aria-label="anchor" href="#pre"><i class="fas fa-link"></i></a>
+</h1>
+<div id="introduction" class="section level2" number="3.1">
+<h2>
+<span class="header-section-number">3.1</span> Introduction<a class="anchor" aria-label="anchor" href="#introduction"><i class="fas fa-link"></i></a>
+</h2>
+<p>The ELCOM pre-processor is used to convert the user’s three-dimensional data of lake bathymetry, boundary forcing sections, and grid structure into one-dimensional vectors used by ELCOM. Configuration for running the pre-processor comes from a <code>run_pre.dat</code> file. The <code>run_pre.dat</code> file is a text file that contains the names and locations of user-supplied input files and pre-processor output files. The pre-processor requires two or three user-supplied text files: <code>bathymetry.dat</code>, <code>bc.dat</code> and optionally <code>levee.dat</code> and <code>update.dat</code>.</p>
+<ul>
+<li>
+<code>bathymetry.dat</code> describes the bathymetry of the lake and grid configuration.</li>
+<li>
+<code>bc.dat</code> defines sets of boundary cells.</li>
+<li>
+<code>levee.dat</code> allows the specification of levee cells — solid walls between two adjacent ELCOM cells.</li>
+<li>
+<code>update.dat</code> allows the specification of update cells — to modify values of various scalars arbitrarily.</li>
+</ul>
+<p>The pre-processor outputs two Fortran unformatted (binary) files: <code>sparsedata.unf</code> and <code>usedata.unf</code>. These may be renamed, but the user must track which are <code>sparsedata</code> and which are <code>usedata</code>.</p>
+</div>
+<div id="sect-bathFile" class="section level2" number="3.2">
+<h2>
+<span class="header-section-number">3.2</span> Setting up the bathymetry file (<code>bathymetry.dat</code>)<a class="anchor" aria-label="anchor" href="#sect-bathFile"><i class="fas fa-link"></i></a>
+</h2>
+<p>ELCOM uses Fortran 90 (with F95 extensions) to map 3D space into a single vector for fast operation. Only computational cells containing water are represented in the vector, minimizing memory usage. This enables parallelization/vectorization without platform-specific modifications. Future ELCOM versions may include dynamic pressure effects to handle nonlinear internal wave dynamics.</p>
+<div id="introduction-1" class="section level3" number="3.2.1">
+<h3>
+<span class="header-section-number">3.2.1</span> Introduction<a class="anchor" aria-label="anchor" href="#introduction-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>The bathymetry file allows the user to input the simulation domain geometry at the target resolution<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;The pre-processor cannot interpolate between coarse/fine grids — this must be done manually beforehand.&lt;/p&gt;"><sup>1</sup></a>.</p>
+<p>The format is strict with respect to data amount and order. All items must be present. Comment lines can be added before bathymetry values, with each line containing at least two items. An item may be an integer, real number, or character string. Comments must begin with an exclamation point (<code>!</code>) and include at least two items. A common crash involves a Fortran error due to missing non-optional items or insufficient items per line.</p>
+<p>Below are valid formats:</p>
+<p>keyword data
+data keyword
+! comment
+keyword keyword
+data(j=1 to y_columns)</p>
+<p>The keywords are ELCOM-defined words that indicate the type of user-provided data presented:
+(1) before the keyword,
+(2) after the keyword, or
+(3) on succeeding lines of the file.</p>
+<p>Additional comments may be provided after the keywords to help the user remember the keyword purpose (the code only reads the first two items on a line). Detailed information on the keywords and the format of the file are presented in the following sections.</p>
+</div>
+<div id="physical-and-computational-space-coordinates" class="section level3" number="3.2.2">
+<h3>
+<span class="header-section-number">3.2.2</span> Physical and computational space coordinates<a class="anchor" aria-label="anchor" href="#physical-and-computational-space-coordinates"><i class="fas fa-link"></i></a>
+</h3>
+<p>In the literature, bathymetry is generally presented as the vertical distance from some horizontal baseline (often a mean water height) and may be either positive downward or positive upward. The convention used in ELCOM is an <span class="math inline">\((x,y,z)\)</span> space that follows the right-hand rule and has <span class="math inline">\(z\)</span> positive in the upward direction (Figure <a href="#fig:coords"><strong>??</strong></a>).</p>
+<p>The user is free to choose any suitable <span class="math inline">\(z=0\)</span> baseline for the bathymetry as long as positive <span class="math inline">\(z\)</span> upward is maintained as the convention for measurement. The pre-processor will adjust the user-defined <span class="math inline">\(z=0\)</span> baseline to an internal code baseline that is suitable for the ELCOM simulation.</p>
+<p>For the most part, the user does not need to know or consider this internal baseline adjustment. However, some debugging or monitoring output is presented in terms of the code coordinate system rather than the user coordinate system, so care must be taken in interpreting debugging output that is intended for use by code developers.</p>
+<p>The position of the physical space origin <span class="math inline">\((x=0, y=0)\)</span> is set implicitly by the user through the layout of the bathymetry data in the file <code>bathymetry.dat</code>. This will be covered in more detail below. Physical space <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> values may not be negative (i.e., the <span class="math inline">\(x,y\)</span> origin must be in a corner of the domain).</p>
+<div class="figure" style="text-align: center">
+<embed src="Elcom_user/02-pre/coords.pdf" title="Schematic of coordinate system" width="70%" type="application/pdf"></embed><p class="caption">
+(#fig:fig.coords)Schematic of coordinate system
+</p>
+</div>
+<p>ELCOM performs its simulation on computational cells of a three-dimensional Cartesian mesh. The user needs to understand the layout of the mesh so that boundary condition cells can be properly identified. ELCOM allows non-uniform spacing in each of the horizontal dimensions (<span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>) and allows non-uniform spacing in the vertical (<span class="math inline">\(z\)</span>) direction. (Although non-uniform <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> grid spacings are now allowed, users must be aware that timestep limitations are set by the smallest grid size.)</p>
+<p>Figure <a href="#fig:pmesh"><strong>??</strong></a> shows a plan view (<span class="math inline">\(x\)</span>-<span class="math inline">\(y\)</span> plane) of a lake with a discrete (uniform) Cartesian mesh overlay. The computational domain is divided into “cells” whose centers are represented in Figure <a href="#fig:pmesh"><strong>??</strong></a> by solid dots. Dashed lines represent the faces between the cells. Each cell center has an <span class="math inline">\((i,j,k)\)</span> coordinate that designates its location in discrete computational space. The <span class="math inline">\(i,j,k\)</span> values are the integer indices of a three-dimensional array.</p>
+<p>The right-hand rule is used, with <span class="math inline">\((i,j,k)\)</span> being non-zero, positive integer values; <span class="math inline">\(k = 1\)</span> is associated with the lowermost cell layer in the domain. The <span class="math inline">\((i,j)\)</span> pairs of a horizontal plane represent a matrix, so that by conventional mathematical notation the <span class="math inline">\((1,1)\)</span> position is always in the upper left corner. The <span class="math inline">\(i\)</span> index is the row index and increases <em>down</em> the page. The <span class="math inline">\(j\)</span> index is the column index and increases across the page. The <span class="math inline">\((i,j)\)</span> indices for corner cells are shown in Figure <a href="#fig:pmesh"><strong>??</strong></a>.</p>
+<p>For convenience and consistency, the origin <span class="math inline">\((0,0)\)</span> of the <span class="math inline">\(x,y\)</span> (physical space) coordinates is taken to be at the <span class="math inline">\((1,1)\)</span> location in the computational space <span class="math inline">\(i,j\)</span> indices.</p>
+<div class="figure" style="text-align: center">
+<embed src="Elcom_user/02-pre/pview_cart_mesh.pdf" title="Plan view of Cartesian mesh" width="70%" type="application/pdf"></embed><p class="caption">
+(#fig:fig.pmesh)Plan view of Cartesian mesh
+</p>
+</div>
+<p>Using the upper left corner as the origin may initially be confusing to users familiar with mirror-image storage (used by many graphics programs) where the <em>lower</em> left corner is stored in position <span class="math inline">\(i=1,j=1\)</span>. The problem with mirror-image storage is that a simple printout of bathymetry data always appears as an upside-down mirror image of the real world when viewed with a text processor or spreadsheet.</p>
+<p>The present convention gives the user a <em>What You See Is What You Get</em> view of the bathymetry simply by opening the file with a word processor or importing into a spreadsheet. This convention has been found to be intuitive for users who are not graphics experts. However, caution needs to be taken when converting raw bathymetry data from graphics programs that use a mirror-image standard. Likewise, the direction of the positive <span class="math inline">\(u\)</span> (<span class="math inline">\(x\)</span> direction) velocity is confusing, as it is positive down the page.</p>
+<p>Figure <a href="#fig:pbath"><strong>??</strong></a> shows the <em>physical</em> space outline of the lake as the border of the shaded area. The discrete outline of a lake is shown with a heavy solid line. In developing a <code>bathymetry.dat</code> file for an ELCOM simulation, the user is required to provide bathymetry values (i.e., vertical distance measured from the user’s <span class="math inline">\(z=0\)</span> baseline) for each of the cells within the discrete boundary of the lake. The region outside the lake boundary is defined as the “land” region.</p>
+<p>In Figure <a href="#fig:pbath"><strong>??</strong></a>, the cell center dots have been replaced with numbers that represent the distance from the user’s <span class="math inline">\(z=0\)</span> baseline to the bottom of the lake. In this case, all of the “land” regions have been given a value of 99. Note that the boundary of the bathymetry data set shown in Figure <a href="#fig:pbath"><strong>??</strong></a> has land values around the entire boundary.</p>
+<p>In general, it is required that either a land cell or open boundary cell surrounds the bathymetry data. For the purposes of the <code>bathymetry.dat</code> file, the user must provide bathymetry values for <em>all</em> cells in a rectangular array, including those cells that only contain land. ELCOM will only reserve computational memory for:</p>
+<ol style="list-style-type: decimal">
+<li>The cells which may contain water, and<br>
+</li>
+<li>The first layer of land cells surrounding the water cells.</li>
+</ol>
+<div class="figure" style="text-align: center">
+<embed src="elcom_user/02-pre/pview_bath.pdf" title="Plan view of bathymetry data" width="70%" type="application/pdf"></embed><p class="caption">
+(#fig:fig.pbath)Plan view of bathymetry data
+</p>
+</div>
+<p>Figure <a href="#fig:emesh"><strong>??</strong></a> shows an elevation view (in the <span class="math inline">\(x\text{-}z\)</span> plane) of a lake with a Cartesian overlay. A continuous, <em>physical-space</em> lake bottom is shown as a dashed line, with the resulting discrete lake bottom shown as a solid line.</p>
+<p>ELCOM computes the bathymetry on the face of each cell (the dashed lines) from user-supplied bathymetry data at the cell centers (on the solid dots). In this figure, the user <span class="math inline">\(z=0\)</span> baseline is chosen as the top of the domain, so that all the bathymetry values should be negative. Note that the <span class="math inline">\(k=1\)</span> index of <span class="math inline">\(i,j,k\)</span> space corresponds with the lowermost layer, regardless of the user <em>z=0</em> baseline position.</p>
+<div class="figure" style="text-align: center">
+<img src="ELCOM_User/02-pre/eview_cart_mesh.png" alt="Elevation view of bathymetry data" width="70%"><p class="caption">
+(#fig:fig.emesh)Elevation view of bathymetry data
+</p>
+</div>
+<p>An up-to-date copy of <code>bathymetry.dat</code> is included in the examples. This file can be used as a template for creating your own <code>bathymetry.dat</code> file. The judicious use of extra comment lines and comments after the keywords leads to a file that is much more readable. The <code>bathymetry.dat</code> file can be renamed, but the corresponding name in the <code>run_pre.dat</code> must also be changed.</p>
+<p>The remainder of this section will detail the use of each keyword in the <code>bathymetry.dat</code> file.</p>
+</div>
+<div id="file-header" class="section level3" number="3.2.3">
+<h3>
+<span class="header-section-number">3.2.3</span> File header<a class="anchor" aria-label="anchor" href="#file-header"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>keyword =</strong> <code>FILE</code></p>
+<p>The first non-comment line of the <code>bathymetry.dat</code> file must begin with the keyword <code>FILE</code>. Thus, the first non-comment line <em>must</em> appear as shown:</p>
+<p> </p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Keyword</th>
+<th>Value</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td><code>FILE</code></td>
+<td><code>bathymetry.dat</code></td>
+</tr></tbody>
+</table></div>
+<div id="description-lines" class="section level4" number="3.2.3.1">
+<h4>
+<span class="header-section-number">3.2.3.1</span> Description lines<a class="anchor" aria-label="anchor" href="#description-lines"><i class="fas fa-link"></i></a>
+</h4>
+<p><strong>keywords =</strong> <code>TITLE</code>, <code>ANALYST</code>, <code>ORGANIZATION</code>, <code>COMMENT</code></p>
+<p>Several keywords are provided to allow the user to put identifying information at the top of the bathymetry file. This information is printed to the standard output at the start of the run to provide identification of the debugging output data. The format for the header lines is <code>'string'; keyword</code>, where the string must be a non-null character array enclosed in single quotation marks. If the string is left blank or not enclosed in quotes, the pre-processor will crash with a Fortran read error. The user must have only one <code>COMMENT</code> line. A typical set of header keywords is shown below.</p>
+<p> </p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Value</th>
+<th>Keyword</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>'Lake Nowhere'</code></td>
+<td><code>TITLE</code></td>
+</tr>
+<tr class="even">
+<td><code>'J. Citizen'</code></td>
+<td><code>ANALYST</code></td>
+</tr>
+<tr class="odd">
+<td><code>'A Company'</code></td>
+<td><code>ORGANIZATION</code></td>
+</tr>
+<tr class="even">
+<td><code>'test run number 1'</code></td>
+<td><code>COMMENT</code></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div id="size-of-input-bathymetry-data" class="section level3" number="3.2.4">
+<h3>
+<span class="header-section-number">3.2.4</span> Size of input bathymetry data<a class="anchor" aria-label="anchor" href="#size-of-input-bathymetry-data"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>keywords =</strong> <code>x_rows</code>, <code>y_columns</code>, <code>z_layers</code>, <code>n_max</code>, <code>n_maxBC</code></p>
+<p>In order to correctly read the bathymetry data from file <code>bathymetry.dat</code>, the user must tell the pre-processor the size of grid to expect. The value for <code>x_rows</code> is the number of rows in a two dimensional plan view of the bathymetry. The <code>y_columns</code> is the number of columns in the two-dimensional plan view. The number of layers in the vertical direction is identified with the keyword <code>z_layers</code>. The keyword <code>n_max</code> is used to set an estimate of the number of grid cells in the domain that are required for simulation (i.e. interior points plus the land points in one layer surrounding the interior). For most simulations, <code>n_max</code> can be set to 0, and the code will start with an estimate of <code>x_rows</code> × <code>y_columns</code> × <code>z_layers</code>. However, in some cases, this may create a temporary data array larger than can be processed using the available memory and the pre-processor will crash. The crash may produce a machine error message stating “out of memory,” or a more enigmatic “segmentation fault”. If insufficient memory is available, the user can estimate the actual number of grid points required for the simulation and rerun the preprocessor. Further reduction of the amount of memory used can be achieved by using the keyword <code>n_maxBC</code>. <code>n_maxBC</code> sets the maximum number of cells in any one boundary condition set. If <code>n_maxBC</code> is not specified or is set to 0 then the calculated <code>n_max</code> value is used.</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Value</th>
+<th>Keyword</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>102</td>
+<td><code>x_rows</code></td>
+</tr>
+<tr class="even">
+<td>84</td>
+<td><code>y_columns</code></td>
+</tr>
+<tr class="odd">
+<td>22</td>
+<td><code>z_layers</code></td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td><code>n_max</code></td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+</div>
+<div id="land-cells" class="section level3" number="3.2.5">
+<h3>
+<span class="header-section-number">3.2.5</span> Land cells<a class="anchor" aria-label="anchor" href="#land-cells"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>keyword =</strong> <code>land_value</code></p>
+<p>The land region is designated by a unique bathymetry value (defined using the keyword <code>land_value</code>) that is greater than any value found within the lake. The user is free to choose the <code>land_value</code> as any convenient number that meets this criterion. Thus, if the user chooses a <code>z=0</code> baseline at the very top of the domain, the <code>land_value</code> may be set to zero (and all the bathymetry values should be negative numbers). If the user chooses the bottom of the domain as the <em>z=0</em> baseline, then the <code>land_value</code> may be any positive number that is greater than the largest number appearing within the lake boundary (it is usually convenient to use 9999). In this latter case, all the bathymetry values will be positive numbers. Note that any cell whose bathymetry is not equal to the <code>land_value</code> is considered a cell within the domain; thus typographical errors can produce spurious interior cells of the domain. The user is not required to have a <code>z=0</code> baseline within the domain: it may be convenient to use an external reference such as sea level. This may result in the lowest point in the domain having a positive non-zero bathymetry value.</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Value</th>
+<th>Keyword</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td>9999</td>
+<td><code>land_value</code></td>
+</tr></tbody>
+</table></div>
+<hr>
+</div>
+<div id="open-boundary-cells" class="section level3" number="3.2.6">
+<h3>
+<span class="header-section-number">3.2.6</span> Open boundary cells<a class="anchor" aria-label="anchor" href="#open-boundary-cells"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>keyword =</strong> <code>open_value</code></p>
+<p>Open boundary cells are boundaries with tidal forcing from an adjacent body of water that is not in the simulation domain. The user-defined bathymetry value that indicates an open boundary cell is defined with the keyword <code>open_value</code>.</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Value</th>
+<th>Keyword</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td>8888</td>
+<td><code>open_value</code></td>
+</tr></tbody>
+</table></div>
+<hr>
+</div>
+<div id="north-vector" class="section level3" number="3.2.7">
+<h3>
+<span class="header-section-number">3.2.7</span> North vector<a class="anchor" aria-label="anchor" href="#north-vector"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>keywords =</strong> <code>north_x</code>, <code>north_y</code></p>
+<p>The user may create a bathymetry data file with any orientation (i.e., there is no requirement that north be at the top of the page). Since wind forcing on the free surface requires a direction, the user must designate the north direction. The north vector is determined as shown in Figure <span class="math inline">\(\ref{fig:north}\)</span>. Note that the north vector is given in terms of a vector in physical (<span class="math inline">\(x,y,z\)</span>) space, not the discrete (<span class="math inline">\(i,j,k\)</span>) space. Because the origin is in the upper left corner, a standard “north up” data set has a north vector of (-1, 0).</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Value</th>
+<th>Keyword</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>-1.0</td>
+<td><code>north_x</code></td>
+</tr>
+<tr class="even">
+<td>0.5</td>
+<td><code>north_y</code></td>
+</tr>
+</tbody>
+</table></div>
+<div class="float" id="fig:north">
+<img src="elcom_user/02-pre/north" alt="Calculation of the north vector"><div class="figcaption">Calculation of the north vector</div>
+</div>
+<hr>
+</div>
+<div id="geographic-position" class="section level3" number="3.2.8">
+<h3>
+<span class="header-section-number">3.2.8</span> Geographic position<a class="anchor" aria-label="anchor" href="#geographic-position"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>keywords =</strong> <code>latitude</code>, <code>longitude</code>, <code>altitude</code></p>
+<p>The user provides the geographic position of the simulation domain using the keywords <code>latitude</code>, <code>longitude</code> and <code>altitude</code>. Longitude and altitude have no effect on the simulation but longitude is used to geo-reference output data. The latitude is used to provide appropriate Coriolis forcing in the ELCOM simulation. North latitudes are entered as positive numbers while south latitudes are entered as negative numbers. Latitude and longitude refer to the <em>top,left</em> corner of the bathymetry file.</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Value</th>
+<th>Keyword</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>-32.0</td>
+<td><code>latitude</code></td>
+</tr>
+<tr class="even">
+<td>9.46</td>
+<td><code>longitude</code></td>
+</tr>
+<tr class="odd">
+<td>0.0</td>
+<td><code>altitude</code></td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+</div>
+<div id="horizontal-grid-spacing" class="section level3" number="3.2.9">
+<h3>
+<span class="header-section-number">3.2.9</span> Horizontal grid spacing<a class="anchor" aria-label="anchor" href="#horizontal-grid-spacing"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>keywords =</strong> <code>x_grid</code>, <code>y_grid</code></p>
+<p>The present version of ELCOM allows uniform or stretched grid spacing in the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> direction. Separate grid spacings are implemented in each horizontal dimension so that <span class="math inline">\(dx \neq dy\)</span> is valid. However, the user should be careful in implementing a solution grid with different <span class="math inline">\(dx\)</span> and <span class="math inline">\(dy\)</span> grid spacings since this can affect the solution accuracy. For uniform grids the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> grid spacings are designated with the keywords <code>x_grid</code> and <code>y_grid</code>. If a non-uniform (stretched) horizontal grid is used, a default value for <code>x_grid</code> and <code>y_grid</code> must still be defined.</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Value</th>
+<th>Keyword</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>100.0</td>
+<td><code>x_grid</code></td>
+</tr>
+<tr class="even">
+<td>100.0</td>
+<td><code>y_grid</code></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div id="non-uniform-horizontal-grid-spacing" class="section level3" number="3.2.10">
+<h3>
+<span class="header-section-number">3.2.10</span> Non uniform horizontal grid spacing<a class="anchor" aria-label="anchor" href="#non-uniform-horizontal-grid-spacing"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>keywords =</strong> <code>dx</code>, <code>dy</code> (optional)</p>
+<p>In the horizontal direction, ELCOM version 2.0.0 allows the user to design a grid whose dimension varies in space (i.e. <span class="math inline">\(dx = f[x]\)</span> and <span class="math inline">\(dy = f[y]\)</span>). Note that the <span class="math inline">\(dx\)</span> may not vary with <span class="math inline">\(y\)</span> or <span class="math inline">\(z\)</span> coordinates and <span class="math inline">\(dy\)</span> may not vary with <span class="math inline">\(x\)</span> or <span class="math inline">\(z\)</span> coordinates. In the <code>bathymetry.dat</code> file, stretched horizontal grid spacings are designated by the keywords <code>dx</code> and <code>dy</code>. <code>dx</code> and <code>dy</code> are defined in the <code>bathymetry.dat</code> in the order of increasing coordinate (i.e. from <span class="math inline">\(x=1\)</span> to <span class="math inline">\(x = x\_rows\)</span>).</p>
+<p>While the user is free to set the <span class="math inline">\(dx\)</span> and <span class="math inline">\(dy\)</span> values in an arbitrary manner, the accuracy and stability of the simulation method may be affected by the degree of non-uniformity of the grid. In general, the simulation method will perform best (i.e. with greatest accuracy) using a uniform grid. For non-uniform grids, the degradation of accuracy is a function of the rate at which the grid changes (see below for <span class="math inline">\(dz\)</span>).</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Value</th>
+<th>Keyword</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>100</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="even">
+<td>100</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="odd">
+<td>120</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="even">
+<td>132</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="odd">
+<td>145</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="even">
+<td>150</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="odd">
+<td>165</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="even">
+<td>171</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="odd">
+<td>188</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="even">
+<td>205</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="odd">
+<td>205</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="even">
+<td>205</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="odd">
+<td>205</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="even">
+<td>205</td>
+<td><code>dx</code></td>
+</tr>
+</tbody>
+</table></div>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Value</th>
+<th>Keyword</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>100</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="even">
+<td>100</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="odd">
+<td>120</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="even">
+<td>132</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="odd">
+<td>145</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="even">
+<td>150</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="odd">
+<td>165</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="even">
+<td>171</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="odd">
+<td>188</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="even">
+<td>205</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="odd">
+<td>205</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="even">
+<td>205</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="odd">
+<td>205</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="even">
+<td>205</td>
+<td><code>dy</code></td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+</div>
+<div id="layer-thickness" class="section level3" number="3.2.11">
+<h3>
+<span class="header-section-number">3.2.11</span> Layer thickness<a class="anchor" aria-label="anchor" href="#layer-thickness"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>keyword =</strong> <code>dz</code></p>
+<p>In the vertical direction, ELCOM allows the user to design a structure of horizontal layers whose thickness varies with depth (i.e. <span class="math inline">\(dz = f[z]\)</span>). Note that the layer thickness may not vary with <span class="math inline">\(x\)</span> or <span class="math inline">\(y\)</span> coordinates. In the <code>bathymetry.dat</code> file, the successive layer thicknesses (in descending order from the top of the domain) are designated by the keyword <code>dz</code>. While the user is free to set the <span class="math inline">\(dz\)</span> values in an arbitrary manner, the accuracy and stability of the simulation method may be affected by the degree of non-uniformity of the layers. In general, the simulation method will perform best (i.e. with greatest accuracy) using a grid with uniform <span class="math inline">\(dz\)</span>. For non-uniform <span class="math inline">\(dz\)</span>, the degradation of accuracy is a function of the rate at which the <span class="math inline">\(dz\)</span> changes. Thus, a grid that has a <span class="math inline">\(dz\)</span> that varies slowly will perform very well, while a grid with abrupt changes in grid size will be less accurate. For example, Figure <span class="math inline">\(\ref{fig:vgrid}\)</span> shows two possible configurations which provide vertical resolution of 0.5 metres in the upper portion of a lake and 2.0 metre resolution in the lower portion. Both use the same number of grid cells, but the <span class="math inline">\(dz\)</span> distribution on the left of Figure <span class="math inline">\(\ref{fig:vgrid}\)</span> will show better performance.</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Value</th>
+<th>Keyword</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>0.5</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="even">
+<td>0.5</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="odd">
+<td>0.5</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="even">
+<td>0.51</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="odd">
+<td>0.54</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="even">
+<td>0.58</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="odd">
+<td>0.65</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="even">
+<td>0.75</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="odd">
+<td>0.90</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="even">
+<td>1.13</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="odd">
+<td>1.41</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="even">
+<td>1.65</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="odd">
+<td>1.88</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="even">
+<td>2.0</td>
+<td><code>dz</code></td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<div class="float" id="fig:vgrid">
+<embed src="Elcom_user/02-pre/vgrid.pdf"></embed><div class="figcaption">Vertical grid spacings</div>
+</div>
+<p><em>Figure <span class="math inline">\(\ref{fig:vgrid}\)</span>:</em> Vertical grid spacings</p>
+</div>
+<div id="bathymetry-values" class="section level3" number="3.2.12">
+<h3>
+<span class="header-section-number">3.2.12</span> Bathymetry values<a class="anchor" aria-label="anchor" href="#bathymetry-values"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>keywords</strong> = <code>BATHYMETRY DATA</code></p>
+<p>The bathymetry values must be presented in the file <code>bathymetry.dat</code> following a line with the two keywords <code>BATHYMETRY DATA</code>. Each line of bathymetry values must contain exactly <code>y_columns</code> of data and there must be exactly <code>x_rows</code> of data lines following <code>BATHYMETRY DATA</code>. Each value on the line may be separated from the next by one or more spaces or tabs.</p>
+<p>Thus, for a domain with <code>x_rows</code> = 8 and <code>y_columns</code> = 13, and <code>land_value</code> = 99 (i.e., similar to Figure <a href="#fig:pmesh"><strong>??</strong></a>), the bathymetry values would be entered into the <code>bathymetry.dat</code> file as shown:</p>
+<p><code>BATHYMETRY DATA</code></p>
+<pre><code>99  99  99   99   99   99   99   99   99   99   99   99   99
+99  99  -0.7 -0.5 99   99   99   99   99   99   99   99   99
+99  -0.4 -1.2 -1.3 -1.1 -1.4 -2.5 -2.7 -3.3 -0.7 99   99   99
+99  -1.1 -1.6 -2.2 -3.2 -3.8 -3.9 -4.1 -5.3 -5.7 -5.2 -2.4 99
+99  -0.5 -0.8 -1.2 -2.1 -2.2 -2.4 -3.2 -3.3 -4.1 -5.0 -1.8 99
+99  99  99   99   99   99   99   99   99   -1.7 -1.2 -0.7 99
+99  99  99   99   99   99   99   99   99   -0.7 -0.9 -0.3 99
+99  99  99   99   99   99   99   99   99   99   99   99   99</code></pre>
+</div>
+<div id="bottom-drag-values-optional" class="section level3" number="3.2.13">
+<h3>
+<span class="header-section-number">3.2.13</span> Bottom drag values (optional)<a class="anchor" aria-label="anchor" href="#bottom-drag-values-optional"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Keywords</strong>: <code>BTM_CD DATA</code></p>
+<p>Version 2.0.0 allows a variable bottom drag coefficient to be specified in the <code>bathymetry.dat</code> file. Each line of values must contain exactly <code>y_columns</code> of data and there must be exactly <code>x_rows</code> of data lines following <code>BTM_CD DATA</code>. Each value on the line may be separated from the next by one or more spaces.</p>
+<p>Thus, for the domain with <code>x_rows = 8</code> and <code>y_columns = 13</code>, the values would be entered into the <code>bathymetry.dat</code> file as shown:</p>
+<pre><code>BTM_CD DATA
+8 13 1e+16
+1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16
+1e+16 1e+16 0.002 0.002 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16
+1e+16 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 1e+16 1e+16 1e+16
+1e+16 0.003 0.003 0.003 0.003 0.003 0.003 0.003 0.003 0.003 0.003 0.003 1e+16
+1e+16 0.004 0.004 0.004 0.004 0.004 0.004 0.004 0.004 0.004 0.004 0.004 1e+16
+1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 0.004 0.004 0.004 1e+16
+1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 0.004 0.004 0.004 1e+16
+1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16</code></pre>
+</div>
+<div id="bottom-slope-values-optional" class="section level3" number="3.2.14">
+<h3>
+<span class="header-section-number">3.2.14</span> Bottom Slope Values (Optional)<a class="anchor" aria-label="anchor" href="#bottom-slope-values-optional"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Keywords:</strong> <code>SLOPE_X DATA</code>, <code>SLOPE_Y DATA</code></p>
+<p>To enable the 2D underflow model, bottom slope values must be included in the <code>bathymetry.dat</code> file. These values should follow a line containing either of the keywords <code>SLOPE_X DATA</code> or <code>SLOPE_Y DATA</code>.</p>
+<p>Each line of slope values must contain exactly <code>y_columns</code> entries, and there must be exactly <code>x_rows</code> lines of data following the keyword. Values on a line can be separated by one or more spaces or tabs.</p>
+<p>For instance, if the domain is defined with <code>x_rows = 8</code> and <code>y_columns = 13</code> (as shown earlier), the slope values would appear in the <code>bathymetry.dat</code> file as follows:</p>
+<div id="example-slope_x-data-format" class="section level4 unnumbered">
+<h4>Example SLOPE_X DATA Format<a class="anchor" aria-label="anchor" href="#example-slope_x-data-format"><i class="fas fa-link"></i></a>
+</h4>
+<pre><code>SLOPE_X DATA
+8 13 1e+16
+
+1e+16  1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16
+1e+16  1e+16 -0.006 -0.008 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16
+1e+16 -0.007 -0.004 -0.008 -0.021 -0.024 -0.019 -0.020 -0.026 -0.05 1e+16 1e+16 1e+16
+1e+16 -0.000 0.002 0.000 -0.005 -0.004 0.000 -0.002 0.000 -0.017 -0.025 -0.009 1e+16
+1e+16  0.005 0.008 0.011 0.016 0.019 0.0195 0.020 0.026 0.02 0.02 0.008 1e+16
+1e+16  1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 0.017 0.020 0.007 1e+16
+1e+16  1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 0.008 0.006 0.003 1e+16
+1e+16  1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16</code></pre>
+</div>
+<div id="example-slope_y-data-format" class="section level4 unnumbered">
+<h4>Example SLOPE_Y DATA Format<a class="anchor" aria-label="anchor" href="#example-slope_y-data-format"><i class="fas fa-link"></i></a>
+</h4>
+<pre><code>SLOPE_Y DATA
+8 13 1e+16
+
+1e+16  1e+16  1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16
+1e+16  1e+16 -0.002   0.003   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16
+1e+16 -0.008 -0.004   0.000  -0.000  -0.007  -0.006  -0.004   0.01    0.016   1e+16   1e+16   1e+16
+1e+16 -0.008 -0.005  -0.008  -0.008  -0.003  -0.001  -0.007  -0.008   0.000   0.016   0.026   1e+16
+1e+16  1e+16  1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   0.017   0.005   0.006   1e+16
+1e+16  1e+16  1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16  -0.004   0.002   0.004   1e+16
+1e+16  1e+16  1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16</code></pre>
+<hr>
+</div>
+</div>
+</div>
+<div id="sect:bcFile" class="section level2" number="3.3">
+<h2>
+<span class="header-section-number">3.3</span> Setting up the boundary cell set file (<code>bc.dat</code>)<a class="anchor" aria-label="anchor" href="#sect:bcFile"><i class="fas fa-link"></i></a>
+</h2>
+<p>An up-to-date copy of <code>bc.dat</code> is included in the examples.</p>
+</div>
+<div id="introduction-2" class="section level2" number="3.4">
+<h2>
+<span class="header-section-number">3.4</span> Introduction<a class="anchor" aria-label="anchor" href="#introduction-2"><i class="fas fa-link"></i></a>
+</h2>
+<p>The boundary cell set file designates logical grouping of grid cells over which boundary conditions are enforced in ELCOM. One set of points may have a river inflow, another set may have a dam offtake, another set may represent groundwater inflows, etc. Each set of boundary points is defined by a unique <em>reference number</em> (used also by ELCOM temporal boundary condition files), <em>type</em> (one of several keywords), <em>title</em> (user reference only), and a series of cell <em>i, j, k</em> coordinates. This file gives the user complete flexibility in the assignment of diverse and complex boundary conditions around a three-dimensional topography.</p>
+</div>
+<div id="boundary-cell-set-categories" class="section level2" number="3.5">
+<h2>
+<span class="header-section-number">3.5</span> Boundary cell set categories<a class="anchor" aria-label="anchor" href="#boundary-cell-set-categories"><i class="fas fa-link"></i></a>
+</h2>
+<p>The keywords for the boundary cell sets fall into seven categories, defined as follows:</p>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="9%">
+<col width="90%">
+</colgroup>
+<thead><tr class="header">
+<th><strong>Keyword</strong></th>
+<th><strong>Description</strong></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>land</code></td>
+<td>Cell boundary which is considered to be land, on which a Dirichlet <code>no-slip</code> condition is imposed on all components of the velocity, and a Neumann <code>zero-gradient</code> condition is imposed on transported scalars.</td>
+</tr>
+<tr class="even">
+<td><code>slip</code></td>
+<td>Cell boundary which is considered to be land, but on which the velocity components tangential to the boundary have a Neumann <code>free-slip</code> condition applied, while the normal component of the velocity is a Dirichlet <code>no-flux</code> condition (this may be thought of more precisely as normal Dirichlet, tangential Neumann, or NDTN). A Neumann <code>zero-gradient</code> condition is imposed on transported scalars.</td>
+</tr>
+<tr class="odd">
+<td><code>flow</code></td>
+<td>Cell boundary through which an inflow or outflow will be imposed as a Dirichlet <code>fixed velocity</code> condition. This also enforces a Dirichlet condition on transported scalars.</td>
+</tr>
+<tr class="even">
+<td><code>section</code></td>
+<td>Cell boundary which is grouped into a set for application of an environmental forcing or scalar forcing boundary condition, but does not change the underlying form of the velocity boundary condition (e.g., the free surface may be divided into sections over which different wind conditions may be enforced - the type velocity boundary condition is not changed, but its magnitude is adjusted on different sections).</td>
+</tr>
+<tr class="odd">
+<td><code>open</code></td>
+<td>Cell boundary which is <code>open</code> to inflows and outflows from another body of water where the velocity is not fixed <em>a priori</em> (i.e., not a Dirichlet boundary) but is a function of the baroclinic and barotropic forcing near the boundary.</td>
+</tr>
+<tr class="even">
+<td><code>bubbler</code></td>
+<td>An interior cell on which a bubble plume destratification will be simulated.</td>
+</tr>
+<tr class="odd">
+<td><code>flow_*_dynamic</code></td>
+<td>Cell boundary through which flow is determined dynamically according to the head difference between two locations in the domain (implemented for horizontal culverts). The flow will be imposed as a Dirichlet <code>fixed velocity</code> condition and also enforces a Dirichlet condition on transported scalars.</td>
+</tr>
+</tbody>
+</table></div>
+<p>A boundary cell set consists of a collection of cell <em>faces</em> that are the boundaries between <em>interior</em> cell and <em>land</em> cells. The <code>land</code> boundary condition is the default for all faces of cells identified by the <code>land_value</code> in the <code>bathymetry.dat</code> file and for all boundary cell faces below the bathymetry data. As such, the user will rarely need to use a <code>land</code> boundary condition in the <code>bc.dat</code> file. For a lake without any inflows, outflows or special boundary conditions, the <code>bc.dat</code> file need not be present.</p>
+</div>
+<div id="boundary-cell-set-face-direction" class="section level2" number="3.6">
+<h2>
+<span class="header-section-number">3.6</span> Boundary cell set face direction<a class="anchor" aria-label="anchor" href="#boundary-cell-set-face-direction"><i class="fas fa-link"></i></a>
+</h2>
+<p>The cell faces of the boundaries are identified by the <code>(i, j, k)</code> coordinates of the interior cell and the direction from the cell center to the boundary. The conventions used are as follows:</p>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="22%">
+<col width="77%">
+</colgroup>
+<thead><tr class="header">
+<th><strong>Face code</strong></th>
+<th><strong>Description</strong></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>xp</code></td>
+<td>the <em>y-z</em> cell face in the positive x direction from the cell center</td>
+</tr>
+<tr class="even">
+<td><code>yp</code></td>
+<td>the <em>x-z</em> cell face in the positive y direction from the cell center</td>
+</tr>
+<tr class="odd">
+<td><code>xm</code></td>
+<td>the <em>y-z</em> cell face in the negative x direction from the cell center</td>
+</tr>
+<tr class="even">
+<td><code>ym</code></td>
+<td>the <em>x-z</em> cell face in the negative y direction from the cell center</td>
+</tr>
+<tr class="odd">
+<td><code>top</code></td>
+<td>the <em>x-y</em> cell face above the cell</td>
+</tr>
+<tr class="even">
+<td><code>all_sides</code></td>
+<td>all possible side boundary faces (i.e., all <em>y-z</em> and <em>x-z</em> faces)</td>
+</tr>
+<tr class="odd">
+<td><code>all</code></td>
+<td>all possible side boundary faces plus the bottom boundary</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div id="boundary-cell-set-keywords" class="section level2" number="3.7">
+<h2>
+<span class="header-section-number">3.7</span> Boundary cell set keywords<a class="anchor" aria-label="anchor" href="#boundary-cell-set-keywords"><i class="fas fa-link"></i></a>
+</h2>
+<p>The keywords used to identify boundary cell sets are a concatenation of the categories and the face direction. The valid keywords are listed below:</p>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="25%">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+</colgroup>
+<thead><tr class="header">
+<th><code>land_xp</code></th>
+<th><code>flow_xp</code></th>
+<th><code>slip_xp</code></th>
+<th><code>section_xp</code></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>land_xm</code></td>
+<td><code>flow_xm</code></td>
+<td><code>slip_xm</code></td>
+<td><code>section_xm</code></td>
+</tr>
+<tr class="even">
+<td><code>land_yp</code></td>
+<td><code>flow_yp</code></td>
+<td><code>slip_yp</code></td>
+<td><code>section_yp</code></td>
+</tr>
+<tr class="odd">
+<td><code>land_ym</code></td>
+<td><code>flow_ym</code></td>
+<td><code>slip_ym</code></td>
+<td><code>section_ym</code></td>
+</tr>
+<tr class="even">
+<td><code>land_bottom</code></td>
+<td><code>flow_bottom</code></td>
+<td><code>slip_bottom</code></td>
+<td><code>section_bottom</code></td>
+</tr>
+<tr class="odd">
+<td><code>land_all_sides</code></td>
+<td><code>flow_all_sides</code></td>
+<td><code>slip_all_sides</code></td>
+<td><code>section_all_sides</code></td>
+</tr>
+<tr class="even">
+<td><code>land_all</code></td>
+<td><code>flow_all</code></td>
+<td><code>slip_all</code></td>
+<td><code>section_all</code></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td><code>section_top</code></td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="25%">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+</colgroup>
+<thead><tr class="header">
+<th><code>bubbler</code></th>
+<th><code>bubbler_zbot</code></th>
+<th><code>bubbler_kbot</code></th>
+<th></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>open_cell</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>flow_multi_sides</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>flow_xp_dynamic</code></td>
+<td><code>flow_xm_dynamic</code></td>
+<td><code>flow_yp_dynamic</code></td>
+<td><code>flow_ym_dynamic</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>NOTE:</strong> <code>bubbler_zbot</code> and <code>bubbler_kbot</code> allow the user to specify the height of a bubble plume diffuser as either some height in metres (<code>zbot</code>) or number of cells from the bottom.</p>
+</div>
+<div id="sect:bc.dat" class="section level2" number="3.8">
+<h2>
+<span class="header-section-number">3.8</span> Organization of the boundary cell set file (<code>bc.dat</code>)<a class="anchor" aria-label="anchor" href="#sect:bc.dat"><i class="fas fa-link"></i></a>
+</h2>
+<p>At the top of the boundary cell set file (<code>bc.dat</code>), the user may put any number of comment lines. Each comment line must start with an exclamation point (<code>!</code>) and have at least 3 items on the line (i.e., two words or numbers separated from the exclamation point and each other by spaces or tabs). After the initial comments, the boundary cell set file consists of a series of definitions of boundary sets. Each set consists of a <em>set identification line</em> followed by one or more lines of <em>cell definitions</em>. Each line must have three items on it or the pre-processor will crash with a Fortran file read error. Blank lines are not allowed in the boundary cell set file.</p>
+<p>Each set identification line is of the form:<br><code>integer  keyword  title</code></p>
+<p>The first item, <code>integer</code>, is a <em>reference number</em> for the boundary cell set that is used in preparing temporal boundary condition data files for the ELCOM simulation run (see section <span class="math inline">\(\ref{sect:tempBCfiles}\)</span>). Each boundary cell set must have a unique <code>integer</code> reference number. The <code>keyword</code> is one of the valid keywords listed in Table <span class="math inline">\(\ref{tab:keywords}\)</span>. The <code>title</code> is a user-designated name for the boundary condition set. The <code>title</code> may have more than one word, although only the first word will be used by the code.</p>
+<p>After the set identification line, there will be one or more lines of cell definitions. A cell definition consists of three sets of numbers in the general form:
+<code>i_{start}:i_{end}  j_{start}:j_{end}  k_{start}:k_{end}</code>.
+For all boundary condition types except <code>bubbler_zbot</code> and <code>bubbler_kbot</code> the <code>i</code>, <code>j</code>, and <code>k</code> are integer values of the cell positions in space for a rectangular box of cells on which the relevant boundary cell keyword will be applied. For <code>bubbler_zbot</code> the third column must be a single real which gives the height of the diffuser in metres above the lake bottom. For <code>bubbler_kbot</code> the third column must be a single integer which gives the number of cells the diffuser is above the lake bottom. An example of a simple boundary cell set definition might be</p>
+<pre class="plaintext"><code>  107  flow_xp  river_inflow
+   3:10  4:5  10:14</code></pre>
+<p>The preprocessor would designate as a single set, all positive x boundaries in the range <span class="math inline">\(3 \leq i \leq 10\)</span> and <span class="math inline">\(4 \leq j \leq 5\)</span> and <span class="math inline">\(10 \leq k \leq 14\)</span>. A boundary cell set may have multiple lines of cell definitions:</p>
+<pre class="plaintext"><code>  13  flow_bottom  groundwater_inflow
+    5:10   1:5    10:14
+    5:10   7:11   10:14
+    3:8   12:17   1:5</code></pre>
+<p>Note that each number pair in a cell definition must be in increasing order.</p>
+<p>There are two simpler cases for implementing boundary cell sets (1) where <span class="math inline">\(i, j\)</span> or <span class="math inline">\(k\)</span> is a single value rather than a range, (2) where all possible values in <span class="math inline">\(i, j\)</span> or <span class="math inline">\(k\)</span> are to be included. In the former case, only a single number needs to be provided (rather than a pair), in the latter case, only the colon (<code>:</code>) needs to be listed. For example, the cell set for an inflow boundary along a flat side where <span class="math inline">\(j = 2\)</span> might be written as:</p>
+<pre class="plaintext"><code>  214  slip_all  freeslip_domain
+    :  :  :</code></pre>
+<p>which enforces a free-slip boundary condition on all boundary faces (sides and bottom) of the domain.</p>
+<p>There is no error cross-checking within the pre-processor for cell faces which have been defined as belonging to more than one boundary cell set. In some cases, multiple definitions may be desirable. For example, one might define a river inflow which covers the entire depth of the river for purposes of the velocity boundary condition; and then define a separate section at the bottom of the river that is used to place a tracer. The bc.dat file might then contain</p>
+<pre class="plaintext"><code>  2791  flow_ym     river_inflow
+    3:15    2    :
+  73    section_ym  tracer_inflow
+    3:15    2    1:5</code></pre>
+<p>In other cases, multiple set definitions for a particular face can produce unintended results. For example, if we define an inflow boundary and a global definition of free-slip boundaries on all the cells:</p>
+<pre class="plaintext"><code>2791    flow_ym river_inflow
+    3:15    2   :
+214 slip_all    freeslip_domain
+    :   :   :</code></pre>
+<p>We then find that the cells (3:15, 2, : ) get defined both with imposed velocity (Dirichlet) boundary conditions and free-slip (normal-Dirichlet, tangential-Neumann) boundary conditions. Obviously this is inconsistent and the flow simulation cannot enforce both boundary conditions. Checking for which combinations of multiple definitions are consistent and which are not is an error capturing routine that is not yet implemented. Thus, the above boundary cell sets would be processed and provided to ELCOM. Within ELCOM, only one of the two boundary conditions will actually be enforced, but one cannot tell which boundary condition it will be without detailed examination of source code. Note that the order the items are defined may affect the operation of an inconsistent definition. Thus if the above inconsistent definition were reversed and written as:</p>
+<pre class="plaintext"><code>214 slip_all    freeslip_domain
+    :   :   :
+2791    flow_ym river_inflow
+    3:15    2   :</code></pre>
+<p>The results in ELCOM may be different than the previous implementation — <em>they would be wrong in a different manner</em>. As a general rule, the user should not provide multiple definitions of velocity boundary conditions on a single cell face. The <code>land</code>, <code>flow</code> and <code>slip</code> keywords all affect the type of velocity boundary condition; it is incumbent on the user to be sure that the cell faces defined with these types do not have multiple definitions.</p>
+<p>The following table illustrates a <code>bc.dat</code> file with a few subtle uses of the boundary cell set definitions. A flow boundary has been declared on the x-minus faces of cells with <span class="math inline">\(i=2\)</span>. Thus, to get free-slip boundary conditions on all the other faces, we use the keyword <code>slip_all</code> for cells with <span class="math inline">\(i&gt;2\)</span>. Then to get free slip on the y-minus and y-plus faces at <span class="math inline">\(i=2\)</span> requires two more definitions (These are not inconsistent with the <code>flow_xm</code> definition since they are on different faces of the same cell). This file also shows the use of the <code>section_top</code> to segregate the free surface into different sets onto which different wind data can be enforced.</p>
+<pre class="plaintext"><code>! - - - -
+! - bc.dat file
+! - comment lines need three items
+34  flow_xm   outflow_number_1
+    2       :       :
+75  section_top  wind_region_a
+    :       1:10    :
+118 section_top  wind_region_b
+    :       11:21   :
+25  slip_all_sides  free_slip_section
+    3:34    :       :
+26  slip_ym free_slip_near_inflow_1
+    2:      :       :
+27  slip_yp free_slip_near_inflow_2
+    2:      :       :</code></pre>
+</div>
+<div id="flow_multi_sides" class="section level2" number="3.9">
+<h2>
+<span class="header-section-number">3.9</span> flow_multi_sides<a class="anchor" aria-label="anchor" href="#flow_multi_sides"><i class="fas fa-link"></i></a>
+</h2>
+<p>In ELCOM version 2.1.1 a further bc set type was introduced (<code>flow_multi_sides</code>) which allows the user to specify one inflow which enters from multiple cells on multiple faces. This was primarily introduced to allow a meandering river channel to be specified as one boundary set and will be particularly useful when coupled with <code>INFLOW_DEPTH</code> boundary condition data. The format of <code>flow_multi_sides</code> in the boundary cell set file (<code>bc.dat</code>) is slightly different from other set types.</p>
+<p>Each <code>flow_multi_sides</code> set consists of a set identification line followed by one or more subsets of cell and face type definitions. Each line must have three items on it or the pre-processor will crash with a Fortran file read error. Blank lines are not allowed in the boundary cell set file.</p>
+<p>Each <code>flow_multi_sides</code> set identification line is the same as for all other set types, i.e.:</p>
+<p><code>reference number</code> <code>keyword</code> <code>title</code></p>
+<p>Where <code>keyword</code> must be <code>flow_multi_sides</code>. After the set identification line, there will be one or more subset definitions. Each subset consists of a <em>subset set identification line</em> followed by one or more lines of <em>cell definitions</em>.</p>
+<p>Each subset identification line is of the form: <code>reference number flow_multi_sides keyword.</code><br>
+The subset <code>reference number</code> for each subset must be the same as the <em>reference number</em> from the set identification line.<br>
+The <code>keyword.</code> must be one of <code>flow_xp</code>, <code>flow_xm</code>, <code>flow_yp</code>, or <code>flow_y</code> and defines the inflow face or the subset of cells.</p>
+<p>Following each subset identification line are one or more lines of cell definitions.<br>
+These cell definitions are the same as for an ordinary set type—i.e., of the general form<br><code>$i_{start}:i_{end} j_{start}:j_{end} k_{start}:k_{end}$</code>.</p>
+<p>An example of a <code>flow_multi_sides</code> boundary cell set definition might be:</p>
+<pre class="plaintext"><code>  111 flow_multi_sides    river_inflow
+  111 flow_multi_sides    flow_xm
+      2   3   10
+      3   3   9
+      4   3   8
+  111 flow_multi_sides    flow_ym
+      4   3   8
+      4   4   7
+      4   5   6
+  111 flow_multi_sides    flow_xm
+      4   5   6
+      5   5   5
+      6   5   4</code></pre>
+</div>
+<div id="flow_dynamic" class="section level2" number="3.10">
+<h2>
+<span class="header-section-number">3.10</span> flow_dynamic<a class="anchor" aria-label="anchor" href="#flow_dynamic"><i class="fas fa-link"></i></a>
+</h2>
+<p>Dynamic boundary condition sets (<code>flow*_dynamic</code>) allow the user to specify the connection of two parts of the domain with a (horizontal) culvert. This functionality was recently introduced in ELCOM. A boundary condition set pair related to each of the ends of the culvert must be defined.</p>
+<p>The definition of a dynamic boundary condition pair set comprises four lines. The first and third lines have the same structure as the boundary condition identification line: a set reference number, one of the <code>keywords</code> (<code>flow_xm_dynamic</code>, <code>flow_xp_dynamic</code>, <code>flow_ym_dynamic</code>, or <code>flow_yp_dynamic</code>), and a user identifier. Each of these lines refers to one end of the culvert.</p>
+<p>The second and fourth lines follow the same structure as the cell definition lines of an ordinary set type. Each line refers to one end of the culvert. Only one <code>i</code> and one <code>j</code> value can be specified. Although multiple <code>k</code> values may be included, both ends must have the same <code>k</code> specification.</p>
+<p>An example of a <code>flow*_dynamic</code> boundary cell set definition might be:</p>
+<pre class="plaintext"><code>500     flow_xp_dynamic pipe_east_end
+        2   3   10
+600     flow_ym_dynamic pipe_north_end
+        4   3   10</code></pre>
+</div>
+<div id="sect-leveeFile" class="section level2" number="3.11">
+<h2>
+<span class="header-section-number">3.11</span> Setting up the levee file (<code>levee.dat</code>) (Optional)<a class="anchor" aria-label="anchor" href="#sect-leveeFile"><i class="fas fa-link"></i></a>
+</h2>
+<div id="introduction-3" class="section level3" number="3.11.1">
+<h3>
+<span class="header-section-number">3.11.1</span> Introduction<a class="anchor" aria-label="anchor" href="#introduction-3"><i class="fas fa-link"></i></a>
+</h3>
+<p>The levee set file designates any levees in the domain. Levees are solid boundaries between two adjacent cells. Pre-ELCOM implements levees by adding additional ghost cells adjacent to the levee. These ghost cells are colocated with the wet cells.</p>
+<p>The format of the levee set file is essentially the same as the <code>bc.dat</code> file. Each set of levee points is defined by a unique <em>reference number</em>, <em>type</em> (one of several keywords), <em>title</em> (user reference only), and a series of cell <code>(i, j, k)</code> coordinates.</p>
+</div>
+<div id="levee-set-categories" class="section level3" number="3.11.2">
+<h3>
+<span class="header-section-number">3.11.2</span> Levee set categories<a class="anchor" aria-label="anchor" href="#levee-set-categories"><i class="fas fa-link"></i></a>
+</h3>
+<p>The cell faces of the levees are identified by the <code>(i, j, k)</code> coordinates of the interior cell and the direction from the cell center to the levee. The four valid keywords for the levee sets are as follows:</p>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="17%">
+<col width="82%">
+</colgroup>
+<thead><tr class="header">
+<th>Keyword</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>levee_xp</code></td>
+<td>Levee on the <em>y-z</em> cell face in the positive x direction from the cell center</td>
+</tr>
+<tr class="even">
+<td><code>levee_yp</code></td>
+<td>Levee on the <em>x-z</em> cell face in the positive y direction from the cell center</td>
+</tr>
+<tr class="odd">
+<td><code>levee_xm</code></td>
+<td>Levee on the <em>y-z</em> cell face in the negative x direction from the cell center</td>
+</tr>
+<tr class="even">
+<td><code>levee_ym</code></td>
+<td>Levee on the <em>x-z</em> cell face in the negative y direction from the cell center</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div id="organization-of-the-levee-set-file-levee.dat" class="section level3" number="3.11.3">
+<h3>
+<span class="header-section-number">3.11.3</span> Organization of the levee set file (<code>levee.dat</code>)<a class="anchor" aria-label="anchor" href="#organization-of-the-levee-set-file-levee.dat"><i class="fas fa-link"></i></a>
+</h3>
+<p>At the top of the <code>levee.dat</code> file, the user may include any number of comment lines. Each comment line must begin with an exclamation point <code>!</code> and contain at least three items (i.e., two words or numbers separated from the <code>!</code> and from each other by spaces).</p>
+<p>After the initial comments, the file contains a series of levee set definitions. Each set consists of a <em>set identification line</em> followed by one or more <em>cell definition lines</em>. Each line must have three items; otherwise, the pre-processor will fail with a Fortran file read error. Blank lines are not allowed.</p>
+<p>Each set identification line is of the form: <code>integer keyword title</code>.<br>
+- <code>integer</code>: a <em>reference number</em> unique to each levee set<br>
+- <code>keyword</code>: one of the valid keywords listed above<br>
+- <code>title</code>: a user-designated name for the levee set (only the first word is used by the code)</p>
+<p>Each cell definition consists of three fields in the form:<br><code>i_start:i_end j_start:j_end :</code><br>
+Here, <code>i</code> and <code>j</code> are integer values specifying a rectangular box of cells. The third field must be a colon (<code>:</code>), indicating that the levee acts on all <code>z</code> values.</p>
+<p>An example of a simple levee set definition might be:</p>
+<pre class="plaintext"><code>107  levee_xp  levee_bank
+     3  4:15  :</code></pre>
+</div>
+</div>
+<div id="sect-updateFile" class="section level2" number="3.12">
+<h2>
+<span class="header-section-number">3.12</span> Setting up the update file (<code>update.dat</code>) (Optional)<a class="anchor" aria-label="anchor" href="#sect-updateFile"><i class="fas fa-link"></i></a>
+</h2>
+<div id="introduction-4" class="section level3" number="3.12.1">
+<h3>
+<span class="header-section-number">3.12.1</span> Introduction<a class="anchor" aria-label="anchor" href="#introduction-4"><i class="fas fa-link"></i></a>
+</h3>
+<p>The update set file defines update cells in the domain. These cells allow scalar values to be modified arbitrarily at run-time using Update boundary condition files (see <a href="#sect-updateBCfiles">Update BC Files</a>). The format of this file is essentially the same as the <code>bc.dat</code> file.</p>
+<p>Each set is defined by a unique <em>reference number</em>, <em>type</em> (keyword), <em>title</em> (user reference), and a series of <code>(i, j, k)</code> cell coordinates.</p>
+</div>
+<div id="update-set-categories" class="section level3" number="3.12.2">
+<h3>
+<span class="header-section-number">3.12.2</span> Update set categories<a class="anchor" aria-label="anchor" href="#update-set-categories"><i class="fas fa-link"></i></a>
+</h3>
+<p>Update cells are identified by their <code>(i, j, k)</code> coordinates. The valid keywords for update sets are:</p>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="18%">
+<col width="81%">
+</colgroup>
+<thead><tr class="header">
+<th>Keyword</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>update</code></td>
+<td>Scalar values are set to those in the Update boundary condition files</td>
+</tr>
+<tr class="even">
+<td><code>update_add</code></td>
+<td>Scalar values are increased by the values in the Update boundary files</td>
+</tr>
+<tr class="odd">
+<td><code>update_max</code></td>
+<td>Scalar values are set to the maximum of current and file value</td>
+</tr>
+<tr class="even">
+<td><code>update_scale</code></td>
+<td>Scalar values are multiplied by the file value</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div id="organization-of-the-update-set-file-update.dat" class="section level3" number="3.12.3">
+<h3>
+<span class="header-section-number">3.12.3</span> Organization of the update set file (<code>update.dat</code>)<a class="anchor" aria-label="anchor" href="#organization-of-the-update-set-file-update.dat"><i class="fas fa-link"></i></a>
+</h3>
+<p>Comment lines may appear at the top of the file. Each comment must begin with <code>!</code> and include at least three items. No blank lines are allowed in the file.</p>
+<p>Each update set includes a <em>set identification line</em> followed by one or more <em>cell definition lines</em>. Each line must have exactly three items to avoid pre-processor errors.</p>
+<p>Each set identification line is of the form: <code>integer keyword title</code>.<br>
+- <code>integer</code>: a unique <em>reference number</em><br>
+- <code>keyword</code>: one of the valid update keywords<br>
+- <code>title</code>: a user-designated name (only the first word is used by the code)</p>
+<p>Each cell definition is of the form:<br><code>i_start:i_end j_start:j_end k_start:k_end</code><br>
+Here, <code>i</code>, <code>j</code>, and <code>k</code> define a rectangular box of update cells.</p>
+<p>An example of a simple update set definition might be:</p>
+<pre class="plaintext"><code>12  update  tracer_release
+  3  4:15  2:4</code></pre>
+</div>
+</div>
+<div id="running-the-pre-processor-with-run_pre.dat" class="section level2" number="3.13">
+<h2>
+<span class="header-section-number">3.13</span> Running the pre-processor with <code>run_pre.dat</code><a class="anchor" aria-label="anchor" href="#running-the-pre-processor-with-run_pre.dat"><i class="fas fa-link"></i></a>
+</h2>
+<p>An up-to-date copy of <code>run_pre.dat</code> is included in the examples.</p>
+<p>The <code>run_pre.dat</code> file is a text file that contains the names and paths of the user-supplied input files and the pre-processor output files. The required input files are:</p>
+<ul>
+<li>
+<code>bathymetry.dat</code>: describes lake bathymetry and grid configuration</li>
+<li>
+<code>bc.dat</code>: defines boundary cell sets</li>
+</ul>
+<p>Optionally, it may also include:</p>
+<ul>
+<li><code>update.dat</code></li>
+<li><code>levee.dat</code></li>
+</ul>
+<p>The pre-processor outputs two unformatted Fortran binary files:</p>
+<ul>
+<li><code>sparsedata.unf</code></li>
+<li><code>usedata.unf</code></li>
+</ul>
+<p>These files may be renamed by the user, but they must be tracked carefully to distinguish between <code>sparsedata</code> and <code>usedata</code>.</p>
+<p>Once the <code>run_pre.dat</code> file is in place with correct file paths and names, the pre-processor is executed with:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="pre.html#cb16-1" tabindex="-1"></a><span class="ex">pre_elcom.exe</span></span></code></pre></div>
+
+</div>
+</div>
+
+  <div class="chapter-nav">
+<div class="prev"><a href="intro.html"><span class="header-section-number">2</span> Introduction</a></div>
+<div class="next"><a href="elcom.html"><span class="header-section-number">4</span> ELCOM Operartion</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#pre"><span class="header-section-number">3</span> Pre-Processor</a></li>
+<li><a class="nav-link" href="#introduction"><span class="header-section-number">3.1</span> Introduction</a></li>
+<li>
+<a class="nav-link" href="#sect-bathFile"><span class="header-section-number">3.2</span> Setting up the bathymetry file (bathymetry.dat)</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#introduction-1"><span class="header-section-number">3.2.1</span> Introduction</a></li>
+<li><a class="nav-link" href="#physical-and-computational-space-coordinates"><span class="header-section-number">3.2.2</span> Physical and computational space coordinates</a></li>
+<li><a class="nav-link" href="#file-header"><span class="header-section-number">3.2.3</span> File header</a></li>
+<li><a class="nav-link" href="#size-of-input-bathymetry-data"><span class="header-section-number">3.2.4</span> Size of input bathymetry data</a></li>
+<li><a class="nav-link" href="#land-cells"><span class="header-section-number">3.2.5</span> Land cells</a></li>
+<li><a class="nav-link" href="#open-boundary-cells"><span class="header-section-number">3.2.6</span> Open boundary cells</a></li>
+<li><a class="nav-link" href="#north-vector"><span class="header-section-number">3.2.7</span> North vector</a></li>
+<li><a class="nav-link" href="#geographic-position"><span class="header-section-number">3.2.8</span> Geographic position</a></li>
+<li><a class="nav-link" href="#horizontal-grid-spacing"><span class="header-section-number">3.2.9</span> Horizontal grid spacing</a></li>
+<li><a class="nav-link" href="#non-uniform-horizontal-grid-spacing"><span class="header-section-number">3.2.10</span> Non uniform horizontal grid spacing</a></li>
+<li><a class="nav-link" href="#layer-thickness"><span class="header-section-number">3.2.11</span> Layer thickness</a></li>
+<li><a class="nav-link" href="#bathymetry-values"><span class="header-section-number">3.2.12</span> Bathymetry values</a></li>
+<li><a class="nav-link" href="#bottom-drag-values-optional"><span class="header-section-number">3.2.13</span> Bottom drag values (optional)</a></li>
+<li><a class="nav-link" href="#bottom-slope-values-optional"><span class="header-section-number">3.2.14</span> Bottom Slope Values (Optional)</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#sect:bcFile"><span class="header-section-number">3.3</span> Setting up the boundary cell set file (bc.dat)</a></li>
+<li><a class="nav-link" href="#introduction-2"><span class="header-section-number">3.4</span> Introduction</a></li>
+<li><a class="nav-link" href="#boundary-cell-set-categories"><span class="header-section-number">3.5</span> Boundary cell set categories</a></li>
+<li><a class="nav-link" href="#boundary-cell-set-face-direction"><span class="header-section-number">3.6</span> Boundary cell set face direction</a></li>
+<li><a class="nav-link" href="#boundary-cell-set-keywords"><span class="header-section-number">3.7</span> Boundary cell set keywords</a></li>
+<li><a class="nav-link" href="#sect:bc.dat"><span class="header-section-number">3.8</span> Organization of the boundary cell set file (bc.dat)</a></li>
+<li><a class="nav-link" href="#flow_multi_sides"><span class="header-section-number">3.9</span> flow_multi_sides</a></li>
+<li><a class="nav-link" href="#flow_dynamic"><span class="header-section-number">3.10</span> flow_dynamic</a></li>
+<li>
+<a class="nav-link" href="#sect-leveeFile"><span class="header-section-number">3.11</span> Setting up the levee file (levee.dat) (Optional)</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#introduction-3"><span class="header-section-number">3.11.1</span> Introduction</a></li>
+<li><a class="nav-link" href="#levee-set-categories"><span class="header-section-number">3.11.2</span> Levee set categories</a></li>
+<li><a class="nav-link" href="#organization-of-the-levee-set-file-levee.dat"><span class="header-section-number">3.11.3</span> Organization of the levee set file (levee.dat)</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#sect-updateFile"><span class="header-section-number">3.12</span> Setting up the update file (update.dat) (Optional)</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#introduction-4"><span class="header-section-number">3.12.1</span> Introduction</a></li>
+<li><a class="nav-link" href="#update-set-categories"><span class="header-section-number">3.12.2</span> Update set categories</a></li>
+<li><a class="nav-link" href="#organization-of-the-update-set-file-update.dat"><span class="header-section-number">3.12.3</span> Organization of the update set file (update.dat)</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#running-the-pre-processor-with-run_pre.dat"><span class="header-section-number">3.13</span> Running the pre-processor with run_pre.dat</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>ELCOM manual</strong>" was written by . It was last built on 2025-05-26.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Section 2 Introduction | ELCOM manual</title>
+<meta name="author" content="">
+<meta name="description" content="2.1 The ELCOM model ELCOM (Estuary and Lake Computer Model) is a numerical modeling tool that applies hydrodynamic and thermodynamic models to simulate the temporal behavior of stratified water...">
+<meta name="generator" content="bookdown 0.34 with bs4_book()">
+<meta property="og:title" content="Section 2 Introduction | ELCOM manual">
+<meta property="og:type" content="book">
+<meta property="og:description" content="2.1 The ELCOM model ELCOM (Estuary and Lake Computer Model) is a numerical modeling tool that applies hydrodynamic and thermodynamic models to simulate the temporal behavior of stratified water...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Section 2 Introduction | ELCOM manual">
+<meta name="twitter:description" content="2.1 The ELCOM model ELCOM (Estuary and Lake Computer Model) is a numerical modeling tool that applies hydrodynamic and thermodynamic models to simulate the temporal behavior of stratified water...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.0/transition.js"></script><script src="libs/bs3compat-0.5.0/tabs.js"></script><script src="libs/bs3compat-0.5.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">ELCOM manual</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Welcome</a></li>
+<li><a class="active" href="intro.html"><span class="header-section-number">2</span> Introduction</a></li>
+<li><a class="" href="pre.html"><span class="header-section-number">3</span> Pre-Processor</a></li>
+<li><a class="" href="elcom.html"><span class="header-section-number">4</span> ELCOM Operartion</a></li>
+<li><a class="" href="notation.html"><span class="header-section-number">5</span> Notation</a></li>
+<li><a class="" href="applications.html"><span class="header-section-number">6</span> Applications</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="intro" class="section level1" number="2">
+<h1>
+<span class="header-section-number">Section 2</span> Introduction<a class="anchor" aria-label="anchor" href="#intro"><i class="fas fa-link"></i></a>
+</h1>
+<div id="the-elcom-model" class="section level2" number="2.1">
+<h2>
+<span class="header-section-number">2.1</span> The ELCOM model<a class="anchor" aria-label="anchor" href="#the-elcom-model"><i class="fas fa-link"></i></a>
+</h2>
+<p>ELCOM (Estuary and Lake Computer Model) is a numerical modeling tool that applies hydrodynamic and thermodynamic models to simulate the temporal behavior of stratified water bodies with environmental forcing.</p>
+<p>The hydrodynamic simulation method solves the unsteady, viscous Navier-Stokes equations for incompressible flow using the hydrostatic assumption for pressure. Modeled and simulated processes include baroclinic and barotropic responses, rotational effects, tidal forcing, wind stresses, surface thermal forcing, inflows, outflows, and transport of salt, heat and passive scalars.</p>
+<p>Through coupling with the CAEDYM (Computational Aquatic Ecosystem DYnamics Model) water quality module, ELCOM can be used to simulate three-dimensional transport and interactions of flow physics, biology and chemistry.</p>
+<p>The hydrodynamic algorithms in ELCOM are based on the Euler-Lagrange method for advection of momentum with a conjugate-gradient solution for the free-surface height (Casulli and Cheng, 1992). Passive and active scalars (i.e., tracers, salinity and temperature) are advected using a conservative ULTIMATE QUICKEST discretization (Leonard 1991).</p>
+</div>
+<div id="implementation-language" class="section level2" number="2.2">
+<h2>
+<span class="header-section-number">2.2</span> Implementation language<a class="anchor" aria-label="anchor" href="#implementation-language"><i class="fas fa-link"></i></a>
+</h2>
+<p>ELCOM is implemented in Fortran 90 (with F95 extensions) so that three-dimensional space can be mapped into a single vector for fast operation using array-processing techniques.</p>
+<p>Only the computational cells that contain water are represented in the single vector so that memory usage is minimized. This allows Fortran 90 compiler parallelization and vectorization without platform-specific modification of the code. A future extension of ELCOM will include dynamic pressure effects to account for nonlinear dynamics of internal waves that may be lost due to the hydrostatic approximation.</p>
+</div>
+<div id="outline-of-a-simulation-run" class="section level2" number="2.3">
+<h2>
+<span class="header-section-number">2.3</span> Outline of a simulation run<a class="anchor" aria-label="anchor" href="#outline-of-a-simulation-run"><i class="fas fa-link"></i></a>
+</h2>
+<p>Setting up and running an ELCOM simulation requires the following steps:</p>
+<ol style="list-style-type: decimal">
+<li>Prepare <code>bathymetry.dat</code> file that provides topography and grid information (see [Section <a href="#sect:bathFile"><strong>??</strong></a>]),</li>
+<li>Prepare <code>bc.dat</code> file that designates sets of cells for applying boundary conditions (see [Section <a href="pre.html#sect:bcFile">3.3</a>]),</li>
+<li>Prepare <code>levee.dat</code> file that designates sets of cells for levee boundary conditions (see [Section <a href="#sect:leveeFile"><strong>??</strong></a>]),</li>
+<li>Prepare <code>update.dat</code> file that designates sets of cells for update boundary conditions (see [Section <a href="#sect:updateFile"><strong>??</strong></a>]),</li>
+<li>Run the pre-processor to produce <code>sparsedata.unf</code> and <code>usedata.unf</code> files,</li>
+<li>Configure the simulation <code>run_elcom</code> file (see [Section @ref(sect:runelcom.dat)]),</li>
+<li>Specify output in a datablock file (<code>*.db</code>) for designating data output operations (see [Section <a href="elcom.html#sect:datablock">4.9.3</a>]),</li>
+<li>Prepare temporal boundary condition files (<code>*.dat</code>) for data applied to the boundary condition cells (see [Section <a href="elcom.html#sect:tempBCfiles">4.8.2</a>]),</li>
+<li>Prepare initial conditions files (see [Section <a href="elcom.html#sect:initfiles">4.4</a>]),</li>
+<li>Run the executable, directing the screen output to a file (see [Section <a href="elcom.html#sect:runexe">4.10</a>]),</li>
+<li>Post-process data (see [Section <a href="elcom.html#sect:postproc">4.10.1</a>]).</li>
+</ol>
+</div>
+<div id="conventions-and-definitions" class="section level2" number="2.4">
+<h2>
+<span class="header-section-number">2.4</span> Conventions and definitions<a class="anchor" aria-label="anchor" href="#conventions-and-definitions"><i class="fas fa-link"></i></a>
+</h2>
+<p>In this document, a number of conventions will be used. For clarity, the computational domain will generally be referred to as a “lake”. However, the simulation method is designed for applicability to estuaries and coastal ocean environments.</p>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="19%">
+<col width="80%">
+</colgroup>
+<thead><tr class="header">
+<th>Term</th>
+<th>Definition</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>
+<em>x,y,z</em> space</td>
+<td>Full Cartesian space which covers all of the bathymetry</td>
+</tr>
+<tr class="even">
+<td>
+<em>i,j,k</em> space</td>
+<td>Discrete integer space of computational cells which covers all bathymetry</td>
+</tr>
+<tr class="odd">
+<td>land</td>
+<td>A computational cell that cannot contain water</td>
+</tr>
+<tr class="even">
+<td>open</td>
+<td>A cell used for an open boundary condition</td>
+</tr>
+<tr class="odd">
+<td>interior</td>
+<td>A cell that may contain water</td>
+</tr>
+<tr class="even">
+<td>x_rows</td>
+<td>Number of grid cells in the x direction</td>
+</tr>
+<tr class="odd">
+<td>y_columns</td>
+<td>Number of grid cells in the y direction</td>
+</tr>
+<tr class="even">
+<td>z_layers</td>
+<td>Number of grid cells in the vertical (z) direction</td>
+</tr>
+<tr class="odd">
+<td>land_value</td>
+<td>Number used in the bathymetry file to represent land cells</td>
+</tr>
+<tr class="even">
+<td>open_value</td>
+<td>Number used in the bathymetry file to represent open boundary cells</td>
+</tr>
+<tr class="odd">
+<td>dx, dy, dz</td>
+<td>Grid spacing in x, y, z directions (can be uniform or non-uniform, in meters)</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="index.html"><span class="header-section-number">1</span> Welcome</a></div>
+<div class="next"><a href="pre.html"><span class="header-section-number">3</span> Pre-Processor</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#intro"><span class="header-section-number">2</span> Introduction</a></li>
+<li><a class="nav-link" href="#the-elcom-model"><span class="header-section-number">2.1</span> The ELCOM model</a></li>
+<li><a class="nav-link" href="#implementation-language"><span class="header-section-number">2.2</span> Implementation language</a></li>
+<li><a class="nav-link" href="#outline-of-a-simulation-run"><span class="header-section-number">2.3</span> Outline of a simulation run</a></li>
+<li><a class="nav-link" href="#conventions-and-definitions"><span class="header-section-number">2.4</span> Conventions and definitions</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>ELCOM manual</strong>" was written by . It was last built on 2025-05-26.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Section 5 Simulation modules | ELCOM manual</title>
+  <meta name="description" content="This is a draft of the ELCOM manual." />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Section 5 Simulation modules | ELCOM manual" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is a draft of the ELCOM manual." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Section 5 Simulation modules | ELCOM manual" />
+  
+  <meta name="twitter:description" content="This is a draft of the ELCOM manual." />
+  
+
+<meta name="author" content="" />
+
+
+<meta name="date" content="2025-05-26" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="elcom.html"/>
+<link rel="next" href="sect:initfiles.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#the-elcom-model"><i class="fa fa-check"></i><b>2.1</b> The ELCOM model</a></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#implementation-language"><i class="fa fa-check"></i><b>2.2</b> Implementation language</a></li>
+<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#outline-of-a-simulation-run"><i class="fa fa-check"></i><b>2.3</b> Outline of a simulation run</a></li>
+<li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#conventions-and-definitions"><i class="fa fa-check"></i><b>2.4</b> Conventions and definitions</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="pre.html"><a href="pre.html"><i class="fa fa-check"></i><b>3</b> Pre-Processor</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="pre.html"><a href="pre.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="pre.html"><a href="pre.html#sect-bathFile"><i class="fa fa-check"></i><b>3.2</b> Setting up the bathymetry file (<code>bathymetry.dat</code>)</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="pre.html"><a href="pre.html#introduction-1"><i class="fa fa-check"></i><b>3.2.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2.2" data-path="pre.html"><a href="pre.html#physical-and-computational-space-coordinates"><i class="fa fa-check"></i><b>3.2.2</b> Physical and computational space coordinates</a></li>
+<li class="chapter" data-level="3.2.3" data-path="pre.html"><a href="pre.html#file-header"><i class="fa fa-check"></i><b>3.2.3</b> File header</a></li>
+<li class="chapter" data-level="3.2.4" data-path="pre.html"><a href="pre.html#size-of-input-bathymetry-data"><i class="fa fa-check"></i><b>3.2.4</b> Size of input bathymetry data</a></li>
+<li class="chapter" data-level="3.2.5" data-path="pre.html"><a href="pre.html#land-cells"><i class="fa fa-check"></i><b>3.2.5</b> Land cells</a></li>
+<li class="chapter" data-level="3.2.6" data-path="pre.html"><a href="pre.html#open-boundary-cells"><i class="fa fa-check"></i><b>3.2.6</b> Open boundary cells</a></li>
+<li class="chapter" data-level="3.2.7" data-path="pre.html"><a href="pre.html#north-vector"><i class="fa fa-check"></i><b>3.2.7</b> North vector</a></li>
+<li class="chapter" data-level="3.2.8" data-path="pre.html"><a href="pre.html#geographic-position"><i class="fa fa-check"></i><b>3.2.8</b> Geographic position</a></li>
+<li class="chapter" data-level="3.2.9" data-path="pre.html"><a href="pre.html#horizontal-grid-spacing"><i class="fa fa-check"></i><b>3.2.9</b> Horizontal grid spacing</a></li>
+<li class="chapter" data-level="3.2.10" data-path="pre.html"><a href="pre.html#non-uniform-horizontal-grid-spacing"><i class="fa fa-check"></i><b>3.2.10</b> Non uniform horizontal grid spacing</a></li>
+<li class="chapter" data-level="3.2.11" data-path="pre.html"><a href="pre.html#layer-thickness"><i class="fa fa-check"></i><b>3.2.11</b> Layer thickness</a></li>
+<li class="chapter" data-level="3.2.12" data-path="pre.html"><a href="pre.html#bathymetry-values"><i class="fa fa-check"></i><b>3.2.12</b> Bathymetry values</a></li>
+<li class="chapter" data-level="3.2.13" data-path="pre.html"><a href="pre.html#bottom-drag-values-optional"><i class="fa fa-check"></i><b>3.2.13</b> Bottom drag values (optional)</a></li>
+<li class="chapter" data-level="3.2.14" data-path="pre.html"><a href="pre.html#bottom-slope-values-optional"><i class="fa fa-check"></i><b>3.2.14</b> Bottom Slope Values (Optional)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="pre.html"><a href="pre.html#sect:bcFile"><i class="fa fa-check"></i><b>3.3</b> Setting up the boundary cell set file (<code>bc.dat</code>)</a></li>
+<li class="chapter" data-level="3.4" data-path="pre.html"><a href="pre.html#introduction-2"><i class="fa fa-check"></i><b>3.4</b> Introduction</a></li>
+<li class="chapter" data-level="3.5" data-path="pre.html"><a href="pre.html#boundary-cell-set-categories"><i class="fa fa-check"></i><b>3.5</b> Boundary cell set categories</a></li>
+<li class="chapter" data-level="3.6" data-path="pre.html"><a href="pre.html#boundary-cell-set-face-direction"><i class="fa fa-check"></i><b>3.6</b> Boundary cell set face direction</a></li>
+<li class="chapter" data-level="3.7" data-path="pre.html"><a href="pre.html#boundary-cell-set-keywords"><i class="fa fa-check"></i><b>3.7</b> Boundary cell set keywords</a></li>
+<li class="chapter" data-level="3.8" data-path="pre.html"><a href="pre.html#sect:bc.dat"><i class="fa fa-check"></i><b>3.8</b> Organization of the boundary cell set file (<code>bc.dat</code>)</a></li>
+<li class="chapter" data-level="3.9" data-path="pre.html"><a href="pre.html#flow_multi_sides"><i class="fa fa-check"></i><b>3.9</b> flow_multi_sides</a></li>
+<li class="chapter" data-level="3.10" data-path="pre.html"><a href="pre.html#flow_dynamic"><i class="fa fa-check"></i><b>3.10</b> flow_dynamic</a></li>
+<li class="chapter" data-level="3.11" data-path="pre.html"><a href="pre.html#sect-leveeFile"><i class="fa fa-check"></i><b>3.11</b> Setting up the levee file (<code>levee.dat</code>) (Optional)</a>
+<ul>
+<li class="chapter" data-level="3.11.1" data-path="pre.html"><a href="pre.html#introduction-3"><i class="fa fa-check"></i><b>3.11.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.11.2" data-path="pre.html"><a href="pre.html#levee-set-categories"><i class="fa fa-check"></i><b>3.11.2</b> Levee set categories</a></li>
+<li class="chapter" data-level="3.11.3" data-path="pre.html"><a href="pre.html#organization-of-the-levee-set-file-levee.dat"><i class="fa fa-check"></i><b>3.11.3</b> Organization of the levee set file (<code>levee.dat</code>)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.12" data-path="pre.html"><a href="pre.html#sect-updateFile"><i class="fa fa-check"></i><b>3.12</b> Setting up the update file (<code>update.dat</code>) (Optional)</a>
+<ul>
+<li class="chapter" data-level="3.12.1" data-path="pre.html"><a href="pre.html#introduction-4"><i class="fa fa-check"></i><b>3.12.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.12.2" data-path="pre.html"><a href="pre.html#update-set-categories"><i class="fa fa-check"></i><b>3.12.2</b> Update set categories</a></li>
+<li class="chapter" data-level="3.12.3" data-path="pre.html"><a href="pre.html#organization-of-the-update-set-file-update.dat"><i class="fa fa-check"></i><b>3.12.3</b> Organization of the update set file (<code>update.dat</code>)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.13" data-path="pre.html"><a href="pre.html#running-the-pre-processor-with-run_pre.dat"><i class="fa fa-check"></i><b>3.13</b> Running the pre-processor with <code>run_pre.dat</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="elcom.html"><a href="elcom.html"><i class="fa fa-check"></i><b>4</b> ELCOM Operartion</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="elcom.html"><a href="elcom.html#introduction-5"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="elcom.html"><a href="elcom.html#files-for-elcom"><i class="fa fa-check"></i><b>4.2</b> Files for ELCOM</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="simulation-modules.html"><a href="simulation-modules.html"><i class="fa fa-check"></i><b>5</b> Simulation modules</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="simulation-modules.html"><a href="simulation-modules.html#stratification"><i class="fa fa-check"></i><b>5.1</b> Stratification</a></li>
+<li class="chapter" data-level="5.2" data-path="simulation-modules.html"><a href="simulation-modules.html#tracers"><i class="fa fa-check"></i><b>5.2</b> Tracers</a></li>
+<li class="chapter" data-level="5.3" data-path="simulation-modules.html"><a href="simulation-modules.html#surface-thermodynamics"><i class="fa fa-check"></i><b>5.3</b> Surface thermodynamics</a></li>
+<li class="chapter" data-level="5.4" data-path="simulation-modules.html"><a href="simulation-modules.html#rain"><i class="fa fa-check"></i><b>5.4</b> Rain</a></li>
+<li class="chapter" data-level="5.5" data-path="simulation-modules.html"><a href="simulation-modules.html#wind"><i class="fa fa-check"></i><b>5.5</b> Wind</a></li>
+<li class="chapter" data-level="5.6" data-path="simulation-modules.html"><a href="simulation-modules.html#inflowoutflow"><i class="fa fa-check"></i><b>5.6</b> Inflow/Outflow</a></li>
+<li class="chapter" data-level="5.7" data-path="simulation-modules.html"><a href="simulation-modules.html#conservation-of-background-potential-energy"><i class="fa fa-check"></i><b>5.7</b> Conservation of Background Potential Energy</a></li>
+<li class="chapter" data-level="5.8" data-path="simulation-modules.html"><a href="simulation-modules.html#bubble-plume-destratification"><i class="fa fa-check"></i><b>5.8</b> Bubble Plume Destratification</a></li>
+<li class="chapter" data-level="5.9" data-path="simulation-modules.html"><a href="simulation-modules.html#underflow"><i class="fa fa-check"></i><b>5.9</b> Underflow</a></li>
+<li class="chapter" data-level="5.10" data-path="simulation-modules.html"><a href="simulation-modules.html#water-age-modelling"><i class="fa fa-check"></i><b>5.10</b> Water Age Modelling</a></li>
+<li class="chapter" data-level="5.11" data-path="simulation-modules.html"><a href="simulation-modules.html#drifters-particles"><i class="fa fa-check"></i><b>5.11</b> Drifters / Particles</a></li>
+<li class="chapter" data-level="5.12" data-path="simulation-modules.html"><a href="simulation-modules.html#jetspumps"><i class="fa fa-check"></i><b>5.12</b> Jets/Pumps</a></li>
+<li class="chapter" data-level="5.13" data-path="simulation-modules.html"><a href="simulation-modules.html#drafttubes"><i class="fa fa-check"></i><b>5.13</b> Drafttubes</a></li>
+<li class="chapter" data-level="5.14" data-path="simulation-modules.html"><a href="simulation-modules.html#non-hydrostatic-code"><i class="fa fa-check"></i><b>5.14</b> Non-hydrostatic code</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="sect:initfiles.html"><a href="sect:initfiles.html"><i class="fa fa-check"></i><b>6</b> Initialization</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="sect:initfiles.html"><a href="sect:initfiles.html#uniform-initial-conditions"><i class="fa fa-check"></i><b>6.1</b> Uniform initial conditions</a></li>
+<li class="chapter" data-level="6.2" data-path="sect:initfiles.html"><a href="sect:initfiles.html#vertical-profile"><i class="fa fa-check"></i><b>6.2</b> Vertical Profile</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>7</b> Applications</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>7.1</b> Example one</a></li>
+<li class="chapter" data-level="7.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>7.2</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>8</b> Final Words</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ELCOM manual</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="simulation-modules" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Section 5</span> Simulation modules<a href="simulation-modules.html#simulation-modules" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>ELCOM is organized into simulation modules that can be turned off/on depending on the type of simulation that is desired. A module is turned off/on by setting the value of control keywords. This is done within the <code>run_elcom.dat</code> file. These controls provide a simple method for modifying the simulation.</p>
+<p>For example: a boundary condition file can be set up to include both meteorological data and inflow data. As a simple test, the user decides to turn off the inflow. One approach would be to return to the pre-processor, eliminate the inflow boundary cell set, re-run the pre-processor, then modify the temporal boundary condition file to remove the inflow data. As a simpler approach, the user need only set <code>iflow = 0</code>, and the inflow data and boundary cell sets will be ignored.</p>
+<p>This section provides a brief overview of the modules within <code>ELCOM</code> and their corresponding keywords set within the <code>run_elcom.dat</code> file.</p>
+<div id="stratification" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Stratification<a href="simulation-modules.html#stratification" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Density stratification in ELCOM can be through temperature, salinity, or both by using the controls <code>itemperature</code> and <code>isalinity</code> in combination with <code>idensity = 1</code>. If desired, temperature and salinity can be treated as passive tracers by setting <code>idensity = 0</code>. If temperature and/or salinity are turned on, they must be initialized throughout the simulation domain using the <code>default_***</code> controls, initial condition files, or associated subroutines in <code>elcom_user.f90</code>.</p>
+</div>
+<div id="tracers" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Tracers<a href="simulation-modules.html#tracers" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Up to 10 passive tracers may be transported in a simulation. They may be initialized in the domain using initial condition files or may flow into the domain through an inflow boundary using keywords <code>TRACER_**</code> in a temporal boundary condition file.</p>
+</div>
+<div id="surface-thermodynamics" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Surface thermodynamics<a href="simulation-modules.html#surface-thermodynamics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This module controls the heat transfer across the free surface. Required inputs (in temporal boundary condition files) include: solar radiation, wind speed, air temperature, and relative humidity.</p>
+</div>
+<div id="rain" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Rain<a href="simulation-modules.html#rain" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The rain module controls rain input into the free surface. Rain data in <em>m/day</em> must be provided in a temporal boundary condition file.</p>
+</div>
+<div id="wind" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Wind<a href="simulation-modules.html#wind" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Wind affects ELCOM simulations in three ways:</p>
+<ol style="list-style-type: decimal">
+<li>Evaporative cooling in the surface thermodynamics module<br />
+</li>
+<li>Wind stress on the free surface<br />
+</li>
+<li>Wind-induced momentum source in the wind-mixed layer</li>
+</ol>
+<p>Use <code>WIND_SPEED</code> and <code>WIND_DIR</code> (linked to boundary cell set 0 for uniform application) or define multiple sections via <code>section_top</code> in <code>bc.dat</code>. ELCOM interpolates wind speed and direction in time. Vector interpolation isn’t supported, so consistent time intervals are recommended. Alternatively, use <code>WIND_U</code> and <code>WIND_V</code>.</p>
+</div>
+<div id="inflowoutflow" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> Inflow/Outflow<a href="simulation-modules.html#inflowoutflow" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Inflow/outflow boundaries must be defined in <code>bc.dat</code>. Temporal boundary conditions for flow rate must be provided. Inflow conditions must also include scalar values.</p>
+</div>
+<div id="conservation-of-background-potential-energy" class="section level2 hasAnchor" number="5.7">
+<h2><span class="header-section-number">5.7</span> Conservation of Background Potential Energy<a href="simulation-modules.html#conservation-of-background-potential-energy" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Numerical diffusion can destratify the domain, increasing background potential energy. A vertical sharpening filter can conserve energy but not mass. The filter applies to salinity (<code>IFILTER = 2</code>) or temperature (<code>IFILTER = 3</code>). Alternatively, use <code>FILTER_&lt;SCALAR&gt;</code> in <code>run_elcom.dat</code> with <code>IFILTER = 1</code>. Temporally varying filters are also supported.</p>
+</div>
+<div id="bubble-plume-destratification" class="section level2 hasAnchor" number="5.8">
+<h2><span class="header-section-number">5.8</span> Bubble Plume Destratification<a href="simulation-modules.html#bubble-plume-destratification" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To simulate bubble destratification, define outlet locations in <code>bc.dat</code>. Temporal boundary conditions must specify airflow rates and the number of ports.</p>
+</div>
+<div id="underflow" class="section level2 hasAnchor" number="5.9">
+<h2><span class="header-section-number">5.9</span> Underflow<a href="simulation-modules.html#underflow" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To simulate dense inflow using Dallimore et al. (2001)’s 2D model, define inflow boundaries and temporal conditions, including <code>INFLOW_HEIGHT</code>. Set <code>IUNDERFLOW</code> in <code>run_elcom.dat</code>.<br />
+<strong>Note:</strong> Not compatible with CAEDYM.</p>
+</div>
+<div id="water-age-modelling" class="section level2 hasAnchor" number="5.10">
+<h2><span class="header-section-number">5.10</span> Water Age Modelling<a href="simulation-modules.html#water-age-modelling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Enable using <code>IRETENTION</code> in <code>run_elcom.dat</code>. Water age starts at zero and increments by <code>del_t</code> each timestep. Transported as a scalar.</p>
+</div>
+<div id="drifters-particles" class="section level2 hasAnchor" number="5.11">
+<h2><span class="header-section-number">5.11</span> Drifters / Particles<a href="simulation-modules.html#drifters-particles" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Simulate Lagrangian or semi-Lagrangian particles using <code>NDRIFTERS</code> in <code>run_elcom.dat</code>. Define properties in <code>drifter_properties_file</code> and <code>drifter_in_file</code>. Updates via <code>update_drifter_file</code>.</p>
+</div>
+<div id="jetspumps" class="section level2 hasAnchor" number="5.12">
+<h2><span class="header-section-number">5.12</span> Jets/Pumps<a href="simulation-modules.html#jetspumps" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To simulate jet/pump destratification, provide thrust, radius, and depth data in jet files. Controlled via <code>IJET</code> in <code>run_elcom.dat</code>.</p>
+</div>
+<div id="drafttubes" class="section level2 hasAnchor" number="5.13">
+<h2><span class="header-section-number">5.13</span> Drafttubes<a href="simulation-modules.html#drafttubes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For destratification impellors with draft tubes, specify thrust, radius, depth, and tube length in drafttube files. Controlled via <code>ITUBE</code> in <code>run_elcom.dat</code>.</p>
+</div>
+<div id="non-hydrostatic-code" class="section level2 hasAnchor" number="5.14">
+<h2><span class="header-section-number">5.14</span> Non-hydrostatic code<a href="simulation-modules.html#non-hydrostatic-code" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To simulate non-hydrostatic pressure effects (as in Bothel et al.), note that finer horizontal resolution (~10m) is required and simulation runtime increases significantly.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="elcom.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sect:initfiles.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/03-elcom.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["elcom-manual.pdf", "elcom-manual.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
