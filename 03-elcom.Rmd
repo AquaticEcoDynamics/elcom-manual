@@ -1,0 +1,1253 @@
+# ELCOM Operartion {#elcom}
+
+## Introduction
+
+Running an ELCOM simulation requires the user to provide several types of data:
+
+1. Initial conditions  
+2. Temporal boundary conditions  
+3. Configuration parameters  
+4. Output control  
+
+ELCOM obtains this data from the user through user-prepared input files and pre-processor prepared input files.
+
+## Files for ELCOM
+
+ELCOM is a command-line executable that communicates with the user through files.  
+Table \@ref(tab:elcomFiles) provides a summary of file types, whether their presence is required or optional, the purpose of the file, and responsibility for preparation of the file.
+
+- File names in `courier bold` font without brackets are fixed named files (i.e., the file must be present with exactly that name).  
+- File names such as `[data_name].unf` use square brackets to indicate that ELCOM may substitute various names in the bracketed section (see following sections).  
+- File names such as *<datablock>*.db use angle brackets to indicate sections of file names that the user can customize at the command line.
+
+```{r elcomFiles, echo=FALSE}
+knitr::kable(
+  data.frame(
+    "File Name" = c(
+      "`run_elcom.dat`",
+      "*<datablock>*.db",
+      "*<environment>*.dat",
+      "*<initial>*.dat",
+      "*<update>*.dat",
+      "*<drifter_properties>*.dat",
+      "*<drifter_initial>*.dat",
+      "*<drifter_update>*.dat",
+      "*<jet>*.dat",
+      "*<drafttube>*.dat",
+      "*<filter>*.dat",
+      "*<sparsedata>*.unf",
+      "*<usedata>*.unf",
+      "*<group_name>*.unf",
+      "[data_name].unf",
+      "[time_]*<save>*.unf",
+      "*<restart_out>*.unf",
+      "`elcom.exe`"
+    ),
+    Presence = c(
+      "required", "optional", "optional", "optional", "optional", "optional",
+      "optional", "optional", "optional", "optional", "optional", "required",
+      "required", "output", "output", "output", "output", "required"
+    ),
+    Usage = c(
+      "configuration control", "output control", "boundary control",
+      "initial condition", "scalar updates", "drifter properties",
+      "drifter initial conditions", "drifter updates", "jet/pump file",
+      "drafttube file", "temporal filter constants", "geometry data",
+      "geometry data", "datablock output", "3D data type output",
+      "simulation space output", "restart file", "executable"
+    ),
+    Preparation = c(
+      "user", "user", "user", "user", "user", "user", "user", "user", "user",
+      "user", "user", "pre-processor", "pre-processor", "ELCOM", "ELCOM",
+      "ELCOM", "ELCOM", "make"
+    ),
+    Number = c(
+      "1", "1", "10", "10", "10", "10", "10", "10", "100", "100", "10", "1",
+      "1", "no limit", "no limit", "no limit", "1", "1"
+    )
+  ),
+  caption = "Files for ELCOM.",
+  booktabs = TRUE
+)
+```
+
+## Simulation modules
+
+ELCOM is organized into simulation modules that can be turned off/on depending on the type of simulation that is desired. A module is turned off/on by setting the value of control keywords. This is done within the `run_elcom.dat` file. These controls provide a simple method for modifying the simulation.
+
+For example: a boundary condition file can be set up to include both meteorological data and inflow data. As a simple test, the user decides to turn off the inflow. One approach would be to return to the pre-processor, eliminate the inflow boundary cell set, re-run the pre-processor, then modify the temporal boundary condition file to remove the inflow data. As a simpler approach, the user need only set `iflow = 0`, and the inflow data and boundary cell sets will be ignored.
+
+This section provides a brief overview of the modules within `ELCOM` and their corresponding keywords set within the `run_elcom.dat` file.
+
+### Stratification
+
+Density stratification in ELCOM can be through temperature, salinity, or both by using the controls `itemperature` and `isalinity` in combination with `idensity = 1`. If desired, temperature and salinity can be treated as passive tracers by setting `idensity = 0`. If temperature and/or salinity are turned on, they must be initialized throughout the simulation domain using the `default_***` controls, initial condition files, or associated subroutines in `elcom_user.f90`.
+
+### Tracers
+
+Up to 10 passive tracers may be transported in a simulation. They may be initialized in the domain using initial condition files or may flow into the domain through an inflow boundary using keywords `TRACER_**` in a temporal boundary condition file.
+
+### Surface thermodynamics
+
+This module controls the heat transfer across the free surface. Required inputs (in temporal boundary condition files) include: solar radiation, wind speed, air temperature, and relative humidity.
+
+### Rain
+
+The rain module controls rain input into the free surface. Rain data in *m/day* must be provided in a temporal boundary condition file.
+
+### Wind
+
+Wind affects ELCOM simulations in three ways:
+
+1. Evaporative cooling in the surface thermodynamics module  
+2. Wind stress on the free surface  
+3. Wind-induced momentum source in the wind-mixed layer  
+
+Use `WIND_SPEED` and `WIND_DIR` (linked to boundary cell set 0 for uniform application) or define multiple sections via `section_top` in `bc.dat`. ELCOM interpolates wind speed and direction in time. Vector interpolation isn't supported, so consistent time intervals are recommended. Alternatively, use `WIND_U` and `WIND_V`.
+
+### Inflow/Outflow
+
+Inflow/outflow boundaries must be defined in `bc.dat`. Temporal boundary conditions for flow rate must be provided. Inflow conditions must also include scalar values.
+
+### Conservation of Background Potential Energy
+
+Numerical diffusion can destratify the domain, increasing background potential energy. A vertical sharpening filter can conserve energy but not mass. The filter applies to salinity (`IFILTER = 2`) or temperature (`IFILTER = 3`). Alternatively, use `FILTER_<SCALAR>` in `run_elcom.dat` with `IFILTER = 1`. Temporally varying filters are also supported.
+
+### Bubble Plume Destratification
+
+To simulate bubble destratification, define outlet locations in `bc.dat`. Temporal boundary conditions must specify airflow rates and the number of ports.
+
+### Underflow
+
+To simulate dense inflow using Dallimore et al. (2001)'s 2D model, define inflow boundaries and temporal conditions, including `INFLOW_HEIGHT`. Set `IUNDERFLOW` in `run_elcom.dat`.  
+**Note:** Not compatible with CAEDYM.
+
+### Water Age Modelling
+
+Enable using `IRETENTION` in `run_elcom.dat`. Water age starts at zero and increments by `del_t` each timestep. Transported as a scalar.
+
+### Drifters / Particles
+
+Simulate Lagrangian or semi-Lagrangian particles using `NDRIFTERS` in `run_elcom.dat`. Define properties in `drifter_properties_file` and `drifter_in_file`. Updates via `update_drifter_file`.
+
+### Jets/Pumps
+
+To simulate jet/pump destratification, provide thrust, radius, and depth data in jet files. Controlled via `IJET` in `run_elcom.dat`.
+
+### Drafttubes
+
+For destratification impellors with draft tubes, specify thrust, radius, depth, and tube length in drafttube files. Controlled via `ITUBE` in `run_elcom.dat`.
+
+### Non-hydrostatic code
+
+To simulate non-hydrostatic pressure effects (as in Bothel et al.), note that finer horizontal resolution (~10m) is required and simulation runtime increases significantly.
+
+## Initialization {#sect:initfiles}
+
+### Uniform initial conditions
+
+For simple initial conditions (e.g., distributing a scalar or setting a flat surface), use `DEFAULT_****` keywords in `run_elcom.dat`. Default values can be overwritten by profile or horizontal files or initialization subroutines.
+
+### Vertical Profile
+
+Vertical scalar variation is defined using `initial_profile_file` (in the `infiles` directory). Format:
+
+- Four header lines:
+  1. Number of datasets (excluding depth)
+  2. Number of depths (first column is `DEPTH`)
+  3. i and j coordinates
+  4. Column keywords (first must be `DEPTH`, rest valid scalar keywords)
+- Data rows: Depth (in meters) and scalar values.
+- Depths must start at zero and increase monotonically.
+- Linear interpolation is used during simulation.
+
+> Comments (`!`) can appear at the top of the file but not within the data block. Comment rows in headers must match column count.
+
+
+```plaintext
+! Example: ic.dat
+2   data sets
+4   number of depths
+15 20   i,j
+DEPTH   WTR_TEMP    SALINITY
+0.0     25.0        0.0
+5.1     23.1        15.1
+6.2     20.2        35.0
+10.4    18.3        35.2
+```
+
+### Multiple Vertical Profiles {#sect:multiProf}
+
+To increase the flexibility of initialization, ELCOM Version 2 allows for multiple profile initial condition files. If more than one initial condition file is specified for any scalar, then ELCOM interpolates between files to initialize the domain. Each profile is first linearly interpolated onto the vertical layers, and then each point is horizontally interpolated using the inverse distance weighting method such that
+
+$$
+S_{i,j,k} = \sum_{n=1}^N \frac{S_{n,k}r_{n}^\alpha}{r_{n}^\alpha}
+$$
+
+where $\alpha$ is the distance weighting specified by the flag `IC_DIST_WEIGHTING` in `run_elcom.dat` (default = 2.0), $r$ is the distance between the column and profile $n$, and $N$ is the number of profiles.
+
+### Horizontal Variation
+
+A horizontal variation in the initial conditions for any valid transportable scalar can be defined using an input file (keyword = `initial_horiz_file`). The input file may have any name but must be located in the `infiles` directory.
+
+These files require a format that consists of three header lines followed by a value for each `(i,j)` column of the domain. The file may have as many comment lines (preceded by `!`) at the top of the file as desired. Comment lines within the header data must have as many items as there are columns (i.e., if there are 3 columns, a valid comment line is `!  - -`). No comment lines are allowed within the columns of data. The columns must be completely dense with data (i.e., there may not be "missing" data such that a row has fewer items than the number of columns).
+
+The first header line contains two numbers: the number of x rows and the number of y columns. These must match the number of rows and columns in the bathymetry file.
+
+The second line gives a land value for land cells.
+
+The third line in the header contains the keyword that describes the scalar to be initialized. This keyword should be a valid transportable scalar given in the Valid Scalars table in [Section \@ref(tab:validScalars)].
+
+The remaining lines in the file contain the data. The matrix should be the same size as the bathymetry data in your bathymetry file.
+
+```plaintext
+! Example:	ic.dat
+8 13	xrows	yrows
+1e+16	land	val
+SALINITY
+1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16
+1e+16 1e+16   9.0   9.5 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16
+1e+16   8.1   8.5   9.3   9.5  10.0  10.2  11.0  11.6  11.8 1e+16 1e+16 1e+16
+1e+16   8.0   8.5   9.2   9.5  10.0  10.3  10.6  11.3  11.6  11.8  12.0 1e+16
+1e+16   8.0   8.5   9.1   9.3   9.5   9.5   9.7   9.8  10.0  10.2  11.2 1e+16
+1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16  10.0  10.0  10.5 1e+16
+1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16   9.1   9.2   9.5 1e+16
+1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16
+```
+
+
+### User subroutines
+
+For ELCOM users who are willing to modify and compile source code, the ability to set up complex initial conditions is available through the addition of code to subroutines in the `elcom_user.f90` file. The subroutines in this file are only called if the appropriate `user_init_***` control in the `run_elcom.dat` file is non-zero. 
+
+The stub routines supplied with ELCOM are designed to be executed with the `user_init_***` controls set to 1. However, this can be modified by the user so that different initializations are performed for different values of `user_init_***`.
+
+## Configuration controls
+
+### Time step
+
+The time step (keyword = `del_t`) is the number of seconds that the simulation advances in time for each simulation step.
+
+### Number of steps
+
+The total number of time steps to be computed in the present simulation run is set using the keyword `iter_max` in the `run_elcom.dat` file.
+
+### Start date
+
+The start date is entered in **CWR Julian Day** format, which specifies the year and day using a real number with 7 digits to the left of the decimal place as `yyyyddd.ddd`. The first 4 digits are the year and the subsequent 3 digits are the Julian Day (days since January 1st). Hours, minutes, and seconds are represented as fractions of a day (e.g., 1 AM on January 1st, 2000 is represented as `2000001.041667`).
+
+### CGM tolerance
+
+The `CGM_TOL` is the residual at which iteration of the **conjugate gradient method** (used for the free-surface solution) is stopped.
+
+### Turbulence
+
+For stratified flow, the base closure scheme can be supplemented by unstable mixing (`iclosure = 1`) algorithms. The unstable mixing algorithm mixes momentum and transported scalars in vertical cells where an unstable gradient of potential density exists (i.e., Ri < 0.0).
+
+For stratified flows driven by surface wind, the **wind-mixed-layer closure scheme with energy transport** (`iclosure = 6`) is recommended. This approach computes the turbulent kinetic energy due to wind stirring, convective overturns, and wind shear, then uses this to compute vertical mixing.
+
+## Output frequency
+
+Outputs of data that are not controlled by the datablock file are set through the `iter_out_***` and `start_output_***` keywords. The former controls the time step interval for providing output, while the latter controls the first step on which output will be provided.
+
+## Configuration using file `run_elcom.dat` {#sect:runelcom.dat}
+
+An up-to-date copy of `run_elcom.dat` is included in the examples.
+
+ELCOM looks for the file `run_elcom.dat` in the local directory to set the configuration of the simulation run. The `run_elcom.dat` configuration file controls execution of optional modules and models within ELCOM, allowing the user to set the parameters that govern the physical and numerical simulation.
+
+The format of the file is flexible: lines may occur in any order, and not all items must be present. Comment lines (preceded by `!`) may occur anywhere in the file. **Blank lines are not allowed** in the file (the code stops reading at a blank line). Each line (including comment lines) must have at least two items separated by a blank space.
+
+The comment marker `!` counts as an item, so a valid line is ``!  !`` or `` ! -``, while ``!!`` (no space between) is not valid.
+
+The general format for the file is a series of lines, with each line listing a user setting followed by a keyword that defines the parameter. The individual keywords and settings are explained briefly below:
+
+### File headers
+
+- `FILE`: file name for this file (must be `run_elcom.dat`)
+- `ANALYST`: user name (must be inside single quotes `' '`)
+- `ORGANIZATION`: user company name (must be inside single quotes `' '`)
+- `COMMENT`: user comment (must be inside single quotes `' '`)
+- `CASE_KEYWORD`: allows user to add code to be executed for a particular simulation case. Must be a string without blank spaces enclosed in single quotes.
+
+### Simulation module controls
+
+- `iheat_input`: controls surface thermodynamics  
+  - 0 = no surface thermodynamics  
+  - 1 = surface thermodynamics model (input solar radiation is measured; longwave model determined by input keywords)
+
+- `iatmstability`: controls atmospheric stability correction in thermodynamics  
+  - 0 = no correction  
+  - 1 = apply correction
+
+- `irain`: controls rainfall input  
+  - 0 = no rain  
+  - 1 = rain enabled
+
+- `iflow`: controls inflow/outflow (Dirichlet boundaries); overrides boundary condition files  
+  - 0 = no inflow/outflow  
+  - 1 = inflow/outflow model 1
+
+- `iunderflow`: controls 2D underflow model; overrides boundary condition files  
+  - 0 = standard inflow modelling  
+  - 1 = use underflow model where `INFLOW_HEIGHT` is specified
+
+- `ibubbler`: controls bubble plume destratification  
+  - 0 = no bubble plume  
+  - 1 = enable destratification model
+
+- `itemperature`: controls whether temperature is transported  
+  - 0 = no temperature  
+  - 1 = temperature as scalar
+
+- `isalinity`: controls whether salinity is transported  
+  - 0 = no salinity  
+  - 1 = salinity as scalar
+
+- `idensity`: controls inclusion of buoyancy (density) in simulation  
+  - 0 = no buoyancy  
+  - 1 = use UNESCO equation of state for buoyancy
+
+- `ntracer`: number of passive tracers  
+  - 0 = none  
+  - 1 to 10 = number of tracers initialized or supplied via inflow
+
+- `ndrifters`: number of drifters or particles  
+  - 0 = none  
+  - ≥1 = number of drifters
+
+- `ijet`: include jets/pumps  
+  - 0 = no jets  
+  - 1 = simulate jets
+
+- `itube`: include drafttube pump destratification  
+  - 0 = no drafttubes  
+  - 1 = simulate drafttubes
+
+- `ICAEDYM`: enable CAEDYM water quality module  
+  - 0 = off  
+  - 1 = on
+
+- `icoriolis`: include Coriolis force from `bathymetry.dat` latitude  
+  - 0 = off  
+  - 1 = on
+
+- `inonhydrostatic`: use non-hydrostatic approximations of Botelho et al.  
+  - 0 = hydrostatic  
+  - 1 = non-hydrostatic
+
+### Initialization and update options
+
+- `irestart`: use restart file for initial conditions  
+  - 0 = do not use  
+  - 1 = use file specified by `restart_in_file`
+
+- `user_init_u_vel`: user subroutine for x velocity  
+  - 0 = ignore  
+  - 1 = call `user_u_init` with `USER_START_U = 1`
+
+- `user_init_v_vel`: user subroutine for y velocity  
+  - 0 = ignore  
+  - 1 = call `user_v_init` with `USER_START_V = 1`
+
+- `user_init_w_vel`: user subroutine for z velocity  
+  - 0 = ignore  
+  - 1 = call `user_w_init` with `USER_START_W = 1`
+
+- `user_init_temperature`: user subroutine for temperature  
+  - 0 = ignore  
+  - 1 = call `user_temperature_init` with `USER_START_TEMPERATURE = 1`
+
+- `user_init_salinity`: user subroutine for salinity  
+  - 0 = ignore  
+  - 1 = call `user_salinity_init` with `USER_START_SALINITY = 1`
+
+- `user_init_tracer`: user subroutine for tracer  
+  - 0 = ignore  
+  - 1 = call `user_tracer_init` with `USER_START_TRACER = 1`
+
+- `user_init_height`: user subroutine for surface height  
+  - 0 = ignore  
+  - 1 = call `user_height_init` with `USER_START_HEIGHT = 1`
+
+- `user_init_extinction`: user subroutine for light extinction coefficient  
+  - 0 = ignore  
+  - 1 = call `user_extinction_init` with `USER_START_EXTINCTION = 1`
+
+- `latitude`: optional simulation latitude (overrides value in `bathymetry.dat`)
+
+
+### Turbulence modeling
+
+- `iclosure`: controls the type of closure scheme used  
+  - 0 = constant eddy viscosity  
+  - 1 = closure model 1 (includes mixing of unstable stratification)  
+  - 6 = wind-mixed layer model with energy transport — **RECOMMENDED**
+
+- `DIFFUSIVITY<SCALAR>`: horizontal diffusivity for a scalar in X and Y (same). `<SCALAR>` must be uppercase and valid.
+
+- `DIFFUSIVITY_X_<SCALAR>`, `DIFFUSIVITY_Y_<SCALAR>`: horizontal diffusivities in X and Y directions separately.
+
+- `DEFAULT_DIFFUSIVITY`: default horizontal diffusivity for scalars; overridden by scalar-specific settings.
+
+### Meteorological Sensor Heights
+
+- `WIND_SPEED_HEIGHT`: height (m) of wind speed measurements. Default is 10 m.
+- `SCALAR_HEIGHT`: height (m) for air temperature and humidity data. Default is 10 m.
+
+### Model Settings and Controls
+
+- `mean_albedo`: mean albedo of water  
+- `drag_btm_cd`: bottom drag coefficient  
+- `model_grav_damp_x`: damping for x-baroclinic term  
+- `model_grav_damp_y`: damping for y-baroclinic term  
+
+### Scalar Maximum and Minimum for Debugging
+
+- `min_<SCALAR>` and `max_<SCALAR>`: bounds for debugging. `<SCALAR>` must be uppercase.
+- `ihardlimit`:  
+  - 0 = no limits  
+  - 1 = apply scalar bounds
+
+### Debugging controls
+
+- `debug_check`:  
+  - 0 = off  
+  - 1 = stop on fatal  
+  - 2 = high check, stop on fatal  
+  - 3 = high check, stop on warning  
+
+- `debug_print`:  
+  - 0 = none  
+  - 1 = minimal  
+  - 2 = moderate  
+  - 10 = extensive  
+
+- `debug_point`: sparse data index point for debug output  
+- `debug_baroclinic_x`, `debug_baroclinic_y`:  
+  - 0 = off  
+  - 1 = on
+
+### Output Frequency
+
+- `iter_out_monitor`: output interval for monitoring  
+- `iter_out_save`: output interval for saved simulation  
+- `iter_out_restart`: output interval for restart files  
+
+### Output Start Time
+
+- `start_output_monitor`: time step to start monitoring output  
+- `start_output_save`: time step to start save files  
+- `start_output_restart`: time step to start restart files  
+
+### Time Controls
+
+- `start_date_CWR`: start in Julian format `yyyyddd.ddd`  
+- `del_t`: time step (seconds)  
+- `iter_max`: max time steps  
+
+### Iterative Solver Controls
+
+- `CGM_TOL`: tolerance for conjugate gradient method  
+- `CGM_MIN`: minimum iterations  
+- `CGM_MAX`: maximum iterations  
+
+### Scalar Filtering
+
+- `IFILTER`:  
+  - 1 = off (default)  
+  - 2 = BPE filter for salinity  
+  - 3 = BPE filter for temperature  
+
+- `filter_bPE_threshold`: max BPE change (e.g., 1e-9 for Lake Kinneret)  
+- `filter_mass_threshold`: max mass change (e.g., 1e-7 for Lake Kinneret)  
+- `FILTER<SCALAR>`: constant filter value for scalar  
+- `DEFAULT_FILTER`: default filter value for all scalars  
+
+### Default Values
+
+- `DEFAULT_HEIGHT`: default water height (m)  
+- `DEFAULT_WIND_SPEED`: default wind speed (m/s)  
+- `DEFAULT_WIND_DIR`: wind direction (degrees from North)  
+- `DEFAULT_<SCALAR>`: default scalar value  
+- `DEFAULT_PAR_EXTINCTION`, `DEFAULT_NIR_EXTINCTION`, `DEFAULT_UVA_EXTINCTION`, `DEFAULT_UVB_EXTINCTION`: extinction coefficients  
+- `DEFAULT_BC`: boundary condition preset (1-9)  
+
+### Input File Names
+
+- `3D_data_file`, `preprocessor_file`: grid and map files  
+- `initial_profile_file`, `initial_horiz_file`: initial condition files  
+- `boundary_condition_file`, `profile_boundary_condition_file`: boundary files  
+- `update_file`, `filter_file`: updates and filter files  
+- `drifter_properties_file`, `drifter_in_file`, `update_drifter_file`: drifter config  
+- `jet_file`, `drafttube_file`: destratification devices  
+- `datablock_file`: output configuration
+
+### File Directories
+
+- `infile_dir`: directory of input files  
+- `outfile_unf_dir`: binary output directory  
+- `outfile_txt_dir`: text output directory
+
+### Output File Names
+
+- `restart_save_file`: base name for save files  
+- `restart_out_file`: base name for restart output  
+
+
+## Input files
+
+### sparsedata.unf and usedata.unf
+
+The files `sparsedata.unf` and `usedata.unf` are required files for ELCOM. These are the Fortran unformatted (binary) files produced by the pre-processor. The user may rename these files, but must keep track of which file is the `sparsedata` file (`3D_data_file`) and which is the `usedata` file (`preprocessor_file`). ELCOM will look for the files specified in the `run_elcom.dat` file. If the incorrect files are used, the simulation will crash.
+
+### Temporal boundary condition (1D) files {#sect:tempBCfiles}
+
+The one-dimensional temporal boundary condition files (`boundary_condition_file`) are created by the user to provide environmental forcing information that varies with time. These files must follow a specific format:
+
+- Four header lines followed by data columns.
+- First column = time in CWR format (`yyyyddd.dd`).
+- Each row represents data for a specific time.
+- Comment lines (starting with `!`) may appear at the top.
+- Header comment lines must have the same number of items as data columns.
+- No comments allowed within the data block.
+- All columns must be fully populated (no missing values).
+
+#### Header line meanings:
+
+1. Number of data columns (excluding the time column).
+2. `0` indicating CWR time format (first data column should be `TIME`).
+3. Boundary cell set reference numbers (from `bc.dat`).
+4. Keywords describing the type of data in each column.
+
+**Interpolation:** ELCOM linearly interpolates between provided time values to match simulation time steps (`del_t`).
+
+#### Table: Temporal Boundary Condition Data-types
+
+| Keyword                    | Units         | Description                                                                 |
+|----------------------------|---------------|-----------------------------------------------------------------------------|
+| `HEIGHT`                   | m             | Water height for open boundary condition                                   |
+| `INFLOW`                   | m³/s          | Inflow volume                                                              |
+| `INFLOW_MAXDEPTH`         | m             | Max depth for inflow                                                       |
+| `INFLOW_MINDEPTH`         | m             | Min depth for inflow                                                       |
+| `INFLOW_HEIGHT`           | m             | Inflow height for underflow model                                          |
+| `OUTFLOW`                 | m³/s          | Outflow volume                                                             |
+| `GATE_<n>_TOP`            | m             | Top of an inflow/outflow gate                                              |
+| `GATE_<n>_BOTTOM`         | m             | Bottom of an inflow/outflow gate                                           |
+| `GATE_<n>_OPEN`           | -             | Status of gate (1=open, 0=closed)                                          |
+| `AIRFLOW`                 | m³/s          | Airflow rate for bubble destratification                                   |
+| `N_PORTS`                 |               | Number of ports in destratification device                                 |
+| `RAIN`                    | m/day         | Rainfall rate                                                              |
+| `WIND_SPEED`              | m/s           | Wind speed                                                                 |
+| `WIND_DIR`                | °             | Wind direction (° clockwise from north)                                    |
+| `SOLAR_RAD`               | W/m²          | Solar radiation at water surface                                           |
+| `LW_RAD_IN`               | W/m²          | Incoming longwave radiation                                                |
+| `LW_RAD_NET`              | W/m²          | Net longwave radiation (positive incoming)                                 |
+| `ATM_PRESS`               | Pascals       | Atmospheric pressure                                                       |
+| `CLOUDS`                  |               | Fractional cloud cover (0 to 1)                                            |
+| `REL_HUM`                 |               | Relative humidity (0 to 1)                                                 |
+| `AIR_TEMP`                | °C            | Air temperature                                                            |
+| `<SCALAR>`                | -             | Valid transportable scalar                                                 |
+
+#### Notes:
+
+- `INFLOW_MAXDEPTH` and `INFLOW_MINDEPTH`: allow control of inflow depths, enabling inflow at the surface of a thalweg cell even as surface level varies.
+- `GATE_<n>_TOP`, `GATE_<n>_BOTTOM`, `GATE_<n>_OPEN`: specify selective withdrawal gates. `n` is the gate number (e.g. `GATE_1_TOP`), with `OPEN` = 1 (open) or 0 (closed). Flow is distributed among open gates based on area.
+
+These features allow for more realistic simulation of systems like reservoirs with variable surface height or dam withdrawal structures.
+
+### Temporal profile boundary condition (2D) files
+
+The two-dimensional temporal profile boundary condition files (`profile_boundary_condition_file`) are used to provide scalar boundary information that varies with both time and depth. These files consist of:
+
+- Four header lines
+- Sections of data, each representing a profile at a specific time
+
+#### Header lines:
+
+1. Number of data sets per section (including `DEPTH`, excluding the `TIME` row)
+2. Must contain `0` to indicate CWR time format; data section starts with `TIME`
+3. Boundary cell set reference numbers (including `TIME` and `DEPTH`) — each file may apply to only **one** boundary set
+4. Keywords for each column (`TIME`, `DEPTH`, and valid scalar keywords)
+
+#### Data section:
+
+Each section contains:
+- One header row: the profile time (`yyyyddd.dd`) and number of depths
+- One row for `DEPTH` values (depths in meters below the surface)
+- Subsequent rows: one per scalar, with values at each depth
+
+All sections must:
+- Contain the same number of data rows (one per scalar)
+- Maintain the same order of keywords per section
+
+---
+
+### Update boundary condition files {#sect:updateBCfiles}
+
+The update boundary condition files (`update_file`) are used to update scalar values on boundaries during specified time intervals (e.g., tracer releases). Format is the same as 1D temporal boundary condition files, **except**:
+
+- Two `TIME` columns per row are provided
+- Scalar values are applied during timesteps between the first and second time column
+
+If a timestep doesn't fall within any of these intervals, no update is applied.
+
+---
+
+### Temporal filter constant files {#sect:tempFiltFiles}
+
+Temporal filter constant files (`filter_file`) provide time-varying filter constants for scalars. They follow the same format as the 1D temporal boundary condition files.
+
+- Third header line still includes boundary cell set reference, **but it is ignored**
+- All keywords must be valid transportable scalars
+
+---
+
+### Drifter files
+
+#### Drifter Properties Files
+
+The drifter properties file (`drifter_properties_file`) provides physical properties of semi-Lagrangian drifters. If only Lagrangian particles are simulated, this file can be blank.
+
+Each line contains **four columns**:
+
+1. Value
+2. Target drifters (e.g., `:`, or `n1:n2`)
+3. Target components (e.g., `:`, or `n1:n2`)
+4. Property keyword
+
+#### Valid property keywords:
+
+- `mass`: mass of the component (kg)
+- `area`: cross-sectional area (m²)
+- `length`: vertical length (m)
+- `drag_cd`: drag coefficient
+- `distance`: vertical distance from probe base to component base (m)
+
+#### `shape` keyword values:
+
+- 1 = sphere  
+- 2 = cylinder  
+- 3 = rectangle  
+
+#### `type` keyword values:
+
+- 1 = submerged — forced by modeled water velocities  
+- 2 = subsurface — forced by surface wind shear velocity  
+- 3 = surface — forced by wind  
+
+Therefore an example file for drifters consisting of five components (antenna, surface buoy, subsurface buoy, pole connecting the drogue to the subsurface buoy and the drifter sails) may look something like:
+
+```plaintext
+! - - - -
+! ! Example Drifter Properties File
+! ! NB each comment line should have 4 words
+! - - - -
+! Component 1 sail
+26.0   :    1    mass
+1.5    :    1    area
+1.0    :    1    length
+0.3    :    1    drag_cd
+0.0    :    1    distance
+3      :    1    shape
+1      :    1    type
+! Component 2 Pole
+3.0    :    2    mass
+0.001  :    2    area
+1.0    :    2    length
+0.3    :    2    drag_cd
+1.0    :    2    distance
+2      :    2    shape
+1      :    2    type
+! Component 3 sub-surface float
+0.2    :    3    mass
+0.2    :    3    area
+0.2    :    3    length
+0.3    :    3    drag_cd
+2.3    :    3    distance
+3      :    3    shape
+2      :    3    type
+! Component 4 surface float
+0.1    :    4    mass
+0.01   :    4    area
+0.1    :    4    length
+0.3    :    4    drag_cd
+2.5    :    4    distance
+3      :    4    shape
+3      :    4    type
+! Component 5 antennea
+1.0    :    5    mass
+0.01   :    5    area
+0.3    :    5    length
+0.3    :    5    drag_cd
+2.6    :    5    distance
+2      :    5    shape
+3      :    5    type
+```
+
+### Drifter Initial Files
+
+The drifter initial files (`drifter_in_file`) are used to provide initial conditions and simulation properties for drifters and particles.
+
+Each line of the `drifter_in_file` should contain **three columns**:
+1. A value
+2. Target drifters (`:` for all, or `n1:n2` for a range)
+3. A keyword that specifies the property to set
+
+### Valid keywords:
+
+- `start_t`: starting timestep for the drifter
+- `end_t`: ending timestep for the drifter
+
+- `solution_method`: type of drifter  
+  - 1 = Drifter with constant elevation  
+  - 2 = Drifter with constant depth  
+  - 3 = Drifter with constant density  
+  - 4 = Lagrangian Particle with constant elevation  
+  - 5 = Lagrangian Particle with constant depth  
+  - 6 = Lagrangian Particle with constant density  
+  - 7 = 3D Lagrangian Particle  
+
+- `beach_method`:  
+  - 1 = Remove drifter when it hits land  
+  - 2 = Drifter continues if it hits land  
+  > **Note:** Drifters are always removed if they cross an open boundary.
+
+- `cfl_max`: maximum timestep for drifter (sub-timestepped if CFL > `cfl_max`)
+
+- `drogue_density`: density of drogue/particle (used for constant density solutions)
+
+- `centre_of_mass`: distance of centre of mass from bottom of drogue (used for constant density solutions)
+
+- `depth`: depth of bottom of drogue/particle (used for constant depth solutions)
+
+- `start_i`, `start_j`, `start_k`: starting position in `i, j, k` grid coordinates  
+  - Example: `start_i = 8.5`, `start_j = 8.5`, `start_k = 5.5` places the drifter in the center of cell `(i = 8, j = 8, k = 5)`
+
+- `start_x`, `start_y`, `start_z`: starting position in physical `x, y, z` coordinates
+
+- `start_cell`: starting cell number (in 1D sparse array)
+
+---
+
+An example file may look something like:
+
+
+```plaintext
+! - - - -
+! ! Example Drifter Initial File
+! ! NB each comment line should have 3 words
+! - - - -
+8.5    :    start_i
+14.5   :    start_j
+6.7    :    start_k
+2      :    solution_method
+2      :    beach_method
+1.5    :    depth
+```
+
+### Drifter Update Files
+
+The drifter update files (`update_drifter_file`) are used to update drifter positions or solution methods during a simulation. These files are primarily designed to incorporate real-time position updates from measurements.
+
+The format is the same as standard update boundary condition files, **except**:
+- The third header line contains a **drifter number** instead of a boundary condition set number.
+- The update is applied to the specified drifter for all timesteps between the two time values on each row.
+
+If the current timestep is not between the two specified time values of a row, no update is made.
+
+### Valid keywords for updates:
+
+- `solution_method`: (see earlier for method options)
+- `beach_method`: (see earlier for options)
+- `cfl_max`: maximum timestep (drifter is sub-timestepped if CFL > `cfl_max`)
+- `drogue_density`: density of drogue/particle (for constant density mode)
+- `centre_of_mass`: vertical offset from bottom of drogue to its center of mass
+- `depth`: depth of drogue/particle (for constant depth solutions)
+- `i, j, k`: updated grid coordinates for drifter position
+- `x, y, z`: updated physical coordinates
+- `cell`: updated cell index in 1D sparse array
+
+---
+
+An example file may look something like:
+
+```plaintext
+! - - - -
+! ! Example Drifter Update File
+! ! NB each comment line  should have 3 words
+! - - - -
+2 data sets
+0 seconds between data
+0          0          1   1
+TIME       TIME       i   j
+2005001.50 2005001.60 6.7 7.2
+```
+
+### Jet Files
+
+The jet files (`jet_file`) are used to define the properties of a jet or pump employed for artificial destratification.
+
+These files must follow a specific format:
+
+- **Three header lines**
+- **Four columns of data**
+- Data corresponds to specific instants of time and applies to a particular jet
+- Comments (`!`) are allowed at the top of the file
+- All data rows must be fully populated — **no missing values allowed**
+
+#### Header line definitions:
+
+1. **Jet reference number** (used for debugging purposes only)
+2. **i and j location** of the jet (two integers)
+3. **Column headers** for the data that follows
+
+> *Note: The expected structure of the third header line and the data columns can include variables like time, thrust, radius, and depth or height depending on the configuration, although this was not specified completely in the original text.*
+
+```plaintext
+ TIME THRUST RADIUS DEPTH
+```
+```plaintext
+ TIME THRUST RADIUS HEIGHT
+```
+
+The four data colums are
+
+#### Data Column Descriptions (Jet Files)
+
+- `TIME`: The date in CWR Julian Day format (`yyyyddd.ddd`)
+- `THRUST`: Force of the pump in Newtons
+- `RADIUS`: Radius of the pump in metres
+- `DEPTH` or `HEIGHT`: Either the depth of the pump from the surface level or the height from the bottom (in metres)
+
+
+```plaintext
+! - - - -
+! Example Jet File
+! - - - -
+1 jet ID number
+6 12 i,j location of jet data
+TIME      THRUST RADIUS DEPTH
+2005001.0 3000   2.0    2.2
+2005011.0 3000   2.0    2.2
+```
+
+### Drafttube Files
+
+The drafttube files (`drafttube_file`) are used to define the properties of a pump with a drafttube used for artificial destratification.
+
+These files must follow this structure:
+
+- **Three header lines**
+- **Five columns of data**
+- Each row provides values at specific time instances for a single device
+- Comment lines (starting with `!`) may appear at the top of the file
+- **All data columns must be complete** — no missing values in any row
+
+#### Header line definitions:
+
+1. A **drafttube reference number** (used for debugging only)
+2. Two integers indicating the **i and j location** of the device
+3. A line containing the **column headers** for the data that follows
+
+> *Note: The exact headers for the data columns (e.g., `TIME`, `THRUST`, `RADIUS`, `DEPTH`, `LENGTH`) should follow this third line, depending on what is specified for each simulation setup.*
+
+```plaintext
+ TIME FLOW RADIUS DEPTH LENGTH
+```
+
+
+The four data colums are
+#### Data Column Descriptions (Drafttube Files)
+
+- `TIME`: The date in CWR Julian Day format (`yyyyddd.ddd`)
+- `FLOW`: Flow rate through the pump in m³/s  
+  *Note: This value should be negative (i.e., pumping downward through the tube).*
+- `RADIUS`: Radius of the pump and tube in metres
+- `DEPTH`: Depth of the pump from the surface level (in metres)
+- `LENGTH`: Length of the draft tube in metres
+
+
+```plaintext
+! - - - -
+! Example drafttube File
+! - - - -
+1 drafttube ID number
+6 12 i,j location of jet data
+TIME      FLOW RADIUS DEPTH  LENGTH
+2005001.0 -5   2.0    2.2    5.0
+2005011.0 -5   2.0    2.2    5.0
+```
+
+
+## Definition of Culvert Characteristics – Dynamic Boundary Conditions
+
+When dynamic boundary conditions are defined in `pre_elcom`, the characteristics of the culvert connecting the pair of boundary conditions must be provided. These characteristics are supplied in a file specified in `run_elcom.dat` using the keyword `dynamic_boundary_condition_file`.
+
+These files require:
+- Three header lines
+- One line listing culvert characteristics to be defined
+- One or more data rows for each culvert
+
+**Header Format:**
+1. Two values – boundary condition reference numbers (as defined in `pre_elcom`)
+2. One value – number of characteristics being specified (between 3 and 12)
+3. One value – number of pipes in the set (only circular pipes supported)
+4. One line – column headers for culvert characteristics
+
+### Supported Culvert Keywords and Defaults
+
+| `KEYWORD`           | Default     | Description                                                                 |
+|---------------------|-------------|-----------------------------------------------------------------------------|
+| `PIPE_K`            | 0.098       | Inlet control factor K – unsubmerged pipe                                  |
+| `PIPE_M`            | 2.000       | Inlet control exponent M – unsubmerged pipe                                |
+| `PIPE_C`            | 0.398       | Inlet control factor C – submerged pipe                                    |
+| `PIPE_Y`            | 0.670       | Inlet control term Y – submerged pipe                                      |
+| `EPS_ENTRY`         | 0.500       | Head loss at pipe inlet                                                    |
+| `EPS_EXIT`          | 1.000       | Head loss at pipe outlet                                                   |
+| `EPS_FLAP_IN`       | 0.000       | Head loss for flapped gate at first boundary                               |
+| `EPS_FLAP_OUT`      | 0.000       | Head loss for flapped gate at second boundary                              |
+| `PIPE_MAN`          | 0.015       | Manning's coefficient                                                      |
+| `PIPE_PHI`          | required    | Pipe diameter                                                               |
+| `PIPE_LEN`          | required    | Pipe length                                                                 |
+| `PIPE_HEIGHT`       | required    | Pipe bottom height (relative to domain reference level)                    |
+
+### Example File
+```plaintext
+! Boundary Condition file for Culverts
+2 1 ! Pair of dynamic sets
+7   ! data sets
+10  ! number of pipes
+EPS_ENTRY  EPS_EXIT EPS_FLAP_IN  PIPE_PHI  PIPE_LEN  PIPE_MAN  PIPE_HEIGHT
+0.500      1.000      0.100      0.500     15.0       0.015       2.750
+```
+
+
+### Output definition file (Datablock.db) {#sect:datablock}
+
+The file `datablock.db` is a text file produced by the user, and contains the configuration data used to set up the users output. The name for this file is specified by the user.
+
+A `datablock.db` file is structured as a series of blocks of instructions. Each block requires an exact number of lines, with specific instructions on each line. Each line contains a single instruction followed by a comment. The comment must begin with a "!" character. In manually editing `datablock.db` files, it is important to keep in mind that while blocks of instructions may be added or removed, lines within a block can only be modified, but not removed. The following will discuss the structure of each block of instructions.
+
+#### Datablock Description
+
+The first 4 lines of a `datablock.db` are the datablock description. In order, they are the block descriptor, the current datablock version number, the number of output groups, and the number of output sets. Output groups and sets are described below.
+
+#### Group Description
+
+Following the datablock description are the group description blocks. A group represents a group of data to be output. A data group is defined as an output filename, datatypes to be output (i.e. `TEMPERATURE, SALINITY`, etc...), the location within the simulation domain of the points at which data is to be output, and the time at which data is to be output. If several groups are desired, the group descriptions must follow each other without breaks between them.
+
+A group description block contains 11 lines, which are as follows:
+
+| Line | Description |
+|------|-------------|
+| 1 | `BEGIN GROUP_DESCRIPTION` — begin block statement |
+| 2 | Group reference number — an integer labelling the group, this can have any value |
+| 3 | User label — a name containing no blank spaces labelling the group |
+| 4 | Output filename — should include `.unf` suffix |
+| 5 | Set reference number — an integer corresponding to a description of a set of points at which the data are to be output (sets will be described after groups) |
+| 6 | Number of datatypes in group — an integer indicating the desired number of datatypes to be output (i.e. `TEMPERATURE, SALINITY`, etc...) |
+| 7 | Should read `.TRUE.`, do not modify |
+| 8 | Output interval — an integer indicating the desired number of timesteps between outputs |
+| 9 | Output start time — an integer indicating which time step to begin outputting data |
+| 10 | Output end time — an integer indicating which time step to stop outputting data, `0` indicates entire run |
+| 11 | Should read `0`, do not modify |
+
+#### Set Description
+
+A set is a set of points at which data are to be output. This can include a vertical column of points, a contiguous series of columns of points (curtain), a horizontal sheet of points, a collection of drifters, a collection of outflows, or any group of points in the three-dimensional domain. The valid set types are:
+
+```
+PROFILE_1D  
+CURTAIN_2D  
+SHEET_2D  
+DRIFTER  
+OUTFLOW  
+ALL_3D  
+GENERAL_3D  
+```
+
+Profiles and curtains require only the (x, y) locations of the base of each column to describe their location. Sheets can be referenced to a layer, a height above user datum, a height above bottom, or a height below the free-surface. Drifters are referenced by their drifter number from 1 to `n_drifters`. `OUTFLOW` outputs total flow and average scalar concentrations for flow out of the domain. Outflows are referred to by their bc reference number in `bc.dat`. `ALL_3D` simply outputs all points in the domain, and `GENERAL_3D` at points whose coordinates are individually specified.
+
+A set description block contains 16 lines, which are as follows:
+
+| Line | Description |
+|------|-------------|
+| 1 | `BEGIN SET_DESCRIPTION` — begin set statement |
+| 2 | Set reference number — an integer labelling the set, this can have any value |
+| 3 | User label — a name containing no blank spaces labelling the set |
+| 4 | Type of set — one of the 7 valid set type names described above |
+| 5 | Number of cells in set — varies by set type:<br> - `PROFILE`: number of vertical columns<br> - `CURTAIN2D`: number of columns making up the curtain<br> - `DRIFTER`: number of drifters to output<br> - `OUTFLOW`: number of outflow bc sets to output<br> - `SHEET_2D`, `ALL_3D`: use `0` |
+| 6 | Sheet type — only for `SHEET_2D`. Valid keywords:<br> - `LAYER`: referenced as layer number up from bottom (see `bathymetry.dat`)<br> - `HEIGHT`: height in meters above datum (see `bathymetry.dat`)<br> - `BOTTOM`: meters above bottom<br> - `SURFACE`: meters below free-surface (evolves in time)<br> - `FLAT`: flat calculation layer |
+| 7 | Sheet calc — only for `SHEET_2D`. Valid options:<br> - `NEAREST`: nearest vertical grid point (required for `LAYER`, `HEIGHT`, `BOTTOM`, `SURFACE`)<br> - `MAX`: maximum in column (only with `FLAT`)<br> - `MIN`: minimum in column (only with `FLAT`)<br> - `AVG`: average in column (only with `FLAT`)<br> - `TOTAL`: integrated column value (only with `FLAT`) |
+| 8 | Sheet value —<br> - `LAYER`: layer number<br> - `HEIGHT`, `BOTTOM`, `SURFACE`: vertical distance in meters<br> - `FLAT`: use `0` |
+| 9–16 | Not implemented, do not modify |
+
+
+#### 4 Group data types
+
+This block begins with the desired number of data types, followed by a listing of the desired data types.
+
+| Line | Description |
+|------|-------------|
+| 1 | `BEGIN GROUP_DATA_TYPES` — Begin data type description |
+| 2 | Group reference number — An integer referencing the group number defined in the group description |
+| 3–n | Data types — One data type descriptor per line. The possible data type descriptors are: |
+
+```
+<TEMPERATURE>
+<SALINITY>
+U_VELOCITY
+V_VELOCITY
+W_VELOCITY
+DENSITY
+EXTINCTION
+F_PRESSURE
+T_PRESSURE
+RI
+SHEAR
+MIX_ENERGY
+MIX_FRACTION
+MIX_REGIME
+SHEAR_ENERGY
+WIND_ENERGY
+BBL_ENERGY
+DISSIPATION
+RETENTION_T
+HEIGHT
+SLOPE_X
+SLOPE_Y
+WIND_SPEED
+WIND_DIR
+WIND_U
+WIND_V
+RAIN
+REL_HUM
+LW_RAD_IN
+LW_RAD_NET
+SOLAR_RAD
+ATM_PRESS
+CLOUDS
+AIR_TEMP
+AUX_1
+AUX_2
+AUX_3
+AUX_4
+AUX_5
+EVAP_VOL_FLUX
+EVAP_MASS_FLUX
+EVAP_HEAT_FLUX
+SENS_HEAT_FLUX
+HUMIDITY_ALT
+HUMIDITY_SURF
+C_WIND
+C_HEAT
+```
+
+**Underflow Variables**:
+
+```
+<SCALAR>_UND
+H_UND
+U_UND
+V_UND
+DENSITY_UND
+PRESSURE_UND
+E_COEFF_UND
+RI_UND
+E_VOLUME_UND
+E_VEL_XS_UND
+XP_F_UND_INDEX
+YP_F_UND_INDEX
+XN_F_UND_INDEX
+YN_F_UND_INDEX
+```
+
+For `DRIFTER` set types the value output is the value at the location of the bottom of the drifter.
+
+For `OUTFLOW` set types the scalar value output is the average value for the total flow out.  
+**Note:** Scalar is actually estimated using a first-order upwind scheme rather than the actual ULTIMATE-QUICKEST flux values.
+
+
+### 5 Group Time List
+
+This block is required to initialize a time stamp for each group. It requires only two lines as follows:
+
+| Line | Description |
+|------|-------------|
+| 1 | `BEGIN GROUP_TIME_LIST` — Begin group time list |
+| 2 | Group reference number — An integer referencing the group number defined in the group description |
+
+---
+
+### 6 Set Cell Data
+
+This block describes the spatial location of each datablock set. The locations are described as row, column, and/or layer number.
+
+| Line | Description |
+|------|-------------|
+| 1 | `BEGIN SET_CELL_DATA` — Begin set cell data |
+| 2 | Set reference number — An integer referencing the set number defined in the set description |
+| 3–n | Cell locations — This input varies for different set types as follows: |
+
+**Set type-specific input formats:**
+
+- `PROFILE`:  
+  Each profile requires a row of input. Each row requires 4 integers:  
+  `x-row`, `y-column`, `0`, `0`
+
+- `CURTAIN_2D`:  
+  Each profile making up the curtain requires a row of input. Each row requires 4 integers:  
+  `x-row`, `y-column`, `0`, `0`
+
+- `SHEET_2D`:  
+  No input required.
+
+- `DRIFTER`:  
+  The drifters to be output. Each row requires 4 integers:  
+  `drifter number`, `0`, `0`, `0`
+
+- `OUTFLOW`:  
+  The bc sets to be output. Each row requires 4 integers:  
+  `bcset number (from bc.dat)`, `0`, `0`, `0`
+
+- `ALL_3D`:  
+  No input required.
+
+- `GENERAL_3D`:  
+  Each point requires a row of input. Each row requires 3 integers:  
+  `x-row`, `y-column`, `z-layer`
+
+## Running ELCOM {#sect:runexe}
+
+ELCOM is executed at the command line by typing `elcom.exe` within the directory *where the `run_elcom.dat` and all the appropriate input data files* are located. The monitoring/debugging output is sent to the standard output of the computer (the display terminal on most computers). Unless the simulation run is very short, it is recommended that the user redirect the output to a file with a execution redirection such as:
+
+```
+elcom.exe >& run_output.txt
+```
+
+### Post-Processing {#sect:postproc}
+
+#### Conversion of datablock file to NETCDF
+
+The datablock output files are named and configured through the `datablock.db` file. ELCOM produces Fortran unformatted (binary) files as specified by the datablock output configuration. In general, one datablock output file contains one or more data types (e.g. velocity, temperature) applied to a set of points at a specified time interval. These files can be reprocessed into NETCDF files using the command-line program `dbconv.exe`.
+
+The program `dbconv.exe` is used for converting datablock unformatted binary files created by ELCOM to NETCDF files which can then be processed and viewed in a program such as Matlab. The `dbconv.exe` executable should be placed either in the working directory or as recommended in the `/bin` directory which is in the operating system's search path. `dbconv` is run through a configuration file called `run_dbconv.dat`.
+
+The `run_dbconv.dat` file contains 9 lines as follows:
+
+```
+ Comment line, up to 64 characters
+ .unf file name and path
+ sparsedata.unf file name and path
+ .nc netcdf output file name and path
+ Start time step, -1 for beginning
+ End time step, -1 for end of file
+ Overwriting of .nc file? -  clobber for overwriting, no_clobber for no overwriting
+ Output mapping info to text file? -  map for writing, no_map for no overwriting
+ Output diagnosics to monitor?  -  echo to output to monitor, no_echo to not output to monitor
+```
+
+An example `run_dbconv.dat` file would be:
+
+```
+ Example dbconv
+ unfiles/curtain.unf
+ infiles/sparsedata.unf
+ ncfiles/curtain.nc
+ -1
+ -1
+ clobber
+ no_map
+ no_echo
+```
+
+Once the `run_dbconv.dat` file is correctly configured, `dbconv` can be executed at the command line by typing:
+
+```
+dbconv.exe run_dbconv.dat
+```
+
+**Notes:**
+
+- `run_dbconv.dat` can have any file name, however the correct file name must be invoked at run time.
+- The `run_dbconv.dat` can only be configured for one file at a time.
+
+For batch processing of several `.unf` files, it is recommended that a `run_dbconv.dat` file be created for each `.unf` to be converted and `dbconv.exe` be invoked for each `run_dbconv.dat` using a batch file.
+
+## Save and Restart output files
+
+Save and Restart output files are Fortran unformatted (binary) files that contain run configuration information used to allow the user to restart ELCOM runs from a certain point. As described in the `run_elcom.dat` section, the kernel name and output frequency of save and restart files are defined in the `run_elcom.dat` file.
+
+The save files are created starting at the time step specified by the value assigned to the `run_elcom.dat` keyword `start_output_save`, and subsequently at intervals defined by `iter_out_save`. The file name of the save files begins with the user-specified kernel, given by `restart_save_file`, appended by a time stamp, and appended by `.unf`.
+
+The restart files are created at intervals defined by `iter_out_restart`, starting from the first time step. Subsequent restart files overwrite existing restart files. The file name of the restart files begins with the user-specified kernel, given by `restart_out_file`, appended by `.unf`. All start and restart files are written in the outfiles directory specified in the `run_elcom.dat` file.
+
+To restart an ELCOM simulation using a save or restart file, the user must place a copy of the desired save or restart file in the infiles directory as specified in the `run_elcom.dat` file. In the `run_elcom.dat` file the name of the desired save or restart file must be assigned to the `restart_infile` keyword, and keyword `irestart` must be assigned the value `1`.
+
+## Culvert Outputs - Dynamic Boundary Conditions
+
+In the current implementation, the flow rates and scalars calculated for each pipe in each of the pairs of dynamic boundary condition sets are output to an `ASCII` file located in the `outfile_txt_dir` directory.
+
+The output files are named `culvert_bcset_[$set$].out`, where `$set$` is each of the dynamic boundary condition sets present in the simulation.
+
+The format of the files is as follows. 16 header lines explain the format of the file.
+
+```
+ % number of pipes in set = n (repeats n times)
+ % set ref 1 (repeats n times)
+ % set ref 2 (repeats n times)
+ % pipe heights 1 to n
+ % pipe diameters 1 to n
+ % number of scalars (repeats n times)
+ % names of scalars (repeats n times)
+ % Then, for each time step
+ % time step (repeats n times)
+ % height set upstream
+ % height set downstream (repeats n times)
+ % total flow (repeats n times)
+ % shift in set (repeats n times)
+ % regime pipe 1 to n
+ % flow pipe 1 to n
+ % each scalars flowing through the culverts (repeats n times)
+```
+
+The percentage symbols at the beginning of each text line were used to make it easier to load the numeric data into a Matlab environment.
+
+The next 7 lines give the set and pipe information.
+
+- **First line** gives the number of pipes (`n`) in the dynamic boundary condition output set. The information repeats `n` times for easier loading into Matlab.
+- **Second line** gives the first defined set reference number in the dynamic boundary condition output set `ref 1`. The information repeats `n` times.
+- **Third line** gives the second defined set reference number in the dynamic boundary condition output set `ref 2`. The information repeats `n` times.
+- **Fourth line** gives the bottom height for each of the pipes in the boundary condition set.
+- **Fifth line** gives the pipe diameter for each of the pipes in the dynamic boundary condition output set.
+- **Sixth line** gives the number of transportable scalars used in the simulation. The information repeats `n` times.
+- **Seventh line** gives the names of transportable scalars used in the simulation. The information repeats `n` times and the line is preceded by a percentage symbol.
+
+Then, for each time step in the simulation, `7 + number of scalars` lines are output.
+
+- **First line** gives the time step of the output `t`. The information repeats `n` times.
+
+```
+ % flow pipe 1 to n
+ % each scalar flowing through the culverts (repeats n times)
+```
+
+- **Second line** gives the water height in the upstream cell of the dynamic boundary condition set at time step `t`. Repeats `n` times.
+- **Third line** gives the water height in the downstream cell of the dynamic boundary condition set at time step `t`. Repeats `n` times.
+- **Fourth line** gives the sum of the flow in all the pipes in the dynamic boundary condition set at time step `t`. Repeats `n` times.
+- **Fifth line** tells if there was a shift in the direction of the flow. A value `1` means there was a shift (flow is from cells defined in reference set `ref 2` to `ref 1`), and a value `0` means no shift. Repeats `n` times.
+- **Sixth line** gives the flow regime in each of the pipes (see the science manual for a description of flow regimes).
+- **Seventh line** gives the flow in each of the pipes.
+
+Then, `number of scalars` lines are output for each of the transportable scalars defined in the header.
+
+## ELCOM Valid Scalars {#tab:validScalars}
+
+| Scalar Keyword      | Units     | Description                                                                 |
+|---------------------|-----------|-----------------------------------------------------------------------------|
+| `SALINITY`          | PSU       | salinity (*practical salinity units which can be treated as parts per thousand within the numerical resolution of the model*) |
+| `WTR_TEMP`          | degC      | water temperature for inflowing water                                      |
+| `TRACER_1` - `TRACER_10` | concentration | tracer input                                                          |
+| `<CAEDYM>`          | concentration | CAEDYM Scalars                                                        |
+

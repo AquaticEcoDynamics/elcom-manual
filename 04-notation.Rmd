@@ -1,0 +1,4 @@
+# Notation {#notation}
+
+Table \@ref(tab:var-notation) shows the variable notation used throughout. 
+

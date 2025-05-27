@@ -1,0 +1,57 @@
+# Introduction {#intro}
+
+## The ELCOM model
+
+ELCOM (Estuary and Lake Computer Model) is a numerical modeling tool that applies hydrodynamic and thermodynamic models to simulate the temporal behavior of stratified water bodies with environmental forcing.  
+
+The hydrodynamic simulation method solves the unsteady, viscous Navier-Stokes equations for incompressible flow using the hydrostatic assumption for pressure. Modeled and simulated processes include baroclinic and barotropic responses, rotational effects, tidal forcing, wind stresses, surface thermal forcing, inflows, outflows, and transport of salt, heat and passive scalars.  
+
+Through coupling with the CAEDYM (Computational Aquatic Ecosystem DYnamics Model) water quality module, ELCOM can be used to simulate three-dimensional transport and interactions of flow physics, biology and chemistry.  
+
+The hydrodynamic algorithms in ELCOM are based on the Euler-Lagrange method for advection of momentum with a conjugate-gradient solution for the free-surface height (Casulli and Cheng, 1992). Passive and active scalars (i.e., tracers, salinity and temperature) are advected using a conservative ULTIMATE QUICKEST discretization (Leonard 1991).
+
+## Implementation language
+
+ELCOM is implemented in Fortran 90 (with F95 extensions) so that three-dimensional space can be mapped into a single vector for fast operation using array-processing techniques.  
+
+Only the computational cells that contain water are represented in the single vector so that memory usage is minimized. This allows Fortran 90 compiler parallelization and vectorization without platform-specific modification of the code. A future extension of ELCOM will include dynamic pressure effects to account for nonlinear dynamics of internal waves that may be lost due to the hydrostatic approximation.
+
+## Outline of a simulation run
+
+Setting up and running an ELCOM simulation requires the following steps:
+
+1. Prepare `bathymetry.dat` file that provides topography and grid information (see [Section \@ref(sect:bathFile)]),
+2. Prepare `bc.dat` file that designates sets of cells for applying boundary conditions (see [Section \@ref(sect:bcFile)]),
+3. Prepare `levee.dat` file that designates sets of cells for levee boundary conditions (see [Section \@ref(sect:leveeFile)]),
+4. Prepare `update.dat` file that designates sets of cells for update boundary conditions (see [Section \@ref(sect:updateFile)]),
+5. Run the pre-processor to produce `sparsedata.unf` and `usedata.unf` files,
+6. Configure the simulation `run_elcom` file (see [Section \@ref(sect:runelcom.dat)]),
+7. Specify output in a datablock file (`*.db`) for designating data output operations (see [Section \@ref(sect:datablock)]),
+8. Prepare temporal boundary condition files (`*.dat`) for data applied to the boundary condition cells (see [Section \@ref(sect:tempBCfiles)]),
+9. Prepare initial conditions files (see [Section \@ref(sect:initfiles)]),
+10. Run the executable, directing the screen output to a file (see [Section \@ref(sect:runexe)]),
+11. Post-process data (see [Section \@ref(sect:postproc)]).
+
+## Conventions and definitions
+
+In this document, a number of conventions will be used. For clarity, the computational domain will generally be referred to as a "lake". However, the simulation method is designed for applicability to estuaries and coastal ocean environments.
+
+\vspace{3mm}
+
+| Term              | Definition                                                                 |
+|-------------------|-----------------------------------------------------------------------------|
+| *x,y,z* space     | Full Cartesian space which covers all of the bathymetry                    |
+| *i,j,k* space     | Discrete integer space of computational cells which covers all bathymetry  |
+| land              | A computational cell that cannot contain water                             |
+| open              | A cell used for an open boundary condition                                 |
+| interior          | A cell that may contain water                                               |
+| x\_rows           | Number of grid cells in the x direction                                     |
+| y\_columns        | Number of grid cells in the y direction                                     |
+| z\_layers         | Number of grid cells in the vertical (z) direction                          |
+| land\_value       | Number used in the bathymetry file to represent land cells                 |
+| open\_value       | Number used in the bathymetry file to represent open boundary cells        |
+| dx, dy, dz        | Grid spacing in x, y, z directions (can be uniform or non-uniform, in meters) |
+
+
+
+
