@@ -8,7 +8,7 @@
 
 <meta name="description" content="This is a draft of the ELCOM manual.">
 
-<title>References – ELCOM Manual</title>
+<title>3&nbsp; Governing Hydrodynamic Equations and Models – ELCOM Manual</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,26 +21,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -50,7 +31,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./05-application.html" rel="prev">
+<link href="./sci-timestep.html" rel="next">
+<link href="./sci-intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -90,6 +72,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -102,7 +113,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">References</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sci-intro.html">Science Description</a></li><li class="breadcrumb-item"><a href="./sci-goveqns.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Governing Hydrodynamic Equations and Models</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -167,7 +178,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sci-goveqns.html" class="sidebar-item-text sidebar-link">
+  <a href="./sci-goveqns.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Governing Hydrodynamic Equations and Models</span></span></a>
   </div>
 </li>
@@ -263,7 +274,7 @@ div.csl-indent {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link active">
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -278,9 +289,9 @@ div.csl-indent {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sci-intro.html">Science Description</a></li><li class="breadcrumb-item"><a href="./sci-goveqns.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Governing Hydrodynamic Equations and Models</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">References</h1>
+<h1 class="title"><span id="sec-goveqns" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Governing Hydrodynamic Equations and Models</span></span></h1>
 </div>
 
 
@@ -297,153 +308,51 @@ div.csl-indent {
 </header>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-Alkh86" class="csl-entry" role="listitem">
-Al-Khafaji, A. W., and J. R. Tooley. 1986. <em>Numerical Methods in
-Engineering Practice</em>. Holt, Reinhart; Winston, Inc.
-</div>
-<div id="ref-Amor80" class="csl-entry" role="listitem">
-Amorocho, J., and J. J. Devries. 1980. <span>“A New Evaluation of the
-Wind Stress Coefficient over Water Surfaces.”</span> <em>J. Geophys.
-Res.</em> 85: 433–42.
-</div>
-<div id="ref-Brad99" class="csl-entry" role="listitem">
-Bradford, S. F., and N. D. Katapodes. 1999. <span>“Hydrodynamics of
-Turbid Underflows. <span>I</span>: Formulation and Numerical
-Analysis.”</span> <em>J. Hydraul. Eng.</em> 125 (10): 1006–15.
-</div>
-<div id="ref-Casu94" class="csl-entry" role="listitem">
-Casulli, V., and F. C. Cattani. 1994. <span>“Stability, Accuracy and
-Efficiency of a Semi-Implicit Method for Three-Dimensional Shallow Water
-Flow.”</span> <em>Comput. Math. Applic.</em> 27: 99–112.
-</div>
-<div id="ref-Casu92" class="csl-entry" role="listitem">
-Casulli, V., and R. T. Cheng. 1992. <span>“Semi-Implicit Finite
-Difference Methods for Three-Dimensional Shallow Water Flow.”</span>
-<em>Int. J. Numer. Methods Fluids</em> 15: 629–48.
-</div>
-<div id="ref-Dall01" class="csl-entry" role="listitem">
-Dallimore, C. J., J. Imberger, and T. Ishikawa. 2001. <span>“Entrainment
-and Turbulence in Saline Underflow in <span>Lake Ogawara</span>.”</span>
-<em>J. Hydraul. Eng.</em> 127 (11): 937–48.
-</div>
-<div id="ref-Elli59" class="csl-entry" role="listitem">
-Ellison, T. H., and J. S. Turner. 1959. <span>“Turbulent Entrainment in
-Stratified Flows.”</span> <em>J. Fluid Mech.</em> 6: 423–48.
-</div>
-<div id="ref-Fisc79" class="csl-entry" role="listitem">
-Fischer, H. B., E. G. List, R. C. Y. Koh, J. Imberger, and N. H. Brooks.
-1979. <em>Mixing in Inland and Coastal Waters</em>. Academic Press.
-</div>
-<div id="ref-Fozd85" class="csl-entry" role="listitem">
-Fozdar, F. M., G. J. Parker, and J. Imberger. 1985. <span>“Matching
-Temperature and Conductivity Sensor Response Characteristics.”</span>
-<em>J. Phys. Oceanogr.</em> 15 (11): 1157–1569.
-</div>
-<div id="ref-Glor95" class="csl-entry" role="listitem">
-Glorioso, P. D., and A. M. Davies. 1995. <span>“The Influence of Eddy
-Viscosity Formulation, Bottom Topography and Wind Wave Effects Upon the
-Circulation of a Shallow Bay.”</span> <em>J. Phys. Oceanogr.</em> 25:
-1243–64.
-</div>
-<div id="ref-Gros98" class="csl-entry" role="listitem">
-Gross, E. S., V. Casulli, L. Bonaventura, and J. R. Koseff. 1998.
-<span>“A Semi-Implicit Method for Vertical Transport in
-Multi-Dimensional Models.”</span> <em>Numer. Methods Fluids</em> 28:
-157–86.
-</div>
-<div id="ref-Hend86" class="csl-entry" role="listitem">
-Henderson-Sellers, B. 1986. <span>“Calculating the Surface Energy
-Balance for Lake and Reservoir Modelling: A Review.”</span> <em>Reviews
-of Geophysics</em> 24 (3): 625–49.
-</div>
-<div id="ref-Hick75" class="csl-entry" role="listitem">
-Hicks, B. B. 1975. <span>“A Procedure for the Formulation of Bulk
-Transfer Coefficients over Water.”</span> <em>Boundary Layer
-Meteorology</em> 8: 315–24.
-</div>
-<div id="ref-Hodg99" class="csl-entry" role="listitem">
-Hodges, B. R., and R. L. Street. 1999. <span>“On Simulation of Turbulent
-Nonlinear Free-Surface Flows.”</span> <em>J. Comp. Phys.</em> 151:
-425–57.
-</div>
-<div id="ref-Imbe81" class="csl-entry" role="listitem">
-Imberger, J., and J. C. Patterson. 1981. <span>“A Dynamic Reservoir
-Simulation Model – <span>DYRESM</span> 5.”</span> In <em>Transport
-Models for Inland and Coastal Waters</em>, edited by H. Fischer, 310–61.
-Academic Press.
-</div>
-<div id="ref-Imbe90" class="csl-entry" role="listitem">
-———. 1990. <span>“Physical Limnology.”</span> In <em>Adv. Appl.
-Mech.</em>, 27:303–475.
-</div>
-<div id="ref-Iser96" class="csl-entry" role="listitem">
-Iserles, A. 1996. <span>“Biorthogonal Polynomials: Recent
-Developments.”</span> <em>Numerical Algorithms</em> 11: 215–28.
-</div>
-<div id="ref-Jacq83" class="csl-entry" role="listitem">
-Jacquet, J. 1983. <span>“Simulation of the Thermal Regime of
-Rivers.”</span> In <em>Mathematical Modeling of Water Quality: Streams,
-Lakes and Reservoirs</em>, edited by G. T. Orlob. Wiley-Interscience.
-</div>
-<div id="ref-Kowa93" class="csl-entry" role="listitem">
-Kowalik, Z., and T. S. Murty. 1993. <em>Numerical Modeling of Ocean
-Dynamics</em>. World Scientific.
-</div>
-<div id="ref-Leon91" class="csl-entry" role="listitem">
-Leonard, B. P. 1991. <span>“The <span>ULTIMATE</span> Conservative
-Difference Scheme Applied to Unsteady One-Dimensional Advection.”</span>
-<em>Comp. Meth. In Applied Mech. And Eng.</em> 88: 17–74.
-</div>
-<div id="ref-Lin97" class="csl-entry" role="listitem">
-Lin, B., and R. A. Falconer. 1997. <span>“Tidal Flow and Transport
-Modeling Using <span>ULTIMATE QUICKEST</span> Scheme.”</span> <em>J.
-Hydraul. Eng.</em> 123 (4): 303–14.
-</div>
-<div id="ref-Mart85" class="csl-entry" role="listitem">
-Martin, P. J. 1985. <span>“Simulation of the Mixed Layer at
-<span>OWS</span> November and Papa with Several Models.”</span> <em>J.
-Geophys. Res.</em> 90: 903–16.
-</div>
-<div id="ref-Roe81" class="csl-entry" role="listitem">
-Roe, P. L. 1981. <span>“Approximate <span>Riemann</span> Solvers,
-Parameter Vectors, and Difference Schemes.”</span> <em>J. Computat.
-Phys.</em> 43: 357–72.
-</div>
-<div id="ref-Smol92" class="csl-entry" role="listitem">
-Smolarkiewicz, P. K., and J. A. Pudykiewicz. 1992. <span>“A Class of
-Semi-<span>Lagrangian</span> Approximations for Fluids.”</span> <em>J.
-Atmos. Sci.</em> 49: 2082–96.
-</div>
-<div id="ref-Spig86" class="csl-entry" role="listitem">
-Spigel, R. H., J. Imberger, and K. N. Rayner. 1986. <span>“Modeling the
-Diurnal Mixed Layer.”</span> <em>Limnol. Oceanogr.</em> 31: 533–56.
-</div>
-<div id="ref-Stan91" class="csl-entry" role="listitem">
-Staniforth, A., and J. Cote. 1991. <span>“Semi-<span>Lagrangian</span>
-Integration Schemes for Atmospheric Models – a Review.”</span>
-<em>Monthly Weather Review</em> 119 (9): 2206–23.
-</div>
-<div id="ref-Swin63" class="csl-entry" role="listitem">
-Swinbank, W. C. 1963. <span>“Longwave Radiation from Clear
-Skies.”</span> <em>Quarterly Journal of the Royal Meteorological
-Society</em> 89: 339–48.
-</div>
-<div id="ref-Tenn72" class="csl-entry" role="listitem">
-Tennessee Valley Authority. 1972. <span>“Heat and Mass Transfer Between
-a Water Surface and the Atmosphere.”</span> Report 14, Report No.
-0-6803. Water Resources Research Laboratory.
-</div>
-<div id="ref-Wall77" class="csl-entry" role="listitem">
-Wallace, J. M., and P. V. Hobbs. 1977. <em>Atmospheric Science: An
-Introductory Survey</em>. Academic Press.
-</div>
-<div id="ref-Wint95" class="csl-entry" role="listitem">
-Winters, K. B., P. N. Lombard, J. J. Riley, and E. D’Asaro. 1995.
-<span>“Available Potential Energy and Mixing in Density-Stratified
-Fluids.”</span> <em>J. Fluid Mech.</em> 289: 115–28.
-</div>
-</div>
+<p>The governing equations and fundamental models used for three-dimensional transport and surface thermodynamics in ELCOM are summarized below. The transport equations are the unsteady Reynolds-averaged Navier-Stokes (RANS) and scalar transport equations using the Boussinesq approximation and neglecting the non-hydrostatic pressure terms. The free surface evolution is governed by an evolution equation developed by a vertical integration of the continuity equation applied to the Reynolds-averaged kinematic boundary condition.</p>
+<p>The equations in the table are:</p>
+<p><em>Transport of Momentum:</em> <span id="eq-momentum"><span class="math display">\[
+\frac{\partial U_\alpha}{\partial t}+U_j\frac{\partial U_\alpha}{\partial x_j}=-g\left\{ \frac{\partial \eta}{\partial x_\alpha} + \frac{1}{\rho_0}\frac{\partial}{\partial x_a} \int_z^\eta \rho^\prime dz \right\}+\frac{\partial}{\partial x_1} \left\{ \nu_1\frac{\partial U_\alpha}{\partial x_1}\right\}+\frac{\partial}{\partial x_2} \left\{ \nu_2\frac{\partial U_\alpha}{\partial x_2}\right\}+\frac{\partial}{\partial x_3} \left\{ \nu_3\frac{\partial U_\alpha}{\partial x_3}\right\}-\epsilon_{\alpha\beta}fU_\beta
+\tag{3.1}\]</span></span></p>
+<p><em>Continuity:</em> <span id="eq-continuity"><span class="math display">\[
+\frac{\partial U_j}{\partial x_j}=0
+\tag{3.2}\]</span></span></p>
+<p><em>Momentum Boundary Conditions - Free Surface:</em> <span id="eq-freeSurfBC"><span class="math display">\[
+\frac{\partial U_\alpha}{\partial x_3}=0
+\tag{3.3}\]</span></span></p>
+<p><em>Momentum Boundary Conditions - Bottom and Sides:</em> <span id="eq-botSidesBC"><span class="math display">\[
+U_i=0
+\tag{3.4}\]</span></span></p>
+<p><em>Transport of Scalars:</em> <span id="eq-transportScalars"><span class="math display">\[
+\frac{\partial C}{\partial t}+\frac{\partial }{\partial x_j}(CU_j)=\frac{\partial}{\partial x_1} \left\{ \kappa_1\frac{\partial C}{\partial x_1}\right\}+\frac{\partial}{\partial x_2} \left\{ \kappa_2\frac{\partial C}{\partial x_2}\right\}+\frac{\partial}{\partial x_3} \left\{ \kappa_3\frac{\partial C}{\partial x_3}\right\}+S_c
+\tag{3.5}\]</span></span></p>
+<p><em>Scalar Boundary Conditions:</em> <span id="eq-scalarBC"><span class="math display">\[
+\frac{\partial C_\alpha}{\partial x_j}=0
+\tag{3.6}\]</span></span></p>
+<p><em>Free-Surface Evolution:</em> <span id="eq-surfEvol"><span class="math display">\[
+\frac{\partial \eta}{\partial t}=-\frac{\partial }{\partial x_\alpha}\int_0^\eta u_\alpha dz
+\tag{3.7}\]</span></span></p>
+<p><em>Free-Surface wind shear:</em> <span id="eq-surfWind"><span class="math display">\[
+\left ( u_* \right )^2_\alpha=C_{10}\frac{\rho_{air}}{\rho_{water}} \left( W_\beta W_\beta\right)^{1/2}W_\alpha
+\tag{3.8}\]</span></span></p>
+<p><em>Momentum input by wind:</em> <span id="eq-momWind"><span class="math display">\[
+\frac{\partial U_\alpha}{\partial t}=\frac{(U_*)^2_\alpha}{h}
+\tag{3.9}\]</span></span></p>
+<p>: Summary of Governing Hydrodynamic equations used in ELCOM. {#tbl-goveqns}</p>
+<p>The unsteady RANS equations are developed by filtering the unsteady Navier-Stokes equations over a time period that is long relative to sub-grid scale processes, but small relative to the unsteady grid-scale processes that are of interest. In an unsteady RANS numerical method the time scale of the averaging is the time step used in advancement of the evolution equations. Thus, the maximum time step for a given grid resolution is fundamentally limited by the grid scale physics, regardless of the numerical method. This is an important point that is lost when “unconditionally stable” numerical methods are discussed<em>: the stability of the method at a large time step is irrelevant if the size of the time step implies a temporal averaging scale that encompasses grid-scale motions.</em></p>
+<p>In most numerical approaches, the sub-time scale nonlinear terms <span class="math inline">\(\overline{u_i^\prime u_j^\prime}\)</span> are represented by an eddy viscosity <span class="math inline">\(\nu_{jk}\)</span> defined in a tensor form as:</p>
+<p><span class="math display">\[
+\nu_{jk}\frac{\partial u_i}{\partial x_k}=\delta_{jk}\nu\frac{\partial u_i}{\partial x_k}-\overline{u_i^\prime u_j^\prime}
+\]</span></p>
+<p>where <span class="math inline">\(\delta\)</span> is the molecular viscosity, <span class="math inline">\(u_i^\prime\)</span> are the sub-time-scale velocity fluctuations, and the overbar indicates the Reynolds-averaging filter. The off-diagonal eddy-viscosity terms are generally set to zero and the molecular viscosity is ignored so that we obtain:</p>
+<p><span class="math display">\[
+\nu_1\frac{\partial u_i}{\partial x_1}=\overline{u_i^\prime u_1^\prime};\quad \nu_2\frac{\partial u_i}{\partial x_2}=\overline{u_i^\prime u_2^\prime};\quad \nu_3\frac{\partial u_i}{\partial x_3}=\overline{u_i^\prime u_3^\prime}
+\]</span></p>
+<p>In ELCOM, eddy-viscosity is used to represent the horizontal turbulence closure. In the vertical direction, ELCOM can apply either a vertical eddy viscosity or a mixed-layer model discussed in <a href="sci-mixing.html" class="quarto-xref"><span>Chapter 7</span></a>.</p>
+<p>The free-surface evolution is governed by vertical integration of the continuity equation for incompressible flow from the bottom (b) of the water column to the free surface (h) applied to the kinematic boundary condition <span class="citation" data-cites="Kowa93">(e.g. Kowalik and Murty 1993)</span>. To derive the Reynolds-averaged free-surface evolution the Reynolds-averaging filter must be applied to the kinematic boundary condition, resulting in</p>
+<p><span class="math display">\[
+\frac{\partial \eta}{\partial t}=U_3-U_\alpha \frac{\partial \eta}{\partial x_\alpha}-\frac{\partial}{\partial x_\alpha}(\overline{u_\alpha^\prime h^\prime})
+\]</span></p>
+<p>Note that the sub-time scale correlation term <span class="math inline">\((\overline{u_\alpha^\prime h^\prime})\)</span> has not been discussed in the literature as the Reynolds-averaging filter has not been rigorously applied to boundary conditions; the equivalent term in large-eddy simulation is discussed in <span class="citation" data-cites="Hodg99">(Hodges and Street 1999)</span>. The modeling of this term remains an unexplored area of free-surface flows; thus we are forced to assume that it is either small or only of local importance. In the former case it is readily neglected. In the latter case, the present use of implicit discretization of the free-surface solution is numerically diffusive at high barotropic CFL conditions, so local barotropic effects are not well-resolved. Thus, neglecting the subtime-scale nonlinear effects is justified by our focus on basin-scale baroclinic motions. However, we can speculate that the nonlinear correlation <span class="math inline">\((\overline{u_\alpha h_\alpha})\)</span> might be both large and non-local where nonlinear sub-basin-scale surface waves enter shallow or restricted waters. The neglect of this term is predicated on the assumption that sub-time scale nonlinear effects do not significantly effect the local mean free-surface height. In general, this is a good assumption for the resolution typically achieved in simulations of lakes and estuaries, and will be used herein. The free surface boundary condition is an approximate form of the dynamic boundary condition that neglects: dynamic pressure, local horizontal variation of the wind, updrafts, downdrafts and surface tension. This is appropriate for lake simulations using the hydrostatic approximation.</p>
 
 
 
@@ -850,11 +759,14 @@ Fluids.”</span> <em>J. Fluid Mech.</em> 289: 115–28.
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./05-application.html" class="pagination-link" aria-label="Applications">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Applications</span></span>
+      <a href="./sci-intro.html" class="pagination-link" aria-label="Introduction">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./sci-timestep.html" class="pagination-link" aria-label="Timestep limitations">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Timestep limitations</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

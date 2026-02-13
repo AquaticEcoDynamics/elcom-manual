@@ -8,7 +8,7 @@
 
 <meta name="description" content="This is a draft of the ELCOM manual.">
 
-<title>4&nbsp; Surface Thermodynamics – ELCOM Manual</title>
+<title>4&nbsp; Timestep limitations – ELCOM Manual</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,8 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./sci-turbulence.html" rel="next">
-<link href="./sci-transport.html" rel="prev">
+<link href="./sci-method.html" rel="next">
+<link href="./sci-goveqns.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -72,6 +72,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -84,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sci-hydrodynamics.html">Science Description</a></li><li class="breadcrumb-item"><a href="./sci-thermodynamics.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Surface Thermodynamics</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sci-intro.html">Science Description</a></li><li class="breadcrumb-item"><a href="./sci-timestep.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Timestep limitations</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -143,26 +172,56 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sci-hydrodynamics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hydrodynamics</span></span></a>
+  <a href="./sci-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sci-transport.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Transport and Mixing</span></span></a>
+  <a href="./sci-goveqns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Governing Hydrodynamic Equations and Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sci-thermodynamics.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Surface Thermodynamics</span></span></a>
+  <a href="./sci-timestep.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Timestep limitations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sci-turbulence.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Turbulence Closure</span></span></a>
+  <a href="./sci-method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Numerical Method</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-thermo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Surface Thermodynamics and Mass Fluxes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-mixing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Mixing Model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-filter.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Numerical Diffusion Filter</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-underflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Underflow Model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-destrat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Artificial Destratification</span></span></a>
   </div>
 </li>
       </ul>
@@ -179,19 +238,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-pre.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pre-Processor</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Pre-Processor</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-elcom.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">ELCOM Operation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ELCOM Operation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-notation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Notation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Notation</span></span></a>
   </div>
 </li>
       </ul>
@@ -208,7 +267,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-application.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Applications</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Applications</span></span></a>
   </div>
 </li>
       </ul>
@@ -224,25 +283,15 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#surface-heat-budget" id="toc-surface-heat-budget" class="nav-link active" data-scroll-target="#surface-heat-budget"><span class="header-section-number">4.1</span> Surface Heat Budget</a></li>
-  <li><a href="#shortwave-radiation" id="toc-shortwave-radiation" class="nav-link" data-scroll-target="#shortwave-radiation"><span class="header-section-number">4.2</span> Shortwave Radiation</a></li>
-  <li><a href="#longwave-radiation" id="toc-longwave-radiation" class="nav-link" data-scroll-target="#longwave-radiation"><span class="header-section-number">4.3</span> Longwave Radiation</a></li>
-  <li><a href="#latent-and-sensible-heat-fluxes" id="toc-latent-and-sensible-heat-fluxes" class="nav-link" data-scroll-target="#latent-and-sensible-heat-fluxes"><span class="header-section-number">4.4</span> Latent and Sensible Heat Fluxes</a></li>
-  <li><a href="#equation-of-state" id="toc-equation-of-state" class="nav-link" data-scroll-target="#equation-of-state"><span class="header-section-number">4.5</span> Equation of State</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sci-hydrodynamics.html">Science Description</a></li><li class="breadcrumb-item"><a href="./sci-thermodynamics.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Surface Thermodynamics</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sci-intro.html">Science Description</a></li><li class="breadcrumb-item"><a href="./sci-timestep.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Timestep limitations</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-sci-thermo" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Surface Thermodynamics</span></span></h1>
+<h1 class="title"><span id="sec-timestep" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Timestep limitations</span></span></h1>
 </div>
 
 
@@ -259,29 +308,29 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="surface-heat-budget" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="surface-heat-budget"><span class="header-section-number">4.1</span> Surface Heat Budget</h2>
-<p><em>Content to be added.</em></p>
-<p>The surface thermodynamics module computes the heat exchange across the air-water interface. This chapter describes the components of the surface heat budget and their parameterization.</p>
-</section>
-<section id="shortwave-radiation" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="shortwave-radiation"><span class="header-section-number">4.2</span> Shortwave Radiation</h2>
-<p><em>Content to be added.</em></p>
-</section>
-<section id="longwave-radiation" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="longwave-radiation"><span class="header-section-number">4.3</span> Longwave Radiation</h2>
-<p><em>Content to be added.</em></p>
-</section>
-<section id="latent-and-sensible-heat-fluxes" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="latent-and-sensible-heat-fluxes"><span class="header-section-number">4.4</span> Latent and Sensible Heat Fluxes</h2>
-<p><em>Content to be added.</em></p>
-</section>
-<section id="equation-of-state" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="equation-of-state"><span class="header-section-number">4.5</span> Equation of State</h2>
-<p><em>Content to be added.</em></p>
+<p>Both TRIM and ELCOM are unconditionally stable for purely barotropic flows; that is, they will produce stable numerical results for any size of time step. However, for stratified flows, both methods use explicit discretization of the baroclinic terms in the momentum equation leading to a time step constraint based on the internal wave Courant-Friedrichs-Lewy condition (<span class="math inline">\(CFL\)</span>) such that</p>
+<p><span class="math display">\[
+(g^\prime D)^{1/2}\frac{\Delta t}{\Delta x}&lt;\sqrt{2}
+\]</span></p>
+<p>is required. The left-hand side is defined as the baroclinic <span class="math inline">\(CFL\)</span> number (<span class="math inline">\(CFL_b\)</span>), where <span class="math inline">\(g^\prime\)</span> is the reduced gravity due to stratification, the effective depth is <span class="math inline">\(D\)</span>, <span class="math inline">\(\sqrt{g^\prime D}\)</span> is an approximation of the wave speed of an internal wave. This baroclinic stability condition is generally the most restrictive condition in a density-stratified flow. The importance of the internal wave speed can be seen in a simple scaling analysis: Typical lake stratifications provide a modified gravity of <span class="math inline">\(g^\prime \sim O (10^{-2})\)</span> m s<span class="math inline">\(^{-2}\)</span> while lake depths <span class="math inline">\(D\)</span> are <span class="math inline">\(O(10)\)</span> m to <span class="math inline">\(O(10^2)\)</span> m. Internal waves propagate at <span class="math inline">\(C \sim \sqrt{g^\prime D}\)</span>, giving wave speeds of <span class="math inline">\(O(1)\)</span> m s<span class="math inline">\(^{-1}\)</span>. Maximum horizontal water velocities in a lake are typically <span class="math inline">\(O(10^{-1})\)</span> m s<span class="math inline">\(^{-1}\)</span>, and the desired horizontal grid size is <span class="math inline">\(O (10^{2})\)</span> m.</p>
+<p>The maximum allowable time step for a limiting <span class="math inline">\(CFL\)</span> condition is:</p>
+<p><span class="math display">\[
+\Delta t &lt; \frac{CFL\Delta x}{U}
+\]</span></p>
+<p>If <span class="math inline">\(U\)</span> is taken as the horizontal water velocity, the maximum allowable time step for a limiting <span class="math inline">\(CFL\)</span> of one is <span class="math inline">\(O(10^{3})\)</span> s. If <span class="math inline">\(U\)</span> is taken as the internal wave speed, the maximum allowable time step for a limiting <span class="math inline">\(CFL\)</span> of one is <span class="math inline">\(O (10^{2})\)</span> s. Thus, in the horizontal direction, the internal wave speed rather than the flow velocity controls the maximum allowable time step and high <span class="math inline">\(CFL\)</span> capability in the horizontal direction is generally unnecessary. However, in the vertical direction, there is a definite advantage to a numerical scheme that is stable for <span class="math inline">\(CFL &gt; 1\)</span>. Practical vertical grid resolutions are typically <span class="math inline">\(O(10^{-1})\)</span> m to <span class="math inline">\(O(10)\)</span> m depending on the lake morphology and available computational power. Internal wave motions can produce vertical velocities of <span class="math inline">\(O(10^{-2})\)</span> m s<span class="math inline">\(^{-1}\)</span>, so fine grid resolutions with a <span class="math inline">\(CFL\)</span> limit of one can result in an unacceptable time step limitations of <span class="math inline">\(O(10)\)</span> s.</p>
+<p>Scalar transport in ELCOM uses an explicit approach has an advective Courant-Friedrichs-Lewy condition (<span class="math inline">\(CFL_{a}\)</span>) such that <span class="math inline">\(u \frac{\Delta t}{\delta x} &lt; 1\)</span> is required. This condition does not effect the time step of the momentum solution (<span class="math inline">\(\Delta t\)</span>), but instead is used to compute sub-time step (<span class="math inline">\(\Delta t\)</span>) for the scalar transport solution. The implicit scheme of <span class="citation" data-cites="Gros98">(Gross et al. 1998)</span> does not have <span class="math inline">\(CFL\)</span> limitation for vertical velocity and is therefore preferable where fine grid resolution is used in the vertical direction and high vertical <span class="math inline">\(CFL\)</span> values are expected. At coarse vertical grid resolutions (low vertical <span class="math inline">\(CFL\)</span> values) the present explicit approach should prove more computationally efficient.</p>
+<p>A final stability constraint for semi-implicit schemes with explicit horizontal diffusion (e.g.&nbsp;TRIM and ELCOM) is the viscous stability condition (derived for homogenous flows in <span class="citation" data-cites="Casu92">(Casulli and Cheng 1992)</span>)</p>
+<p><span class="math display">\[
+\Delta t \leq \frac{\Delta x^2 \Delta y^2}{2\nu (\Delta x^2 + \Delta y^2)}
+\]</span></p>
+<p>This is typically at least an order of magnitude less restrictive than the baroclinic stability condition.</p>
+<p>A constraint that becomes important when using large time step in a geophysical model is whether the velocity field can be considered Lipschitz at the grid and time scales applied: i.e.&nbsp;is the field sufficiently smooth for a numerical approximation <span class="citation" data-cites="Iser96">(Iserles 1996)</span>. In <span class="citation" data-cites="Smol92">(Smolarkiewicz and Pudykiewicz 1992)</span> the numerical Lipschitz constant <span class="math inline">\(B\)</span> is defined with the condition that it must be less than unity:</p>
+<p><span class="math display">\[
+B=\left | \left | \frac{\partial \nu}{dx} \right | \right |\Delta t &lt; 1
+\]</span></p>
+<p>This was demonstrated to be a necessary condition in a multi-time-level semi-Lagrangian method to prevent trajectories from intersecting as they are traced back in time and space. While the present Euler-Lagrange method tracks trajectories back only in space, the above Lipschitz condition heuristically applies as a fundamental statement of the necessary behavior of the velocity field to allow reasonable approximation by a numerical model. As demonstrated in <span class="citation" data-cites="Smol92">(Smolarkiewicz and Pudykiewicz 1992)</span>, a numerical method may remain stable at a high B, but the results will not be accurate. This places a fundamental limit on the allowable time step that may be reasonably used in a model. The importance of this point is that the maximum time step that can be used may be a function of the physics, rather than the stability of the numerical method.</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -686,13 +735,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./sci-transport.html" class="pagination-link" aria-label="Transport and Mixing">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Transport and Mixing</span></span>
+      <a href="./sci-goveqns.html" class="pagination-link" aria-label="Governing Hydrodynamic Equations and Models">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Governing Hydrodynamic Equations and Models</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./sci-turbulence.html" class="pagination-link" aria-label="Turbulence Closure">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Turbulence Closure</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./sci-method.html" class="pagination-link" aria-label="Numerical Method">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Numerical Method</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

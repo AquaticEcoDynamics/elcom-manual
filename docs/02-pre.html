@@ -8,7 +8,7 @@
 
 <meta name="description" content="This is a draft of the ELCOM manual.">
 
-<title>6&nbsp; Pre-Processor – ELCOM Manual</title>
+<title>11&nbsp; Pre-Processor – ELCOM Manual</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,7 +67,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./03-elcom.html" rel="next">
-<link href="./sci-turbulence.html" rel="prev">
+<link href="./sci-destrat.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -148,7 +148,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-pre.html">Using ELCOM</a></li><li class="breadcrumb-item"><a href="./02-pre.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pre-Processor</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-pre.html">Using ELCOM</a></li><li class="breadcrumb-item"><a href="./02-pre.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Pre-Processor</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -207,26 +207,56 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sci-hydrodynamics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hydrodynamics</span></span></a>
+  <a href="./sci-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sci-transport.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Transport and Mixing</span></span></a>
+  <a href="./sci-goveqns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Governing Hydrodynamic Equations and Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sci-thermodynamics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Surface Thermodynamics</span></span></a>
+  <a href="./sci-timestep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Timestep limitations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sci-turbulence.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Turbulence Closure</span></span></a>
+  <a href="./sci-method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Numerical Method</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-thermo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Surface Thermodynamics and Mass Fluxes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-mixing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Mixing Model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-filter.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Numerical Diffusion Filter</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-underflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Underflow Model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-destrat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Artificial Destratification</span></span></a>
   </div>
 </li>
       </ul>
@@ -243,19 +273,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-pre.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pre-Processor</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Pre-Processor</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-elcom.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">ELCOM Operation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ELCOM Operation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-notation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Notation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Notation</span></span></a>
   </div>
 </li>
       </ul>
@@ -272,7 +302,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-application.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Applications</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Applications</span></span></a>
   </div>
 </li>
       </ul>
@@ -293,54 +323,54 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">6.1</span> Introduction</a></li>
-  <li><a href="#sec-bathFile" id="toc-sec-bathFile" class="nav-link" data-scroll-target="#sec-bathFile"><span class="header-section-number">6.2</span> Setting up the bathymetry file (<code>bathymetry.dat</code>)</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">11.1</span> Introduction</a></li>
+  <li><a href="#sec-bathFile" id="toc-sec-bathFile" class="nav-link" data-scroll-target="#sec-bathFile"><span class="header-section-number">11.2</span> Setting up the bathymetry file (<code>bathymetry.dat</code>)</a>
   <ul class="collapse">
-  <li><a href="#introduction-1" id="toc-introduction-1" class="nav-link" data-scroll-target="#introduction-1"><span class="header-section-number">6.2.1</span> Introduction</a></li>
-  <li><a href="#physical-and-computational-space-coordinates" id="toc-physical-and-computational-space-coordinates" class="nav-link" data-scroll-target="#physical-and-computational-space-coordinates"><span class="header-section-number">6.2.2</span> Physical and computational space coordinates</a></li>
-  <li><a href="#file-header" id="toc-file-header" class="nav-link" data-scroll-target="#file-header"><span class="header-section-number">6.2.3</span> File header</a></li>
-  <li><a href="#size-of-input-bathymetry-data" id="toc-size-of-input-bathymetry-data" class="nav-link" data-scroll-target="#size-of-input-bathymetry-data"><span class="header-section-number">6.2.4</span> Size of input bathymetry data</a></li>
-  <li><a href="#land-cells" id="toc-land-cells" class="nav-link" data-scroll-target="#land-cells"><span class="header-section-number">6.2.5</span> Land cells</a></li>
-  <li><a href="#open-boundary-cells" id="toc-open-boundary-cells" class="nav-link" data-scroll-target="#open-boundary-cells"><span class="header-section-number">6.2.6</span> Open boundary cells</a></li>
-  <li><a href="#north-vector" id="toc-north-vector" class="nav-link" data-scroll-target="#north-vector"><span class="header-section-number">6.2.7</span> North vector</a></li>
-  <li><a href="#geographic-position" id="toc-geographic-position" class="nav-link" data-scroll-target="#geographic-position"><span class="header-section-number">6.2.8</span> Geographic position</a></li>
-  <li><a href="#horizontal-grid-spacing" id="toc-horizontal-grid-spacing" class="nav-link" data-scroll-target="#horizontal-grid-spacing"><span class="header-section-number">6.2.9</span> Horizontal grid spacing</a></li>
-  <li><a href="#non-uniform-horizontal-grid-spacing" id="toc-non-uniform-horizontal-grid-spacing" class="nav-link" data-scroll-target="#non-uniform-horizontal-grid-spacing"><span class="header-section-number">6.2.10</span> Non uniform horizontal grid spacing</a></li>
-  <li><a href="#layer-thickness" id="toc-layer-thickness" class="nav-link" data-scroll-target="#layer-thickness"><span class="header-section-number">6.2.11</span> Layer thickness</a></li>
-  <li><a href="#bathymetry-values" id="toc-bathymetry-values" class="nav-link" data-scroll-target="#bathymetry-values"><span class="header-section-number">6.2.12</span> Bathymetry values</a></li>
-  <li><a href="#bottom-drag-values-optional" id="toc-bottom-drag-values-optional" class="nav-link" data-scroll-target="#bottom-drag-values-optional"><span class="header-section-number">6.2.13</span> Bottom drag values (optional)</a></li>
-  <li><a href="#bottom-slope-values-optional" id="toc-bottom-slope-values-optional" class="nav-link" data-scroll-target="#bottom-slope-values-optional"><span class="header-section-number">6.2.14</span> Bottom Slope Values (Optional)</a></li>
+  <li><a href="#introduction-1" id="toc-introduction-1" class="nav-link" data-scroll-target="#introduction-1"><span class="header-section-number">11.2.1</span> Introduction</a></li>
+  <li><a href="#physical-and-computational-space-coordinates" id="toc-physical-and-computational-space-coordinates" class="nav-link" data-scroll-target="#physical-and-computational-space-coordinates"><span class="header-section-number">11.2.2</span> Physical and computational space coordinates</a></li>
+  <li><a href="#file-header" id="toc-file-header" class="nav-link" data-scroll-target="#file-header"><span class="header-section-number">11.2.3</span> File header</a></li>
+  <li><a href="#size-of-input-bathymetry-data" id="toc-size-of-input-bathymetry-data" class="nav-link" data-scroll-target="#size-of-input-bathymetry-data"><span class="header-section-number">11.2.4</span> Size of input bathymetry data</a></li>
+  <li><a href="#land-cells" id="toc-land-cells" class="nav-link" data-scroll-target="#land-cells"><span class="header-section-number">11.2.5</span> Land cells</a></li>
+  <li><a href="#open-boundary-cells" id="toc-open-boundary-cells" class="nav-link" data-scroll-target="#open-boundary-cells"><span class="header-section-number">11.2.6</span> Open boundary cells</a></li>
+  <li><a href="#north-vector" id="toc-north-vector" class="nav-link" data-scroll-target="#north-vector"><span class="header-section-number">11.2.7</span> North vector</a></li>
+  <li><a href="#geographic-position" id="toc-geographic-position" class="nav-link" data-scroll-target="#geographic-position"><span class="header-section-number">11.2.8</span> Geographic position</a></li>
+  <li><a href="#horizontal-grid-spacing" id="toc-horizontal-grid-spacing" class="nav-link" data-scroll-target="#horizontal-grid-spacing"><span class="header-section-number">11.2.9</span> Horizontal grid spacing</a></li>
+  <li><a href="#non-uniform-horizontal-grid-spacing" id="toc-non-uniform-horizontal-grid-spacing" class="nav-link" data-scroll-target="#non-uniform-horizontal-grid-spacing"><span class="header-section-number">11.2.10</span> Non uniform horizontal grid spacing</a></li>
+  <li><a href="#layer-thickness" id="toc-layer-thickness" class="nav-link" data-scroll-target="#layer-thickness"><span class="header-section-number">11.2.11</span> Layer thickness</a></li>
+  <li><a href="#bathymetry-values" id="toc-bathymetry-values" class="nav-link" data-scroll-target="#bathymetry-values"><span class="header-section-number">11.2.12</span> Bathymetry values</a></li>
+  <li><a href="#bottom-drag-values-optional" id="toc-bottom-drag-values-optional" class="nav-link" data-scroll-target="#bottom-drag-values-optional"><span class="header-section-number">11.2.13</span> Bottom drag values (optional)</a></li>
+  <li><a href="#bottom-slope-values-optional" id="toc-bottom-slope-values-optional" class="nav-link" data-scroll-target="#bottom-slope-values-optional"><span class="header-section-number">11.2.14</span> Bottom Slope Values (Optional)</a></li>
   </ul></li>
-  <li><a href="#sec-bcFile" id="toc-sec-bcFile" class="nav-link" data-scroll-target="#sec-bcFile"><span class="header-section-number">6.3</span> Setting up the boundary cell set file (<code>bc.dat</code>)</a></li>
-  <li><a href="#introduction-2" id="toc-introduction-2" class="nav-link" data-scroll-target="#introduction-2"><span class="header-section-number">6.4</span> Introduction</a></li>
-  <li><a href="#boundary-cell-set-categories" id="toc-boundary-cell-set-categories" class="nav-link" data-scroll-target="#boundary-cell-set-categories"><span class="header-section-number">6.5</span> Boundary cell set categories</a></li>
-  <li><a href="#boundary-cell-set-face-direction" id="toc-boundary-cell-set-face-direction" class="nav-link" data-scroll-target="#boundary-cell-set-face-direction"><span class="header-section-number">6.6</span> Boundary cell set face direction</a></li>
-  <li><a href="#boundary-cell-set-keywords" id="toc-boundary-cell-set-keywords" class="nav-link" data-scroll-target="#boundary-cell-set-keywords"><span class="header-section-number">6.7</span> Boundary cell set keywords</a></li>
-  <li><a href="#sec-bcdat" id="toc-sec-bcdat" class="nav-link" data-scroll-target="#sec-bcdat"><span class="header-section-number">6.8</span> Organization of the boundary cell set file (<code>bc.dat</code>)</a></li>
-  <li><a href="#flow_multi_sides" id="toc-flow_multi_sides" class="nav-link" data-scroll-target="#flow_multi_sides"><span class="header-section-number">6.9</span> flow_multi_sides</a></li>
-  <li><a href="#flow_dynamic" id="toc-flow_dynamic" class="nav-link" data-scroll-target="#flow_dynamic"><span class="header-section-number">6.10</span> flow_dynamic</a></li>
-  <li><a href="#sec-leveeFile" id="toc-sec-leveeFile" class="nav-link" data-scroll-target="#sec-leveeFile"><span class="header-section-number">6.11</span> Setting up the levee file (<code>levee.dat</code>) (Optional)</a>
+  <li><a href="#sec-bcFile" id="toc-sec-bcFile" class="nav-link" data-scroll-target="#sec-bcFile"><span class="header-section-number">11.3</span> Setting up the boundary cell set file (<code>bc.dat</code>)</a></li>
+  <li><a href="#introduction-2" id="toc-introduction-2" class="nav-link" data-scroll-target="#introduction-2"><span class="header-section-number">11.4</span> Introduction</a></li>
+  <li><a href="#boundary-cell-set-categories" id="toc-boundary-cell-set-categories" class="nav-link" data-scroll-target="#boundary-cell-set-categories"><span class="header-section-number">11.5</span> Boundary cell set categories</a></li>
+  <li><a href="#boundary-cell-set-face-direction" id="toc-boundary-cell-set-face-direction" class="nav-link" data-scroll-target="#boundary-cell-set-face-direction"><span class="header-section-number">11.6</span> Boundary cell set face direction</a></li>
+  <li><a href="#boundary-cell-set-keywords" id="toc-boundary-cell-set-keywords" class="nav-link" data-scroll-target="#boundary-cell-set-keywords"><span class="header-section-number">11.7</span> Boundary cell set keywords</a></li>
+  <li><a href="#sec-bcdat" id="toc-sec-bcdat" class="nav-link" data-scroll-target="#sec-bcdat"><span class="header-section-number">11.8</span> Organization of the boundary cell set file (<code>bc.dat</code>)</a></li>
+  <li><a href="#flow_multi_sides" id="toc-flow_multi_sides" class="nav-link" data-scroll-target="#flow_multi_sides"><span class="header-section-number">11.9</span> flow_multi_sides</a></li>
+  <li><a href="#flow_dynamic" id="toc-flow_dynamic" class="nav-link" data-scroll-target="#flow_dynamic"><span class="header-section-number">11.10</span> flow_dynamic</a></li>
+  <li><a href="#sec-leveeFile" id="toc-sec-leveeFile" class="nav-link" data-scroll-target="#sec-leveeFile"><span class="header-section-number">11.11</span> Setting up the levee file (<code>levee.dat</code>) (Optional)</a>
   <ul class="collapse">
-  <li><a href="#introduction-3" id="toc-introduction-3" class="nav-link" data-scroll-target="#introduction-3"><span class="header-section-number">6.11.1</span> Introduction</a></li>
-  <li><a href="#levee-set-categories" id="toc-levee-set-categories" class="nav-link" data-scroll-target="#levee-set-categories"><span class="header-section-number">6.11.2</span> Levee set categories</a></li>
-  <li><a href="#organization-of-the-levee-set-file-levee.dat" id="toc-organization-of-the-levee-set-file-levee.dat" class="nav-link" data-scroll-target="#organization-of-the-levee-set-file-levee.dat"><span class="header-section-number">6.11.3</span> Organization of the levee set file (<code>levee.dat</code>)</a></li>
+  <li><a href="#introduction-3" id="toc-introduction-3" class="nav-link" data-scroll-target="#introduction-3"><span class="header-section-number">11.11.1</span> Introduction</a></li>
+  <li><a href="#levee-set-categories" id="toc-levee-set-categories" class="nav-link" data-scroll-target="#levee-set-categories"><span class="header-section-number">11.11.2</span> Levee set categories</a></li>
+  <li><a href="#organization-of-the-levee-set-file-levee.dat" id="toc-organization-of-the-levee-set-file-levee.dat" class="nav-link" data-scroll-target="#organization-of-the-levee-set-file-levee.dat"><span class="header-section-number">11.11.3</span> Organization of the levee set file (<code>levee.dat</code>)</a></li>
   </ul></li>
-  <li><a href="#sec-updateFile" id="toc-sec-updateFile" class="nav-link" data-scroll-target="#sec-updateFile"><span class="header-section-number">6.12</span> Setting up the update file (<code>update.dat</code>) (Optional)</a>
+  <li><a href="#sec-updateFile" id="toc-sec-updateFile" class="nav-link" data-scroll-target="#sec-updateFile"><span class="header-section-number">11.12</span> Setting up the update file (<code>update.dat</code>) (Optional)</a>
   <ul class="collapse">
-  <li><a href="#introduction-4" id="toc-introduction-4" class="nav-link" data-scroll-target="#introduction-4"><span class="header-section-number">6.12.1</span> Introduction</a></li>
-  <li><a href="#update-set-categories" id="toc-update-set-categories" class="nav-link" data-scroll-target="#update-set-categories"><span class="header-section-number">6.12.2</span> Update set categories</a></li>
-  <li><a href="#organization-of-the-update-set-file-update.dat" id="toc-organization-of-the-update-set-file-update.dat" class="nav-link" data-scroll-target="#organization-of-the-update-set-file-update.dat"><span class="header-section-number">6.12.3</span> Organization of the update set file (<code>update.dat</code>)</a></li>
+  <li><a href="#introduction-4" id="toc-introduction-4" class="nav-link" data-scroll-target="#introduction-4"><span class="header-section-number">11.12.1</span> Introduction</a></li>
+  <li><a href="#update-set-categories" id="toc-update-set-categories" class="nav-link" data-scroll-target="#update-set-categories"><span class="header-section-number">11.12.2</span> Update set categories</a></li>
+  <li><a href="#organization-of-the-update-set-file-update.dat" id="toc-organization-of-the-update-set-file-update.dat" class="nav-link" data-scroll-target="#organization-of-the-update-set-file-update.dat"><span class="header-section-number">11.12.3</span> Organization of the update set file (<code>update.dat</code>)</a></li>
   </ul></li>
-  <li><a href="#running-the-pre-processor-with-run_pre.dat" id="toc-running-the-pre-processor-with-run_pre.dat" class="nav-link" data-scroll-target="#running-the-pre-processor-with-run_pre.dat"><span class="header-section-number">6.13</span> Running the pre-processor with <code>run_pre.dat</code></a></li>
+  <li><a href="#running-the-pre-processor-with-run_pre.dat" id="toc-running-the-pre-processor-with-run_pre.dat" class="nav-link" data-scroll-target="#running-the-pre-processor-with-run_pre.dat"><span class="header-section-number">11.13</span> Running the pre-processor with <code>run_pre.dat</code></a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-pre.html">Using ELCOM</a></li><li class="breadcrumb-item"><a href="./02-pre.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pre-Processor</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-pre.html">Using ELCOM</a></li><li class="breadcrumb-item"><a href="./02-pre.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Pre-Processor</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-pre" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pre-Processor</span></span></h1>
+<h1 class="title"><span id="sec-pre" class="quarto-section-identifier"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Pre-Processor</span></span></h1>
 </div>
 
 
@@ -357,8 +387,8 @@ window.Quarto = {
 </header>
 
 
-<section id="introduction" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">6.1</span> Introduction</h2>
+<section id="introduction" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">11.1</span> Introduction</h2>
 <p>The ELCOM pre-processor is used to convert the user’s three-dimensional data of lake bathymetry, boundary forcing sections, and grid structure into one-dimensional vectors used by ELCOM. Configuration for running the pre-processor comes from a <code>run_pre.dat</code> file. The <code>run_pre.dat</code> file is a text file that contains the names and locations of user-supplied input files and pre-processor output files. The pre-processor requires two or three user-supplied text files: <code>bathymetry.dat</code>, <code>bc.dat</code> and optionally <code>levee.dat</code> and <code>update.dat</code>.</p>
 <ul>
 <li><code>bathymetry.dat</code> describes the bathymetry of the lake and grid configuration.</li>
@@ -368,11 +398,11 @@ window.Quarto = {
 </ul>
 <p>The pre-processor outputs two Fortran unformatted (binary) files: <code>sparsedata.unf</code> and <code>usedata.unf</code>. These may be renamed, but the user must track which are <code>sparsedata</code> and which are <code>usedata</code>.</p>
 </section>
-<section id="sec-bathFile" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="sec-bathFile"><span class="header-section-number">6.2</span> Setting up the bathymetry file (<code>bathymetry.dat</code>)</h2>
+<section id="sec-bathFile" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="sec-bathFile"><span class="header-section-number">11.2</span> Setting up the bathymetry file (<code>bathymetry.dat</code>)</h2>
 <p>ELCOM uses Fortran 90 (with F95 extensions) to map 3D space into a single vector for fast operation. Only computational cells containing water are represented in the vector, minimizing memory usage. This enables parallelization/vectorization without platform-specific modifications. Future ELCOM versions may include dynamic pressure effects to handle nonlinear internal wave dynamics.</p>
-<section id="introduction-1" class="level3" data-number="6.2.1">
-<h3 data-number="6.2.1" class="anchored" data-anchor-id="introduction-1"><span class="header-section-number">6.2.1</span> Introduction</h3>
+<section id="introduction-1" class="level3" data-number="11.2.1">
+<h3 data-number="11.2.1" class="anchored" data-anchor-id="introduction-1"><span class="header-section-number">11.2.1</span> Introduction</h3>
 <p>The bathymetry file allows the user to input the simulation domain geometry at the target resolution<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
 <p>The format is strict with respect to data amount and order. All items must be present. Comment lines can be added before bathymetry values, with each line containing at least two items. An item may be an integer, real number, or character string. Comments must begin with an exclamation point (<code>!</code>) and include at least two items. A common crash involves a Fortran error due to missing non-optional items or insufficient items per line.</p>
 <p>Below are valid formats:</p>
@@ -380,9 +410,9 @@ window.Quarto = {
 <p>The keywords are ELCOM-defined words that indicate the type of user-provided data presented: (1) before the keyword, (2) after the keyword, or (3) on succeeding lines of the file.</p>
 <p>Additional comments may be provided after the keywords to help the user remember the keyword purpose (the code only reads the first two items on a line). Detailed information on the keywords and the format of the file are presented in the following sections.</p>
 </section>
-<section id="physical-and-computational-space-coordinates" class="level3" data-number="6.2.2">
-<h3 data-number="6.2.2" class="anchored" data-anchor-id="physical-and-computational-space-coordinates"><span class="header-section-number">6.2.2</span> Physical and computational space coordinates</h3>
-<p>In the literature, bathymetry is generally presented as the vertical distance from some horizontal baseline (often a mean water height) and may be either positive downward or positive upward. The convention used in ELCOM is an <span class="math inline">\(({x,y,z})\)</span> space that follows the right-hand rule and has <span class="math inline">\(z\)</span> positive in the upward direction (<a href="#fig-coords" class="quarto-xref">Figure&nbsp;<span>6.1</span></a>).</p>
+<section id="physical-and-computational-space-coordinates" class="level3" data-number="11.2.2">
+<h3 data-number="11.2.2" class="anchored" data-anchor-id="physical-and-computational-space-coordinates"><span class="header-section-number">11.2.2</span> Physical and computational space coordinates</h3>
+<p>In the literature, bathymetry is generally presented as the vertical distance from some horizontal baseline (often a mean water height) and may be either positive downward or positive upward. The convention used in ELCOM is an <span class="math inline">\(({x,y,z})\)</span> space that follows the right-hand rule and has <span class="math inline">\(z\)</span> positive in the upward direction (<a href="#fig-coords" class="quarto-xref">Figure&nbsp;<span>11.1</span></a>).</p>
 <p>The user is free to choose any suitable <span class="math inline">\(z=0\)</span> baseline for the bathymetry as long as positive <span class="math inline">\(z\)</span> upward is maintained as the convention for measurement. The pre-processor will adjust the user-defined <span class="math inline">\(z=0\)</span> baseline to an internal code baseline that is suitable for the ELCOM simulation.</p>
 <p>For the most part, the user does not need to know or consider this internal baseline adjustment. However, some debugging or monitoring output is presented in terms of the code coordinate system rather than the user coordinate system, so care must be taken in interpreting debugging output that is intended for use by code developers.</p>
 <p>The position of the physical space origin <span class="math inline">\((x=0, y=0)\)</span> is set implicitly by the user through the layout of the bathymetry data in the file <code>bathymetry.dat</code>. This will be covered in more detail below. Physical space <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> values may not be negative (i.e., the <span class="math inline">\(x,y\)</span> origin must be in a corner of the domain).</p>
@@ -394,15 +424,15 @@ window.Quarto = {
 <embed src="Elcom_user/02-pre/coords.pdf" class="img-fluid quarto-figure quarto-figure-center" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-coords-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.1: Schematic of coordinate system
+Figure&nbsp;11.1: Schematic of coordinate system
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>ELCOM performs its simulation on computational cells of a three-dimensional Cartesian mesh. The user needs to understand the layout of the mesh so that boundary condition cells can be properly identified. ELCOM allows non-uniform spacing in each of the horizontal dimensions (<span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>) and allows non-uniform spacing in the vertical (<span class="math inline">\(z\)</span>) direction. (Although non-uniform <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> grid spacings are now allowed, users must be aware that timestep limitations are set by the smallest grid size.)</p>
-<p><a href="#fig-pmesh" class="quarto-xref">Figure&nbsp;<span>6.2</span></a> shows a plan view (<span class="math inline">\(x\)</span>-<span class="math inline">\(y\)</span> plane) of a lake with a discrete (uniform) Cartesian mesh overlay. The computational domain is divided into “cells” whose centers are represented in <a href="#fig-pmesh" class="quarto-xref">Figure&nbsp;<span>6.2</span></a> by solid dots. Dashed lines represent the faces between the cells. Each cell center has an <span class="math inline">\((i,j,k)\)</span> coordinate that designates its location in discrete computational space. The <span class="math inline">\(i,j,k\)</span> values are the integer indices of a three-dimensional array.</p>
-<p>The right-hand rule is used, with <span class="math inline">\((i,j,k)\)</span> being non-zero, positive integer values; <span class="math inline">\(k = 1\)</span> is associated with the lowermost cell layer in the domain. The <span class="math inline">\((i,j)\)</span> pairs of a horizontal plane represent a matrix, so that by conventional mathematical notation the <span class="math inline">\((1,1)\)</span> position is always in the upper left corner. The <span class="math inline">\(i\)</span> index is the row index and increases <em>down</em> the page. The <span class="math inline">\(j\)</span> index is the column index and increases across the page. The <span class="math inline">\((i,j)\)</span> indices for corner cells are shown in <a href="#fig-pmesh" class="quarto-xref">Figure&nbsp;<span>6.2</span></a>.</p>
+<p><a href="#fig-pmesh" class="quarto-xref">Figure&nbsp;<span>11.2</span></a> shows a plan view (<span class="math inline">\(x\)</span>-<span class="math inline">\(y\)</span> plane) of a lake with a discrete (uniform) Cartesian mesh overlay. The computational domain is divided into “cells” whose centers are represented in <a href="#fig-pmesh" class="quarto-xref">Figure&nbsp;<span>11.2</span></a> by solid dots. Dashed lines represent the faces between the cells. Each cell center has an <span class="math inline">\((i,j,k)\)</span> coordinate that designates its location in discrete computational space. The <span class="math inline">\(i,j,k\)</span> values are the integer indices of a three-dimensional array.</p>
+<p>The right-hand rule is used, with <span class="math inline">\((i,j,k)\)</span> being non-zero, positive integer values; <span class="math inline">\(k = 1\)</span> is associated with the lowermost cell layer in the domain. The <span class="math inline">\((i,j)\)</span> pairs of a horizontal plane represent a matrix, so that by conventional mathematical notation the <span class="math inline">\((1,1)\)</span> position is always in the upper left corner. The <span class="math inline">\(i\)</span> index is the row index and increases <em>down</em> the page. The <span class="math inline">\(j\)</span> index is the column index and increases across the page. The <span class="math inline">\((i,j)\)</span> indices for corner cells are shown in <a href="#fig-pmesh" class="quarto-xref">Figure&nbsp;<span>11.2</span></a>.</p>
 <p>For convenience and consistency, the origin <span class="math inline">\((0,0)\)</span> of the <span class="math inline">\(x,y\)</span> (physical space) coordinates is taken to be at the <span class="math inline">\((1,1)\)</span> location in the computational space <span class="math inline">\(i,j\)</span> indices.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
@@ -412,7 +442,7 @@ Figure&nbsp;6.1: Schematic of coordinate system
 <embed src="Elcom_user/02-pre/pview_cart_mesh.pdf" class="img-fluid quarto-figure quarto-figure-center" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pmesh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.2: Plan view of Cartesian mesh
+Figure&nbsp;11.2: Plan view of Cartesian mesh
 </figcaption>
 </figure>
 </div>
@@ -420,8 +450,8 @@ Figure&nbsp;6.2: Plan view of Cartesian mesh
 </div>
 <p>Using the upper left corner as the origin may initially be confusing to users familiar with mirror-image storage (used by many graphics programs) where the <em>lower</em> left corner is stored in position <span class="math inline">\(i=1,j=1\)</span>. The problem with mirror-image storage is that a simple printout of bathymetry data always appears as an upside-down mirror image of the real world when viewed with a text processor or spreadsheet.</p>
 <p>The present convention gives the user a <em>What You See Is What You Get</em> view of the bathymetry simply by opening the file with a word processor or importing into a spreadsheet. This convention has been found to be intuitive for users who are not graphics experts. However, caution needs to be taken when converting raw bathymetry data from graphics programs that use a mirror-image standard. Likewise, the direction of the positive <span class="math inline">\(u\)</span> (<span class="math inline">\(x\)</span> direction) velocity is confusing, as it is positive down the page.</p>
-<p><a href="#fig-pbath" class="quarto-xref">Figure&nbsp;<span>6.3</span></a> shows the <em>physical</em> space outline of the lake as the border of the shaded area. The discrete outline of a lake is shown with a heavy solid line. In developing a <code>bathymetry.dat</code> file for an ELCOM simulation, the user is required to provide bathymetry values (i.e., vertical distance measured from the user’s <span class="math inline">\(z=0\)</span> baseline) for each of the cells within the discrete boundary of the lake. The region outside the lake boundary is defined as the “land” region.</p>
-<p>In <a href="#fig-pbath" class="quarto-xref">Figure&nbsp;<span>6.3</span></a>, the cell center dots have been replaced with numbers that represent the distance from the user’s <span class="math inline">\(z=0\)</span> baseline to the bottom of the lake. In this case, all of the “land” regions have been given a value of 99. Note that the boundary of the bathymetry data set shown in <a href="#fig-pbath" class="quarto-xref">Figure&nbsp;<span>6.3</span></a> has land values around the entire boundary.</p>
+<p><a href="#fig-pbath" class="quarto-xref">Figure&nbsp;<span>11.3</span></a> shows the <em>physical</em> space outline of the lake as the border of the shaded area. The discrete outline of a lake is shown with a heavy solid line. In developing a <code>bathymetry.dat</code> file for an ELCOM simulation, the user is required to provide bathymetry values (i.e., vertical distance measured from the user’s <span class="math inline">\(z=0\)</span> baseline) for each of the cells within the discrete boundary of the lake. The region outside the lake boundary is defined as the “land” region.</p>
+<p>In <a href="#fig-pbath" class="quarto-xref">Figure&nbsp;<span>11.3</span></a>, the cell center dots have been replaced with numbers that represent the distance from the user’s <span class="math inline">\(z=0\)</span> baseline to the bottom of the lake. In this case, all of the “land” regions have been given a value of 99. Note that the boundary of the bathymetry data set shown in <a href="#fig-pbath" class="quarto-xref">Figure&nbsp;<span>11.3</span></a> has land values around the entire boundary.</p>
 <p>In general, it is required that either a land cell or open boundary cell surrounds the bathymetry data. For the purposes of the <code>bathymetry.dat</code> file, the user must provide bathymetry values for <em>all</em> cells in a rectangular array, including those cells that only contain land. ELCOM will only reserve computational memory for:</p>
 <ol type="1">
 <li>The cells which may contain water, and</li>
@@ -435,13 +465,13 @@ Figure&nbsp;6.2: Plan view of Cartesian mesh
 <embed src="Elcom_user/02-pre/pview_bath.pdf" class="img-fluid quarto-figure quarto-figure-center" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pbath-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.3: Plan view of bathymetry data
+Figure&nbsp;11.3: Plan view of bathymetry data
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p><a href="#fig-emesh" class="quarto-xref">Figure&nbsp;<span>6.4</span></a> shows an elevation view (in the <span class="math inline">\(x\text{-}z\)</span> plane) of a lake with a Cartesian overlay. A continuous, <em>physical-space</em> lake bottom is shown as a dashed line, with the resulting discrete lake bottom shown as a solid line.</p>
+<p><a href="#fig-emesh" class="quarto-xref">Figure&nbsp;<span>11.4</span></a> shows an elevation view (in the <span class="math inline">\(x\text{-}z\)</span> plane) of a lake with a Cartesian overlay. A continuous, <em>physical-space</em> lake bottom is shown as a dashed line, with the resulting discrete lake bottom shown as a solid line.</p>
 <p>ELCOM computes the bathymetry on the face of each cell (the dashed lines) from user-supplied bathymetry data at the cell centers (on the solid dots). In this figure, the user <span class="math inline">\(z=0\)</span> baseline is chosen as the top of the domain, so that all the bathymetry values should be negative. Note that the <span class="math inline">\(k=1\)</span> index of <span class="math inline">\(i,j,k\)</span> space corresponds with the lowermost layer, regardless of the user <em>z=0</em> baseline position.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
@@ -451,7 +481,7 @@ Figure&nbsp;6.3: Plan view of bathymetry data
 <img src="Elcom_user/02-pre/eview_cart_mesh.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-emesh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.4: Elevation view of bathymetry data
+Figure&nbsp;11.4: Elevation view of bathymetry data
 </figcaption>
 </figure>
 </div>
@@ -460,8 +490,8 @@ Figure&nbsp;6.4: Elevation view of bathymetry data
 <p>An up-to-date copy of <code>bathymetry.dat</code> is included in the examples. This file can be used as a template for creating your own <code>bathymetry.dat</code> file. The judicious use of extra comment lines and comments after the keywords leads to a file that is much more readable. The <code>bathymetry.dat</code> file can be renamed, but the corresponding name in the <code>run_pre.dat</code> must also be changed.</p>
 <p>The remainder of this section will detail the use of each keyword in the <code>bathymetry.dat</code> file.</p>
 </section>
-<section id="file-header" class="level3" data-number="6.2.3">
-<h3 data-number="6.2.3" class="anchored" data-anchor-id="file-header"><span class="header-section-number">6.2.3</span> File header</h3>
+<section id="file-header" class="level3" data-number="11.2.3">
+<h3 data-number="11.2.3" class="anchored" data-anchor-id="file-header"><span class="header-section-number">11.2.3</span> File header</h3>
 <p><strong>keyword =</strong> <code>FILE</code></p>
 <p>The first non-comment line of the <code>bathymetry.dat</code> file must begin with the keyword <code>FILE</code>. Thus, the first non-comment line <em>must</em> appear as shown:</p>
 <p>&nbsp;</p>
@@ -479,8 +509,8 @@ Figure&nbsp;6.4: Elevation view of bathymetry data
 </tr>
 </tbody>
 </table>
-<section id="description-lines" class="level4" data-number="6.2.3.1">
-<h4 data-number="6.2.3.1" class="anchored" data-anchor-id="description-lines"><span class="header-section-number">6.2.3.1</span> Description lines</h4>
+<section id="description-lines" class="level4" data-number="11.2.3.1">
+<h4 data-number="11.2.3.1" class="anchored" data-anchor-id="description-lines"><span class="header-section-number">11.2.3.1</span> Description lines</h4>
 <p><strong>keywords =</strong> <code>TITLE</code>, <code>ANALYST</code>, <code>ORGANIZATION</code>, <code>COMMENT</code></p>
 <p>Several keywords are provided to allow the user to put identifying information at the top of the bathymetry file. This information is printed to the standard output at the start of the run to provide identification of the debugging output data. The format for the header lines is <code>'string'; keyword</code>, where the string must be a non-null character array enclosed in single quotation marks. If the string is left blank or not enclosed in quotes, the pre-processor will crash with a Fortran read error. The user must have only one <code>COMMENT</code> line. A typical set of header keywords is shown below.</p>
 <p>&nbsp;</p>
@@ -512,8 +542,8 @@ Figure&nbsp;6.4: Elevation view of bathymetry data
 </table>
 </section>
 </section>
-<section id="size-of-input-bathymetry-data" class="level3" data-number="6.2.4">
-<h3 data-number="6.2.4" class="anchored" data-anchor-id="size-of-input-bathymetry-data"><span class="header-section-number">6.2.4</span> Size of input bathymetry data</h3>
+<section id="size-of-input-bathymetry-data" class="level3" data-number="11.2.4">
+<h3 data-number="11.2.4" class="anchored" data-anchor-id="size-of-input-bathymetry-data"><span class="header-section-number">11.2.4</span> Size of input bathymetry data</h3>
 <p><strong>keywords =</strong> <code>x_rows</code>, <code>y_columns</code>, <code>z_layers</code>, <code>n_max</code>, <code>n_maxBC</code></p>
 <p>In order to correctly read the bathymetry data from file <code>bathymetry.dat</code>, the user must tell the pre-processor the size of grid to expect. The value for <code>x_rows</code> is the number of rows in a two dimensional plan view of the bathymetry. The <code>y_columns</code> is the number of columns in the two-dimensional plan view. The number of layers in the vertical direction is identified with the keyword <code>z_layers</code>. The keyword <code>n_max</code> is used to set an estimate of the number of grid cells in the domain that are required for simulation (i.e.&nbsp;interior points plus the land points in one layer surrounding the interior). For most simulations, <code>n_max</code> can be set to 0, and the code will start with an estimate of <code>x_rows</code> × <code>y_columns</code> × <code>z_layers</code>. However, in some cases, this may create a temporary data array larger than can be processed using the available memory and the pre-processor will crash. The crash may produce a machine error message stating “out of memory,” or a more enigmatic “segmentation fault”. If insufficient memory is available, the user can estimate the actual number of grid points required for the simulation and rerun the preprocessor. Further reduction of the amount of memory used can be achieved by using the keyword <code>n_maxBC</code>. <code>n_maxBC</code> sets the maximum number of cells in any one boundary condition set. If <code>n_maxBC</code> is not specified or is set to 0 then the calculated <code>n_max</code> value is used.</p>
 <table class="caption-top table">
@@ -544,8 +574,8 @@ Figure&nbsp;6.4: Elevation view of bathymetry data
 </table>
 <hr>
 </section>
-<section id="land-cells" class="level3" data-number="6.2.5">
-<h3 data-number="6.2.5" class="anchored" data-anchor-id="land-cells"><span class="header-section-number">6.2.5</span> Land cells</h3>
+<section id="land-cells" class="level3" data-number="11.2.5">
+<h3 data-number="11.2.5" class="anchored" data-anchor-id="land-cells"><span class="header-section-number">11.2.5</span> Land cells</h3>
 <p><strong>keyword =</strong> <code>land_value</code></p>
 <p>The land region is designated by a unique bathymetry value (defined using the keyword <code>land_value</code>) that is greater than any value found within the lake. The user is free to choose the <code>land_value</code> as any convenient number that meets this criterion. Thus, if the user chooses a <code>z=0</code> baseline at the very top of the domain, the <code>land_value</code> may be set to zero (and all the bathymetry values should be negative numbers). If the user chooses the bottom of the domain as the <em>z=0</em> baseline, then the <code>land_value</code> may be any positive number that is greater than the largest number appearing within the lake boundary (it is usually convenient to use 9999). In this latter case, all the bathymetry values will be positive numbers. Note that any cell whose bathymetry is not equal to the <code>land_value</code> is considered a cell within the domain; thus typographical errors can produce spurious interior cells of the domain. The user is not required to have a <code>z=0</code> baseline within the domain: it may be convenient to use an external reference such as sea level. This may result in the lowest point in the domain having a positive non-zero bathymetry value.</p>
 <table class="caption-top table">
@@ -564,8 +594,8 @@ Figure&nbsp;6.4: Elevation view of bathymetry data
 </table>
 <hr>
 </section>
-<section id="open-boundary-cells" class="level3" data-number="6.2.6">
-<h3 data-number="6.2.6" class="anchored" data-anchor-id="open-boundary-cells"><span class="header-section-number">6.2.6</span> Open boundary cells</h3>
+<section id="open-boundary-cells" class="level3" data-number="11.2.6">
+<h3 data-number="11.2.6" class="anchored" data-anchor-id="open-boundary-cells"><span class="header-section-number">11.2.6</span> Open boundary cells</h3>
 <p><strong>keyword =</strong> <code>open_value</code></p>
 <p>Open boundary cells are boundaries with tidal forcing from an adjacent body of water that is not in the simulation domain. The user-defined bathymetry value that indicates an open boundary cell is defined with the keyword <code>open_value</code>.</p>
 <table class="caption-top table">
@@ -584,10 +614,10 @@ Figure&nbsp;6.4: Elevation view of bathymetry data
 </table>
 <hr>
 </section>
-<section id="north-vector" class="level3" data-number="6.2.7">
-<h3 data-number="6.2.7" class="anchored" data-anchor-id="north-vector"><span class="header-section-number">6.2.7</span> North vector</h3>
+<section id="north-vector" class="level3" data-number="11.2.7">
+<h3 data-number="11.2.7" class="anchored" data-anchor-id="north-vector"><span class="header-section-number">11.2.7</span> North vector</h3>
 <p><strong>keywords =</strong> <code>north_x</code>, <code>north_y</code></p>
-<p>The user may create a bathymetry data file with any orientation (i.e., there is no requirement that north be at the top of the page). Since wind forcing on the free surface requires a direction, the user must designate the north direction. The north vector is determined as shown in <a href="#fig-north" class="quarto-xref">Figure&nbsp;<span>6.5</span></a>. Note that the north vector is given in terms of a vector in physical (<span class="math inline">\(x,y,z\)</span>) space, not the discrete (<span class="math inline">\(i,j,k\)</span>) space. Because the origin is in the upper left corner, a standard “north up” data set has a north vector of (-1, 0).</p>
+<p>The user may create a bathymetry data file with any orientation (i.e., there is no requirement that north be at the top of the page). Since wind forcing on the free surface requires a direction, the user must designate the north direction. The north vector is determined as shown in <a href="#fig-north" class="quarto-xref">Figure&nbsp;<span>11.5</span></a>. Note that the north vector is given in terms of a vector in physical (<span class="math inline">\(x,y,z\)</span>) space, not the discrete (<span class="math inline">\(i,j,k\)</span>) space. Because the origin is in the upper left corner, a standard “north up” data set has a north vector of (-1, 0).</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -612,14 +642,14 @@ Figure&nbsp;6.4: Elevation view of bathymetry data
 <embed src="Elcom_user/02-pre/north.pdf" class="img-fluid">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-north-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.5: Calculation of the north vector
+Figure&nbsp;11.5: Calculation of the north vector
 </figcaption>
 </figure>
 </div>
 <hr>
 </section>
-<section id="geographic-position" class="level3" data-number="6.2.8">
-<h3 data-number="6.2.8" class="anchored" data-anchor-id="geographic-position"><span class="header-section-number">6.2.8</span> Geographic position</h3>
+<section id="geographic-position" class="level3" data-number="11.2.8">
+<h3 data-number="11.2.8" class="anchored" data-anchor-id="geographic-position"><span class="header-section-number">11.2.8</span> Geographic position</h3>
 <p><strong>keywords =</strong> <code>latitude</code>, <code>longitude</code>, <code>altitude</code></p>
 <p>The user provides the geographic position of the simulation domain using the keywords <code>latitude</code>, <code>longitude</code> and <code>altitude</code>. Longitude and altitude have no effect on the simulation but longitude is used to geo-reference output data. The latitude is used to provide appropriate Coriolis forcing in the ELCOM simulation. North latitudes are entered as positive numbers while south latitudes are entered as negative numbers. Latitude and longitude refer to the <em>top,left</em> corner of the bathymetry file.</p>
 <table class="caption-top table">
@@ -646,8 +676,8 @@ Figure&nbsp;6.5: Calculation of the north vector
 </table>
 <hr>
 </section>
-<section id="horizontal-grid-spacing" class="level3" data-number="6.2.9">
-<h3 data-number="6.2.9" class="anchored" data-anchor-id="horizontal-grid-spacing"><span class="header-section-number">6.2.9</span> Horizontal grid spacing</h3>
+<section id="horizontal-grid-spacing" class="level3" data-number="11.2.9">
+<h3 data-number="11.2.9" class="anchored" data-anchor-id="horizontal-grid-spacing"><span class="header-section-number">11.2.9</span> Horizontal grid spacing</h3>
 <p><strong>keywords =</strong> <code>x_grid</code>, <code>y_grid</code></p>
 <p>The present version of ELCOM allows uniform or stretched grid spacing in the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> direction. Separate grid spacings are implemented in each horizontal dimension so that <span class="math inline">\(dx \neq dy\)</span> is valid. However, the user should be careful in implementing a solution grid with different <span class="math inline">\(dx\)</span> and <span class="math inline">\(dy\)</span> grid spacings since this can affect the solution accuracy. For uniform grids the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> grid spacings are designated with the keywords <code>x_grid</code> and <code>y_grid</code>. If a non-uniform (stretched) horizontal grid is used, a default value for <code>x_grid</code> and <code>y_grid</code> must still be defined.</p>
 <table class="caption-top table">
@@ -669,8 +699,8 @@ Figure&nbsp;6.5: Calculation of the north vector
 </tbody>
 </table>
 </section>
-<section id="non-uniform-horizontal-grid-spacing" class="level3" data-number="6.2.10">
-<h3 data-number="6.2.10" class="anchored" data-anchor-id="non-uniform-horizontal-grid-spacing"><span class="header-section-number">6.2.10</span> Non uniform horizontal grid spacing</h3>
+<section id="non-uniform-horizontal-grid-spacing" class="level3" data-number="11.2.10">
+<h3 data-number="11.2.10" class="anchored" data-anchor-id="non-uniform-horizontal-grid-spacing"><span class="header-section-number">11.2.10</span> Non uniform horizontal grid spacing</h3>
 <p><strong>keywords =</strong> <code>dx</code>, <code>dy</code> (optional)</p>
 <p>In the horizontal direction, ELCOM version 2.0.0 allows the user to design a grid whose dimension varies in space (i.e.&nbsp;<span class="math inline">\(dx = f[x]\)</span> and <span class="math inline">\(dy = f[y]\)</span>). Note that the <span class="math inline">\(dx\)</span> may not vary with <span class="math inline">\(y\)</span> or <span class="math inline">\(z\)</span> coordinates and <span class="math inline">\(dy\)</span> may not vary with <span class="math inline">\(x\)</span> or <span class="math inline">\(z\)</span> coordinates. In the <code>bathymetry.dat</code> file, stretched horizontal grid spacings are designated by the keywords <code>dx</code> and <code>dy</code>. <code>dx</code> and <code>dy</code> are defined in the <code>bathymetry.dat</code> in the order of increasing coordinate (i.e.&nbsp;from <span class="math inline">\(x=1\)</span> to <span class="math inline">\(x = x\_rows\)</span>).</p>
 <p>While the user is free to set the <span class="math inline">\(dx\)</span> and <span class="math inline">\(dy\)</span> values in an arbitrary manner, the accuracy and stability of the simulation method may be affected by the degree of non-uniformity of the grid. In general, the simulation method will perform best (i.e.&nbsp;with greatest accuracy) using a uniform grid. For non-uniform grids, the degradation of accuracy is a function of the rate at which the grid changes (see below for <span class="math inline">\(dz\)</span>).</p>
@@ -808,10 +838,10 @@ Figure&nbsp;6.5: Calculation of the north vector
 </table>
 <hr>
 </section>
-<section id="layer-thickness" class="level3" data-number="6.2.11">
-<h3 data-number="6.2.11" class="anchored" data-anchor-id="layer-thickness"><span class="header-section-number">6.2.11</span> Layer thickness</h3>
+<section id="layer-thickness" class="level3" data-number="11.2.11">
+<h3 data-number="11.2.11" class="anchored" data-anchor-id="layer-thickness"><span class="header-section-number">11.2.11</span> Layer thickness</h3>
 <p><strong>keyword =</strong> <code>dz</code></p>
-<p>In the vertical direction, ELCOM allows the user to design a structure of horizontal layers whose thickness varies with depth (i.e.&nbsp;<span class="math inline">\(dz = f[z]\)</span>). Note that the layer thickness may not vary with <span class="math inline">\(x\)</span> or <span class="math inline">\(y\)</span> coordinates. In the <code>bathymetry.dat</code> file, the successive layer thicknesses (in descending order from the top of the domain) are designated by the keyword <code>dz</code>. While the user is free to set the <span class="math inline">\(dz\)</span> values in an arbitrary manner, the accuracy and stability of the simulation method may be affected by the degree of non-uniformity of the layers. In general, the simulation method will perform best (i.e.&nbsp;with greatest accuracy) using a grid with uniform <span class="math inline">\(dz\)</span>. For non-uniform <span class="math inline">\(dz\)</span>, the degradation of accuracy is a function of the rate at which the <span class="math inline">\(dz\)</span> changes. Thus, a grid that has a <span class="math inline">\(dz\)</span> that varies slowly will perform very well, while a grid with abrupt changes in grid size will be less accurate. For example, <a href="#fig-vgrid" class="quarto-xref">Figure&nbsp;<span>6.6</span></a> shows two possible configurations which provide vertical resolution of 0.5 metres in the upper portion of a lake and 2.0 metre resolution in the lower portion. Both use the same number of grid cells, but the <span class="math inline">\(dz\)</span> distribution on the left of <a href="#fig-vgrid" class="quarto-xref">Figure&nbsp;<span>6.6</span></a> will show better performance.</p>
+<p>In the vertical direction, ELCOM allows the user to design a structure of horizontal layers whose thickness varies with depth (i.e.&nbsp;<span class="math inline">\(dz = f[z]\)</span>). Note that the layer thickness may not vary with <span class="math inline">\(x\)</span> or <span class="math inline">\(y\)</span> coordinates. In the <code>bathymetry.dat</code> file, the successive layer thicknesses (in descending order from the top of the domain) are designated by the keyword <code>dz</code>. While the user is free to set the <span class="math inline">\(dz\)</span> values in an arbitrary manner, the accuracy and stability of the simulation method may be affected by the degree of non-uniformity of the layers. In general, the simulation method will perform best (i.e.&nbsp;with greatest accuracy) using a grid with uniform <span class="math inline">\(dz\)</span>. For non-uniform <span class="math inline">\(dz\)</span>, the degradation of accuracy is a function of the rate at which the <span class="math inline">\(dz\)</span> changes. Thus, a grid that has a <span class="math inline">\(dz\)</span> that varies slowly will perform very well, while a grid with abrupt changes in grid size will be less accurate. For example, <a href="#fig-vgrid" class="quarto-xref">Figure&nbsp;<span>11.6</span></a> shows two possible configurations which provide vertical resolution of 0.5 metres in the upper portion of a lake and 2.0 metre resolution in the lower portion. Both use the same number of grid cells, but the <span class="math inline">\(dz\)</span> distribution on the left of <a href="#fig-vgrid" class="quarto-xref">Figure&nbsp;<span>11.6</span></a> will show better performance.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -885,16 +915,16 @@ Figure&nbsp;6.5: Calculation of the north vector
 <embed src="Elcom_user/02-pre/vgrid.pdf" class="img-fluid">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vgrid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.6: Vertical grid spacings
+Figure&nbsp;11.6: Vertical grid spacings
 </figcaption>
 </figure>
 </div>
 </section>
-<section id="bathymetry-values" class="level3" data-number="6.2.12">
-<h3 data-number="6.2.12" class="anchored" data-anchor-id="bathymetry-values"><span class="header-section-number">6.2.12</span> Bathymetry values</h3>
+<section id="bathymetry-values" class="level3" data-number="11.2.12">
+<h3 data-number="11.2.12" class="anchored" data-anchor-id="bathymetry-values"><span class="header-section-number">11.2.12</span> Bathymetry values</h3>
 <p><strong>keywords</strong> = <code>BATHYMETRY DATA</code></p>
 <p>The bathymetry values must be presented in the file <code>bathymetry.dat</code> following a line with the two keywords <code>BATHYMETRY DATA</code>. Each line of bathymetry values must contain exactly <code>y_columns</code> of data and there must be exactly <code>x_rows</code> of data lines following <code>BATHYMETRY DATA</code>. Each value on the line may be separated from the next by one or more spaces or tabs.</p>
-<p>Thus, for a domain with <code>x_rows</code> = 8 and <code>y_columns</code> = 13, and <code>land_value</code> = 99 (i.e., similar to <a href="#fig-pmesh" class="quarto-xref">Figure&nbsp;<span>6.2</span></a>), the bathymetry values would be entered into the <code>bathymetry.dat</code> file as shown:</p>
+<p>Thus, for a domain with <code>x_rows</code> = 8 and <code>y_columns</code> = 13, and <code>land_value</code> = 99 (i.e., similar to <a href="#fig-pmesh" class="quarto-xref">Figure&nbsp;<span>11.2</span></a>), the bathymetry values would be entered into the <code>bathymetry.dat</code> file as shown:</p>
 <p><code>BATHYMETRY DATA</code></p>
 <pre><code>99  99  99   99   99   99   99   99   99   99   99   99   99
 99  99  -0.7 -0.5 99   99   99   99   99   99   99   99   99
@@ -905,8 +935,8 @@ Figure&nbsp;6.6: Vertical grid spacings
 99  99  99   99   99   99   99   99   99   -0.7 -0.9 -0.3 99
 99  99  99   99   99   99   99   99   99   99   99   99   99</code></pre>
 </section>
-<section id="bottom-drag-values-optional" class="level3" data-number="6.2.13">
-<h3 data-number="6.2.13" class="anchored" data-anchor-id="bottom-drag-values-optional"><span class="header-section-number">6.2.13</span> Bottom drag values (optional)</h3>
+<section id="bottom-drag-values-optional" class="level3" data-number="11.2.13">
+<h3 data-number="11.2.13" class="anchored" data-anchor-id="bottom-drag-values-optional"><span class="header-section-number">11.2.13</span> Bottom drag values (optional)</h3>
 <p><strong>Keywords</strong>: <code>BTM_CD DATA</code></p>
 <p>Version 2.0.0 allows a variable bottom drag coefficient to be specified in the <code>bathymetry.dat</code> file. Each line of values must contain exactly <code>y_columns</code> of data and there must be exactly <code>x_rows</code> of data lines following <code>BTM_CD DATA</code>. Each value on the line may be separated from the next by one or more spaces.</p>
 <p>Thus, for the domain with <code>x_rows = 8</code> and <code>y_columns = 13</code>, the values would be entered into the <code>bathymetry.dat</code> file as shown:</p>
@@ -921,8 +951,8 @@ Figure&nbsp;6.6: Vertical grid spacings
 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 0.004 0.004 0.004 1e+16
 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16</code></pre>
 </section>
-<section id="bottom-slope-values-optional" class="level3" data-number="6.2.14">
-<h3 data-number="6.2.14" class="anchored" data-anchor-id="bottom-slope-values-optional"><span class="header-section-number">6.2.14</span> Bottom Slope Values (Optional)</h3>
+<section id="bottom-slope-values-optional" class="level3" data-number="11.2.14">
+<h3 data-number="11.2.14" class="anchored" data-anchor-id="bottom-slope-values-optional"><span class="header-section-number">11.2.14</span> Bottom Slope Values (Optional)</h3>
 <p><strong>Keywords:</strong> <code>SLOPE_X DATA</code>, <code>SLOPE_Y DATA</code></p>
 <p>To enable the 2D underflow model, bottom slope values must be included in the <code>bathymetry.dat</code> file. These values should follow a line containing either of the keywords <code>SLOPE_X DATA</code> or <code>SLOPE_Y DATA</code>.</p>
 <p>Each line of slope values must contain exactly <code>y_columns</code> entries, and there must be exactly <code>x_rows</code> lines of data following the keyword. Values on a line can be separated by one or more spaces or tabs.</p>
@@ -957,16 +987,16 @@ Figure&nbsp;6.6: Vertical grid spacings
 </section>
 </section>
 </section>
-<section id="sec-bcFile" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="sec-bcFile"><span class="header-section-number">6.3</span> Setting up the boundary cell set file (<code>bc.dat</code>)</h2>
+<section id="sec-bcFile" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="sec-bcFile"><span class="header-section-number">11.3</span> Setting up the boundary cell set file (<code>bc.dat</code>)</h2>
 <p>An up-to-date copy of <code>bc.dat</code> is included in the examples.</p>
 </section>
-<section id="introduction-2" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="introduction-2"><span class="header-section-number">6.4</span> Introduction</h2>
+<section id="introduction-2" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="introduction-2"><span class="header-section-number">11.4</span> Introduction</h2>
 <p>The boundary cell set file designates logical grouping of grid cells over which boundary conditions are enforced in ELCOM. One set of points may have a river inflow, another set may have a dam offtake, another set may represent groundwater inflows, etc. Each set of boundary points is defined by a unique <em>reference number</em> (used also by ELCOM temporal boundary condition files), <em>type</em> (one of several keywords), <em>title</em> (user reference only), and a series of cell <em>i, j, k</em> coordinates. This file gives the user complete flexibility in the assignment of diverse and complex boundary conditions around a three-dimensional topography.</p>
 </section>
-<section id="boundary-cell-set-categories" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="boundary-cell-set-categories"><span class="header-section-number">6.5</span> Boundary cell set categories</h2>
+<section id="boundary-cell-set-categories" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="boundary-cell-set-categories"><span class="header-section-number">11.5</span> Boundary cell set categories</h2>
 <p>The keywords for the boundary cell sets fall into seven categories, defined as follows:</p>
 <table class="caption-top table">
 <colgroup>
@@ -1012,8 +1042,8 @@ Figure&nbsp;6.6: Vertical grid spacings
 </table>
 <p>A boundary cell set consists of a collection of cell <em>faces</em> that are the boundaries between <em>interior</em> cell and <em>land</em> cells. The <code>land</code> boundary condition is the default for all faces of cells identified by the <code>land_value</code> in the <code>bathymetry.dat</code> file and for all boundary cell faces below the bathymetry data. As such, the user will rarely need to use a <code>land</code> boundary condition in the <code>bc.dat</code> file. For a lake without any inflows, outflows or special boundary conditions, the <code>bc.dat</code> file need not be present.</p>
 </section>
-<section id="boundary-cell-set-face-direction" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="boundary-cell-set-face-direction"><span class="header-section-number">6.6</span> Boundary cell set face direction</h2>
+<section id="boundary-cell-set-face-direction" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="boundary-cell-set-face-direction"><span class="header-section-number">11.6</span> Boundary cell set face direction</h2>
 <p>The cell faces of the boundaries are identified by the <code>(i, j, k)</code> coordinates of the interior cell and the direction from the cell center to the boundary. The conventions used are as follows:</p>
 <table class="caption-top table">
 <colgroup>
@@ -1058,8 +1088,8 @@ Figure&nbsp;6.6: Vertical grid spacings
 </tbody>
 </table>
 </section>
-<section id="boundary-cell-set-keywords" class="level2" data-number="6.7">
-<h2 data-number="6.7" class="anchored" data-anchor-id="boundary-cell-set-keywords"><span class="header-section-number">6.7</span> Boundary cell set keywords</h2>
+<section id="boundary-cell-set-keywords" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="boundary-cell-set-keywords"><span class="header-section-number">11.7</span> Boundary cell set keywords</h2>
 <p>The keywords used to identify boundary cell sets are a concatenation of the categories and the face direction. The valid keywords are listed below:</p>
 <table class="caption-top table">
 <colgroup>
@@ -1160,11 +1190,11 @@ Figure&nbsp;6.6: Vertical grid spacings
 </table>
 <p><strong>NOTE:</strong> <code>bubbler_zbot</code> and <code>bubbler_kbot</code> allow the user to specify the height of a bubble plume diffuser as either some height in metres (<code>zbot</code>) or number of cells from the bottom.</p>
 </section>
-<section id="sec-bcdat" class="level2" data-number="6.8">
-<h2 data-number="6.8" class="anchored" data-anchor-id="sec-bcdat"><span class="header-section-number">6.8</span> Organization of the boundary cell set file (<code>bc.dat</code>)</h2>
+<section id="sec-bcdat" class="level2" data-number="11.8">
+<h2 data-number="11.8" class="anchored" data-anchor-id="sec-bcdat"><span class="header-section-number">11.8</span> Organization of the boundary cell set file (<code>bc.dat</code>)</h2>
 <p>At the top of the boundary cell set file (<code>bc.dat</code>), the user may put any number of comment lines. Each comment line must start with an exclamation point (<code>!</code>) and have at least 3 items on the line (i.e., two words or numbers separated from the exclamation point and each other by spaces or tabs). After the initial comments, the boundary cell set file consists of a series of definitions of boundary sets. Each set consists of a <em>set identification line</em> followed by one or more lines of <em>cell definitions</em>. Each line must have three items on it or the pre-processor will crash with a Fortran file read error. Blank lines are not allowed in the boundary cell set file.</p>
 <p>Each set identification line is of the form: <code>integer  keyword  title</code></p>
-<p>The first item, <code>integer</code>, is a <em>reference number</em> for the boundary cell set that is used in preparing temporal boundary condition data files for the ELCOM simulation run (see <a href="03-elcom.html#sec-tempBCfiles" class="quarto-xref"><span>Section 7.8.2</span></a>). Each boundary cell set must have a unique <code>integer</code> reference number. The <code>keyword</code> is one of the valid keywords listed in the boundary cell set keywords table above. The <code>title</code> is a user-designated name for the boundary condition set. The <code>title</code> may have more than one word, although only the first word will be used by the code.</p>
+<p>The first item, <code>integer</code>, is a <em>reference number</em> for the boundary cell set that is used in preparing temporal boundary condition data files for the ELCOM simulation run (see <a href="03-elcom.html#sec-tempBCfiles" class="quarto-xref"><span>Section 12.8.2</span></a>). Each boundary cell set must have a unique <code>integer</code> reference number. The <code>keyword</code> is one of the valid keywords listed in the boundary cell set keywords table above. The <code>title</code> is a user-designated name for the boundary condition set. The <code>title</code> may have more than one word, although only the first word will be used by the code.</p>
 <p>After the set identification line, there will be one or more lines of cell definitions. A cell definition consists of three sets of numbers in the general form: <code>i_{start}:i_{end}  j_{start}:j_{end}  k_{start}:k_{end}</code>. For all boundary condition types except <code>bubbler_zbot</code> and <code>bubbler_kbot</code> the <code>i</code>, <code>j</code>, and <code>k</code> are integer values of the cell positions in space for a rectangular box of cells on which the relevant boundary cell keyword will be applied. For <code>bubbler_zbot</code> the third column must be a single real which gives the height of the diffuser in metres above the lake bottom. For <code>bubbler_kbot</code> the third column must be a single integer which gives the number of cells the diffuser is above the lake bottom. An example of a simple boundary cell set definition might be</p>
 <pre class="plaintext"><code>  107  flow_xp  river_inflow
    3:10  4:5  10:14</code></pre>
@@ -1211,8 +1241,8 @@ Figure&nbsp;6.6: Vertical grid spacings
 27  slip_yp free_slip_near_inflow_2
     2:      :       :</code></pre>
 </section>
-<section id="flow_multi_sides" class="level2" data-number="6.9">
-<h2 data-number="6.9" class="anchored" data-anchor-id="flow_multi_sides"><span class="header-section-number">6.9</span> flow_multi_sides</h2>
+<section id="flow_multi_sides" class="level2" data-number="11.9">
+<h2 data-number="11.9" class="anchored" data-anchor-id="flow_multi_sides"><span class="header-section-number">11.9</span> flow_multi_sides</h2>
 <p>In ELCOM version 2.1.1 a further bc set type was introduced (<code>flow_multi_sides</code>) which allows the user to specify one inflow which enters from multiple cells on multiple faces. This was primarily introduced to allow a meandering river channel to be specified as one boundary set and will be particularly useful when coupled with <code>INFLOW_DEPTH</code> boundary condition data. The format of <code>flow_multi_sides</code> in the boundary cell set file (<code>bc.dat</code>) is slightly different from other set types.</p>
 <p>Each <code>flow_multi_sides</code> set consists of a set identification line followed by one or more subsets of cell and face type definitions. Each line must have three items on it or the pre-processor will crash with a Fortran file read error. Blank lines are not allowed in the boundary cell set file.</p>
 <p>Each <code>flow_multi_sides</code> set identification line is the same as for all other set types, i.e.:</p>
@@ -1235,8 +1265,8 @@ Figure&nbsp;6.6: Vertical grid spacings
       5   5   5
       6   5   4</code></pre>
 </section>
-<section id="flow_dynamic" class="level2" data-number="6.10">
-<h2 data-number="6.10" class="anchored" data-anchor-id="flow_dynamic"><span class="header-section-number">6.10</span> flow_dynamic</h2>
+<section id="flow_dynamic" class="level2" data-number="11.10">
+<h2 data-number="11.10" class="anchored" data-anchor-id="flow_dynamic"><span class="header-section-number">11.10</span> flow_dynamic</h2>
 <p>Dynamic boundary condition sets (<code>flow*_dynamic</code>) allow the user to specify the connection of two parts of the domain with a (horizontal) culvert. This functionality was recently introduced in ELCOM. A boundary condition set pair related to each of the ends of the culvert must be defined.</p>
 <p>The definition of a dynamic boundary condition pair set comprises four lines. The first and third lines have the same structure as the boundary condition identification line: a set reference number, one of the <code>keywords</code> (<code>flow_xm_dynamic</code>, <code>flow_xp_dynamic</code>, <code>flow_ym_dynamic</code>, or <code>flow_yp_dynamic</code>), and a user identifier. Each of these lines refers to one end of the culvert.</p>
 <p>The second and fourth lines follow the same structure as the cell definition lines of an ordinary set type. Each line refers to one end of the culvert. Only one <code>i</code> and one <code>j</code> value can be specified. Although multiple <code>k</code> values may be included, both ends must have the same <code>k</code> specification.</p>
@@ -1246,15 +1276,15 @@ Figure&nbsp;6.6: Vertical grid spacings
 600     flow_ym_dynamic pipe_north_end
         4   3   10</code></pre>
 </section>
-<section id="sec-leveeFile" class="level2" data-number="6.11">
-<h2 data-number="6.11" class="anchored" data-anchor-id="sec-leveeFile"><span class="header-section-number">6.11</span> Setting up the levee file (<code>levee.dat</code>) (Optional)</h2>
-<section id="introduction-3" class="level3" data-number="6.11.1">
-<h3 data-number="6.11.1" class="anchored" data-anchor-id="introduction-3"><span class="header-section-number">6.11.1</span> Introduction</h3>
+<section id="sec-leveeFile" class="level2" data-number="11.11">
+<h2 data-number="11.11" class="anchored" data-anchor-id="sec-leveeFile"><span class="header-section-number">11.11</span> Setting up the levee file (<code>levee.dat</code>) (Optional)</h2>
+<section id="introduction-3" class="level3" data-number="11.11.1">
+<h3 data-number="11.11.1" class="anchored" data-anchor-id="introduction-3"><span class="header-section-number">11.11.1</span> Introduction</h3>
 <p>The levee set file designates any levees in the domain. Levees are solid boundaries between two adjacent cells. Pre-ELCOM implements levees by adding additional ghost cells adjacent to the levee. These ghost cells are colocated with the wet cells.</p>
 <p>The format of the levee set file is essentially the same as the <code>bc.dat</code> file. Each set of levee points is defined by a unique <em>reference number</em>, <em>type</em> (one of several keywords), <em>title</em> (user reference only), and a series of cell <code>(i, j, k)</code> coordinates.</p>
 </section>
-<section id="levee-set-categories" class="level3" data-number="6.11.2">
-<h3 data-number="6.11.2" class="anchored" data-anchor-id="levee-set-categories"><span class="header-section-number">6.11.2</span> Levee set categories</h3>
+<section id="levee-set-categories" class="level3" data-number="11.11.2">
+<h3 data-number="11.11.2" class="anchored" data-anchor-id="levee-set-categories"><span class="header-section-number">11.11.2</span> Levee set categories</h3>
 <p>The cell faces of the levees are identified by the <code>(i, j, k)</code> coordinates of the interior cell and the direction from the cell center to the levee. The four valid keywords for the levee sets are as follows:</p>
 <table class="caption-top table">
 <colgroup>
@@ -1287,8 +1317,8 @@ Figure&nbsp;6.6: Vertical grid spacings
 </tbody>
 </table>
 </section>
-<section id="organization-of-the-levee-set-file-levee.dat" class="level3" data-number="6.11.3">
-<h3 data-number="6.11.3" class="anchored" data-anchor-id="organization-of-the-levee-set-file-levee.dat"><span class="header-section-number">6.11.3</span> Organization of the levee set file (<code>levee.dat</code>)</h3>
+<section id="organization-of-the-levee-set-file-levee.dat" class="level3" data-number="11.11.3">
+<h3 data-number="11.11.3" class="anchored" data-anchor-id="organization-of-the-levee-set-file-levee.dat"><span class="header-section-number">11.11.3</span> Organization of the levee set file (<code>levee.dat</code>)</h3>
 <p>At the top of the <code>levee.dat</code> file, the user may include any number of comment lines. Each comment line must begin with an exclamation point <code>!</code> and contain at least three items (i.e., two words or numbers separated from the <code>!</code> and from each other by spaces).</p>
 <p>After the initial comments, the file contains a series of levee set definitions. Each set consists of a <em>set identification line</em> followed by one or more <em>cell definition lines</em>. Each line must have three items; otherwise, the pre-processor will fail with a Fortran file read error. Blank lines are not allowed.</p>
 <p>Each set identification line is of the form: <code>integer keyword title</code>.</p>
@@ -1303,15 +1333,15 @@ Figure&nbsp;6.6: Vertical grid spacings
      3  4:15  :</code></pre>
 </section>
 </section>
-<section id="sec-updateFile" class="level2" data-number="6.12">
-<h2 data-number="6.12" class="anchored" data-anchor-id="sec-updateFile"><span class="header-section-number">6.12</span> Setting up the update file (<code>update.dat</code>) (Optional)</h2>
-<section id="introduction-4" class="level3" data-number="6.12.1">
-<h3 data-number="6.12.1" class="anchored" data-anchor-id="introduction-4"><span class="header-section-number">6.12.1</span> Introduction</h3>
-<p>The update set file defines update cells in the domain. These cells allow scalar values to be modified arbitrarily at run-time using Update boundary condition files (see <a href="03-elcom.html#sec-updateBCfiles" class="quarto-xref"><span>Section 7.8.4</span></a>). The format of this file is essentially the same as the <code>bc.dat</code> file.</p>
+<section id="sec-updateFile" class="level2" data-number="11.12">
+<h2 data-number="11.12" class="anchored" data-anchor-id="sec-updateFile"><span class="header-section-number">11.12</span> Setting up the update file (<code>update.dat</code>) (Optional)</h2>
+<section id="introduction-4" class="level3" data-number="11.12.1">
+<h3 data-number="11.12.1" class="anchored" data-anchor-id="introduction-4"><span class="header-section-number">11.12.1</span> Introduction</h3>
+<p>The update set file defines update cells in the domain. These cells allow scalar values to be modified arbitrarily at run-time using Update boundary condition files (see <a href="03-elcom.html#sec-updateBCfiles" class="quarto-xref"><span>Section 12.8.4</span></a>). The format of this file is essentially the same as the <code>bc.dat</code> file.</p>
 <p>Each set is defined by a unique <em>reference number</em>, <em>type</em> (keyword), <em>title</em> (user reference), and a series of <code>(i, j, k)</code> cell coordinates.</p>
 </section>
-<section id="update-set-categories" class="level3" data-number="6.12.2">
-<h3 data-number="6.12.2" class="anchored" data-anchor-id="update-set-categories"><span class="header-section-number">6.12.2</span> Update set categories</h3>
+<section id="update-set-categories" class="level3" data-number="11.12.2">
+<h3 data-number="11.12.2" class="anchored" data-anchor-id="update-set-categories"><span class="header-section-number">11.12.2</span> Update set categories</h3>
 <p>Update cells are identified by their <code>(i, j, k)</code> coordinates. The valid keywords for update sets are:</p>
 <table class="caption-top table">
 <colgroup>
@@ -1344,8 +1374,8 @@ Figure&nbsp;6.6: Vertical grid spacings
 </tbody>
 </table>
 </section>
-<section id="organization-of-the-update-set-file-update.dat" class="level3" data-number="6.12.3">
-<h3 data-number="6.12.3" class="anchored" data-anchor-id="organization-of-the-update-set-file-update.dat"><span class="header-section-number">6.12.3</span> Organization of the update set file (<code>update.dat</code>)</h3>
+<section id="organization-of-the-update-set-file-update.dat" class="level3" data-number="11.12.3">
+<h3 data-number="11.12.3" class="anchored" data-anchor-id="organization-of-the-update-set-file-update.dat"><span class="header-section-number">11.12.3</span> Organization of the update set file (<code>update.dat</code>)</h3>
 <p>Comment lines may appear at the top of the file. Each comment must begin with <code>!</code> and include at least three items. No blank lines are allowed in the file.</p>
 <p>Each update set includes a <em>set identification line</em> followed by one or more <em>cell definition lines</em>. Each line must have exactly three items to avoid pre-processor errors.</p>
 <p>Each set identification line is of the form: <code>integer keyword title</code>.</p>
@@ -1360,8 +1390,8 @@ Figure&nbsp;6.6: Vertical grid spacings
   3  4:15  2:4</code></pre>
 </section>
 </section>
-<section id="running-the-pre-processor-with-run_pre.dat" class="level2" data-number="6.13">
-<h2 data-number="6.13" class="anchored" data-anchor-id="running-the-pre-processor-with-run_pre.dat"><span class="header-section-number">6.13</span> Running the pre-processor with <code>run_pre.dat</code></h2>
+<section id="running-the-pre-processor-with-run_pre.dat" class="level2" data-number="11.13">
+<h2 data-number="11.13" class="anchored" data-anchor-id="running-the-pre-processor-with-run_pre.dat"><span class="header-section-number">11.13</span> Running the pre-processor with <code>run_pre.dat</code></h2>
 <p>An up-to-date copy of <code>run_pre.dat</code> is included in the examples.</p>
 <p>The <code>run_pre.dat</code> file is a text file that contains the names and paths of the user-supplied input files and the pre-processor output files. The required input files are:</p>
 <ul>
@@ -1794,13 +1824,13 @@ Figure&nbsp;6.6: Vertical grid spacings
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./sci-turbulence.html" class="pagination-link" aria-label="Turbulence Closure">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Turbulence Closure</span></span>
+      <a href="./sci-destrat.html" class="pagination-link" aria-label="Artificial Destratification">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Artificial Destratification</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./03-elcom.html" class="pagination-link" aria-label="ELCOM Operation">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">ELCOM Operation</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ELCOM Operation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

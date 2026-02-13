@@ -8,7 +8,7 @@
 
 <meta name="description" content="This is a draft of the ELCOM manual.">
 
-<title>5&nbsp; Turbulence Closure – ELCOM Manual</title>
+<title>6&nbsp; Surface Thermodynamics and Mass Fluxes – ELCOM Manual</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,8 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./02-pre.html" rel="next">
-<link href="./sci-thermodynamics.html" rel="prev">
+<link href="./sci-mixing.html" rel="next">
+<link href="./sci-method.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -72,6 +72,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -84,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sci-hydrodynamics.html">Science Description</a></li><li class="breadcrumb-item"><a href="./sci-turbulence.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Turbulence Closure</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sci-intro.html">Science Description</a></li><li class="breadcrumb-item"><a href="./sci-thermo.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Surface Thermodynamics and Mass Fluxes</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -143,26 +172,56 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sci-hydrodynamics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hydrodynamics</span></span></a>
+  <a href="./sci-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sci-transport.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Transport and Mixing</span></span></a>
+  <a href="./sci-goveqns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Governing Hydrodynamic Equations and Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sci-thermodynamics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Surface Thermodynamics</span></span></a>
+  <a href="./sci-timestep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Timestep limitations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sci-turbulence.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Turbulence Closure</span></span></a>
+  <a href="./sci-method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Numerical Method</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-thermo.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Surface Thermodynamics and Mass Fluxes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-mixing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Mixing Model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-filter.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Numerical Diffusion Filter</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-underflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Underflow Model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-destrat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Artificial Destratification</span></span></a>
   </div>
 </li>
       </ul>
@@ -179,19 +238,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-pre.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pre-Processor</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Pre-Processor</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-elcom.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">ELCOM Operation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ELCOM Operation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-notation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Notation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Notation</span></span></a>
   </div>
 </li>
       </ul>
@@ -208,7 +267,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-application.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Applications</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Applications</span></span></a>
   </div>
 </li>
       </ul>
@@ -229,20 +288,34 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#overview-of-mixing-parameterizations" id="toc-overview-of-mixing-parameterizations" class="nav-link active" data-scroll-target="#overview-of-mixing-parameterizations"><span class="header-section-number">5.1</span> Overview of Mixing Parameterizations</a></li>
-  <li><a href="#wind-mixed-layer-model" id="toc-wind-mixed-layer-model" class="nav-link" data-scroll-target="#wind-mixed-layer-model"><span class="header-section-number">5.2</span> Wind-Mixed Layer Model</a></li>
-  <li><a href="#unstable-mixing" id="toc-unstable-mixing" class="nav-link" data-scroll-target="#unstable-mixing"><span class="header-section-number">5.3</span> Unstable Mixing</a></li>
-  <li><a href="#bottom-boundary-layer" id="toc-bottom-boundary-layer" class="nav-link" data-scroll-target="#bottom-boundary-layer"><span class="header-section-number">5.4</span> Bottom Boundary Layer</a></li>
-  <li><a href="#background-potential-energy-conservation" id="toc-background-potential-energy-conservation" class="nav-link" data-scroll-target="#background-potential-energy-conservation"><span class="header-section-number">5.5</span> Background Potential Energy Conservation</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">6.1</span> Introduction</a></li>
+  <li><a href="#surface-energy-fluxes" id="toc-surface-energy-fluxes" class="nav-link" data-scroll-target="#surface-energy-fluxes"><span class="header-section-number">6.2</span> Surface Energy Fluxes</a>
+  <ul class="collapse">
+  <li><a href="#solar-shortwave-radiation-flux" id="toc-solar-shortwave-radiation-flux" class="nav-link" data-scroll-target="#solar-shortwave-radiation-flux"><span class="header-section-number">6.2.1</span> Solar (shortwave) radiation flux</a></li>
+  </ul></li>
+  <li><a href="#long-wave-energy-flux" id="toc-long-wave-energy-flux" class="nav-link" data-scroll-target="#long-wave-energy-flux"><span class="header-section-number">6.3</span> Long Wave Energy Flux</a>
+  <ul class="collapse">
+  <li><a href="#incident-long-wave-radiation" id="toc-incident-long-wave-radiation" class="nav-link" data-scroll-target="#incident-long-wave-radiation"><span class="header-section-number">6.3.1</span> Incident long wave radiation</a></li>
+  <li><a href="#net-long-wave-radiation" id="toc-net-long-wave-radiation" class="nav-link" data-scroll-target="#net-long-wave-radiation"><span class="header-section-number">6.3.2</span> Net long wave radiation</a></li>
+  <li><a href="#cloud-cover" id="toc-cloud-cover" class="nav-link" data-scroll-target="#cloud-cover"><span class="header-section-number">6.3.3</span> Cloud cover</a></li>
+  </ul></li>
+  <li><a href="#sensible-heat-flux" id="toc-sensible-heat-flux" class="nav-link" data-scroll-target="#sensible-heat-flux"><span class="header-section-number">6.4</span> Sensible Heat Flux</a></li>
+  <li><a href="#latent-heat-flux" id="toc-latent-heat-flux" class="nav-link" data-scroll-target="#latent-heat-flux"><span class="header-section-number">6.5</span> Latent Heat Flux</a></li>
+  <li><a href="#surface-mass-fluxes" id="toc-surface-mass-fluxes" class="nav-link" data-scroll-target="#surface-mass-fluxes"><span class="header-section-number">6.6</span> Surface Mass Fluxes</a>
+  <ul class="collapse">
+  <li><a href="#latent-heat-mass-flux-density" id="toc-latent-heat-mass-flux-density" class="nav-link" data-scroll-target="#latent-heat-mass-flux-density"><span class="header-section-number">6.6.1</span> Latent heat mass flux density</a></li>
+  <li><a href="#rainfall" id="toc-rainfall" class="nav-link" data-scroll-target="#rainfall"><span class="header-section-number">6.6.2</span> Rainfall</a></li>
+  </ul></li>
+  <li><a href="#atmospheric-stability-and-surface-exchange" id="toc-atmospheric-stability-and-surface-exchange" class="nav-link" data-scroll-target="#atmospheric-stability-and-surface-exchange"><span class="header-section-number">6.7</span> Atmospheric Stability and Surface Exchange</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sci-hydrodynamics.html">Science Description</a></li><li class="breadcrumb-item"><a href="./sci-turbulence.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Turbulence Closure</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sci-intro.html">Science Description</a></li><li class="breadcrumb-item"><a href="./sci-thermo.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Surface Thermodynamics and Mass Fluxes</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-sci-turbulence" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Turbulence Closure</span></span></h1>
+<h1 class="title"><span id="sec-thermo" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Surface Thermodynamics and Mass Fluxes</span></span></h1>
 </div>
 
 
@@ -259,27 +332,160 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="overview-of-mixing-parameterizations" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="overview-of-mixing-parameterizations"><span class="header-section-number">5.1</span> Overview of Mixing Parameterizations</h2>
-<p><em>Content to be added.</em></p>
-<p>ELCOM provides several turbulence closure options for vertical mixing of momentum and scalars. This chapter describes the available closure schemes and their applicability.</p>
+<section id="introduction" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">6.1</span> Introduction</h2>
+<p>The surface exchanges include heating due to short wave radiation penetration into the lake and the fluxes at the surface due to evaporation, sensible heat (i.e.&nbsp;convection of heat from the water surface to the atmosphere) and long wave radiation.</p>
+<p>Short wave radiation (280nm to 2800nm) is usually measured directly. Long wave radiation (greater than 2800nm) emitted from clouds and atmospheric water vapour can be measured directly or calculated from cloud cover, air temperature and humidity. The reflection coefficient, or albedo, of short wave radiation varies from lake to lake and depends on the angle of the sun, the lake colour and the surface wave state.</p>
 </section>
-<section id="wind-mixed-layer-model" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="wind-mixed-layer-model"><span class="header-section-number">5.2</span> Wind-Mixed Layer Model</h2>
-<p><em>Content to be added.</em></p>
-<p>The recommended closure for wind-driven stratified flows (<code>iclosure = 6</code>) computes turbulent kinetic energy from wind stirring, convective overturns, and shear production.</p>
+<section id="surface-energy-fluxes" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="surface-energy-fluxes"><span class="header-section-number">6.2</span> Surface Energy Fluxes</h2>
+<section id="solar-shortwave-radiation-flux" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="solar-shortwave-radiation-flux"><span class="header-section-number">6.2.1</span> Solar (shortwave) radiation flux</h3>
+<p>Shortwave radiation can be divided into four components. ELCOM 2.2 assumes the following percentages for each component</p>
+<ul>
+<li>Photosynthetically Active Radiation (PAR) 45%</li>
+<li>Near Infrared (NIR) 41%</li>
+<li>Ultra Violet A (UVA) 3.5%</li>
+<li>Ultra Violet B (UVB) 0.5%</li>
+</ul>
+<p>The distance the radiation penetrates into the water column is dependent on the extinction component for each band-width. ELCOM allows users to set the extinction coefficient for each band in the run_elcom.dat file but has the following default values</p>
+<ul>
+<li>Photosynthetically Active Radiation (PAR) <span class="math inline">\(0.25 \; m^{-1}\)</span></li>
+<li>Near Infrared (NIR) <span class="math inline">\(1 \; m^{-1}\)</span></li>
+<li>Ultra Violet A (UVA) <span class="math inline">\(1 \; m^{-1}\)</span></li>
+<li>Ultra Violet B (UVB) <span class="math inline">\(2.5 \; m^{-1}\)</span></li>
+</ul>
+<p>If water quality is being simulated via CAEDYM then the PAR extinction coefficient is calculated by CAEDYM.</p>
+<p>The depth of penetration of short wave radiation depends on the net short wave radiation that penetrates the water surface and the extinction coefficient. The equations given in TVA (eq 2.48 and 2.37) and Jacquet (eq A5.2) for the net solar radiation penetrating the water can be written as:</p>
+<p><span id="eq-qsw"><span class="math display">\[
+Q_{sw}=Q_{sw(total)}(1-r_{a}^{(sw)})
+\tag{6.1}\]</span></span></p>
+<p>where <span class="math inline">\(Q_{sw(total)}\)</span> is the short wave radiation that reaches the surface of the water, <span class="math inline">\(Q_{sw}\)</span> is the net short wave radiation penetrating the water surface, and <span class="math inline">\(r_{a}^{(sw)}\)</span> is the shortwave albedo of the water surface given by:</p>
+<p><span id="eq-albedo"><span class="math display">\[
+r_{a}^{(sw)}=
+\begin{cases}
+\overline{R}_a^{(sw)}+a_{(sw)}\sin\left ( \frac{2\pi d}{D}-\frac{\pi}{2} \right ) &amp; \text{Sth Hemisphere} \\
+\overline{R}_a^{(sw)} &amp; \text{Equator} \\
+\overline{R}_a^{(sw)}+a_{(sw)}\sin\left ( \frac{2\pi d}{D}+\frac{\pi}{2} \right ) &amp; \text{Nth Hemisphere}
+\end{cases}
+\tag{6.2}\]</span></span></p>
+<p>and <span class="math inline">\(\overline{R}_a^{(sw)} = 0.08\)</span>, <span class="math inline">\(a_{(sw)}= 0.02\)</span>, <span class="math inline">\(D\)</span> is the standard number of days in a year (<span class="math inline">\(=365\)</span>) and <span class="math inline">\(d\)</span> is the day number in the year.</p>
+<p>Short-wave radiation in each band penetrates according to the Beer-Lambert law, such that</p>
+<p><span id="eq-beer"><span class="math display">\[
+Q(z)=Q_{sw}e^{-\eta_a z}
+\tag{6.3}\]</span></span></p>
+<p>where <span class="math inline">\(z\)</span> is the depth below the water surface and <span class="math inline">\(\eta_a\)</span> is the attenuation coefficient for each band.</p>
+<p>Thus, the shortwave energy per unit area entering layer <span class="math inline">\(k\)</span> through its upper face is</p>
+<p><span id="eq-deltaQ"><span class="math display">\[
+\Delta Q_k = Q_k-Q_{k-1}
+\tag{6.4}\]</span></span></p>
+<p>or</p>
+<p><span id="eq-deltaQ2"><span class="math display">\[
+\Delta Q_k = Q_k(1-e^{\eta_a\Delta Z_k})
+\tag{6.5}\]</span></span></p>
+<p>For heating purposes, it is assumed that all of the <span class="math inline">\(\Delta Q\)</span>’s are converted to heat.</p>
+<p>If there is excess short wave energy at the bottom of a column of water ELCOM reflects a portion of the energy back into the domain (currently 90% in Version 2.2). This energy is allowed to propagate back up through the water column according to the Beer-Lambert law.</p>
 </section>
-<section id="unstable-mixing" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="unstable-mixing"><span class="header-section-number">5.3</span> Unstable Mixing</h2>
-<p><em>Content to be added.</em></p>
 </section>
-<section id="bottom-boundary-layer" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="bottom-boundary-layer"><span class="header-section-number">5.4</span> Bottom Boundary Layer</h2>
-<p><em>Content to be added.</em></p>
+<section id="long-wave-energy-flux" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="long-wave-energy-flux"><span class="header-section-number">6.3</span> Long Wave Energy Flux</h2>
+<p>Longwave radiation is calculated by one of three methods, depending on the input data. Three input measures are allowed: incident long wave radiation, net long wave radiation, and cloud cover.</p>
+<section id="incident-long-wave-radiation" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="incident-long-wave-radiation"><span class="header-section-number">6.3.1</span> Incident long wave radiation</h3>
+<p>Using incident long wave radiation requires accounting for albedo and long wave radiation emitted from the water surface. The long wave radiation penetrating the water surface is then</p>
+<p><span id="eq-qlw-incident"><span class="math display">\[
+Q_{lw}=(1-r_a^{(lw)})Q_{lw(incident)}
+\tag{6.6}\]</span></span></p>
+<p>where <span class="math inline">\(r_a^{(lw)}\)</span> is the albedo for long wave radiation, which is taken as a constant = 0.03 <span class="citation" data-cites="Hend86">(Henderson-Sellers 1986)</span>.</p>
+<p>Long wave radiation emitted from the water surface is given by <span class="citation" data-cites="Tenn72">(Tennessee Valley Authority 1972, eqn 3.5)</span></p>
+<p><span id="eq-lw-emitted"><span class="math display">\[
+Q_{lw(emitted)}=\epsilon_w \sigma T_w^4
+\tag{6.7}\]</span></span></p>
+<p>where <span class="math inline">\(\epsilon_w\)</span> is the emissivity of the water surface (=0.96), <span class="math inline">\(\sigma\)</span> is the Stefan-Boltzmann constant (<span class="math inline">\(\sigma =5.6697 \times 10^{-8} \; W \, m^{-2} \, K^{-4}\)</span>), and <span class="math inline">\(T_w\)</span> is the absolute temperature of the water surface (i.e.&nbsp;the temperature of the surface layer).</p>
+<p>The net longwave radiation energy density deposited into the surface layer for the period <span class="math inline">\(\Delta t\)</span> is therefore</p>
+<p><span id="eq-qlw-net-incident"><span class="math display">\[
+Q_{lw}=(1-r_a^{(lw)})Q_{lw(incident)}-\epsilon_w \sigma T_w^4
+\tag{6.8}\]</span></span></p>
 </section>
-<section id="background-potential-energy-conservation" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="background-potential-energy-conservation"><span class="header-section-number">5.5</span> Background Potential Energy Conservation</h2>
-<p><em>Content to be added.</em></p>
+<section id="net-long-wave-radiation" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="net-long-wave-radiation"><span class="header-section-number">6.3.2</span> Net long wave radiation</h3>
+<p>Using net long wave radiation requires accounting for albedo at the water surface. The long wave radiation energy density deposited into the surface layer for the period <span class="math inline">\(\Delta t\)</span> is therefore</p>
+<p><span id="eq-qlw-nett"><span class="math display">\[
+Q_{lw}=(1-r_a^{(lw)})Q_{lw(nett)}
+\tag{6.9}\]</span></span></p>
+</section>
+<section id="cloud-cover" class="level3" data-number="6.3.3">
+<h3 data-number="6.3.3" class="anchored" data-anchor-id="cloud-cover"><span class="header-section-number">6.3.3</span> Cloud cover</h3>
+<p>Long wave radiation can also be estimated from atmospheric conditions, using cloud cover fraction (<span class="math inline">\(0 \le C \le 1\)</span>). The net long wave radiation energy density incident on the water surface can be estimated as</p>
+<p><span id="eq-qlw-rad"><span class="math display">\[
+Q_{lw(rad)}=(1-r_a^{(lw)})Q_{lw(air)}
+\tag{6.10}\]</span></span></p>
+<p>where <span class="citation" data-cites="Tenn72 Fisc79">(Tennessee Valley Authority 1972, eqn 3.14; Fischer et al. 1979, eqn 6.21)</span></p>
+<p><span id="eq-qlw-air"><span class="math display">\[
+Q_{lw(air)}=(1+0.17C^2)\epsilon_a(T_a) \sigma T_a^4
+\tag{6.11}\]</span></span></p>
+<p>the subscript <span class="math inline">\(a\)</span> referring to properties of the air. <span class="citation" data-cites="Swin63">Swinbank (1963)</span> showed that</p>
+<p><span id="eq-emissivity-air"><span class="math display">\[
+\epsilon_a(T_a) = C_\epsilon T_a^2
+\tag{6.12}\]</span></span></p>
+<p>where <span class="math inline">\(C_\epsilon = 9.37 \times 10^{-6} \; K^{-2}\)</span>. As previously, the long wave emitted is</p>
+<p><span id="eq-lw-emitted2"><span class="math display">\[
+Q_{lw(emitted)}=\epsilon_w \sigma T_w^4
+\tag{6.13}\]</span></span></p>
+<p>The net long wave radiation is therefore</p>
+<p><span id="eq-qlw-cloud"><span class="math display">\[
+Q_{lw}=(1-r_a^{(lw)})(1+0.17C^2)\epsilon_a(T_a) \sigma T_a^4-\epsilon_w \sigma T_w^4
+\tag{6.14}\]</span></span></p>
+</section>
+</section>
+<section id="sensible-heat-flux" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="sensible-heat-flux"><span class="header-section-number">6.4</span> Sensible Heat Flux</h2>
+<p>The sensible heat loss from the surface of the lake for the period <span class="math inline">\(\Delta t\)</span> may be written as <span class="citation" data-cites="Fisc79">(Fischer et al. 1979, eqn 6.19)</span></p>
+<p><span id="eq-sensible"><span class="math display">\[
+Q_{sh}=C_s \rho_a C_P U_a (T_a-T_s)\Delta t
+\tag{6.15}\]</span></span></p>
+<p>where <span class="math inline">\(C_S\)</span> is the sensible heat transfer coefficient for wind speed at 10 m reference height above the water surface (<span class="math inline">\(= 1.3 \times 10^{-3}\)</span>), <span class="math inline">\(\rho_a\)</span> the density of air in kg m<span class="math inline">\(^{-3}\)</span>, <span class="math inline">\(C_P\)</span> the specific heat of air at constant pressure (<span class="math inline">\(= 1003 \; J \, kg^{-1} \, K^{-1}\)</span>), <span class="math inline">\(U_{a}\)</span> is the wind speed at the ‘standard’ reference height of 10 m in m s<span class="math inline">\(^{-1}\)</span>, with temperatures either <strong>both</strong> in Celsius or <strong>both</strong> in Kelvin.</p>
+</section>
+<section id="latent-heat-flux" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="latent-heat-flux"><span class="header-section-number">6.5</span> Latent Heat Flux</h2>
+<p>The evaporative heat flux is given by <span class="citation" data-cites="Fisc79">(Fischer et al. 1979, eqn 6.20)</span></p>
+<p><span id="eq-latent"><span class="math display">\[
+Q_{lh}=\min \left ( 0,\frac{0.622}{P}C_L \rho_a L_E U_a (e_a-e_s(T_s)) \Delta t \right )
+\tag{6.16}\]</span></span></p>
+<p>where <span class="math inline">\(P\)</span> is the atmospheric pressure in pascals, <span class="math inline">\(C_{L}\)</span> is the latent heat transfer coefficient (<span class="math inline">\(= 1.3 \times 10^{-3}\)</span>) for wind speed at the reference height of 10 m, <span class="math inline">\(\rho_{a}\)</span> the density of air in kg m<span class="math inline">\(^{-3}\)</span>, <span class="math inline">\(L_{E}\)</span> the latent heat of evaporation of water (<span class="math inline">\(= 2.453 \times 10^{6} \; J \, kg^{-1}\)</span>), <span class="math inline">\(U_{a}\)</span> is the wind speed in m s<span class="math inline">\(^{-1}\)</span> at the reference height of 10 m, <span class="math inline">\(e_{a}\)</span> the vapour pressure of the air, and <span class="math inline">\(e_{s}\)</span> the saturation vapour pressure at the water surface temperature <span class="math inline">\(T_{S}\)</span>; both vapour pressures are measured in pascals. The condition that <span class="math inline">\(Q_{lh} \le 0\)</span>, is so that no condensation effects are considered.</p>
+<p>The saturated vapour pressure <span class="math inline">\(e_{s}\)</span> is calculated via the Magnus-Tetens formula <span class="citation" data-cites="Tenn72">(Tennessee Valley Authority 1972, eqn 4.1)</span>:</p>
+<p><span id="eq-magnus"><span class="math display">\[
+e_s(T_s)=100 \exp\left [ 2.3026 \left (\frac{7.5T_s}{T_s+237.3}+0.758 \right ) \right]
+\tag{6.17}\]</span></span></p>
+<p>where <span class="math inline">\(T_{s}\)</span> is in degrees Celsius and <span class="math inline">\(e_{s}\)</span> is in pascals.</p>
+<p>Thus, the total non-penetrative energy density deposited in the surface layer during the period <span class="math inline">\(\Delta t\)</span> is given by</p>
+<p><span id="eq-nonpen"><span class="math display">\[
+Q_{non-pen}=Q_{lw}+Q_{sh}+Q_{lh}
+\tag{6.18}\]</span></span></p>
+</section>
+<section id="surface-mass-fluxes" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="surface-mass-fluxes"><span class="header-section-number">6.6</span> Surface Mass Fluxes</h2>
+<section id="latent-heat-mass-flux-density" class="level3" data-number="6.6.1">
+<h3 data-number="6.6.1" class="anchored" data-anchor-id="latent-heat-mass-flux-density"><span class="header-section-number">6.6.1</span> Latent heat mass flux density</h3>
+<p>The change in mass in the surface layer cells (layer number <span class="math inline">\(N\)</span>) due to latent heat flux is calculated as</p>
+<p><span id="eq-mass-latent"><span class="math display">\[
+\Delta M_N^{lh}=\frac{-Q_{lh}d_X d_Y}{L_V}
+\tag{6.19}\]</span></span></p>
+<p>where <span class="math inline">\(d_{X}\)</span> and <span class="math inline">\(d_{Y}\)</span> are the grid size of the surface layer cell and <span class="math inline">\(L_{V}\)</span> is the latent heat of vaporisation for water.</p>
+</section>
+<section id="rainfall" class="level3" data-number="6.6.2">
+<h3 data-number="6.6.2" class="anchored" data-anchor-id="rainfall"><span class="header-section-number">6.6.2</span> Rainfall</h3>
+<p>It is assumed that the temperature of the rain is the same as that of the surface cell. The salinity and water quality are set to zero. The change in surface layer mass is</p>
+<p><span id="eq-mass-rain"><span class="math display">\[
+\Delta M_N^{rain}=\rho_{rain} d_X d_Y r \Delta t
+\tag{6.20}\]</span></span></p>
+<p>where <span class="math inline">\(r\)</span> is the rainfall in m s<span class="math inline">\(^{-1}\)</span>.</p>
+</section>
+</section>
+<section id="atmospheric-stability-and-surface-exchange" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="atmospheric-stability-and-surface-exchange"><span class="header-section-number">6.7</span> Atmospheric Stability and Surface Exchange</h2>
+<p>One factor known to cause variability in the heat and momentum transfer described above is air column stability and water roughness <span class="citation" data-cites="Imbe90">(Imberger and Patterson 1990)</span>. This has the effect of altering the exchange coefficients <span class="math inline">\(C_{S}\)</span>, <span class="math inline">\(C_{L}\)</span> and <span class="math inline">\(C_{D}\)</span>.</p>
+<p>If the meteorological sensors are located within the internal boundary layer over the surface of the lake, and data is collected at sub-daily intervals, it is appropriate to consider the effect of air column stability on surface exchange. ELCOM uses the iterative procedure of <span class="citation" data-cites="Hick75">Hicks (1975)</span> to compute these values, as described in <span class="citation" data-cites="Imbe90">Imberger and Patterson (1990)</span> (p329). The user is referred to these references for more information.</p>
 
 
 </section>
@@ -687,13 +893,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./sci-thermodynamics.html" class="pagination-link" aria-label="Surface Thermodynamics">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Surface Thermodynamics</span></span>
+      <a href="./sci-method.html" class="pagination-link" aria-label="Numerical Method">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Numerical Method</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./02-pre.html" class="pagination-link" aria-label="Pre-Processor">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pre-Processor</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./sci-mixing.html" class="pagination-link" aria-label="Mixing Model">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Mixing Model</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

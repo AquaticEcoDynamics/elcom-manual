@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="This is a draft of the ELCOM manual.">
+
+<title>9&nbsp; Underflow Model – ELCOM Manual</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./sci-destrat.html" rel="next">
+<link href="./sci-filter.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-d9ea66fcd6c317012447f26e9c021348.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sci-intro.html">Science Description</a></li><li class="breadcrumb-item"><a href="./sci-underflow.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Underflow Model</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">ELCOM Manual</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Overview</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Science Description</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-goveqns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Governing Hydrodynamic Equations and Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-timestep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Timestep limitations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Numerical Method</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-thermo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Surface Thermodynamics and Mass Fluxes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-mixing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Mixing Model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-filter.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Numerical Diffusion Filter</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-underflow.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Underflow Model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-destrat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Artificial Destratification</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Using ELCOM</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-pre.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Pre-Processor</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-elcom.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ELCOM Operation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Notation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Examples</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-application.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Applications</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">9.1</span> Introduction</a></li>
+  <li><a href="#governing-equations" id="toc-governing-equations" class="nav-link" data-scroll-target="#governing-equations"><span class="header-section-number">9.2</span> Governing Equations</a></li>
+  <li><a href="#model-implementation" id="toc-model-implementation" class="nav-link" data-scroll-target="#model-implementation"><span class="header-section-number">9.3</span> Model Implementation</a></li>
+  <li><a href="#front-tracking" id="toc-front-tracking" class="nav-link" data-scroll-target="#front-tracking"><span class="header-section-number">9.4</span> Front Tracking</a></li>
+  <li><a href="#coupling-the-model-to-elcom" id="toc-coupling-the-model-to-elcom" class="nav-link" data-scroll-target="#coupling-the-model-to-elcom"><span class="header-section-number">9.5</span> Coupling the Model to ELCOM</a></li>
+  <li><a href="#plunge-point-analysis" id="toc-plunge-point-analysis" class="nav-link" data-scroll-target="#plunge-point-analysis"><span class="header-section-number">9.6</span> Plunge Point Analysis</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sci-intro.html">Science Description</a></li><li class="breadcrumb-item"><a href="./sci-underflow.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Underflow Model</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-underflow" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Underflow Model</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">9.1</span> Introduction</h2>
+<p>The underflow model in ELCOM is based on the numerical approach proposed by <span class="citation" data-cites="Brad99">Bradford and Katapodes (1999)</span> with finite-volume spatial discretization, conservation equations advanced by a predictor-corrector algorithm and <span class="citation" data-cites="Roe81">Roe (1981)</span> approximate Riemann solver for fluxes through cell faces. The conservation equations of <span class="citation" data-cites="Brad99">Bradford and Katapodes (1999)</span> have been modified to use salinity and temperature instead of turbidity, and terms have been added to model 1) effects of the earth’s rotation, 2) gradients in ambient fluid salinity and 3) momentum of the background circulation. The entrainment relationship has been changed to the formulation of <span class="citation" data-cites="Dall01">Dallimore, Imberger, and Ishikawa (2001)</span>, developed from a parameterisation of the turbulent kinetic energy equation. The general grid transformations of <span class="citation" data-cites="Brad99">Bradford and Katapodes (1999)</span> are replaced with a simple Cartesian-grid approach for compatibility with the Cartesian grid in ELCOM.</p>
+</section>
+<section id="governing-equations" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="governing-equations"><span class="header-section-number">9.2</span> Governing Equations</h2>
+<p>The underflow model governing equations are the vertically-integrated equations of volume, momentum and salinity based on derivations of <span class="citation" data-cites="Elli59">Ellison and Turner (1959)</span>. Assuming unity values for the shape factors while including the ambient fluid properties, the conservation equations of volume, x momentum, y momentum and salinity are respectively given by</p>
+<p><span id="eq-uf-volume"><span class="math display">\[
+\frac{\partial(H)}{\partial t}+\frac{\partial(UH)}{\partial x}+\frac{\partial(VH)}{\partial y}=E\sqrt{U^2+V^2}
+\tag{9.1}\]</span></span></p>
+<p><span id="eq-uf-xmom"><span class="math display">\[
+\frac{\partial(UH)}{\partial t}+\frac{\partial(U^2H)}{\partial x}+\frac{\partial(UVH)}{\partial y}=fVH-C_DU\sqrt{U^2+V^2}- \frac{1}{2}\frac{\partial(g'H^2)}{\partial x}-g'HS_x+U_{amb}E\sqrt{U^2+V^2}
+\tag{9.2}\]</span></span></p>
+<p><span id="eq-uf-ymom"><span class="math display">\[
+\frac{\partial(VH)}{\partial t}+\frac{\partial(UVH)}{\partial x}+\frac{\partial(V^2H)}{\partial y}=-fUH-C_DV\sqrt{U^2+V^2}- \frac{1}{2}\frac{\partial(g'H^2)}{\partial y}-g'HS_y+V_{amb}E\sqrt{U^2+V^2}
+\tag{9.3}\]</span></span></p>
+<p><span id="eq-uf-salinity"><span class="math display">\[
+\frac{\partial(SH)}{\partial t}+\frac{\partial(SUH)}{\partial x}+\frac{\partial(SVH)}{\partial y}=S_{amb}E\sqrt{U^2+V^2}
+\tag{9.4}\]</span></span></p>
+<p>where <span class="math inline">\(H\)</span> is the height of the underflow; <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> are vertically averaged velocities in the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> directions; <span class="math inline">\(S\)</span> is the vertically averaged salinity; <span class="math inline">\(g'\)</span> is the reduced gravity term <span class="math inline">\(= g(\rho-\rho_{amb})/\rho_{amb}\)</span>, <span class="math inline">\(f\)</span> is the Coriolis parameter; <span class="math inline">\(C_D\)</span> is the bottom drag coefficient; <span class="math inline">\(E\)</span> is the entrainment coefficient and <span class="math inline">\(S_x\)</span> and <span class="math inline">\(S_y\)</span> are the bottom slopes in the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> directions. The subscripts <span class="math inline">\(amb\)</span> refer to the ambient value of the variable. Ambient values used by the underflow model are obtained from the salinity and velocity at the bottom boundary cells of the 3D model, and are used to model entrainment through the last terms in the momentum and salinity equations.</p>
+<p>The entrainment coefficient (<span class="math inline">\(E\)</span>) in the governing equations is given by the entrainment law of <span class="citation" data-cites="Dall01">Dallimore, Imberger, and Ishikawa (2001)</span>. The equation has been altered to account for the ambient flow and is given by</p>
+<p><span id="eq-entrainment"><span class="math display">\[
+E=\frac{C_KC_D^{3/2}+C_s\left(\frac{\Delta u}{\sqrt{U^2+V^2}}\right)^{3/2}}{Ri+ 10\left(C_KC_D^{3/2}+C_s\left(\frac{\Delta u}{\sqrt{U^2+V^2}}\right)^{3/2}\right)}
+\tag{9.5}\]</span></span></p>
+<p>where</p>
+<p><span id="eq-delta-u"><span class="math display">\[
+\Delta u =\sqrt{(U^2-U_{amb}^2)+(V^2-V_{amb}^2)}
+\tag{9.6}\]</span></span></p>
+<p>and <span class="math inline">\(Ri\)</span> is the bulk Richardson number given by</p>
+<p><span id="eq-Ri"><span class="math display">\[
+Ri=\frac{g'H}{U^2+V^2}
+\tag{9.7}\]</span></span></p>
+<p>The parameterisation constants <span class="math inline">\(C_K\)</span> and <span class="math inline">\(C_S\)</span> account for the bottom production and shear production terms respectively.</p>
+</section>
+<section id="model-implementation" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="model-implementation"><span class="header-section-number">9.3</span> Model Implementation</h2>
+<p>The model is implemented using a finite-volume method. The predictor-corrector scheme (explicit prediction and implicit correction) as outlined by <span class="citation" data-cites="Brad99">Bradford and Katapodes (1999)</span> is used to obtain second-order temporal accuracy. The predictor solution is obtained from the primitive form of the governing equations. Following <span class="citation" data-cites="Brad99">Bradford and Katapodes (1999)</span>, the primitive forms of governing equations are used for computational efficiency and can be written as:</p>
+<p><span id="eq-prim-vol"><span class="math display">\[
+\frac{\partial H}{\partial t}+U\frac{\partial H}{\partial x}+H\frac{\partial U}{\partial x}+V\frac{\partial H}{\partial y} +H\frac{\partial V}{\partial y}=E\sqrt{U^2+V^2}
+\tag{9.8}\]</span></span></p>
+<p><span id="eq-prim-xmom"><span class="math display">\[
+\frac{\partial U}{\partial t}+g'\frac{\partial H}{\partial x}+U\frac{\partial U}{\partial x}+\frac{1}{2}H\frac{\partial g'}{\partial x}
++V\frac{\partial U}{\partial y}=\frac{1}{H}\left(U_{amb}E\sqrt{U^2+V^2}-C_DU\sqrt{U^2+V^2} \right)+fVH-gS_x
+\tag{9.9}\]</span></span></p>
+<p><span id="eq-prim-ymom"><span class="math display">\[
+\frac{\partial V}{\partial t}+g'\frac{\partial H}{\partial y}+V\frac{\partial V}{\partial y}+\frac{1}{2}H\frac{\partial g'}{\partial y}
++U\frac{\partial V}{\partial x}=\frac{1}{H}\left(V_{amb}E\sqrt{U^2+V^2}-C_DV\sqrt{U^2+V^2} \right)-fUH-gS_y
+\tag{9.10}\]</span></span></p>
+<p><span id="eq-prim-sal"><span class="math display">\[
+\frac{\partial S}{\partial t}+U\frac{\partial S}{\partial x}+V\frac{\partial S}{\partial y}=\frac{1}{H}(S-S_{amb})E\sqrt{U^2+V^2}
+\tag{9.11}\]</span></span></p>
+<p>An approximate (predictor) solution for the conservation of volume at time <span class="math inline">\(t+\Delta t/2\)</span> in cell <span class="math inline">\(i\)</span>, is given by</p>
+<p><span id="eq-predictor"><span class="math display">\[
+H_{i,j}^{n+1/2}=H_{i,j}^{n}-\frac{\Delta t}{2}
+\left[
+U\frac{\overline{\Delta H_x}}{\Delta x}
++V\frac{\overline{\Delta H_y}}{\Delta y}
++H\frac{\overline{\Delta U_x + \Delta U_y}}{\Delta x}
+-E\sqrt{U^2+V^2}
+\right]_{i,j}^n
+\tag{9.12}\]</span></span></p>
+<p>where superscripts represent the time step and subscripts represent the center of a grid cell in the horizontal underflow model grid. Note that <span class="math inline">\(n+1/2\)</span> represents the computational time of the predictor step. Similar expressions (not shown for brevity) can be written for predictor conservation equations of salinity and momentum. Overbars in <a href="#eq-predictor" class="quarto-xref">Equation&nbsp;<span>9.12</span></a> denote average gradients at the cell center computed from gradients across the cell faces in the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> directions. For example</p>
+<p><span id="eq-avg-gradient"><span class="math display">\[
+\overline{\Delta H_x}=\text{avg}(H_{i,j}-H_{i-1,j},H_{i+1,j}-H_{i,j})=\text{avg}(a,b)
+\tag{9.13}\]</span></span></p>
+<p>where the averaging function used in the underflow model is the <span class="math inline">\(\beta\)</span> family of averages given by</p>
+<p><span id="eq-superbee"><span class="math display">\[
+\overline{\Delta H_x}=
+\begin{cases}
+\text{sign}(a)\min(\max(|a|,|b|),\beta \min(|a|,|b|)) &amp; ab&gt;0 \\
+0 &amp; ab\le0
+\end{cases}
+\tag{9.14}\]</span></span></p>
+<p>For all simulations, <span class="math inline">\(\beta\)</span> is equal to two, which corresponds to a Superbee averaging function.</p>
+<p>The corrector solution is a coupled, implicit solution of a discrete form of the conservative governing equations using the predictor-step fluxes. For example, the conservation of volume equation can be written as</p>
+<p><span id="eq-corrector"><span class="math display">\[
+\Delta x\Delta y \frac{H^{n+1}-H^{n}}{dt}=F_F^{n+1/2}\Delta y+F_B^{n+1/2}\Delta y+F_R^{n+1/2}\Delta x+F_L^{n+1/2}\Delta x+E\sqrt{U^{(n+1/2)^2}+V^{(n+1/2)^2}}
+\tag{9.15}\]</span></span></p>
+<p>where <span class="math inline">\(F_F\)</span>, <span class="math inline">\(F_R\)</span>, <span class="math inline">\(F_B\)</span> and <span class="math inline">\(F_L\)</span> are the volume fluxes through the front, right, back and left cell faces respectively. Here the nomenclature is consistent with the ELCOM code, where the front is the cell face in the positive <span class="math inline">\(x\)</span> direction, back is in negative <span class="math inline">\(x\)</span>, right is positive <span class="math inline">\(y\)</span>, and left is negative <span class="math inline">\(y\)</span>. The fluxes are defined as positive in the direction of increasing computational coordinates.</p>
+<p>The fluxes at each cell face are calculated using the approximate Riemann solver developed by <span class="citation" data-cites="Roe81">Roe (1981)</span>. These fluxes are given by</p>
+<p><span id="eq-fluxTerm"><span class="math display">\[
+F_{F(i,j)}=F_{B(i+1,j)}=\frac{1}{2}\left(f_{F(i,j)}^{n+1/2} + f_{B(i+1,j)}^{n+1/2} - \hat{R}|\hat{\Lambda}||\Delta \hat{V}|\right)
+\tag{9.16}\]</span></span></p>
+<p>where the <span class="math inline">\(f_{F(i,j)}\)</span> and <span class="math inline">\(f_{B(i+1,j)}\)</span> refer to the estimated fluxes at the front face of cell <span class="math inline">\((i,j)\)</span> and the back face of <span class="math inline">\((i+1,j)\)</span> respectively. The third term on the right hand side is the Riemann flux term. The estimated fluxes at the front of cell <span class="math inline">\((i,j)\)</span> are determined from the extrapolation of the primitive variables at the centre of the cell to the front face of the cell. For example the height at the front face of cell <span class="math inline">\((i,j)\)</span> is given by</p>
+<p><span id="eq-H-front"><span class="math display">\[
+H_{F(i,j)}^{n+1/2}=H_{(i,j)}^{n+1/2}+\frac{1}{2}\overline{\Delta H_x}_{i,j}^n
+\tag{9.17}\]</span></span></p>
+<p>and the estimated volume flux at the front face of cell <span class="math inline">\((i,j)\)</span> is given by</p>
+<p><span id="eq-f-front"><span class="math display">\[
+f_{F(i,j)}^{n+1/2} =H_{F(i,j)}^{n+1/2}U_{F(i,j)}^{n+1/2}
+\tag{9.18}\]</span></span></p>
+<p>Similar expressions can be written for the other faces and fluxes.</p>
+<p>In matrix form the Riemann flux terms are detailed further in <span class="citation" data-cites="Dall01">Dallimore, Imberger, and Ishikawa (2001)</span> and <span class="citation" data-cites="Brad99">Bradford and Katapodes (1999)</span>.</p>
+<p>Two boundary conditions are used in the underflow model, solid wall and inflow. Inflows are implemented using ghost cells located outside the computational domain. The specified flow rate, salinity and underflow height are placed within the ghost cell for each timestep. Within the ghost cell all gradient terms are set to 0. The fluxes through the interface between the ghost cell and the interior cell are calculated using the Riemann solver as described above. Solid wall boundaries are cell faces where the fluxes are set to zero.</p>
+</section>
+<section id="front-tracking" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="front-tracking"><span class="header-section-number">9.4</span> Front Tracking</h2>
+<p>Following <span class="citation" data-cites="Brad99">Bradford and Katapodes (1999)</span> a front-tracking scheme is used to eliminate artificial propagation of the density front resulting from discretization. Cells in the underflow model are defined as being ‘underflow’, ‘ambient’ or ‘frontal’. ‘Underflow’ cells are cells that are filled by the underflow; ‘ambient’ cells contain ambient water without underflow water, while ‘frontal’ cells are the boundary cells between the underflow and the ambient fluid that contain both types of water. In a frontal cell, fluxes are only calculated for faces that are bounded by an underflow cell. The front propagation distance in the <span class="math inline">\(x\)</span> direction, <span class="math inline">\(X_f\)</span>, from time <span class="math inline">\(n\)</span> to <span class="math inline">\(n+1\)</span> within a frontal cell is given by</p>
+<p><span id="eq-front"><span class="math display">\[
+X_{f}^{n+1} =X_{f}^{n}+U_f^{n+1}\Delta t
+\tag{9.19}\]</span></span></p>
+<p>where <span class="math inline">\(U_f\)</span> is the front velocity. An analogous formula is used for the frontal distance in the <span class="math inline">\(y\)</span> direction. If <span class="math inline">\(X_f^{n+1}\)</span> is greater than the grid dimension (<span class="math inline">\(\Delta x\)</span>) then the cell is changed to an underflow cell and any adjacent ambient cell becomes a new frontal cell. While the concept is straightforward in one dimension, in 2D a cell may be a frontal cell with respect to both the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> coordinate directions. This is simply a bookkeeping problem for the model, that is handled by designating any cell with both ambient and underflow water as a ‘frontal’ cell then checking whether one or two faces are involved in frontal propagation. At the end of each timestep, any ambient cell that has frontal cells on both <span class="math inline">\(x\)</span> or both <span class="math inline">\(y\)</span> faces is also designated as an underflow cell. This simplifies the computation for two fronts that are propagating in opposite directions and meet in a single ambient grid cell.</p>
+<p>As pointed out by <span class="citation" data-cites="Brad99">Bradford and Katapodes (1999)</span> there are a number of possibilities for the frontal velocities <span class="math inline">\(U_f\)</span> and <span class="math inline">\(V_f\)</span>. We follow their approach wherein the frontal velocity is based on the computed values of <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> in the frontal cells. We add the effect of the ambient flow on front propagation by computing the frontal velocities as</p>
+<p><span id="eq-front-vel"><span class="math display">\[
+U_{f} =U+U_{amb}
+\tag{9.20}\]</span></span></p>
+<p>This formulation provides a simple and robust first-order approximation for calculating the frontal propagation. Due to the explicit nature of the front-tracking scheme, the front must not propagate further than one grid cell in any timestep. If this condition is violated, the underflow model timestep is automatically halved and the underflow is recomputed. This acts recursively so that the underflow solution will always be stable. Note the timestep for the ambient 3D flow solver is not affected by the change in timestep of the underflow model.</p>
+</section>
+<section id="coupling-the-model-to-elcom" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="coupling-the-model-to-elcom"><span class="header-section-number">9.5</span> Coupling the Model to ELCOM</h2>
+<p>This section discusses the coupling of the 2D underflow model with the 3D solver ELCOM. As an underflow travels along the bottom boundary of a water body it has two effects on the ambient water. Firstly it entrains ambient water into itself and secondly it displaces ambient fluid away from the bottom boundary. The proposed coupling scheme attempts to model these effects via the use of inflows and outflows across the bottom boundary of the 3D domain. The fundamental idea behind the scheme is to insert the net change in the underflow volume during each timestep through the bottom boundary of the 3D domain over the appropriate cells while still tracking the salinity of the underflow with the 2D model. In effect the water that is inserted into the 3D domain is designed to act as a ‘place holder’ that will be replaced with the underflow water once the underflow reaches its insertion level. A schematic of the coupling procedure is shown for a homogeneous ambient water body in <a href="#fig-coupling" class="quarto-xref">Figure&nbsp;<span>9.1</span></a>. The three basic steps of the scheme are:</p>
+<ol type="1">
+<li>Removal of the entrained water from the 3D domain (<a href="#fig-coupling" class="quarto-xref">Figure&nbsp;<span>9.1</span></a> a)</li>
+<li>Insertion of the net volume increase in each underflow cell into the corresponding ELCOM bottom boundary cell (<a href="#fig-coupling" class="quarto-xref">Figure&nbsp;<span>9.1</span></a> b)</li>
+<li>Insertion of salinity once the plume has reached its level of neutral buoyancy (<a href="#fig-coupling" class="quarto-xref">Figure&nbsp;<span>9.1</span></a> c and d)</li>
+</ol>
+<p>Step one and two are implemented every timestep, step three only occurs once the underflow reaches the insertion level.</p>
+<div id="fig-coupling" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-coupling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<embed src="elcom_science/08-underflow/coupling.pdf" class="img-fluid">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-coupling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.1: Profiles showing coupling of the 2D underflow model to the 3D solver. The net volume for each underflow cell is calculated for each timestep (a). This volume is inserted as an inflow across the bottom boundary of the 3D domain (b). Once the underflow reaches its insertion level the salinity within a volume at the bottom of each column in the 3D domain is replaced with the salinity of the underflow. (d) shows the representation of the underflow within the 3D domain after insertion.
+</figcaption>
+</figure>
+</div>
+<p>Both the entrainment and the net change in volume of an underflow cell (<a href="#fig-coupling" class="quarto-xref">Figure&nbsp;<span>9.1</span></a> a) are easily calculated from the underflow model. After each underflow timestep is completed the entrained volume is removed from the appropriate cell on the bottom boundary of the 3D domain. The net change in volume of the underflow cell is then inserted into the 3D domain as an inflow across the bottom boundary of the corresponding 3D column. So as not to introduce any unwanted currents in the 3D domain this inflow is given a salinity equal to the salinity at the bottom of the ELCOM column. The idea is to insert the underflow volume over the appropriate cells while having the minimal effect on the ambient motions. In practice, because the entrained and the insertion fluid both have a salinity given by the salinity at the bottom of the 3D domain, step 1 and 2 are combined to form a single inflow for each column. The volume of the inflow is given by the change in volume of the cell minus the volume entrained into the cell and is equal to the net volume flux into the cell given by the modeled Riemann fluxes. If the net volume flux into the underflow cell is negative (e.g.&nbsp;at the tail of the underflow) then the appropriate volume is removed from the ELCOM cell as an outflow.</p>
+<p>It can easily be shown that the sum of the net volume fluxes into all underflow cells, and hence the total volume flux into ELCOM, is equal to the specified inflow flux at the side boundary. This ensures that conservation of volume is maintained in the 3D solver and that the modeled free surface height in ELCOM accurately represents the supplied inflows.</p>
+<p>Once the underflow reaches its insertion level the salinity in the 3D domain is altered to reflect the salinity of the underflow. The criteria for insertion are defined as when any underflow body cell is less dense than the ambient ELCOM cell ‘above it’ or when the height of the underflow is greater than 5 times ELCOM’s vertical grid size.</p>
+<p>The idea behind the salinity insertion subroutine is to replace the salinity within a certain volume at the bottom of each column (<span class="math inline">\(i,j\)</span>) in the 3D domain such that after the insertion the salinity in the 3D domain represents the height and salinity predicted by the underflow model at each cell (<span class="math inline">\(i,j\)</span>). If the 3D domain has a uniform salinity before the underflow event occurs then the insertion is trivial. For this case both the volume input at the bottom boundary of the ELCOM domain and the entrained water into the underflow have a salinity equal to the uniform ambient salinity. It can be shown that for this scenario conservation of salinity is achieved by replacing the ambient salinity at the bottom of each column (<span class="math inline">\(i,j\)</span>) up to a height equal to the underflow height at cell (<span class="math inline">\(i,j\)</span>) with the underflow salinity (<span class="math inline">\(S_{i,j}\)</span>). The replacement of salinity is achieved using the following formulae:</p>
+<p><span id="eq-insertSal"><span class="math display">\[
+S^{ELCOM} =
+\begin{cases}
+S &amp; z_{top}&lt;H \\
+\frac{S(H-z_{bot})}{dz} +\frac{S^{ELCOM}(z_{top}-H)}{dz} &amp; z_{bot}&lt;H \le z_{top} \\
+S^{ELCOM} &amp; z_{bot}&gt;H
+\end{cases}
+\tag{9.21}\]</span></span></p>
+<p>where <span class="math inline">\(S^{ELCOM}\)</span> is the salinity in the ELCOM cell, <span class="math inline">\(dz\)</span> is the vertical grid size and <span class="math inline">\(z_{top}\)</span> and <span class="math inline">\(z_{bot}\)</span> are the height above the bottom of the top and bottom faces of the ELCOM cell. The representation of the underflow salinity in the 3D solver after insertion is shown in <a href="#fig-coupling" class="quarto-xref">Figure&nbsp;<span>9.1</span></a>(d).</p>
+<p>When the ambient salinity is not uniform the above scheme is not conservative for salinity. The problem is the total amount of salinity being replaced is not necessarily equal to the salinity that was input into the 3D domain before the time of insertion. There are two possible solutions to this; either the volume of water being replaced or the underflow salinity can be altered to arbitrarily balance salinity. In ELCOM the former was chosen for two reasons. Firstly, if the underflow salinity is changed there is the possibility that the new salinity will be unrealistically high. Secondly, because the height of the underflow in ELCOM must be an integer number of cells high a small change in the volume of water replaced in the ELCOM domain will have a small effect on the representation of the underflow within ELCOM. The height over which salinity is replaced in a column is given by</p>
+<p><span id="eq-h-insert"><span class="math display">\[
+H_{insert}=H+\frac{S_{removed}-S_{added}}{S\Delta x\Delta y}
+\tag{9.22}\]</span></span></p>
+<p>where <span class="math inline">\(S_{removed}\)</span> is the total salinity replaced in the ELCOM column, <span class="math inline">\(S_{added}\)</span> is the salinity that has been added through the bottom of the ELCOM column and <span class="math inline">\(H\)</span> and <span class="math inline">\(S\)</span> are the predicted height and salinity of the underflow. Once <span class="math inline">\(H_{insert}\)</span> has been calculated the salinity within the 3D domain can be modified according to <a href="#eq-insertSal" class="quarto-xref">Equation&nbsp;<span>9.21</span></a> above with <span class="math inline">\(H\)</span> replaced by <span class="math inline">\(H_{insert}\)</span>. Note that if <span class="math inline">\(S_{removed} = S_{added}\)</span>, as in the ambient uniform case, <a href="#eq-h-insert" class="quarto-xref">Equation&nbsp;<span>9.22</span></a> predicts an insertion height equal to the height of the underflow.</p>
+<p>The two major parts of the insertion routine can be summarised as:</p>
+<ol type="1">
+<li>At each time step a volume is inserted through the bottom boundary of each column in the 3D domain. This volume is equal to the net volume flux into the corresponding underflow cell. The salinity of the inserted water is given by the salinity in the bottom cell of the ELCOM column.</li>
+<li>Once the underflow has reached its level of insertion then the salinity in a certain volume at the base of every column in the 3D domain is replaced by the salinity of the corresponding underflow cell. The volume of water replaced is chosen to ensure conservation of salinity.</li>
+</ol>
+<p>It should be noted that once the insertion of salinity has taken place and the tracking of the underflow has essentially been handed over to ELCOM that numerical convective entrainment will still occur. Two scenarios lead to the insertion of salinity. The first is when the height of the underflow is large compared to the vertical grid size in which case the effect of numerical mixing is small compared to the volume of the flow. The second scenario is when the underflow reaches neutral buoyancy. For this scenario the effect of convective entrainment is reduced because as water flows over a step in the bathymetry the water below it will have a similar salinity.</p>
+</section>
+<section id="plunge-point-analysis" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="plunge-point-analysis"><span class="header-section-number">9.6</span> Plunge Point Analysis</h2>
+<p>In order to model the plunging region of an inflow event a simple first-order approximation was made to the underflow model to account for the error in the momentum equation. This modification deals with the symptoms of the momentum error rather than addressing the error directly. Once the underflow volume fluxes are calculated the underflow height for each underflow cell at timestep <span class="math inline">\(n+1\)</span> is first estimated by neglecting the entrainment into the flow such that</p>
+<p><span id="eq-plunge-height"><span class="math display">\[
+\Delta x\Delta y \frac{H^{n+1}-H^{n}}{dt}=F_F^{n+1/2}\Delta y+F_B^{n+1/2}\Delta y+F_R^{n+1/2}\Delta x+F_L^{n+1/2}\Delta x
+\tag{9.23}\]</span></span></p>
+<p>The predicted underflow height for each cell is then compared to the corresponding depth of the reservoir in the 3D domain. If the underflow height is greater than the water depth then the volume fluxes are manipulated so that the <span class="math inline">\(H^{n+1}\)</span> is equal to the depth of the reservoir. More specifically the volume flux through the face in the direction of the underflow front is increased to provide the necessary change. Scalar fluxes are altered to reflect the change in volume flux. In order to ensure that no mixing takes place before the plunge point of the underflow the entrainment coefficient for these cells is set to zero. Rather than altering the momentum equation to deal with a plunging flow, the conservation of volume equation is utilised to give</p>
+<p><span id="eq-plunge-U"><span class="math display">\[
+U^{n+1}=\frac{F_F^{n+1/2}+F_B^{n+1/2}}{H^{n+1/2}}
+\tag{9.24}\]</span></span></p>
+<p><span id="eq-plunge-V"><span class="math display">\[
+V^{n+1}=\frac{F_R^{n+1/2}+F_L^{n+1/2}}{H^{n+1/2}}
+\tag{9.25}\]</span></span></p>
+<p>A further complication can arise during the solution of the conservation equations. The predicted height at time <span class="math inline">\(t = t+\Delta t\)</span> is given by the conservation of volume equation</p>
+<p><span id="eq-plunge-full"><span class="math display">\[
+\Delta x\Delta y \frac{H^{n+1}-H^{n}}{dt}=F_F^{n+1/2}\Delta y+F_B^{n+1/2}\Delta y+F_R^{n+1/2}\Delta x+F_L^{n+1/2}\Delta x+E\sqrt{U^{(n+1/2)^2}+V^{(n+1/2)^2}}
+\tag{9.26}\]</span></span></p>
+<p>If the entrainment term is large it is still possible for <span class="math inline">\(H^{n+1}\)</span> to be greater than the depth of the water column. This is easily dealt with by modifying the entrainment coefficient, <span class="math inline">\(E\)</span>, where the underflow height is greater than the water depth to ensure <span class="math inline">\(H^{n+1}\)</span> is equal to the depth.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./sci-filter.html" class="pagination-link" aria-label="Numerical Diffusion Filter">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Numerical Diffusion Filter</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./sci-destrat.html" class="pagination-link" aria-label="Artificial Destratification">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Artificial Destratification</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

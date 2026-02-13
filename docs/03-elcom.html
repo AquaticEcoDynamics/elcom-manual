@@ -8,7 +8,7 @@
 
 <meta name="description" content="This is a draft of the ELCOM manual.">
 
-<title>7&nbsp; ELCOM Operation – ELCOM Manual</title>
+<title>12&nbsp; ELCOM Operation – ELCOM Manual</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -113,7 +113,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-pre.html">Using ELCOM</a></li><li class="breadcrumb-item"><a href="./03-elcom.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">ELCOM Operation</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-pre.html">Using ELCOM</a></li><li class="breadcrumb-item"><a href="./03-elcom.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ELCOM Operation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -172,26 +172,56 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sci-hydrodynamics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hydrodynamics</span></span></a>
+  <a href="./sci-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sci-transport.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Transport and Mixing</span></span></a>
+  <a href="./sci-goveqns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Governing Hydrodynamic Equations and Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sci-thermodynamics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Surface Thermodynamics</span></span></a>
+  <a href="./sci-timestep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Timestep limitations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sci-turbulence.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Turbulence Closure</span></span></a>
+  <a href="./sci-method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Numerical Method</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-thermo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Surface Thermodynamics and Mass Fluxes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-mixing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Mixing Model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-filter.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Numerical Diffusion Filter</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-underflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Underflow Model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-destrat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Artificial Destratification</span></span></a>
   </div>
 </li>
       </ul>
@@ -208,19 +238,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-pre.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pre-Processor</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Pre-Processor</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-elcom.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">ELCOM Operation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ELCOM Operation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-notation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Notation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Notation</span></span></a>
   </div>
 </li>
       </ul>
@@ -237,7 +267,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-application.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Applications</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Applications</span></span></a>
   </div>
 </li>
       </ul>
@@ -258,101 +288,101 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">7.1</span> Introduction</a></li>
-  <li><a href="#files-for-elcom" id="toc-files-for-elcom" class="nav-link" data-scroll-target="#files-for-elcom"><span class="header-section-number">7.2</span> Files for ELCOM</a></li>
-  <li><a href="#simulation-modules" id="toc-simulation-modules" class="nav-link" data-scroll-target="#simulation-modules"><span class="header-section-number">7.3</span> Simulation modules</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">12.1</span> Introduction</a></li>
+  <li><a href="#files-for-elcom" id="toc-files-for-elcom" class="nav-link" data-scroll-target="#files-for-elcom"><span class="header-section-number">12.2</span> Files for ELCOM</a></li>
+  <li><a href="#simulation-modules" id="toc-simulation-modules" class="nav-link" data-scroll-target="#simulation-modules"><span class="header-section-number">12.3</span> Simulation modules</a>
   <ul class="collapse">
-  <li><a href="#stratification" id="toc-stratification" class="nav-link" data-scroll-target="#stratification"><span class="header-section-number">7.3.1</span> Stratification</a></li>
-  <li><a href="#tracers" id="toc-tracers" class="nav-link" data-scroll-target="#tracers"><span class="header-section-number">7.3.2</span> Tracers</a></li>
-  <li><a href="#surface-thermodynamics" id="toc-surface-thermodynamics" class="nav-link" data-scroll-target="#surface-thermodynamics"><span class="header-section-number">7.3.3</span> Surface thermodynamics</a></li>
-  <li><a href="#rain" id="toc-rain" class="nav-link" data-scroll-target="#rain"><span class="header-section-number">7.3.4</span> Rain</a></li>
-  <li><a href="#wind" id="toc-wind" class="nav-link" data-scroll-target="#wind"><span class="header-section-number">7.3.5</span> Wind</a></li>
-  <li><a href="#inflowoutflow" id="toc-inflowoutflow" class="nav-link" data-scroll-target="#inflowoutflow"><span class="header-section-number">7.3.6</span> Inflow/Outflow</a></li>
-  <li><a href="#conservation-of-background-potential-energy" id="toc-conservation-of-background-potential-energy" class="nav-link" data-scroll-target="#conservation-of-background-potential-energy"><span class="header-section-number">7.3.7</span> Conservation of Background Potential Energy</a></li>
-  <li><a href="#bubble-plume-destratification" id="toc-bubble-plume-destratification" class="nav-link" data-scroll-target="#bubble-plume-destratification"><span class="header-section-number">7.3.8</span> Bubble Plume Destratification</a></li>
-  <li><a href="#underflow" id="toc-underflow" class="nav-link" data-scroll-target="#underflow"><span class="header-section-number">7.3.9</span> Underflow</a></li>
-  <li><a href="#water-age-modelling" id="toc-water-age-modelling" class="nav-link" data-scroll-target="#water-age-modelling"><span class="header-section-number">7.3.10</span> Water Age Modelling</a></li>
-  <li><a href="#drifters-particles" id="toc-drifters-particles" class="nav-link" data-scroll-target="#drifters-particles"><span class="header-section-number">7.3.11</span> Drifters / Particles</a></li>
-  <li><a href="#jetspumps" id="toc-jetspumps" class="nav-link" data-scroll-target="#jetspumps"><span class="header-section-number">7.3.12</span> Jets/Pumps</a></li>
-  <li><a href="#drafttubes" id="toc-drafttubes" class="nav-link" data-scroll-target="#drafttubes"><span class="header-section-number">7.3.13</span> Drafttubes</a></li>
-  <li><a href="#non-hydrostatic-code" id="toc-non-hydrostatic-code" class="nav-link" data-scroll-target="#non-hydrostatic-code"><span class="header-section-number">7.3.14</span> Non-hydrostatic code</a></li>
+  <li><a href="#stratification" id="toc-stratification" class="nav-link" data-scroll-target="#stratification"><span class="header-section-number">12.3.1</span> Stratification</a></li>
+  <li><a href="#tracers" id="toc-tracers" class="nav-link" data-scroll-target="#tracers"><span class="header-section-number">12.3.2</span> Tracers</a></li>
+  <li><a href="#surface-thermodynamics" id="toc-surface-thermodynamics" class="nav-link" data-scroll-target="#surface-thermodynamics"><span class="header-section-number">12.3.3</span> Surface thermodynamics</a></li>
+  <li><a href="#rain" id="toc-rain" class="nav-link" data-scroll-target="#rain"><span class="header-section-number">12.3.4</span> Rain</a></li>
+  <li><a href="#wind" id="toc-wind" class="nav-link" data-scroll-target="#wind"><span class="header-section-number">12.3.5</span> Wind</a></li>
+  <li><a href="#inflowoutflow" id="toc-inflowoutflow" class="nav-link" data-scroll-target="#inflowoutflow"><span class="header-section-number">12.3.6</span> Inflow/Outflow</a></li>
+  <li><a href="#conservation-of-background-potential-energy" id="toc-conservation-of-background-potential-energy" class="nav-link" data-scroll-target="#conservation-of-background-potential-energy"><span class="header-section-number">12.3.7</span> Conservation of Background Potential Energy</a></li>
+  <li><a href="#bubble-plume-destratification" id="toc-bubble-plume-destratification" class="nav-link" data-scroll-target="#bubble-plume-destratification"><span class="header-section-number">12.3.8</span> Bubble Plume Destratification</a></li>
+  <li><a href="#underflow" id="toc-underflow" class="nav-link" data-scroll-target="#underflow"><span class="header-section-number">12.3.9</span> Underflow</a></li>
+  <li><a href="#water-age-modelling" id="toc-water-age-modelling" class="nav-link" data-scroll-target="#water-age-modelling"><span class="header-section-number">12.3.10</span> Water Age Modelling</a></li>
+  <li><a href="#drifters-particles" id="toc-drifters-particles" class="nav-link" data-scroll-target="#drifters-particles"><span class="header-section-number">12.3.11</span> Drifters / Particles</a></li>
+  <li><a href="#jetspumps" id="toc-jetspumps" class="nav-link" data-scroll-target="#jetspumps"><span class="header-section-number">12.3.12</span> Jets/Pumps</a></li>
+  <li><a href="#drafttubes" id="toc-drafttubes" class="nav-link" data-scroll-target="#drafttubes"><span class="header-section-number">12.3.13</span> Drafttubes</a></li>
+  <li><a href="#non-hydrostatic-code" id="toc-non-hydrostatic-code" class="nav-link" data-scroll-target="#non-hydrostatic-code"><span class="header-section-number">12.3.14</span> Non-hydrostatic code</a></li>
   </ul></li>
-  <li><a href="#sec-initfiles" id="toc-sec-initfiles" class="nav-link" data-scroll-target="#sec-initfiles"><span class="header-section-number">7.4</span> Initialization</a>
+  <li><a href="#sec-initfiles" id="toc-sec-initfiles" class="nav-link" data-scroll-target="#sec-initfiles"><span class="header-section-number">12.4</span> Initialization</a>
   <ul class="collapse">
-  <li><a href="#uniform-initial-conditions" id="toc-uniform-initial-conditions" class="nav-link" data-scroll-target="#uniform-initial-conditions"><span class="header-section-number">7.4.1</span> Uniform initial conditions</a></li>
-  <li><a href="#vertical-profile" id="toc-vertical-profile" class="nav-link" data-scroll-target="#vertical-profile"><span class="header-section-number">7.4.2</span> Vertical Profile</a></li>
-  <li><a href="#sec-multiProf" id="toc-sec-multiProf" class="nav-link" data-scroll-target="#sec-multiProf"><span class="header-section-number">7.4.3</span> Multiple Vertical Profiles</a></li>
-  <li><a href="#horizontal-variation" id="toc-horizontal-variation" class="nav-link" data-scroll-target="#horizontal-variation"><span class="header-section-number">7.4.4</span> Horizontal Variation</a></li>
-  <li><a href="#user-subroutines" id="toc-user-subroutines" class="nav-link" data-scroll-target="#user-subroutines"><span class="header-section-number">7.4.5</span> User subroutines</a></li>
+  <li><a href="#uniform-initial-conditions" id="toc-uniform-initial-conditions" class="nav-link" data-scroll-target="#uniform-initial-conditions"><span class="header-section-number">12.4.1</span> Uniform initial conditions</a></li>
+  <li><a href="#vertical-profile" id="toc-vertical-profile" class="nav-link" data-scroll-target="#vertical-profile"><span class="header-section-number">12.4.2</span> Vertical Profile</a></li>
+  <li><a href="#sec-multiProf" id="toc-sec-multiProf" class="nav-link" data-scroll-target="#sec-multiProf"><span class="header-section-number">12.4.3</span> Multiple Vertical Profiles</a></li>
+  <li><a href="#horizontal-variation" id="toc-horizontal-variation" class="nav-link" data-scroll-target="#horizontal-variation"><span class="header-section-number">12.4.4</span> Horizontal Variation</a></li>
+  <li><a href="#user-subroutines" id="toc-user-subroutines" class="nav-link" data-scroll-target="#user-subroutines"><span class="header-section-number">12.4.5</span> User subroutines</a></li>
   </ul></li>
-  <li><a href="#configuration-controls" id="toc-configuration-controls" class="nav-link" data-scroll-target="#configuration-controls"><span class="header-section-number">7.5</span> Configuration controls</a>
+  <li><a href="#configuration-controls" id="toc-configuration-controls" class="nav-link" data-scroll-target="#configuration-controls"><span class="header-section-number">12.5</span> Configuration controls</a>
   <ul class="collapse">
-  <li><a href="#time-step" id="toc-time-step" class="nav-link" data-scroll-target="#time-step"><span class="header-section-number">7.5.1</span> Time step</a></li>
-  <li><a href="#number-of-steps" id="toc-number-of-steps" class="nav-link" data-scroll-target="#number-of-steps"><span class="header-section-number">7.5.2</span> Number of steps</a></li>
-  <li><a href="#start-date" id="toc-start-date" class="nav-link" data-scroll-target="#start-date"><span class="header-section-number">7.5.3</span> Start date</a></li>
-  <li><a href="#cgm-tolerance" id="toc-cgm-tolerance" class="nav-link" data-scroll-target="#cgm-tolerance"><span class="header-section-number">7.5.4</span> CGM tolerance</a></li>
-  <li><a href="#turbulence" id="toc-turbulence" class="nav-link" data-scroll-target="#turbulence"><span class="header-section-number">7.5.5</span> Turbulence</a></li>
+  <li><a href="#time-step" id="toc-time-step" class="nav-link" data-scroll-target="#time-step"><span class="header-section-number">12.5.1</span> Time step</a></li>
+  <li><a href="#number-of-steps" id="toc-number-of-steps" class="nav-link" data-scroll-target="#number-of-steps"><span class="header-section-number">12.5.2</span> Number of steps</a></li>
+  <li><a href="#start-date" id="toc-start-date" class="nav-link" data-scroll-target="#start-date"><span class="header-section-number">12.5.3</span> Start date</a></li>
+  <li><a href="#cgm-tolerance" id="toc-cgm-tolerance" class="nav-link" data-scroll-target="#cgm-tolerance"><span class="header-section-number">12.5.4</span> CGM tolerance</a></li>
+  <li><a href="#turbulence" id="toc-turbulence" class="nav-link" data-scroll-target="#turbulence"><span class="header-section-number">12.5.5</span> Turbulence</a></li>
   </ul></li>
-  <li><a href="#output-frequency" id="toc-output-frequency" class="nav-link" data-scroll-target="#output-frequency"><span class="header-section-number">7.6</span> Output frequency</a></li>
-  <li><a href="#sec-runelcom" id="toc-sec-runelcom" class="nav-link" data-scroll-target="#sec-runelcom"><span class="header-section-number">7.7</span> Configuration using file <code>run_elcom.dat</code></a>
+  <li><a href="#output-frequency" id="toc-output-frequency" class="nav-link" data-scroll-target="#output-frequency"><span class="header-section-number">12.6</span> Output frequency</a></li>
+  <li><a href="#sec-runelcom" id="toc-sec-runelcom" class="nav-link" data-scroll-target="#sec-runelcom"><span class="header-section-number">12.7</span> Configuration using file <code>run_elcom.dat</code></a>
   <ul class="collapse">
-  <li><a href="#file-headers" id="toc-file-headers" class="nav-link" data-scroll-target="#file-headers"><span class="header-section-number">7.7.1</span> File headers</a></li>
-  <li><a href="#simulation-module-controls" id="toc-simulation-module-controls" class="nav-link" data-scroll-target="#simulation-module-controls"><span class="header-section-number">7.7.2</span> Simulation module controls</a></li>
-  <li><a href="#initialization-and-update-options" id="toc-initialization-and-update-options" class="nav-link" data-scroll-target="#initialization-and-update-options"><span class="header-section-number">7.7.3</span> Initialization and update options</a></li>
-  <li><a href="#turbulence-modeling" id="toc-turbulence-modeling" class="nav-link" data-scroll-target="#turbulence-modeling"><span class="header-section-number">7.7.4</span> Turbulence modeling</a></li>
-  <li><a href="#meteorological-sensor-heights" id="toc-meteorological-sensor-heights" class="nav-link" data-scroll-target="#meteorological-sensor-heights"><span class="header-section-number">7.7.5</span> Meteorological Sensor Heights</a></li>
-  <li><a href="#model-settings-and-controls" id="toc-model-settings-and-controls" class="nav-link" data-scroll-target="#model-settings-and-controls"><span class="header-section-number">7.7.6</span> Model Settings and Controls</a></li>
-  <li><a href="#scalar-maximum-and-minimum-for-debugging" id="toc-scalar-maximum-and-minimum-for-debugging" class="nav-link" data-scroll-target="#scalar-maximum-and-minimum-for-debugging"><span class="header-section-number">7.7.7</span> Scalar Maximum and Minimum for Debugging</a></li>
-  <li><a href="#debugging-controls" id="toc-debugging-controls" class="nav-link" data-scroll-target="#debugging-controls"><span class="header-section-number">7.7.8</span> Debugging controls</a></li>
-  <li><a href="#output-frequency-1" id="toc-output-frequency-1" class="nav-link" data-scroll-target="#output-frequency-1"><span class="header-section-number">7.7.9</span> Output Frequency</a></li>
-  <li><a href="#output-start-time" id="toc-output-start-time" class="nav-link" data-scroll-target="#output-start-time"><span class="header-section-number">7.7.10</span> Output Start Time</a></li>
-  <li><a href="#time-controls" id="toc-time-controls" class="nav-link" data-scroll-target="#time-controls"><span class="header-section-number">7.7.11</span> Time Controls</a></li>
-  <li><a href="#iterative-solver-controls" id="toc-iterative-solver-controls" class="nav-link" data-scroll-target="#iterative-solver-controls"><span class="header-section-number">7.7.12</span> Iterative Solver Controls</a></li>
-  <li><a href="#scalar-filtering" id="toc-scalar-filtering" class="nav-link" data-scroll-target="#scalar-filtering"><span class="header-section-number">7.7.13</span> Scalar Filtering</a></li>
-  <li><a href="#default-values" id="toc-default-values" class="nav-link" data-scroll-target="#default-values"><span class="header-section-number">7.7.14</span> Default Values</a></li>
-  <li><a href="#input-file-names" id="toc-input-file-names" class="nav-link" data-scroll-target="#input-file-names"><span class="header-section-number">7.7.15</span> Input File Names</a></li>
-  <li><a href="#file-directories" id="toc-file-directories" class="nav-link" data-scroll-target="#file-directories"><span class="header-section-number">7.7.16</span> File Directories</a></li>
-  <li><a href="#output-file-names" id="toc-output-file-names" class="nav-link" data-scroll-target="#output-file-names"><span class="header-section-number">7.7.17</span> Output File Names</a></li>
+  <li><a href="#file-headers" id="toc-file-headers" class="nav-link" data-scroll-target="#file-headers"><span class="header-section-number">12.7.1</span> File headers</a></li>
+  <li><a href="#simulation-module-controls" id="toc-simulation-module-controls" class="nav-link" data-scroll-target="#simulation-module-controls"><span class="header-section-number">12.7.2</span> Simulation module controls</a></li>
+  <li><a href="#initialization-and-update-options" id="toc-initialization-and-update-options" class="nav-link" data-scroll-target="#initialization-and-update-options"><span class="header-section-number">12.7.3</span> Initialization and update options</a></li>
+  <li><a href="#turbulence-modeling" id="toc-turbulence-modeling" class="nav-link" data-scroll-target="#turbulence-modeling"><span class="header-section-number">12.7.4</span> Turbulence modeling</a></li>
+  <li><a href="#meteorological-sensor-heights" id="toc-meteorological-sensor-heights" class="nav-link" data-scroll-target="#meteorological-sensor-heights"><span class="header-section-number">12.7.5</span> Meteorological Sensor Heights</a></li>
+  <li><a href="#model-settings-and-controls" id="toc-model-settings-and-controls" class="nav-link" data-scroll-target="#model-settings-and-controls"><span class="header-section-number">12.7.6</span> Model Settings and Controls</a></li>
+  <li><a href="#scalar-maximum-and-minimum-for-debugging" id="toc-scalar-maximum-and-minimum-for-debugging" class="nav-link" data-scroll-target="#scalar-maximum-and-minimum-for-debugging"><span class="header-section-number">12.7.7</span> Scalar Maximum and Minimum for Debugging</a></li>
+  <li><a href="#debugging-controls" id="toc-debugging-controls" class="nav-link" data-scroll-target="#debugging-controls"><span class="header-section-number">12.7.8</span> Debugging controls</a></li>
+  <li><a href="#output-frequency-1" id="toc-output-frequency-1" class="nav-link" data-scroll-target="#output-frequency-1"><span class="header-section-number">12.7.9</span> Output Frequency</a></li>
+  <li><a href="#output-start-time" id="toc-output-start-time" class="nav-link" data-scroll-target="#output-start-time"><span class="header-section-number">12.7.10</span> Output Start Time</a></li>
+  <li><a href="#time-controls" id="toc-time-controls" class="nav-link" data-scroll-target="#time-controls"><span class="header-section-number">12.7.11</span> Time Controls</a></li>
+  <li><a href="#iterative-solver-controls" id="toc-iterative-solver-controls" class="nav-link" data-scroll-target="#iterative-solver-controls"><span class="header-section-number">12.7.12</span> Iterative Solver Controls</a></li>
+  <li><a href="#scalar-filtering" id="toc-scalar-filtering" class="nav-link" data-scroll-target="#scalar-filtering"><span class="header-section-number">12.7.13</span> Scalar Filtering</a></li>
+  <li><a href="#default-values" id="toc-default-values" class="nav-link" data-scroll-target="#default-values"><span class="header-section-number">12.7.14</span> Default Values</a></li>
+  <li><a href="#input-file-names" id="toc-input-file-names" class="nav-link" data-scroll-target="#input-file-names"><span class="header-section-number">12.7.15</span> Input File Names</a></li>
+  <li><a href="#file-directories" id="toc-file-directories" class="nav-link" data-scroll-target="#file-directories"><span class="header-section-number">12.7.16</span> File Directories</a></li>
+  <li><a href="#output-file-names" id="toc-output-file-names" class="nav-link" data-scroll-target="#output-file-names"><span class="header-section-number">12.7.17</span> Output File Names</a></li>
   </ul></li>
-  <li><a href="#input-files" id="toc-input-files" class="nav-link" data-scroll-target="#input-files"><span class="header-section-number">7.8</span> Input files</a>
+  <li><a href="#input-files" id="toc-input-files" class="nav-link" data-scroll-target="#input-files"><span class="header-section-number">12.8</span> Input files</a>
   <ul class="collapse">
-  <li><a href="#sparsedata.unf-and-usedata.unf" id="toc-sparsedata.unf-and-usedata.unf" class="nav-link" data-scroll-target="#sparsedata.unf-and-usedata.unf"><span class="header-section-number">7.8.1</span> sparsedata.unf and usedata.unf</a></li>
-  <li><a href="#sec-tempBCfiles" id="toc-sec-tempBCfiles" class="nav-link" data-scroll-target="#sec-tempBCfiles"><span class="header-section-number">7.8.2</span> Temporal boundary condition (1D) files</a></li>
-  <li><a href="#temporal-profile-boundary-condition-2d-files" id="toc-temporal-profile-boundary-condition-2d-files" class="nav-link" data-scroll-target="#temporal-profile-boundary-condition-2d-files"><span class="header-section-number">7.8.3</span> Temporal profile boundary condition (2D) files</a></li>
-  <li><a href="#sec-updateBCfiles" id="toc-sec-updateBCfiles" class="nav-link" data-scroll-target="#sec-updateBCfiles"><span class="header-section-number">7.8.4</span> Update boundary condition files</a></li>
-  <li><a href="#sec-tempFiltFiles" id="toc-sec-tempFiltFiles" class="nav-link" data-scroll-target="#sec-tempFiltFiles"><span class="header-section-number">7.8.5</span> Temporal filter constant files</a></li>
-  <li><a href="#drifter-files" id="toc-drifter-files" class="nav-link" data-scroll-target="#drifter-files"><span class="header-section-number">7.8.6</span> Drifter files</a></li>
-  <li><a href="#drifter-initial-files" id="toc-drifter-initial-files" class="nav-link" data-scroll-target="#drifter-initial-files"><span class="header-section-number">7.8.7</span> Drifter Initial Files</a></li>
-  <li><a href="#valid-keywords" id="toc-valid-keywords" class="nav-link" data-scroll-target="#valid-keywords"><span class="header-section-number">7.8.8</span> Valid keywords:</a></li>
-  <li><a href="#drifter-update-files" id="toc-drifter-update-files" class="nav-link" data-scroll-target="#drifter-update-files"><span class="header-section-number">7.8.9</span> Drifter Update Files</a></li>
-  <li><a href="#valid-keywords-for-updates" id="toc-valid-keywords-for-updates" class="nav-link" data-scroll-target="#valid-keywords-for-updates"><span class="header-section-number">7.8.10</span> Valid keywords for updates:</a></li>
-  <li><a href="#jet-files" id="toc-jet-files" class="nav-link" data-scroll-target="#jet-files"><span class="header-section-number">7.8.11</span> Jet Files</a></li>
-  <li><a href="#drafttube-files" id="toc-drafttube-files" class="nav-link" data-scroll-target="#drafttube-files"><span class="header-section-number">7.8.12</span> Drafttube Files</a></li>
+  <li><a href="#sparsedata.unf-and-usedata.unf" id="toc-sparsedata.unf-and-usedata.unf" class="nav-link" data-scroll-target="#sparsedata.unf-and-usedata.unf"><span class="header-section-number">12.8.1</span> sparsedata.unf and usedata.unf</a></li>
+  <li><a href="#sec-tempBCfiles" id="toc-sec-tempBCfiles" class="nav-link" data-scroll-target="#sec-tempBCfiles"><span class="header-section-number">12.8.2</span> Temporal boundary condition (1D) files</a></li>
+  <li><a href="#temporal-profile-boundary-condition-2d-files" id="toc-temporal-profile-boundary-condition-2d-files" class="nav-link" data-scroll-target="#temporal-profile-boundary-condition-2d-files"><span class="header-section-number">12.8.3</span> Temporal profile boundary condition (2D) files</a></li>
+  <li><a href="#sec-updateBCfiles" id="toc-sec-updateBCfiles" class="nav-link" data-scroll-target="#sec-updateBCfiles"><span class="header-section-number">12.8.4</span> Update boundary condition files</a></li>
+  <li><a href="#sec-tempFiltFiles" id="toc-sec-tempFiltFiles" class="nav-link" data-scroll-target="#sec-tempFiltFiles"><span class="header-section-number">12.8.5</span> Temporal filter constant files</a></li>
+  <li><a href="#drifter-files" id="toc-drifter-files" class="nav-link" data-scroll-target="#drifter-files"><span class="header-section-number">12.8.6</span> Drifter files</a></li>
+  <li><a href="#drifter-initial-files" id="toc-drifter-initial-files" class="nav-link" data-scroll-target="#drifter-initial-files"><span class="header-section-number">12.8.7</span> Drifter Initial Files</a></li>
+  <li><a href="#valid-keywords" id="toc-valid-keywords" class="nav-link" data-scroll-target="#valid-keywords"><span class="header-section-number">12.8.8</span> Valid keywords:</a></li>
+  <li><a href="#drifter-update-files" id="toc-drifter-update-files" class="nav-link" data-scroll-target="#drifter-update-files"><span class="header-section-number">12.8.9</span> Drifter Update Files</a></li>
+  <li><a href="#valid-keywords-for-updates" id="toc-valid-keywords-for-updates" class="nav-link" data-scroll-target="#valid-keywords-for-updates"><span class="header-section-number">12.8.10</span> Valid keywords for updates:</a></li>
+  <li><a href="#jet-files" id="toc-jet-files" class="nav-link" data-scroll-target="#jet-files"><span class="header-section-number">12.8.11</span> Jet Files</a></li>
+  <li><a href="#drafttube-files" id="toc-drafttube-files" class="nav-link" data-scroll-target="#drafttube-files"><span class="header-section-number">12.8.12</span> Drafttube Files</a></li>
   </ul></li>
-  <li><a href="#definition-of-culvert-characteristics-dynamic-boundary-conditions" id="toc-definition-of-culvert-characteristics-dynamic-boundary-conditions" class="nav-link" data-scroll-target="#definition-of-culvert-characteristics-dynamic-boundary-conditions"><span class="header-section-number">7.9</span> Definition of Culvert Characteristics – Dynamic Boundary Conditions</a>
+  <li><a href="#definition-of-culvert-characteristics-dynamic-boundary-conditions" id="toc-definition-of-culvert-characteristics-dynamic-boundary-conditions" class="nav-link" data-scroll-target="#definition-of-culvert-characteristics-dynamic-boundary-conditions"><span class="header-section-number">12.9</span> Definition of Culvert Characteristics – Dynamic Boundary Conditions</a>
   <ul class="collapse">
-  <li><a href="#supported-culvert-keywords-and-defaults" id="toc-supported-culvert-keywords-and-defaults" class="nav-link" data-scroll-target="#supported-culvert-keywords-and-defaults"><span class="header-section-number">7.9.1</span> Supported Culvert Keywords and Defaults</a></li>
-  <li><a href="#example-file" id="toc-example-file" class="nav-link" data-scroll-target="#example-file"><span class="header-section-number">7.9.2</span> Example File</a></li>
-  <li><a href="#sec-datablock" id="toc-sec-datablock" class="nav-link" data-scroll-target="#sec-datablock"><span class="header-section-number">7.9.3</span> Output definition file (Datablock.db)</a></li>
-  <li><a href="#group-time-list" id="toc-group-time-list" class="nav-link" data-scroll-target="#group-time-list"><span class="header-section-number">7.9.4</span> Group Time List</a></li>
-  <li><a href="#set-cell-data" id="toc-set-cell-data" class="nav-link" data-scroll-target="#set-cell-data"><span class="header-section-number">7.9.5</span> Set Cell Data</a></li>
+  <li><a href="#supported-culvert-keywords-and-defaults" id="toc-supported-culvert-keywords-and-defaults" class="nav-link" data-scroll-target="#supported-culvert-keywords-and-defaults"><span class="header-section-number">12.9.1</span> Supported Culvert Keywords and Defaults</a></li>
+  <li><a href="#example-file" id="toc-example-file" class="nav-link" data-scroll-target="#example-file"><span class="header-section-number">12.9.2</span> Example File</a></li>
+  <li><a href="#sec-datablock" id="toc-sec-datablock" class="nav-link" data-scroll-target="#sec-datablock"><span class="header-section-number">12.9.3</span> Output definition file (Datablock.db)</a></li>
+  <li><a href="#group-time-list" id="toc-group-time-list" class="nav-link" data-scroll-target="#group-time-list"><span class="header-section-number">12.9.4</span> Group Time List</a></li>
+  <li><a href="#set-cell-data" id="toc-set-cell-data" class="nav-link" data-scroll-target="#set-cell-data"><span class="header-section-number">12.9.5</span> Set Cell Data</a></li>
   </ul></li>
-  <li><a href="#sec-runexe" id="toc-sec-runexe" class="nav-link" data-scroll-target="#sec-runexe"><span class="header-section-number">7.10</span> Running ELCOM</a>
+  <li><a href="#sec-runexe" id="toc-sec-runexe" class="nav-link" data-scroll-target="#sec-runexe"><span class="header-section-number">12.10</span> Running ELCOM</a>
   <ul class="collapse">
-  <li><a href="#sec-postproc" id="toc-sec-postproc" class="nav-link" data-scroll-target="#sec-postproc"><span class="header-section-number">7.10.1</span> Post-Processing</a></li>
+  <li><a href="#sec-postproc" id="toc-sec-postproc" class="nav-link" data-scroll-target="#sec-postproc"><span class="header-section-number">12.10.1</span> Post-Processing</a></li>
   </ul></li>
-  <li><a href="#save-and-restart-output-files" id="toc-save-and-restart-output-files" class="nav-link" data-scroll-target="#save-and-restart-output-files"><span class="header-section-number">7.11</span> Save and Restart output files</a></li>
-  <li><a href="#culvert-outputs---dynamic-boundary-conditions" id="toc-culvert-outputs---dynamic-boundary-conditions" class="nav-link" data-scroll-target="#culvert-outputs---dynamic-boundary-conditions"><span class="header-section-number">7.12</span> Culvert Outputs - Dynamic Boundary Conditions</a></li>
-  <li><a href="#sec-validScalars" id="toc-sec-validScalars" class="nav-link" data-scroll-target="#sec-validScalars"><span class="header-section-number">7.13</span> ELCOM Valid Scalars</a></li>
+  <li><a href="#save-and-restart-output-files" id="toc-save-and-restart-output-files" class="nav-link" data-scroll-target="#save-and-restart-output-files"><span class="header-section-number">12.11</span> Save and Restart output files</a></li>
+  <li><a href="#culvert-outputs---dynamic-boundary-conditions" id="toc-culvert-outputs---dynamic-boundary-conditions" class="nav-link" data-scroll-target="#culvert-outputs---dynamic-boundary-conditions"><span class="header-section-number">12.12</span> Culvert Outputs - Dynamic Boundary Conditions</a></li>
+  <li><a href="#sec-validScalars" id="toc-sec-validScalars" class="nav-link" data-scroll-target="#sec-validScalars"><span class="header-section-number">12.13</span> ELCOM Valid Scalars</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-pre.html">Using ELCOM</a></li><li class="breadcrumb-item"><a href="./03-elcom.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">ELCOM Operation</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-pre.html">Using ELCOM</a></li><li class="breadcrumb-item"><a href="./03-elcom.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ELCOM Operation</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-elcom" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">ELCOM Operation</span></span></h1>
+<h1 class="title"><span id="sec-elcom" class="quarto-section-identifier"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ELCOM Operation</span></span></h1>
 </div>
 
 
@@ -369,8 +399,8 @@ window.Quarto = {
 </header>
 
 
-<section id="introduction" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">7.1</span> Introduction</h2>
+<section id="introduction" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">12.1</span> Introduction</h2>
 <p>Running an ELCOM simulation requires the user to provide several types of data:</p>
 <ol type="1">
 <li>Initial conditions</li>
@@ -380,9 +410,9 @@ window.Quarto = {
 </ol>
 <p>ELCOM obtains this data from the user through user-prepared input files and pre-processor prepared input files.</p>
 </section>
-<section id="files-for-elcom" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="files-for-elcom"><span class="header-section-number">7.2</span> Files for ELCOM</h2>
-<p>ELCOM is a command-line executable that communicates with the user through files. <a href="#tbl-elcomFiles" class="quarto-xref">Table&nbsp;<span>7.1</span></a> provides a summary of file types, whether their presence is required or optional, the purpose of the file, and responsibility for preparation of the file.</p>
+<section id="files-for-elcom" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="files-for-elcom"><span class="header-section-number">12.2</span> Files for ELCOM</h2>
+<p>ELCOM is a command-line executable that communicates with the user through files. <a href="#tbl-elcomFiles" class="quarto-xref">Table&nbsp;<span>12.1</span></a> provides a summary of file types, whether their presence is required or optional, the purpose of the file, and responsibility for preparation of the file.</p>
 <ul>
 <li>File names in <code>courier bold</code> font without brackets are fixed named files (i.e., the file must be present with exactly that name).</li>
 <li>File names such as <code>[data_name].unf</code> use square brackets to indicate that ELCOM may substitute various names in the bracketed section (see following sections).</li>
@@ -392,7 +422,7 @@ window.Quarto = {
 <div id="tbl-elcomFiles" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-elcomFiles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;7.1: Files for ELCOM.
+Table&nbsp;12.1: Files for ELCOM.
 </figcaption>
 <div aria-describedby="tbl-elcomFiles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -548,29 +578,29 @@ Table&nbsp;7.1: Files for ELCOM.
 </div>
 </div>
 </section>
-<section id="simulation-modules" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="simulation-modules"><span class="header-section-number">7.3</span> Simulation modules</h2>
+<section id="simulation-modules" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="simulation-modules"><span class="header-section-number">12.3</span> Simulation modules</h2>
 <p>ELCOM is organized into simulation modules that can be turned off/on depending on the type of simulation that is desired. A module is turned off/on by setting the value of control keywords. This is done within the <code>run_elcom.dat</code> file. These controls provide a simple method for modifying the simulation.</p>
 <p>For example: a boundary condition file can be set up to include both meteorological data and inflow data. As a simple test, the user decides to turn off the inflow. One approach would be to return to the pre-processor, eliminate the inflow boundary cell set, re-run the pre-processor, then modify the temporal boundary condition file to remove the inflow data. As a simpler approach, the user need only set <code>iflow = 0</code>, and the inflow data and boundary cell sets will be ignored.</p>
 <p>This section provides a brief overview of the modules within <code>ELCOM</code> and their corresponding keywords set within the <code>run_elcom.dat</code> file.</p>
-<section id="stratification" class="level3" data-number="7.3.1">
-<h3 data-number="7.3.1" class="anchored" data-anchor-id="stratification"><span class="header-section-number">7.3.1</span> Stratification</h3>
+<section id="stratification" class="level3" data-number="12.3.1">
+<h3 data-number="12.3.1" class="anchored" data-anchor-id="stratification"><span class="header-section-number">12.3.1</span> Stratification</h3>
 <p>Density stratification in ELCOM can be through temperature, salinity, or both by using the controls <code>itemperature</code> and <code>isalinity</code> in combination with <code>idensity = 1</code>. If desired, temperature and salinity can be treated as passive tracers by setting <code>idensity = 0</code>. If temperature and/or salinity are turned on, they must be initialized throughout the simulation domain using the <code>default_***</code> controls, initial condition files, or associated subroutines in <code>elcom_user.f90</code>.</p>
 </section>
-<section id="tracers" class="level3" data-number="7.3.2">
-<h3 data-number="7.3.2" class="anchored" data-anchor-id="tracers"><span class="header-section-number">7.3.2</span> Tracers</h3>
+<section id="tracers" class="level3" data-number="12.3.2">
+<h3 data-number="12.3.2" class="anchored" data-anchor-id="tracers"><span class="header-section-number">12.3.2</span> Tracers</h3>
 <p>Up to 10 passive tracers may be transported in a simulation. They may be initialized in the domain using initial condition files or may flow into the domain through an inflow boundary using keywords <code>TRACER_**</code> in a temporal boundary condition file.</p>
 </section>
-<section id="surface-thermodynamics" class="level3" data-number="7.3.3">
-<h3 data-number="7.3.3" class="anchored" data-anchor-id="surface-thermodynamics"><span class="header-section-number">7.3.3</span> Surface thermodynamics</h3>
+<section id="surface-thermodynamics" class="level3" data-number="12.3.3">
+<h3 data-number="12.3.3" class="anchored" data-anchor-id="surface-thermodynamics"><span class="header-section-number">12.3.3</span> Surface thermodynamics</h3>
 <p>This module controls the heat transfer across the free surface. Required inputs (in temporal boundary condition files) include: solar radiation, wind speed, air temperature, and relative humidity.</p>
 </section>
-<section id="rain" class="level3" data-number="7.3.4">
-<h3 data-number="7.3.4" class="anchored" data-anchor-id="rain"><span class="header-section-number">7.3.4</span> Rain</h3>
+<section id="rain" class="level3" data-number="12.3.4">
+<h3 data-number="12.3.4" class="anchored" data-anchor-id="rain"><span class="header-section-number">12.3.4</span> Rain</h3>
 <p>The rain module controls rain input into the free surface. Rain data in <em>m/day</em> must be provided in a temporal boundary condition file.</p>
 </section>
-<section id="wind" class="level3" data-number="7.3.5">
-<h3 data-number="7.3.5" class="anchored" data-anchor-id="wind"><span class="header-section-number">7.3.5</span> Wind</h3>
+<section id="wind" class="level3" data-number="12.3.5">
+<h3 data-number="12.3.5" class="anchored" data-anchor-id="wind"><span class="header-section-number">12.3.5</span> Wind</h3>
 <p>Wind affects ELCOM simulations in three ways:</p>
 <ol type="1">
 <li>Evaporative cooling in the surface thermodynamics module</li>
@@ -579,51 +609,51 @@ Table&nbsp;7.1: Files for ELCOM.
 </ol>
 <p>Use <code>WIND_SPEED</code> and <code>WIND_DIR</code> (linked to boundary cell set 0 for uniform application) or define multiple sections via <code>section_top</code> in <code>bc.dat</code>. ELCOM interpolates wind speed and direction in time. Vector interpolation isn’t supported, so consistent time intervals are recommended. Alternatively, use <code>WIND_U</code> and <code>WIND_V</code>.</p>
 </section>
-<section id="inflowoutflow" class="level3" data-number="7.3.6">
-<h3 data-number="7.3.6" class="anchored" data-anchor-id="inflowoutflow"><span class="header-section-number">7.3.6</span> Inflow/Outflow</h3>
+<section id="inflowoutflow" class="level3" data-number="12.3.6">
+<h3 data-number="12.3.6" class="anchored" data-anchor-id="inflowoutflow"><span class="header-section-number">12.3.6</span> Inflow/Outflow</h3>
 <p>Inflow/outflow boundaries must be defined in <code>bc.dat</code>. Temporal boundary conditions for flow rate must be provided. Inflow conditions must also include scalar values.</p>
 </section>
-<section id="conservation-of-background-potential-energy" class="level3" data-number="7.3.7">
-<h3 data-number="7.3.7" class="anchored" data-anchor-id="conservation-of-background-potential-energy"><span class="header-section-number">7.3.7</span> Conservation of Background Potential Energy</h3>
+<section id="conservation-of-background-potential-energy" class="level3" data-number="12.3.7">
+<h3 data-number="12.3.7" class="anchored" data-anchor-id="conservation-of-background-potential-energy"><span class="header-section-number">12.3.7</span> Conservation of Background Potential Energy</h3>
 <p>Numerical diffusion can destratify the domain, increasing background potential energy. A vertical sharpening filter can conserve energy but not mass. The filter applies to salinity (<code>IFILTER = 2</code>) or temperature (<code>IFILTER = 3</code>). Alternatively, use <code>FILTER_&lt;SCALAR&gt;</code> in <code>run_elcom.dat</code> with <code>IFILTER = 1</code>. Temporally varying filters are also supported.</p>
 </section>
-<section id="bubble-plume-destratification" class="level3" data-number="7.3.8">
-<h3 data-number="7.3.8" class="anchored" data-anchor-id="bubble-plume-destratification"><span class="header-section-number">7.3.8</span> Bubble Plume Destratification</h3>
+<section id="bubble-plume-destratification" class="level3" data-number="12.3.8">
+<h3 data-number="12.3.8" class="anchored" data-anchor-id="bubble-plume-destratification"><span class="header-section-number">12.3.8</span> Bubble Plume Destratification</h3>
 <p>To simulate bubble destratification, define outlet locations in <code>bc.dat</code>. Temporal boundary conditions must specify airflow rates and the number of ports.</p>
 </section>
-<section id="underflow" class="level3" data-number="7.3.9">
-<h3 data-number="7.3.9" class="anchored" data-anchor-id="underflow"><span class="header-section-number">7.3.9</span> Underflow</h3>
+<section id="underflow" class="level3" data-number="12.3.9">
+<h3 data-number="12.3.9" class="anchored" data-anchor-id="underflow"><span class="header-section-number">12.3.9</span> Underflow</h3>
 <p>To simulate dense inflow using Dallimore et al.&nbsp;(2001)’s 2D model, define inflow boundaries and temporal conditions, including <code>INFLOW_HEIGHT</code>. Set <code>IUNDERFLOW</code> in <code>run_elcom.dat</code>. <strong>Note:</strong> Not compatible with CAEDYM.</p>
 </section>
-<section id="water-age-modelling" class="level3" data-number="7.3.10">
-<h3 data-number="7.3.10" class="anchored" data-anchor-id="water-age-modelling"><span class="header-section-number">7.3.10</span> Water Age Modelling</h3>
+<section id="water-age-modelling" class="level3" data-number="12.3.10">
+<h3 data-number="12.3.10" class="anchored" data-anchor-id="water-age-modelling"><span class="header-section-number">12.3.10</span> Water Age Modelling</h3>
 <p>Enable using <code>IRETENTION</code> in <code>run_elcom.dat</code>. Water age starts at zero and increments by <code>del_t</code> each timestep. Transported as a scalar.</p>
 </section>
-<section id="drifters-particles" class="level3" data-number="7.3.11">
-<h3 data-number="7.3.11" class="anchored" data-anchor-id="drifters-particles"><span class="header-section-number">7.3.11</span> Drifters / Particles</h3>
+<section id="drifters-particles" class="level3" data-number="12.3.11">
+<h3 data-number="12.3.11" class="anchored" data-anchor-id="drifters-particles"><span class="header-section-number">12.3.11</span> Drifters / Particles</h3>
 <p>Simulate Lagrangian or semi-Lagrangian particles using <code>NDRIFTERS</code> in <code>run_elcom.dat</code>. Define properties in <code>drifter_properties_file</code> and <code>drifter_in_file</code>. Updates via <code>update_drifter_file</code>.</p>
 </section>
-<section id="jetspumps" class="level3" data-number="7.3.12">
-<h3 data-number="7.3.12" class="anchored" data-anchor-id="jetspumps"><span class="header-section-number">7.3.12</span> Jets/Pumps</h3>
+<section id="jetspumps" class="level3" data-number="12.3.12">
+<h3 data-number="12.3.12" class="anchored" data-anchor-id="jetspumps"><span class="header-section-number">12.3.12</span> Jets/Pumps</h3>
 <p>To simulate jet/pump destratification, provide thrust, radius, and depth data in jet files. Controlled via <code>IJET</code> in <code>run_elcom.dat</code>.</p>
 </section>
-<section id="drafttubes" class="level3" data-number="7.3.13">
-<h3 data-number="7.3.13" class="anchored" data-anchor-id="drafttubes"><span class="header-section-number">7.3.13</span> Drafttubes</h3>
+<section id="drafttubes" class="level3" data-number="12.3.13">
+<h3 data-number="12.3.13" class="anchored" data-anchor-id="drafttubes"><span class="header-section-number">12.3.13</span> Drafttubes</h3>
 <p>For destratification impellors with draft tubes, specify thrust, radius, depth, and tube length in drafttube files. Controlled via <code>ITUBE</code> in <code>run_elcom.dat</code>.</p>
 </section>
-<section id="non-hydrostatic-code" class="level3" data-number="7.3.14">
-<h3 data-number="7.3.14" class="anchored" data-anchor-id="non-hydrostatic-code"><span class="header-section-number">7.3.14</span> Non-hydrostatic code</h3>
+<section id="non-hydrostatic-code" class="level3" data-number="12.3.14">
+<h3 data-number="12.3.14" class="anchored" data-anchor-id="non-hydrostatic-code"><span class="header-section-number">12.3.14</span> Non-hydrostatic code</h3>
 <p>To simulate non-hydrostatic pressure effects (as in Bothel et al.), note that finer horizontal resolution (~10m) is required and simulation runtime increases significantly.</p>
 </section>
 </section>
-<section id="sec-initfiles" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="sec-initfiles"><span class="header-section-number">7.4</span> Initialization</h2>
-<section id="uniform-initial-conditions" class="level3" data-number="7.4.1">
-<h3 data-number="7.4.1" class="anchored" data-anchor-id="uniform-initial-conditions"><span class="header-section-number">7.4.1</span> Uniform initial conditions</h3>
+<section id="sec-initfiles" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="sec-initfiles"><span class="header-section-number">12.4</span> Initialization</h2>
+<section id="uniform-initial-conditions" class="level3" data-number="12.4.1">
+<h3 data-number="12.4.1" class="anchored" data-anchor-id="uniform-initial-conditions"><span class="header-section-number">12.4.1</span> Uniform initial conditions</h3>
 <p>For simple initial conditions (e.g., distributing a scalar or setting a flat surface), use <code>DEFAULT_****</code> keywords in <code>run_elcom.dat</code>. Default values can be overwritten by profile or horizontal files or initialization subroutines.</p>
 </section>
-<section id="vertical-profile" class="level3" data-number="7.4.2">
-<h3 data-number="7.4.2" class="anchored" data-anchor-id="vertical-profile"><span class="header-section-number">7.4.2</span> Vertical Profile</h3>
+<section id="vertical-profile" class="level3" data-number="12.4.2">
+<h3 data-number="12.4.2" class="anchored" data-anchor-id="vertical-profile"><span class="header-section-number">12.4.2</span> Vertical Profile</h3>
 <p>Vertical scalar variation is defined using <code>initial_profile_file</code> (in the <code>infiles</code> directory). Format:</p>
 <ul>
 <li>Four header lines:
@@ -650,21 +680,21 @@ DEPTH   WTR_TEMP    SALINITY
 6.2     20.2        35.0
 10.4    18.3        35.2</code></pre>
 </section>
-<section id="sec-multiProf" class="level3" data-number="7.4.3">
-<h3 data-number="7.4.3" class="anchored" data-anchor-id="sec-multiProf"><span class="header-section-number">7.4.3</span> Multiple Vertical Profiles</h3>
+<section id="sec-multiProf" class="level3" data-number="12.4.3">
+<h3 data-number="12.4.3" class="anchored" data-anchor-id="sec-multiProf"><span class="header-section-number">12.4.3</span> Multiple Vertical Profiles</h3>
 <p>To increase the flexibility of initialization, ELCOM Version 2 allows for multiple profile initial condition files. If more than one initial condition file is specified for any scalar, then ELCOM interpolates between files to initialize the domain. Each profile is first linearly interpolated onto the vertical layers, and then each point is horizontally interpolated using the inverse distance weighting method such that</p>
 <p><span class="math display">\[
 S_{i,j,k} = \sum_{n=1}^N \frac{S_{n,k}r_{n}^\alpha}{r_{n}^\alpha}
 \]</span></p>
 <p>where <span class="math inline">\(\alpha\)</span> is the distance weighting specified by the flag <code>IC_DIST_WEIGHTING</code> in <code>run_elcom.dat</code> (default = 2.0), <span class="math inline">\(r\)</span> is the distance between the column and profile <span class="math inline">\(n\)</span>, and <span class="math inline">\(N\)</span> is the number of profiles.</p>
 </section>
-<section id="horizontal-variation" class="level3" data-number="7.4.4">
-<h3 data-number="7.4.4" class="anchored" data-anchor-id="horizontal-variation"><span class="header-section-number">7.4.4</span> Horizontal Variation</h3>
+<section id="horizontal-variation" class="level3" data-number="12.4.4">
+<h3 data-number="12.4.4" class="anchored" data-anchor-id="horizontal-variation"><span class="header-section-number">12.4.4</span> Horizontal Variation</h3>
 <p>A horizontal variation in the initial conditions for any valid transportable scalar can be defined using an input file (keyword = <code>initial_horiz_file</code>). The input file may have any name but must be located in the <code>infiles</code> directory.</p>
 <p>These files require a format that consists of three header lines followed by a value for each <code>(i,j)</code> column of the domain. The file may have as many comment lines (preceded by <code>!</code>) at the top of the file as desired. Comment lines within the header data must have as many items as there are columns (i.e., if there are 3 columns, a valid comment line is <code>!  - -</code>). No comment lines are allowed within the columns of data. The columns must be completely dense with data (i.e., there may not be “missing” data such that a row has fewer items than the number of columns).</p>
 <p>The first header line contains two numbers: the number of x rows and the number of y columns. These must match the number of rows and columns in the bathymetry file.</p>
 <p>The second line gives a land value for land cells.</p>
-<p>The third line in the header contains the keyword that describes the scalar to be initialized. This keyword should be a valid transportable scalar given in the Valid Scalars table in <a href="#sec-validScalars" class="quarto-xref"><span>Section 7.13</span></a>.</p>
+<p>The third line in the header contains the keyword that describes the scalar to be initialized. This keyword should be a valid transportable scalar given in the Valid Scalars table in <a href="#sec-validScalars" class="quarto-xref"><span>Section 12.13</span></a>.</p>
 <p>The remaining lines in the file contain the data. The matrix should be the same size as the bathymetry data in your bathymetry file.</p>
 <pre class="plaintext"><code>! Example:  ic.dat
 8 13    xrows   yrows
@@ -679,49 +709,49 @@ SALINITY
 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16   9.1   9.2   9.5 1e+16
 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16</code></pre>
 </section>
-<section id="user-subroutines" class="level3" data-number="7.4.5">
-<h3 data-number="7.4.5" class="anchored" data-anchor-id="user-subroutines"><span class="header-section-number">7.4.5</span> User subroutines</h3>
+<section id="user-subroutines" class="level3" data-number="12.4.5">
+<h3 data-number="12.4.5" class="anchored" data-anchor-id="user-subroutines"><span class="header-section-number">12.4.5</span> User subroutines</h3>
 <p>For ELCOM users who are willing to modify and compile source code, the ability to set up complex initial conditions is available through the addition of code to subroutines in the <code>elcom_user.f90</code> file. The subroutines in this file are only called if the appropriate <code>user_init_***</code> control in the <code>run_elcom.dat</code> file is non-zero.</p>
 <p>The stub routines supplied with ELCOM are designed to be executed with the <code>user_init_***</code> controls set to 1. However, this can be modified by the user so that different initializations are performed for different values of <code>user_init_***</code>.</p>
 </section>
 </section>
-<section id="configuration-controls" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="configuration-controls"><span class="header-section-number">7.5</span> Configuration controls</h2>
-<section id="time-step" class="level3" data-number="7.5.1">
-<h3 data-number="7.5.1" class="anchored" data-anchor-id="time-step"><span class="header-section-number">7.5.1</span> Time step</h3>
+<section id="configuration-controls" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="configuration-controls"><span class="header-section-number">12.5</span> Configuration controls</h2>
+<section id="time-step" class="level3" data-number="12.5.1">
+<h3 data-number="12.5.1" class="anchored" data-anchor-id="time-step"><span class="header-section-number">12.5.1</span> Time step</h3>
 <p>The time step (keyword = <code>del_t</code>) is the number of seconds that the simulation advances in time for each simulation step.</p>
 </section>
-<section id="number-of-steps" class="level3" data-number="7.5.2">
-<h3 data-number="7.5.2" class="anchored" data-anchor-id="number-of-steps"><span class="header-section-number">7.5.2</span> Number of steps</h3>
+<section id="number-of-steps" class="level3" data-number="12.5.2">
+<h3 data-number="12.5.2" class="anchored" data-anchor-id="number-of-steps"><span class="header-section-number">12.5.2</span> Number of steps</h3>
 <p>The total number of time steps to be computed in the present simulation run is set using the keyword <code>iter_max</code> in the <code>run_elcom.dat</code> file.</p>
 </section>
-<section id="start-date" class="level3" data-number="7.5.3">
-<h3 data-number="7.5.3" class="anchored" data-anchor-id="start-date"><span class="header-section-number">7.5.3</span> Start date</h3>
+<section id="start-date" class="level3" data-number="12.5.3">
+<h3 data-number="12.5.3" class="anchored" data-anchor-id="start-date"><span class="header-section-number">12.5.3</span> Start date</h3>
 <p>The start date is entered in <strong>CWR Julian Day</strong> format, which specifies the year and day using a real number with 7 digits to the left of the decimal place as <code>yyyyddd.ddd</code>. The first 4 digits are the year and the subsequent 3 digits are the Julian Day (days since January 1st). Hours, minutes, and seconds are represented as fractions of a day (e.g., 1 AM on January 1st, 2000 is represented as <code>2000001.041667</code>).</p>
 </section>
-<section id="cgm-tolerance" class="level3" data-number="7.5.4">
-<h3 data-number="7.5.4" class="anchored" data-anchor-id="cgm-tolerance"><span class="header-section-number">7.5.4</span> CGM tolerance</h3>
+<section id="cgm-tolerance" class="level3" data-number="12.5.4">
+<h3 data-number="12.5.4" class="anchored" data-anchor-id="cgm-tolerance"><span class="header-section-number">12.5.4</span> CGM tolerance</h3>
 <p>The <code>CGM_TOL</code> is the residual at which iteration of the <strong>conjugate gradient method</strong> (used for the free-surface solution) is stopped.</p>
 </section>
-<section id="turbulence" class="level3" data-number="7.5.5">
-<h3 data-number="7.5.5" class="anchored" data-anchor-id="turbulence"><span class="header-section-number">7.5.5</span> Turbulence</h3>
+<section id="turbulence" class="level3" data-number="12.5.5">
+<h3 data-number="12.5.5" class="anchored" data-anchor-id="turbulence"><span class="header-section-number">12.5.5</span> Turbulence</h3>
 <p>For stratified flow, the base closure scheme can be supplemented by unstable mixing (<code>iclosure = 1</code>) algorithms. The unstable mixing algorithm mixes momentum and transported scalars in vertical cells where an unstable gradient of potential density exists (i.e., Ri &lt; 0.0).</p>
 <p>For stratified flows driven by surface wind, the <strong>wind-mixed-layer closure scheme with energy transport</strong> (<code>iclosure = 6</code>) is recommended. This approach computes the turbulent kinetic energy due to wind stirring, convective overturns, and wind shear, then uses this to compute vertical mixing.</p>
 </section>
 </section>
-<section id="output-frequency" class="level2" data-number="7.6">
-<h2 data-number="7.6" class="anchored" data-anchor-id="output-frequency"><span class="header-section-number">7.6</span> Output frequency</h2>
+<section id="output-frequency" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="output-frequency"><span class="header-section-number">12.6</span> Output frequency</h2>
 <p>Outputs of data that are not controlled by the datablock file are set through the <code>iter_out_***</code> and <code>start_output_***</code> keywords. The former controls the time step interval for providing output, while the latter controls the first step on which output will be provided.</p>
 </section>
-<section id="sec-runelcom" class="level2" data-number="7.7">
-<h2 data-number="7.7" class="anchored" data-anchor-id="sec-runelcom"><span class="header-section-number">7.7</span> Configuration using file <code>run_elcom.dat</code></h2>
+<section id="sec-runelcom" class="level2" data-number="12.7">
+<h2 data-number="12.7" class="anchored" data-anchor-id="sec-runelcom"><span class="header-section-number">12.7</span> Configuration using file <code>run_elcom.dat</code></h2>
 <p>An up-to-date copy of <code>run_elcom.dat</code> is included in the examples.</p>
 <p>ELCOM looks for the file <code>run_elcom.dat</code> in the local directory to set the configuration of the simulation run. The <code>run_elcom.dat</code> configuration file controls execution of optional modules and models within ELCOM, allowing the user to set the parameters that govern the physical and numerical simulation.</p>
 <p>The format of the file is flexible: lines may occur in any order, and not all items must be present. Comment lines (preceded by <code>!</code>) may occur anywhere in the file. <strong>Blank lines are not allowed</strong> in the file (the code stops reading at a blank line). Each line (including comment lines) must have at least two items separated by a blank space.</p>
 <p>The comment marker <code>!</code> counts as an item, so a valid line is <code>!  !</code> or <code>! -</code>, while <code>!!</code> (no space between) is not valid.</p>
 <p>The general format for the file is a series of lines, with each line listing a user setting followed by a keyword that defines the parameter. The individual keywords and settings are explained briefly below:</p>
-<section id="file-headers" class="level3" data-number="7.7.1">
-<h3 data-number="7.7.1" class="anchored" data-anchor-id="file-headers"><span class="header-section-number">7.7.1</span> File headers</h3>
+<section id="file-headers" class="level3" data-number="12.7.1">
+<h3 data-number="12.7.1" class="anchored" data-anchor-id="file-headers"><span class="header-section-number">12.7.1</span> File headers</h3>
 <ul>
 <li><code>FILE</code>: file name for this file (must be <code>run_elcom.dat</code>)</li>
 <li><code>ANALYST</code>: user name (must be inside single quotes <code>' '</code>)</li>
@@ -730,8 +760,8 @@ SALINITY
 <li><code>CASE_KEYWORD</code>: allows user to add code to be executed for a particular simulation case. Must be a string without blank spaces enclosed in single quotes.</li>
 </ul>
 </section>
-<section id="simulation-module-controls" class="level3" data-number="7.7.2">
-<h3 data-number="7.7.2" class="anchored" data-anchor-id="simulation-module-controls"><span class="header-section-number">7.7.2</span> Simulation module controls</h3>
+<section id="simulation-module-controls" class="level3" data-number="12.7.2">
+<h3 data-number="12.7.2" class="anchored" data-anchor-id="simulation-module-controls"><span class="header-section-number">12.7.2</span> Simulation module controls</h3>
 <ul>
 <li><code>iheat_input</code>: controls surface thermodynamics
 <ul>
@@ -817,8 +847,8 @@ SALINITY
 </ul></li>
 </ul>
 </section>
-<section id="initialization-and-update-options" class="level3" data-number="7.7.3">
-<h3 data-number="7.7.3" class="anchored" data-anchor-id="initialization-and-update-options"><span class="header-section-number">7.7.3</span> Initialization and update options</h3>
+<section id="initialization-and-update-options" class="level3" data-number="12.7.3">
+<h3 data-number="12.7.3" class="anchored" data-anchor-id="initialization-and-update-options"><span class="header-section-number">12.7.3</span> Initialization and update options</h3>
 <ul>
 <li><code>irestart</code>: use restart file for initial conditions
 <ul>
@@ -868,8 +898,8 @@ SALINITY
 <li><code>latitude</code>: optional simulation latitude (overrides value in <code>bathymetry.dat</code>)</li>
 </ul>
 </section>
-<section id="turbulence-modeling" class="level3" data-number="7.7.4">
-<h3 data-number="7.7.4" class="anchored" data-anchor-id="turbulence-modeling"><span class="header-section-number">7.7.4</span> Turbulence modeling</h3>
+<section id="turbulence-modeling" class="level3" data-number="12.7.4">
+<h3 data-number="12.7.4" class="anchored" data-anchor-id="turbulence-modeling"><span class="header-section-number">12.7.4</span> Turbulence modeling</h3>
 <ul>
 <li><p><code>iclosure</code>: controls the type of closure scheme used</p>
 <ul>
@@ -882,15 +912,15 @@ SALINITY
 <li><p><code>DEFAULT_DIFFUSIVITY</code>: default horizontal diffusivity for scalars; overridden by scalar-specific settings.</p></li>
 </ul>
 </section>
-<section id="meteorological-sensor-heights" class="level3" data-number="7.7.5">
-<h3 data-number="7.7.5" class="anchored" data-anchor-id="meteorological-sensor-heights"><span class="header-section-number">7.7.5</span> Meteorological Sensor Heights</h3>
+<section id="meteorological-sensor-heights" class="level3" data-number="12.7.5">
+<h3 data-number="12.7.5" class="anchored" data-anchor-id="meteorological-sensor-heights"><span class="header-section-number">12.7.5</span> Meteorological Sensor Heights</h3>
 <ul>
 <li><code>WIND_SPEED_HEIGHT</code>: height (m) of wind speed measurements. Default is 10 m.</li>
 <li><code>SCALAR_HEIGHT</code>: height (m) for air temperature and humidity data. Default is 10 m.</li>
 </ul>
 </section>
-<section id="model-settings-and-controls" class="level3" data-number="7.7.6">
-<h3 data-number="7.7.6" class="anchored" data-anchor-id="model-settings-and-controls"><span class="header-section-number">7.7.6</span> Model Settings and Controls</h3>
+<section id="model-settings-and-controls" class="level3" data-number="12.7.6">
+<h3 data-number="12.7.6" class="anchored" data-anchor-id="model-settings-and-controls"><span class="header-section-number">12.7.6</span> Model Settings and Controls</h3>
 <ul>
 <li><code>mean_albedo</code>: mean albedo of water</li>
 <li><code>drag_btm_cd</code>: bottom drag coefficient</li>
@@ -898,8 +928,8 @@ SALINITY
 <li><code>model_grav_damp_y</code>: damping for y-baroclinic term</li>
 </ul>
 </section>
-<section id="scalar-maximum-and-minimum-for-debugging" class="level3" data-number="7.7.7">
-<h3 data-number="7.7.7" class="anchored" data-anchor-id="scalar-maximum-and-minimum-for-debugging"><span class="header-section-number">7.7.7</span> Scalar Maximum and Minimum for Debugging</h3>
+<section id="scalar-maximum-and-minimum-for-debugging" class="level3" data-number="12.7.7">
+<h3 data-number="12.7.7" class="anchored" data-anchor-id="scalar-maximum-and-minimum-for-debugging"><span class="header-section-number">12.7.7</span> Scalar Maximum and Minimum for Debugging</h3>
 <ul>
 <li><code>min_&lt;SCALAR&gt;</code> and <code>max_&lt;SCALAR&gt;</code>: bounds for debugging. <code>&lt;SCALAR&gt;</code> must be uppercase.</li>
 <li><code>ihardlimit</code>:
@@ -909,8 +939,8 @@ SALINITY
 </ul></li>
 </ul>
 </section>
-<section id="debugging-controls" class="level3" data-number="7.7.8">
-<h3 data-number="7.7.8" class="anchored" data-anchor-id="debugging-controls"><span class="header-section-number">7.7.8</span> Debugging controls</h3>
+<section id="debugging-controls" class="level3" data-number="12.7.8">
+<h3 data-number="12.7.8" class="anchored" data-anchor-id="debugging-controls"><span class="header-section-number">12.7.8</span> Debugging controls</h3>
 <ul>
 <li><code>debug_check</code>:
 <ul>
@@ -934,40 +964,40 @@ SALINITY
 </ul></li>
 </ul>
 </section>
-<section id="output-frequency-1" class="level3" data-number="7.7.9">
-<h3 data-number="7.7.9" class="anchored" data-anchor-id="output-frequency-1"><span class="header-section-number">7.7.9</span> Output Frequency</h3>
+<section id="output-frequency-1" class="level3" data-number="12.7.9">
+<h3 data-number="12.7.9" class="anchored" data-anchor-id="output-frequency-1"><span class="header-section-number">12.7.9</span> Output Frequency</h3>
 <ul>
 <li><code>iter_out_monitor</code>: output interval for monitoring</li>
 <li><code>iter_out_save</code>: output interval for saved simulation</li>
 <li><code>iter_out_restart</code>: output interval for restart files</li>
 </ul>
 </section>
-<section id="output-start-time" class="level3" data-number="7.7.10">
-<h3 data-number="7.7.10" class="anchored" data-anchor-id="output-start-time"><span class="header-section-number">7.7.10</span> Output Start Time</h3>
+<section id="output-start-time" class="level3" data-number="12.7.10">
+<h3 data-number="12.7.10" class="anchored" data-anchor-id="output-start-time"><span class="header-section-number">12.7.10</span> Output Start Time</h3>
 <ul>
 <li><code>start_output_monitor</code>: time step to start monitoring output</li>
 <li><code>start_output_save</code>: time step to start save files</li>
 <li><code>start_output_restart</code>: time step to start restart files</li>
 </ul>
 </section>
-<section id="time-controls" class="level3" data-number="7.7.11">
-<h3 data-number="7.7.11" class="anchored" data-anchor-id="time-controls"><span class="header-section-number">7.7.11</span> Time Controls</h3>
+<section id="time-controls" class="level3" data-number="12.7.11">
+<h3 data-number="12.7.11" class="anchored" data-anchor-id="time-controls"><span class="header-section-number">12.7.11</span> Time Controls</h3>
 <ul>
 <li><code>start_date_CWR</code>: start in Julian format <code>yyyyddd.ddd</code></li>
 <li><code>del_t</code>: time step (seconds)</li>
 <li><code>iter_max</code>: max time steps</li>
 </ul>
 </section>
-<section id="iterative-solver-controls" class="level3" data-number="7.7.12">
-<h3 data-number="7.7.12" class="anchored" data-anchor-id="iterative-solver-controls"><span class="header-section-number">7.7.12</span> Iterative Solver Controls</h3>
+<section id="iterative-solver-controls" class="level3" data-number="12.7.12">
+<h3 data-number="12.7.12" class="anchored" data-anchor-id="iterative-solver-controls"><span class="header-section-number">12.7.12</span> Iterative Solver Controls</h3>
 <ul>
 <li><code>CGM_TOL</code>: tolerance for conjugate gradient method</li>
 <li><code>CGM_MIN</code>: minimum iterations</li>
 <li><code>CGM_MAX</code>: maximum iterations</li>
 </ul>
 </section>
-<section id="scalar-filtering" class="level3" data-number="7.7.13">
-<h3 data-number="7.7.13" class="anchored" data-anchor-id="scalar-filtering"><span class="header-section-number">7.7.13</span> Scalar Filtering</h3>
+<section id="scalar-filtering" class="level3" data-number="12.7.13">
+<h3 data-number="12.7.13" class="anchored" data-anchor-id="scalar-filtering"><span class="header-section-number">12.7.13</span> Scalar Filtering</h3>
 <ul>
 <li><code>IFILTER</code>:
 <ul>
@@ -981,8 +1011,8 @@ SALINITY
 <li><code>DEFAULT_FILTER</code>: default filter value for all scalars</li>
 </ul>
 </section>
-<section id="default-values" class="level3" data-number="7.7.14">
-<h3 data-number="7.7.14" class="anchored" data-anchor-id="default-values"><span class="header-section-number">7.7.14</span> Default Values</h3>
+<section id="default-values" class="level3" data-number="12.7.14">
+<h3 data-number="12.7.14" class="anchored" data-anchor-id="default-values"><span class="header-section-number">12.7.14</span> Default Values</h3>
 <ul>
 <li><code>DEFAULT_HEIGHT</code>: default water height (m)</li>
 <li><code>DEFAULT_WIND_SPEED</code>: default wind speed (m/s)</li>
@@ -992,8 +1022,8 @@ SALINITY
 <li><code>DEFAULT_BC</code>: boundary condition preset (1-9)</li>
 </ul>
 </section>
-<section id="input-file-names" class="level3" data-number="7.7.15">
-<h3 data-number="7.7.15" class="anchored" data-anchor-id="input-file-names"><span class="header-section-number">7.7.15</span> Input File Names</h3>
+<section id="input-file-names" class="level3" data-number="12.7.15">
+<h3 data-number="12.7.15" class="anchored" data-anchor-id="input-file-names"><span class="header-section-number">12.7.15</span> Input File Names</h3>
 <ul>
 <li><code>3D_data_file</code>, <code>preprocessor_file</code>: grid and map files</li>
 <li><code>initial_profile_file</code>, <code>initial_horiz_file</code>: initial condition files</li>
@@ -1004,30 +1034,30 @@ SALINITY
 <li><code>datablock_file</code>: output configuration</li>
 </ul>
 </section>
-<section id="file-directories" class="level3" data-number="7.7.16">
-<h3 data-number="7.7.16" class="anchored" data-anchor-id="file-directories"><span class="header-section-number">7.7.16</span> File Directories</h3>
+<section id="file-directories" class="level3" data-number="12.7.16">
+<h3 data-number="12.7.16" class="anchored" data-anchor-id="file-directories"><span class="header-section-number">12.7.16</span> File Directories</h3>
 <ul>
 <li><code>infile_dir</code>: directory of input files</li>
 <li><code>outfile_unf_dir</code>: binary output directory</li>
 <li><code>outfile_txt_dir</code>: text output directory</li>
 </ul>
 </section>
-<section id="output-file-names" class="level3" data-number="7.7.17">
-<h3 data-number="7.7.17" class="anchored" data-anchor-id="output-file-names"><span class="header-section-number">7.7.17</span> Output File Names</h3>
+<section id="output-file-names" class="level3" data-number="12.7.17">
+<h3 data-number="12.7.17" class="anchored" data-anchor-id="output-file-names"><span class="header-section-number">12.7.17</span> Output File Names</h3>
 <ul>
 <li><code>restart_save_file</code>: base name for save files</li>
 <li><code>restart_out_file</code>: base name for restart output</li>
 </ul>
 </section>
 </section>
-<section id="input-files" class="level2" data-number="7.8">
-<h2 data-number="7.8" class="anchored" data-anchor-id="input-files"><span class="header-section-number">7.8</span> Input files</h2>
-<section id="sparsedata.unf-and-usedata.unf" class="level3" data-number="7.8.1">
-<h3 data-number="7.8.1" class="anchored" data-anchor-id="sparsedata.unf-and-usedata.unf"><span class="header-section-number">7.8.1</span> sparsedata.unf and usedata.unf</h3>
+<section id="input-files" class="level2" data-number="12.8">
+<h2 data-number="12.8" class="anchored" data-anchor-id="input-files"><span class="header-section-number">12.8</span> Input files</h2>
+<section id="sparsedata.unf-and-usedata.unf" class="level3" data-number="12.8.1">
+<h3 data-number="12.8.1" class="anchored" data-anchor-id="sparsedata.unf-and-usedata.unf"><span class="header-section-number">12.8.1</span> sparsedata.unf and usedata.unf</h3>
 <p>The files <code>sparsedata.unf</code> and <code>usedata.unf</code> are required files for ELCOM. These are the Fortran unformatted (binary) files produced by the pre-processor. The user may rename these files, but must keep track of which file is the <code>sparsedata</code> file (<code>3D_data_file</code>) and which is the <code>usedata</code> file (<code>preprocessor_file</code>). ELCOM will look for the files specified in the <code>run_elcom.dat</code> file. If the incorrect files are used, the simulation will crash.</p>
 </section>
-<section id="sec-tempBCfiles" class="level3" data-number="7.8.2">
-<h3 data-number="7.8.2" class="anchored" data-anchor-id="sec-tempBCfiles"><span class="header-section-number">7.8.2</span> Temporal boundary condition (1D) files</h3>
+<section id="sec-tempBCfiles" class="level3" data-number="12.8.2">
+<h3 data-number="12.8.2" class="anchored" data-anchor-id="sec-tempBCfiles"><span class="header-section-number">12.8.2</span> Temporal boundary condition (1D) files</h3>
 <p>The one-dimensional temporal boundary condition files (<code>boundary_condition_file</code>) are created by the user to provide environmental forcing information that varies with time. These files must follow a specific format:</p>
 <ul>
 <li>Four header lines followed by data columns.</li>
@@ -1038,8 +1068,8 @@ SALINITY
 <li>No comments allowed within the data block.</li>
 <li>All columns must be fully populated (no missing values).</li>
 </ul>
-<section id="header-line-meanings" class="level4" data-number="7.8.2.1">
-<h4 data-number="7.8.2.1" class="anchored" data-anchor-id="header-line-meanings"><span class="header-section-number">7.8.2.1</span> Header line meanings:</h4>
+<section id="header-line-meanings" class="level4" data-number="12.8.2.1">
+<h4 data-number="12.8.2.1" class="anchored" data-anchor-id="header-line-meanings"><span class="header-section-number">12.8.2.1</span> Header line meanings:</h4>
 <ol type="1">
 <li>Number of data columns (excluding the time column).</li>
 <li><code>0</code> indicating CWR time format (first data column should be <code>TIME</code>).</li>
@@ -1048,8 +1078,8 @@ SALINITY
 </ol>
 <p><strong>Interpolation:</strong> ELCOM linearly interpolates between provided time values to match simulation time steps (<code>del_t</code>).</p>
 </section>
-<section id="table-temporal-boundary-condition-data-types" class="level4" data-number="7.8.2.2">
-<h4 data-number="7.8.2.2" class="anchored" data-anchor-id="table-temporal-boundary-condition-data-types"><span class="header-section-number">7.8.2.2</span> Table: Temporal Boundary Condition Data-types</h4>
+<section id="table-temporal-boundary-condition-data-types" class="level4" data-number="12.8.2.2">
+<h4 data-number="12.8.2.2" class="anchored" data-anchor-id="table-temporal-boundary-condition-data-types"><span class="header-section-number">12.8.2.2</span> Table: Temporal Boundary Condition Data-types</h4>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 23%">
@@ -1177,8 +1207,8 @@ SALINITY
 </tbody>
 </table>
 </section>
-<section id="notes" class="level4" data-number="7.8.2.3">
-<h4 data-number="7.8.2.3" class="anchored" data-anchor-id="notes"><span class="header-section-number">7.8.2.3</span> Notes:</h4>
+<section id="notes" class="level4" data-number="12.8.2.3">
+<h4 data-number="12.8.2.3" class="anchored" data-anchor-id="notes"><span class="header-section-number">12.8.2.3</span> Notes:</h4>
 <ul>
 <li><code>INFLOW_MAXDEPTH</code> and <code>INFLOW_MINDEPTH</code>: allow control of inflow depths, enabling inflow at the surface of a thalweg cell even as surface level varies.</li>
 <li><code>GATE_&lt;n&gt;_TOP</code>, <code>GATE_&lt;n&gt;_BOTTOM</code>, <code>GATE_&lt;n&gt;_OPEN</code>: specify selective withdrawal gates. <code>n</code> is the gate number (e.g.&nbsp;<code>GATE_1_TOP</code>), with <code>OPEN</code> = 1 (open) or 0 (closed). Flow is distributed among open gates based on area.</li>
@@ -1186,15 +1216,15 @@ SALINITY
 <p>These features allow for more realistic simulation of systems like reservoirs with variable surface height or dam withdrawal structures.</p>
 </section>
 </section>
-<section id="temporal-profile-boundary-condition-2d-files" class="level3" data-number="7.8.3">
-<h3 data-number="7.8.3" class="anchored" data-anchor-id="temporal-profile-boundary-condition-2d-files"><span class="header-section-number">7.8.3</span> Temporal profile boundary condition (2D) files</h3>
+<section id="temporal-profile-boundary-condition-2d-files" class="level3" data-number="12.8.3">
+<h3 data-number="12.8.3" class="anchored" data-anchor-id="temporal-profile-boundary-condition-2d-files"><span class="header-section-number">12.8.3</span> Temporal profile boundary condition (2D) files</h3>
 <p>The two-dimensional temporal profile boundary condition files (<code>profile_boundary_condition_file</code>) are used to provide scalar boundary information that varies with both time and depth. These files consist of:</p>
 <ul>
 <li>Four header lines</li>
 <li>Sections of data, each representing a profile at a specific time</li>
 </ul>
-<section id="header-lines" class="level4" data-number="7.8.3.1">
-<h4 data-number="7.8.3.1" class="anchored" data-anchor-id="header-lines"><span class="header-section-number">7.8.3.1</span> Header lines:</h4>
+<section id="header-lines" class="level4" data-number="12.8.3.1">
+<h4 data-number="12.8.3.1" class="anchored" data-anchor-id="header-lines"><span class="header-section-number">12.8.3.1</span> Header lines:</h4>
 <ol type="1">
 <li>Number of data sets per section (including <code>DEPTH</code>, excluding the <code>TIME</code> row)</li>
 <li>Must contain <code>0</code> to indicate CWR time format; data section starts with <code>TIME</code></li>
@@ -1202,8 +1232,8 @@ SALINITY
 <li>Keywords for each column (<code>TIME</code>, <code>DEPTH</code>, and valid scalar keywords)</li>
 </ol>
 </section>
-<section id="data-section" class="level4" data-number="7.8.3.2">
-<h4 data-number="7.8.3.2" class="anchored" data-anchor-id="data-section"><span class="header-section-number">7.8.3.2</span> Data section:</h4>
+<section id="data-section" class="level4" data-number="12.8.3.2">
+<h4 data-number="12.8.3.2" class="anchored" data-anchor-id="data-section"><span class="header-section-number">12.8.3.2</span> Data section:</h4>
 <p>Each section contains:</p>
 <ul>
 <li>One header row: the profile time (<code>yyyyddd.dd</code>) and number of depths</li>
@@ -1218,8 +1248,8 @@ SALINITY
 <hr>
 </section>
 </section>
-<section id="sec-updateBCfiles" class="level3" data-number="7.8.4">
-<h3 data-number="7.8.4" class="anchored" data-anchor-id="sec-updateBCfiles"><span class="header-section-number">7.8.4</span> Update boundary condition files</h3>
+<section id="sec-updateBCfiles" class="level3" data-number="12.8.4">
+<h3 data-number="12.8.4" class="anchored" data-anchor-id="sec-updateBCfiles"><span class="header-section-number">12.8.4</span> Update boundary condition files</h3>
 <p>The update boundary condition files (<code>update_file</code>) are used to update scalar values on boundaries during specified time intervals (e.g., tracer releases). Format is the same as 1D temporal boundary condition files, <strong>except</strong>:</p>
 <ul>
 <li>Two <code>TIME</code> columns per row are provided</li>
@@ -1228,8 +1258,8 @@ SALINITY
 <p>If a timestep doesn’t fall within any of these intervals, no update is applied.</p>
 <hr>
 </section>
-<section id="sec-tempFiltFiles" class="level3" data-number="7.8.5">
-<h3 data-number="7.8.5" class="anchored" data-anchor-id="sec-tempFiltFiles"><span class="header-section-number">7.8.5</span> Temporal filter constant files</h3>
+<section id="sec-tempFiltFiles" class="level3" data-number="12.8.5">
+<h3 data-number="12.8.5" class="anchored" data-anchor-id="sec-tempFiltFiles"><span class="header-section-number">12.8.5</span> Temporal filter constant files</h3>
 <p>Temporal filter constant files (<code>filter_file</code>) provide time-varying filter constants for scalars. They follow the same format as the 1D temporal boundary condition files.</p>
 <ul>
 <li>Third header line still includes boundary cell set reference, <strong>but it is ignored</strong></li>
@@ -1237,10 +1267,10 @@ SALINITY
 </ul>
 <hr>
 </section>
-<section id="drifter-files" class="level3" data-number="7.8.6">
-<h3 data-number="7.8.6" class="anchored" data-anchor-id="drifter-files"><span class="header-section-number">7.8.6</span> Drifter files</h3>
-<section id="drifter-properties-files" class="level4" data-number="7.8.6.1">
-<h4 data-number="7.8.6.1" class="anchored" data-anchor-id="drifter-properties-files"><span class="header-section-number">7.8.6.1</span> Drifter Properties Files</h4>
+<section id="drifter-files" class="level3" data-number="12.8.6">
+<h3 data-number="12.8.6" class="anchored" data-anchor-id="drifter-files"><span class="header-section-number">12.8.6</span> Drifter files</h3>
+<section id="drifter-properties-files" class="level4" data-number="12.8.6.1">
+<h4 data-number="12.8.6.1" class="anchored" data-anchor-id="drifter-properties-files"><span class="header-section-number">12.8.6.1</span> Drifter Properties Files</h4>
 <p>The drifter properties file (<code>drifter_properties_file</code>) provides physical properties of semi-Lagrangian drifters. If only Lagrangian particles are simulated, this file can be blank.</p>
 <p>Each line contains <strong>four columns</strong>:</p>
 <ol type="1">
@@ -1250,8 +1280,8 @@ SALINITY
 <li>Property keyword</li>
 </ol>
 </section>
-<section id="valid-property-keywords" class="level4" data-number="7.8.6.2">
-<h4 data-number="7.8.6.2" class="anchored" data-anchor-id="valid-property-keywords"><span class="header-section-number">7.8.6.2</span> Valid property keywords:</h4>
+<section id="valid-property-keywords" class="level4" data-number="12.8.6.2">
+<h4 data-number="12.8.6.2" class="anchored" data-anchor-id="valid-property-keywords"><span class="header-section-number">12.8.6.2</span> Valid property keywords:</h4>
 <ul>
 <li><code>mass</code>: mass of the component (kg)</li>
 <li><code>area</code>: cross-sectional area (m<sup>2</sup>)</li>
@@ -1260,16 +1290,16 @@ SALINITY
 <li><code>distance</code>: vertical distance from probe base to component base (m)</li>
 </ul>
 </section>
-<section id="shape-keyword-values" class="level4" data-number="7.8.6.3">
-<h4 data-number="7.8.6.3" class="anchored" data-anchor-id="shape-keyword-values"><span class="header-section-number">7.8.6.3</span> <code>shape</code> keyword values:</h4>
+<section id="shape-keyword-values" class="level4" data-number="12.8.6.3">
+<h4 data-number="12.8.6.3" class="anchored" data-anchor-id="shape-keyword-values"><span class="header-section-number">12.8.6.3</span> <code>shape</code> keyword values:</h4>
 <ul>
 <li>1 = sphere</li>
 <li>2 = cylinder</li>
 <li>3 = rectangle</li>
 </ul>
 </section>
-<section id="type-keyword-values" class="level4" data-number="7.8.6.4">
-<h4 data-number="7.8.6.4" class="anchored" data-anchor-id="type-keyword-values"><span class="header-section-number">7.8.6.4</span> <code>type</code> keyword values:</h4>
+<section id="type-keyword-values" class="level4" data-number="12.8.6.4">
+<h4 data-number="12.8.6.4" class="anchored" data-anchor-id="type-keyword-values"><span class="header-section-number">12.8.6.4</span> <code>type</code> keyword values:</h4>
 <ul>
 <li>1 = submerged — forced by modeled water velocities</li>
 <li>2 = subsurface — forced by surface wind shear velocity</li>
@@ -1322,13 +1352,13 @@ SALINITY
 3      :    5    type</code></pre>
 </section>
 </section>
-<section id="drifter-initial-files" class="level3" data-number="7.8.7">
-<h3 data-number="7.8.7" class="anchored" data-anchor-id="drifter-initial-files"><span class="header-section-number">7.8.7</span> Drifter Initial Files</h3>
+<section id="drifter-initial-files" class="level3" data-number="12.8.7">
+<h3 data-number="12.8.7" class="anchored" data-anchor-id="drifter-initial-files"><span class="header-section-number">12.8.7</span> Drifter Initial Files</h3>
 <p>The drifter initial files (<code>drifter_in_file</code>) are used to provide initial conditions and simulation properties for drifters and particles.</p>
 <p>Each line of the <code>drifter_in_file</code> should contain <strong>three columns</strong>: 1. A value 2. Target drifters (<code>:</code> for all, or <code>n1:n2</code> for a range) 3. A keyword that specifies the property to set</p>
 </section>
-<section id="valid-keywords" class="level3" data-number="7.8.8">
-<h3 data-number="7.8.8" class="anchored" data-anchor-id="valid-keywords"><span class="header-section-number">7.8.8</span> Valid keywords:</h3>
+<section id="valid-keywords" class="level3" data-number="12.8.8">
+<h3 data-number="12.8.8" class="anchored" data-anchor-id="valid-keywords"><span class="header-section-number">12.8.8</span> Valid keywords:</h3>
 <ul>
 <li><p><code>start_t</code>: starting timestep for the drifter</p></li>
 <li><p><code>end_t</code>: ending timestep for the drifter</p></li>
@@ -1371,8 +1401,8 @@ SALINITY
 2      :    beach_method
 1.5    :    depth</code></pre>
 </section>
-<section id="drifter-update-files" class="level3" data-number="7.8.9">
-<h3 data-number="7.8.9" class="anchored" data-anchor-id="drifter-update-files"><span class="header-section-number">7.8.9</span> Drifter Update Files</h3>
+<section id="drifter-update-files" class="level3" data-number="12.8.9">
+<h3 data-number="12.8.9" class="anchored" data-anchor-id="drifter-update-files"><span class="header-section-number">12.8.9</span> Drifter Update Files</h3>
 <p>The drifter update files (<code>update_drifter_file</code>) are used to update drifter positions or solution methods during a simulation. These files are primarily designed to incorporate real-time position updates from measurements.</p>
 <p>The format is the same as standard update boundary condition files, <strong>except</strong>:</p>
 <ul>
@@ -1381,8 +1411,8 @@ SALINITY
 </ul>
 <p>If the current timestep is not between the two specified time values of a row, no update is made.</p>
 </section>
-<section id="valid-keywords-for-updates" class="level3" data-number="7.8.10">
-<h3 data-number="7.8.10" class="anchored" data-anchor-id="valid-keywords-for-updates"><span class="header-section-number">7.8.10</span> Valid keywords for updates:</h3>
+<section id="valid-keywords-for-updates" class="level3" data-number="12.8.10">
+<h3 data-number="12.8.10" class="anchored" data-anchor-id="valid-keywords-for-updates"><span class="header-section-number">12.8.10</span> Valid keywords for updates:</h3>
 <ul>
 <li><code>solution_method</code>: (see earlier for method options)</li>
 <li><code>beach_method</code>: (see earlier for options)</li>
@@ -1406,8 +1436,8 @@ SALINITY
 TIME       TIME       i   j
 2005001.50 2005001.60 6.7 7.2</code></pre>
 </section>
-<section id="jet-files" class="level3" data-number="7.8.11">
-<h3 data-number="7.8.11" class="anchored" data-anchor-id="jet-files"><span class="header-section-number">7.8.11</span> Jet Files</h3>
+<section id="jet-files" class="level3" data-number="12.8.11">
+<h3 data-number="12.8.11" class="anchored" data-anchor-id="jet-files"><span class="header-section-number">12.8.11</span> Jet Files</h3>
 <p>The jet files (<code>jet_file</code>) are used to define the properties of a jet or pump employed for artificial destratification.</p>
 <p>These files must follow a specific format:</p>
 <ul>
@@ -1417,8 +1447,8 @@ TIME       TIME       i   j
 <li>Comments (<code>!</code>) are allowed at the top of the file</li>
 <li>All data rows must be fully populated — <strong>no missing values allowed</strong></li>
 </ul>
-<section id="header-line-definitions" class="level4" data-number="7.8.11.1">
-<h4 data-number="7.8.11.1" class="anchored" data-anchor-id="header-line-definitions"><span class="header-section-number">7.8.11.1</span> Header line definitions:</h4>
+<section id="header-line-definitions" class="level4" data-number="12.8.11.1">
+<h4 data-number="12.8.11.1" class="anchored" data-anchor-id="header-line-definitions"><span class="header-section-number">12.8.11.1</span> Header line definitions:</h4>
 <ol type="1">
 <li><strong>Jet reference number</strong> (used for debugging purposes only)</li>
 <li><strong>i and j location</strong> of the jet (two integers)</li>
@@ -1431,8 +1461,8 @@ TIME       TIME       i   j
 <pre class="plaintext"><code> TIME THRUST RADIUS HEIGHT</code></pre>
 <p>The four data columns are</p>
 </section>
-<section id="data-column-descriptions-jet-files" class="level4" data-number="7.8.11.2">
-<h4 data-number="7.8.11.2" class="anchored" data-anchor-id="data-column-descriptions-jet-files"><span class="header-section-number">7.8.11.2</span> Data Column Descriptions (Jet Files)</h4>
+<section id="data-column-descriptions-jet-files" class="level4" data-number="12.8.11.2">
+<h4 data-number="12.8.11.2" class="anchored" data-anchor-id="data-column-descriptions-jet-files"><span class="header-section-number">12.8.11.2</span> Data Column Descriptions (Jet Files)</h4>
 <ul>
 <li><code>TIME</code>: The date in CWR Julian Day format (<code>yyyyddd.ddd</code>)</li>
 <li><code>THRUST</code>: Force of the pump in Newtons</li>
@@ -1449,8 +1479,8 @@ TIME      THRUST RADIUS DEPTH
 2005011.0 3000   2.0    2.2</code></pre>
 </section>
 </section>
-<section id="drafttube-files" class="level3" data-number="7.8.12">
-<h3 data-number="7.8.12" class="anchored" data-anchor-id="drafttube-files"><span class="header-section-number">7.8.12</span> Drafttube Files</h3>
+<section id="drafttube-files" class="level3" data-number="12.8.12">
+<h3 data-number="12.8.12" class="anchored" data-anchor-id="drafttube-files"><span class="header-section-number">12.8.12</span> Drafttube Files</h3>
 <p>The drafttube files (<code>drafttube_file</code>) are used to define the properties of a pump with a drafttube used for artificial destratification.</p>
 <p>These files must follow this structure:</p>
 <ul>
@@ -1460,8 +1490,8 @@ TIME      THRUST RADIUS DEPTH
 <li>Comment lines (starting with <code>!</code>) may appear at the top of the file</li>
 <li><strong>All data columns must be complete</strong> — no missing values in any row</li>
 </ul>
-<section id="header-line-definitions-1" class="level4" data-number="7.8.12.1">
-<h4 data-number="7.8.12.1" class="anchored" data-anchor-id="header-line-definitions-1"><span class="header-section-number">7.8.12.1</span> Header line definitions:</h4>
+<section id="header-line-definitions-1" class="level4" data-number="12.8.12.1">
+<h4 data-number="12.8.12.1" class="anchored" data-anchor-id="header-line-definitions-1"><span class="header-section-number">12.8.12.1</span> Header line definitions:</h4>
 <ol type="1">
 <li>A <strong>drafttube reference number</strong> (used for debugging only)</li>
 <li>Two integers indicating the <strong>i and j location</strong> of the device</li>
@@ -1473,8 +1503,8 @@ TIME      THRUST RADIUS DEPTH
 <pre class="plaintext"><code> TIME FLOW RADIUS DEPTH LENGTH</code></pre>
 <p>The four data columns are</p>
 </section>
-<section id="data-column-descriptions-drafttube-files" class="level4" data-number="7.8.12.2">
-<h4 data-number="7.8.12.2" class="anchored" data-anchor-id="data-column-descriptions-drafttube-files"><span class="header-section-number">7.8.12.2</span> Data Column Descriptions (Drafttube Files)</h4>
+<section id="data-column-descriptions-drafttube-files" class="level4" data-number="12.8.12.2">
+<h4 data-number="12.8.12.2" class="anchored" data-anchor-id="data-column-descriptions-drafttube-files"><span class="header-section-number">12.8.12.2</span> Data Column Descriptions (Drafttube Files)</h4>
 <ul>
 <li><code>TIME</code>: The date in CWR Julian Day format (<code>yyyyddd.ddd</code>)</li>
 <li><code>FLOW</code>: Flow rate through the pump in m<sup>3</sup>/s <em>Note: This value should be negative (i.e., pumping downward through the tube).</em></li>
@@ -1493,8 +1523,8 @@ TIME      FLOW RADIUS DEPTH  LENGTH
 </section>
 </section>
 </section>
-<section id="definition-of-culvert-characteristics-dynamic-boundary-conditions" class="level2" data-number="7.9">
-<h2 data-number="7.9" class="anchored" data-anchor-id="definition-of-culvert-characteristics-dynamic-boundary-conditions"><span class="header-section-number">7.9</span> Definition of Culvert Characteristics – Dynamic Boundary Conditions</h2>
+<section id="definition-of-culvert-characteristics-dynamic-boundary-conditions" class="level2" data-number="12.9">
+<h2 data-number="12.9" class="anchored" data-anchor-id="definition-of-culvert-characteristics-dynamic-boundary-conditions"><span class="header-section-number">12.9</span> Definition of Culvert Characteristics – Dynamic Boundary Conditions</h2>
 <p>When dynamic boundary conditions are defined in <code>pre_elcom</code>, the characteristics of the culvert connecting the pair of boundary conditions must be provided. These characteristics are supplied in a file specified in <code>run_elcom.dat</code> using the keyword <code>dynamic_boundary_condition_file</code>.</p>
 <p>These files require:</p>
 <ul>
@@ -1509,8 +1539,8 @@ TIME      FLOW RADIUS DEPTH  LENGTH
 <li>One value – number of pipes in the set (only circular pipes supported)</li>
 <li>One line – column headers for culvert characteristics</li>
 </ol>
-<section id="supported-culvert-keywords-and-defaults" class="level3" data-number="7.9.1">
-<h3 data-number="7.9.1" class="anchored" data-anchor-id="supported-culvert-keywords-and-defaults"><span class="header-section-number">7.9.1</span> Supported Culvert Keywords and Defaults</h3>
+<section id="supported-culvert-keywords-and-defaults" class="level3" data-number="12.9.1">
+<h3 data-number="12.9.1" class="anchored" data-anchor-id="supported-culvert-keywords-and-defaults"><span class="header-section-number">12.9.1</span> Supported Culvert Keywords and Defaults</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 18%">
@@ -1588,8 +1618,8 @@ TIME      FLOW RADIUS DEPTH  LENGTH
 </tbody>
 </table>
 </section>
-<section id="example-file" class="level3" data-number="7.9.2">
-<h3 data-number="7.9.2" class="anchored" data-anchor-id="example-file"><span class="header-section-number">7.9.2</span> Example File</h3>
+<section id="example-file" class="level3" data-number="12.9.2">
+<h3 data-number="12.9.2" class="anchored" data-anchor-id="example-file"><span class="header-section-number">12.9.2</span> Example File</h3>
 <pre class="plaintext"><code>! Boundary Condition file for Culverts
 2 1 ! Pair of dynamic sets
 7   ! data sets
@@ -1597,16 +1627,16 @@ TIME      FLOW RADIUS DEPTH  LENGTH
 EPS_ENTRY  EPS_EXIT EPS_FLAP_IN  PIPE_PHI  PIPE_LEN  PIPE_MAN  PIPE_HEIGHT
 0.500      1.000      0.100      0.500     15.0       0.015       2.750</code></pre>
 </section>
-<section id="sec-datablock" class="level3" data-number="7.9.3">
-<h3 data-number="7.9.3" class="anchored" data-anchor-id="sec-datablock"><span class="header-section-number">7.9.3</span> Output definition file (Datablock.db)</h3>
+<section id="sec-datablock" class="level3" data-number="12.9.3">
+<h3 data-number="12.9.3" class="anchored" data-anchor-id="sec-datablock"><span class="header-section-number">12.9.3</span> Output definition file (Datablock.db)</h3>
 <p>The file <code>datablock.db</code> is a text file produced by the user, and contains the configuration data used to set up the users output. The name for this file is specified by the user.</p>
 <p>A <code>datablock.db</code> file is structured as a series of blocks of instructions. Each block requires an exact number of lines, with specific instructions on each line. Each line contains a single instruction followed by a comment. The comment must begin with a “!” character. In manually editing <code>datablock.db</code> files, it is important to keep in mind that while blocks of instructions may be added or removed, lines within a block can only be modified, but not removed. The following will discuss the structure of each block of instructions.</p>
-<section id="datablock-description" class="level4" data-number="7.9.3.1">
-<h4 data-number="7.9.3.1" class="anchored" data-anchor-id="datablock-description"><span class="header-section-number">7.9.3.1</span> Datablock Description</h4>
+<section id="datablock-description" class="level4" data-number="12.9.3.1">
+<h4 data-number="12.9.3.1" class="anchored" data-anchor-id="datablock-description"><span class="header-section-number">12.9.3.1</span> Datablock Description</h4>
 <p>The first 4 lines of a <code>datablock.db</code> are the datablock description. In order, they are the block descriptor, the current datablock version number, the number of output groups, and the number of output sets. Output groups and sets are described below.</p>
 </section>
-<section id="group-description" class="level4" data-number="7.9.3.2">
-<h4 data-number="7.9.3.2" class="anchored" data-anchor-id="group-description"><span class="header-section-number">7.9.3.2</span> Group Description</h4>
+<section id="group-description" class="level4" data-number="12.9.3.2">
+<h4 data-number="12.9.3.2" class="anchored" data-anchor-id="group-description"><span class="header-section-number">12.9.3.2</span> Group Description</h4>
 <p>Following the datablock description are the group description blocks. A group represents a group of data to be output. A data group is defined as an output filename, datatypes to be output (i.e.&nbsp;<code>TEMPERATURE, SALINITY</code>, etc…), the location within the simulation domain of the points at which data is to be output, and the time at which data is to be output. If several groups are desired, the group descriptions must follow each other without breaks between them.</p>
 <p>A group description block contains 11 lines, which are as follows:</p>
 <table class="caption-top table">
@@ -1668,8 +1698,8 @@ EPS_ENTRY  EPS_EXIT EPS_FLAP_IN  PIPE_PHI  PIPE_LEN  PIPE_MAN  PIPE_HEIGHT
 </tbody>
 </table>
 </section>
-<section id="set-description" class="level4" data-number="7.9.3.3">
-<h4 data-number="7.9.3.3" class="anchored" data-anchor-id="set-description"><span class="header-section-number">7.9.3.3</span> Set Description</h4>
+<section id="set-description" class="level4" data-number="12.9.3.3">
+<h4 data-number="12.9.3.3" class="anchored" data-anchor-id="set-description"><span class="header-section-number">12.9.3.3</span> Set Description</h4>
 <p>A set is a set of points at which data are to be output. This can include a vertical column of points, a contiguous series of columns of points (curtain), a horizontal sheet of points, a collection of drifters, a collection of outflows, or any group of points in the three-dimensional domain. The valid set types are:</p>
 <pre><code>PROFILE_1D
 CURTAIN_2D
@@ -1731,8 +1761,8 @@ GENERAL_3D</code></pre>
 </tbody>
 </table>
 </section>
-<section id="group-data-types" class="level4" data-number="7.9.3.4">
-<h4 data-number="7.9.3.4" class="anchored" data-anchor-id="group-data-types"><span class="header-section-number">7.9.3.4</span> Group data types</h4>
+<section id="group-data-types" class="level4" data-number="12.9.3.4">
+<h4 data-number="12.9.3.4" class="anchored" data-anchor-id="group-data-types"><span class="header-section-number">12.9.3.4</span> Group data types</h4>
 <p>This block begins with the desired number of data types, followed by a listing of the desired data types.</p>
 <table class="caption-top table">
 <colgroup>
@@ -1826,8 +1856,8 @@ YN_F_UND_INDEX</code></pre>
 <p>For <code>OUTFLOW</code> set types the scalar value output is the average value for the total flow out. <strong>Note:</strong> Scalar is actually estimated using a first-order upwind scheme rather than the actual ULTIMATE-QUICKEST flux values.</p>
 </section>
 </section>
-<section id="group-time-list" class="level3" data-number="7.9.4">
-<h3 data-number="7.9.4" class="anchored" data-anchor-id="group-time-list"><span class="header-section-number">7.9.4</span> Group Time List</h3>
+<section id="group-time-list" class="level3" data-number="12.9.4">
+<h3 data-number="12.9.4" class="anchored" data-anchor-id="group-time-list"><span class="header-section-number">12.9.4</span> Group Time List</h3>
 <p>This block is required to initialize a time stamp for each group. It requires only two lines as follows:</p>
 <table class="caption-top table">
 <colgroup>
@@ -1853,8 +1883,8 @@ YN_F_UND_INDEX</code></pre>
 </table>
 <hr>
 </section>
-<section id="set-cell-data" class="level3" data-number="7.9.5">
-<h3 data-number="7.9.5" class="anchored" data-anchor-id="set-cell-data"><span class="header-section-number">7.9.5</span> Set Cell Data</h3>
+<section id="set-cell-data" class="level3" data-number="12.9.5">
+<h3 data-number="12.9.5" class="anchored" data-anchor-id="set-cell-data"><span class="header-section-number">12.9.5</span> Set Cell Data</h3>
 <p>This block describes the spatial location of each datablock set. The locations are described as row, column, and/or layer number.</p>
 <table class="caption-top table">
 <colgroup>
@@ -1894,14 +1924,14 @@ YN_F_UND_INDEX</code></pre>
 </ul>
 </section>
 </section>
-<section id="sec-runexe" class="level2" data-number="7.10">
-<h2 data-number="7.10" class="anchored" data-anchor-id="sec-runexe"><span class="header-section-number">7.10</span> Running ELCOM</h2>
+<section id="sec-runexe" class="level2" data-number="12.10">
+<h2 data-number="12.10" class="anchored" data-anchor-id="sec-runexe"><span class="header-section-number">12.10</span> Running ELCOM</h2>
 <p>ELCOM is executed at the command line by typing <code>elcom.exe</code> within the directory <em>where the <code>run_elcom.dat</code> and all the appropriate input data files</em> are located. The monitoring/debugging output is sent to the standard output of the computer (the display terminal on most computers). Unless the simulation run is very short, it is recommended that the user redirect the output to a file with a execution redirection such as:</p>
 <pre><code>elcom.exe &gt;&amp; run_output.txt</code></pre>
-<section id="sec-postproc" class="level3" data-number="7.10.1">
-<h3 data-number="7.10.1" class="anchored" data-anchor-id="sec-postproc"><span class="header-section-number">7.10.1</span> Post-Processing</h3>
-<section id="conversion-of-datablock-file-to-netcdf" class="level4" data-number="7.10.1.1">
-<h4 data-number="7.10.1.1" class="anchored" data-anchor-id="conversion-of-datablock-file-to-netcdf"><span class="header-section-number">7.10.1.1</span> Conversion of datablock file to NETCDF</h4>
+<section id="sec-postproc" class="level3" data-number="12.10.1">
+<h3 data-number="12.10.1" class="anchored" data-anchor-id="sec-postproc"><span class="header-section-number">12.10.1</span> Post-Processing</h3>
+<section id="conversion-of-datablock-file-to-netcdf" class="level4" data-number="12.10.1.1">
+<h4 data-number="12.10.1.1" class="anchored" data-anchor-id="conversion-of-datablock-file-to-netcdf"><span class="header-section-number">12.10.1.1</span> Conversion of datablock file to NETCDF</h4>
 <p>The datablock output files are named and configured through the <code>datablock.db</code> file. ELCOM produces Fortran unformatted (binary) files as specified by the datablock output configuration. In general, one datablock output file contains one or more data types (e.g.&nbsp;velocity, temperature) applied to a set of points at a specified time interval. These files can be reprocessed into NETCDF files using the command-line program <code>dbconv.exe</code>.</p>
 <p>The program <code>dbconv.exe</code> is used for converting datablock unformatted binary files created by ELCOM to NETCDF files which can then be processed and viewed in a program such as Matlab. The <code>dbconv.exe</code> executable should be placed either in the working directory or as recommended in the <code>/bin</code> directory which is in the operating system’s search path. <code>dbconv</code> is run through a configuration file called <code>run_dbconv.dat</code>.</p>
 <p>The <code>run_dbconv.dat</code> file contains 9 lines as follows:</p>
@@ -1935,15 +1965,15 @@ YN_F_UND_INDEX</code></pre>
 </section>
 </section>
 </section>
-<section id="save-and-restart-output-files" class="level2" data-number="7.11">
-<h2 data-number="7.11" class="anchored" data-anchor-id="save-and-restart-output-files"><span class="header-section-number">7.11</span> Save and Restart output files</h2>
+<section id="save-and-restart-output-files" class="level2" data-number="12.11">
+<h2 data-number="12.11" class="anchored" data-anchor-id="save-and-restart-output-files"><span class="header-section-number">12.11</span> Save and Restart output files</h2>
 <p>Save and Restart output files are Fortran unformatted (binary) files that contain run configuration information used to allow the user to restart ELCOM runs from a certain point. As described in the <code>run_elcom.dat</code> section, the kernel name and output frequency of save and restart files are defined in the <code>run_elcom.dat</code> file.</p>
 <p>The save files are created starting at the time step specified by the value assigned to the <code>run_elcom.dat</code> keyword <code>start_output_save</code>, and subsequently at intervals defined by <code>iter_out_save</code>. The file name of the save files begins with the user-specified kernel, given by <code>restart_save_file</code>, appended by a time stamp, and appended by <code>.unf</code>.</p>
 <p>The restart files are created at intervals defined by <code>iter_out_restart</code>, starting from the first time step. Subsequent restart files overwrite existing restart files. The file name of the restart files begins with the user-specified kernel, given by <code>restart_out_file</code>, appended by <code>.unf</code>. All start and restart files are written in the outfiles directory specified in the <code>run_elcom.dat</code> file.</p>
 <p>To restart an ELCOM simulation using a save or restart file, the user must place a copy of the desired save or restart file in the infiles directory as specified in the <code>run_elcom.dat</code> file. In the <code>run_elcom.dat</code> file the name of the desired save or restart file must be assigned to the <code>restart_infile</code> keyword, and keyword <code>irestart</code> must be assigned the value <code>1</code>.</p>
 </section>
-<section id="culvert-outputs---dynamic-boundary-conditions" class="level2" data-number="7.12">
-<h2 data-number="7.12" class="anchored" data-anchor-id="culvert-outputs---dynamic-boundary-conditions"><span class="header-section-number">7.12</span> Culvert Outputs - Dynamic Boundary Conditions</h2>
+<section id="culvert-outputs---dynamic-boundary-conditions" class="level2" data-number="12.12">
+<h2 data-number="12.12" class="anchored" data-anchor-id="culvert-outputs---dynamic-boundary-conditions"><span class="header-section-number">12.12</span> Culvert Outputs - Dynamic Boundary Conditions</h2>
 <p>In the current implementation, the flow rates and scalars calculated for each pipe in each of the pairs of dynamic boundary condition sets are output to an <code>ASCII</code> file located in the <code>outfile_txt_dir</code> directory.</p>
 <p>The output files are named <code>culvert_bcset_[$set$].out</code>, where <code>$set$</code> is each of the dynamic boundary condition sets present in the simulation.</p>
 <p>The format of the files is as follows. 16 header lines explain the format of the file.</p>
@@ -1990,8 +2020,8 @@ YN_F_UND_INDEX</code></pre>
 </ul>
 <p>Then, <code>number of scalars</code> lines are output for each of the transportable scalars defined in the header.</p>
 </section>
-<section id="sec-validScalars" class="level2" data-number="7.13">
-<h2 data-number="7.13" class="anchored" data-anchor-id="sec-validScalars"><span class="header-section-number">7.13</span> ELCOM Valid Scalars</h2>
+<section id="sec-validScalars" class="level2" data-number="12.13">
+<h2 data-number="12.13" class="anchored" data-anchor-id="sec-validScalars"><span class="header-section-number">12.13</span> ELCOM Valid Scalars</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 19%">
@@ -2436,12 +2466,12 @@ YN_F_UND_INDEX</code></pre>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./02-pre.html" class="pagination-link" aria-label="Pre-Processor">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pre-Processor</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Pre-Processor</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./04-notation.html" class="pagination-link" aria-label="Notation">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Notation</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Notation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

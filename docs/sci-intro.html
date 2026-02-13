@@ -8,7 +8,7 @@
 
 <meta name="description" content="This is a draft of the ELCOM manual.">
 
-<title>2&nbsp; Hydrodynamics – ELCOM Manual</title>
+<title>2&nbsp; Introduction – ELCOM Manual</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,7 +31,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./sci-transport.html" rel="next">
+<link href="./sci-goveqns.html" rel="next">
 <link href="./01-intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -84,7 +84,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sci-hydrodynamics.html">Science Description</a></li><li class="breadcrumb-item"><a href="./sci-hydrodynamics.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hydrodynamics</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sci-intro.html">Science Description</a></li><li class="breadcrumb-item"><a href="./sci-intro.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -143,26 +143,56 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sci-hydrodynamics.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hydrodynamics</span></span></a>
+  <a href="./sci-intro.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sci-transport.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Transport and Mixing</span></span></a>
+  <a href="./sci-goveqns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Governing Hydrodynamic Equations and Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sci-thermodynamics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Surface Thermodynamics</span></span></a>
+  <a href="./sci-timestep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Timestep limitations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sci-turbulence.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Turbulence Closure</span></span></a>
+  <a href="./sci-method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Numerical Method</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-thermo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Surface Thermodynamics and Mass Fluxes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-mixing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Mixing Model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-filter.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Numerical Diffusion Filter</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-underflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Underflow Model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sci-destrat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Artificial Destratification</span></span></a>
   </div>
 </li>
       </ul>
@@ -179,19 +209,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-pre.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pre-Processor</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Pre-Processor</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-elcom.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">ELCOM Operation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ELCOM Operation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-notation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Notation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Notation</span></span></a>
   </div>
 </li>
       </ul>
@@ -208,7 +238,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-application.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Applications</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Applications</span></span></a>
   </div>
 </li>
       </ul>
@@ -229,20 +259,16 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#governing-equations" id="toc-governing-equations" class="nav-link active" data-scroll-target="#governing-equations"><span class="header-section-number">2.1</span> Governing Equations</a></li>
-  <li><a href="#momentum-equations" id="toc-momentum-equations" class="nav-link" data-scroll-target="#momentum-equations"><span class="header-section-number">2.2</span> Momentum Equations</a></li>
-  <li><a href="#free-surface-evolution" id="toc-free-surface-evolution" class="nav-link" data-scroll-target="#free-surface-evolution"><span class="header-section-number">2.3</span> Free-Surface Evolution</a></li>
-  <li><a href="#coriolis-and-barotropicbaroclinic-forcing" id="toc-coriolis-and-barotropicbaroclinic-forcing" class="nav-link" data-scroll-target="#coriolis-and-barotropicbaroclinic-forcing"><span class="header-section-number">2.4</span> Coriolis and Barotropic/Baroclinic Forcing</a></li>
-  <li><a href="#boundary-conditions" id="toc-boundary-conditions" class="nav-link" data-scroll-target="#boundary-conditions"><span class="header-section-number">2.5</span> Boundary Conditions</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">2.1</span> Overview</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sci-hydrodynamics.html">Science Description</a></li><li class="breadcrumb-item"><a href="./sci-hydrodynamics.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hydrodynamics</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sci-intro.html">Science Description</a></li><li class="breadcrumb-item"><a href="./sci-intro.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-sci-hydro" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hydrodynamics</span></span></h1>
+<h1 class="title"><span id="sec-intro" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></h1>
 </div>
 
 
@@ -259,26 +285,21 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="governing-equations" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="governing-equations"><span class="header-section-number">2.1</span> Governing Equations</h2>
-<p><em>Content to be added.</em></p>
-<p>The hydrodynamic model in ELCOM solves the unsteady, Reynolds-averaged Navier-Stokes equations for incompressible flow using the hydrostatic assumption for pressure. This chapter describes the governing equations and their discretization.</p>
-</section>
-<section id="momentum-equations" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="momentum-equations"><span class="header-section-number">2.2</span> Momentum Equations</h2>
-<p><em>Content to be added.</em></p>
-</section>
-<section id="free-surface-evolution" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="free-surface-evolution"><span class="header-section-number">2.3</span> Free-Surface Evolution</h2>
-<p><em>Content to be added.</em></p>
-</section>
-<section id="coriolis-and-barotropicbaroclinic-forcing" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="coriolis-and-barotropicbaroclinic-forcing"><span class="header-section-number">2.4</span> Coriolis and Barotropic/Baroclinic Forcing</h2>
-<p><em>Content to be added.</em></p>
-</section>
-<section id="boundary-conditions" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="boundary-conditions"><span class="header-section-number">2.5</span> Boundary Conditions</h2>
-<p><em>Content to be added.</em></p>
+<section id="overview" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">2.1</span> Overview</h2>
+<p>ELCOM (Estuary, Lake and Coastal Ocean Model) is a three-dimensional hydrodynamics model for lakes and reservoirs, and is used to predict the variation of water temperature and salinity in space and time. The model forms the three-dimensional hydrodynamics driver to the CAEDYM water quality model.</p>
+<p>Heat exchange through the water’s surface is governed by standard bulk transfer models found in the literature (e.g., <span class="citation" data-cites="Amor80 Imbe81 Jacq83">(Amorocho and Devries 1980; Imberger and Patterson 1981; Jacquet 1983)</span>). The energy transfer across the free surface is separated into nonpenetrative components of long-wave radiation, sensible heat transfer, and evaporative heat loss, complemented by penetrative shortwave radiation. Nonpenetrative effects are introduced as sources of temperature in the surface-mixed layer, whereas penetrative effects are introduced as source terms in one or more grid layers on the basis of an exponential decay and an extinction coefficient (Beer’s law).</p>
+<p>ELCOM computes a model time step in a staged approach consisting of</p>
+<ol type="1">
+<li>introduction of surface heating/ cooling in the surface layer</li>
+<li>mixing of scalar concentrations and momentum using a mixed-layer model</li>
+<li>introduction of wind energy as a momentum source in the wind-mixed layer</li>
+<li>solution of the free-surface evolution and velocity field</li>
+<li>horizontal diffusion of momentum</li>
+<li>advection of scalars, and</li>
+<li>horizontal diffusion of scalars</li>
+</ol>
+<p>The fundamental numerical scheme is adapted from the TRIM approach of <span class="citation" data-cites="Casu92">(Casulli and Cheng 1992)</span> with modifications for accuracy, scalar conservation, numerical diffusion, and implementation of a mixed-layer turbulence closure. The solution grid uses varying width orthoganal cells. The grid stencil is the Arakawa C-grid: Velocities are defined on cell faces with the free-surface height and scalar concentrations on cell centers. The free-surface height in each column of grid cells moves vertically through grid layers as required by the free-surface evolution equation. Replacement of the standard vertical turbulent diffusion equation with a mixed-layer model eliminates the tridiagonal matrix inversion for each horizontal velocity component and transported scalar required for each grid water column in the original TRIM scheme. This provides computational efficiency and allows sharper gradients to be maintained with coarse grid resolution.</p>
 
 
 </section>
@@ -691,8 +712,8 @@ ul.task-list li input[type="checkbox"] {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./sci-transport.html" class="pagination-link" aria-label="Transport and Mixing">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Transport and Mixing</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./sci-goveqns.html" class="pagination-link" aria-label="Governing Hydrodynamic Equations and Models">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Governing Hydrodynamic Equations and Models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
