@@ -6,10 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-02-13">
 <meta name="description" content="This is a draft of the ELCOM manual.">
 
-<title>ELCOM Manual</title>
+<title>4&nbsp; Surface Thermodynamics – ELCOM Manual</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,7 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./01-intro.html" rel="next">
+<link href="./sci-turbulence.html" rel="next">
+<link href="./sci-transport.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -84,7 +84,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Welcome</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sci-hydrodynamics.html">Science Description</a></li><li class="breadcrumb-item"><a href="./sci-thermodynamics.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Surface Thermodynamics</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -111,7 +111,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Welcome</span></a>
   </div>
 </li>
@@ -155,7 +155,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sci-thermodynamics.html" class="sidebar-item-text sidebar-link">
+  <a href="./sci-thermodynamics.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Surface Thermodynamics</span></span></a>
   </div>
 </li>
@@ -229,34 +229,27 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#welcome" id="toc-welcome" class="nav-link active" data-scroll-target="#welcome">Welcome</a></li>
+  <li><a href="#surface-heat-budget" id="toc-surface-heat-budget" class="nav-link active" data-scroll-target="#surface-heat-budget"><span class="header-section-number">4.1</span> Surface Heat Budget</a></li>
+  <li><a href="#shortwave-radiation" id="toc-shortwave-radiation" class="nav-link" data-scroll-target="#shortwave-radiation"><span class="header-section-number">4.2</span> Shortwave Radiation</a></li>
+  <li><a href="#longwave-radiation" id="toc-longwave-radiation" class="nav-link" data-scroll-target="#longwave-radiation"><span class="header-section-number">4.3</span> Longwave Radiation</a></li>
+  <li><a href="#latent-and-sensible-heat-fluxes" id="toc-latent-and-sensible-heat-fluxes" class="nav-link" data-scroll-target="#latent-and-sensible-heat-fluxes"><span class="header-section-number">4.4</span> Latent and Sensible Heat Fluxes</a></li>
+  <li><a href="#equation-of-state" id="toc-equation-of-state" class="nav-link" data-scroll-target="#equation-of-state"><span class="header-section-number">4.5</span> Equation of State</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sci-hydrodynamics.html">Science Description</a></li><li class="breadcrumb-item"><a href="./sci-thermodynamics.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Surface Thermodynamics</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">ELCOM Manual</h1>
+<h1 class="title"><span id="sec-sci-thermo" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Surface Thermodynamics</span></span></h1>
 </div>
 
-<div>
-  <div class="description">
-    This is a draft of the ELCOM manual.
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
 
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">February 13, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -266,16 +259,26 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="welcome" class="level1 unnumbered">
-<h1 class="unnumbered">Welcome</h1>
-<p>This is a draft of the ELCOM manual. It is being written using Quarto and will be published as a Quarto book.</p>
-<p>The ELCOM manual is a work in progress. It is being written by the ELCOM development team and is intended to be a comprehensive guide to using ELCOM for hydrodynamic and thermodynamic modeling of stratified water bodies. The manual will cover the following topics:</p>
-<ul>
-<li>Introduction to ELCOM</li>
-<li>Setting up an ELCOM simulation</li>
-<li>Running an ELCOM simulation</li>
-<li>Post-processing ELCOM simulation results</li>
-</ul>
+<section id="surface-heat-budget" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="surface-heat-budget"><span class="header-section-number">4.1</span> Surface Heat Budget</h2>
+<p><em>Content to be added.</em></p>
+<p>The surface thermodynamics module computes the heat exchange across the air-water interface. This chapter describes the components of the surface heat budget and their parameterization.</p>
+</section>
+<section id="shortwave-radiation" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="shortwave-radiation"><span class="header-section-number">4.2</span> Shortwave Radiation</h2>
+<p><em>Content to be added.</em></p>
+</section>
+<section id="longwave-radiation" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="longwave-radiation"><span class="header-section-number">4.3</span> Longwave Radiation</h2>
+<p><em>Content to be added.</em></p>
+</section>
+<section id="latent-and-sensible-heat-fluxes" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="latent-and-sensible-heat-fluxes"><span class="header-section-number">4.4</span> Latent and Sensible Heat Fluxes</h2>
+<p><em>Content to be added.</em></p>
+</section>
+<section id="equation-of-state" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="equation-of-state"><span class="header-section-number">4.5</span> Equation of State</h2>
+<p><em>Content to be added.</em></p>
 
 
 </section>
@@ -683,10 +686,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./sci-transport.html" class="pagination-link" aria-label="Transport and Mixing">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Transport and Mixing</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./01-intro.html" class="pagination-link" aria-label="Introduction">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./sci-turbulence.html" class="pagination-link" aria-label="Turbulence Closure">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Turbulence Closure</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
