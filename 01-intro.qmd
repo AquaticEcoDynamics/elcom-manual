@@ -1,0 +1,31 @@
+# Introduction {#sec-intro}
+
+## The ELCOM model
+
+ELCOM (Estuary and Lake Computer Model) is a numerical modeling tool that applies hydrodynamic and thermodynamic models to simulate the temporal behavior of stratified water bodies with environmental forcing.
+
+The hydrodynamic simulation method solves the unsteady, viscous Navier-Stokes equations for incompressible flow using the hydrostatic assumption for pressure. Modeled and simulated processes include baroclinic and barotropic responses, rotational effects, tidal forcing, wind stresses, surface thermal forcing, inflows, outflows, and transport of salt, heat and passive scalars.
+
+Through coupling with the CAEDYM (Computational Aquatic Ecosystem DYnamics Model) water quality module, ELCOM can be used to simulate three-dimensional transport and interactions of flow physics, biology and chemistry.
+
+The hydrodynamic algorithms in ELCOM are based on the Euler-Lagrange method for advection of momentum with a conjugate-gradient solution for the free-surface height (Casulli and Cheng, 1992). Passive and active scalars (i.e., tracers, salinity and temperature) are advected using a conservative ULTIMATE QUICKEST discretization (Leonard 1991).
+
+
+
+## Conventions and definitions
+
+In this document, a number of conventions will be used. For clarity, the computational domain will generally be referred to as a "lake". However, the simulation method is designed for applicability to estuaries and coastal ocean environments.
+
+| Term              | Definition                                                                 |
+|-------------------|-----------------------------------------------------------------------------|
+| *x,y,z* space     | Full Cartesian space which covers all of the bathymetry                    |
+| *i,j,k* space     | Discrete integer space of computational cells which covers all bathymetry  |
+| land              | A computational cell that cannot contain water                             |
+| open              | A cell used for an open boundary condition                                 |
+| interior          | A cell that may contain water                                               |
+| x\_rows           | Number of grid cells in the x direction                                     |
+| y\_columns        | Number of grid cells in the y direction                                     |
+| z\_layers         | Number of grid cells in the vertical (z) direction                          |
+| land\_value       | Number used in the bathymetry file to represent land cells                 |
+| open\_value       | Number used in the bathymetry file to represent open boundary cells        |
+| dx, dy, dz        | Grid spacing in x, y, z directions (can be uniform or non-uniform, in meters) |

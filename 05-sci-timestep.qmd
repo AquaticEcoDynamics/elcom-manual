@@ -1,0 +1,35 @@
+# Timestep limitations {#sec-timestep}
+
+Both TRIM and ELCOM are unconditionally stable for purely barotropic flows; that is, they will produce stable numerical results for any size of time step.  However, for stratified flows, both methods use explicit discretization of the baroclinic terms in the momentum equation leading to a time step constraint based on the internal wave Courant-Friedrichs-Lewy condition ($CFL$) such that
+
+$$
+(g^\prime D)^{1/2}\frac{\Delta t}{\Delta x}<\sqrt{2}
+$$ {#eq-baroclinicCFL}
+
+is required.  The left-hand side is defined as the baroclinic $CFL$ number ($CFL_b$), where $g^\prime$ is the reduced gravity due to stratification, the effective depth is $D$, $\sqrt{g^\prime D}$ is an approximation of the wave speed of an internal wave.  This baroclinic stability condition is generally the most restrictive condition in a density-stratified flow. The importance of the internal wave speed can be seen in a simple scaling analysis:  Typical lake stratifications provide a modified gravity of $g^\prime \sim O (10^{-2})$ m s$^{-2}$ while lake depths $D$ are $O(10)$ m to $O(10^2)$ m.  Internal waves propagate at $C \sim \sqrt{g^\prime D}$, giving wave speeds of $O(1)$ m s$^{-1}$.  Maximum horizontal water velocities in a lake are typically $O(10^{-1})$ m s$^{-1}$, and the desired horizontal grid size is $O (10^{2})$ m.
+
+The maximum allowable time step for a limiting $CFL$ condition is:
+
+$$
+\Delta t < \frac{CFL\Delta x}{U}
+$$ {#eq-maxTimestep}
+
+If $U$ is taken as the horizontal water velocity, the maximum allowable time step for a limiting $CFL$ of one is $O(10^{3})$ s.  If $U$ is taken as the internal wave speed, the maximum allowable time step for a limiting $CFL$ of one is $O (10^{2})$ s.  Thus, in the horizontal direction, the internal wave speed rather than the flow velocity controls the maximum allowable time step and high $CFL$ capability in the horizontal direction is generally unnecessary.  However, in the vertical direction, there is a definite advantage to a numerical scheme that is stable for $CFL > 1$.  Practical vertical grid resolutions are typically $O(10^{-1})$ m to $O(10)$ m depending on the lake morphology and available computational power.  Internal wave motions can produce vertical velocities of $O(10^{-2})$ m s$^{-1}$, so fine grid resolutions with a $CFL$ limit of one can result in an unacceptable time step limitations of $O(10)$ s.
+
+Scalar transport in ELCOM uses an explicit approach has an advective Courant-Friedrichs-Lewy condition ($CFL_{a}$) such that $u \frac{\Delta t}{\delta x} < 1$ is required. This condition does not effect the time step of the momentum solution ($\Delta t$), but instead is used to compute sub-time step ($\Delta t$) for the scalar transport solution.  The implicit scheme of [@Gros98] does not have $CFL$ limitation for vertical velocity and is therefore preferable where fine grid resolution is used in the vertical direction and high vertical $CFL$ values are expected.  At coarse vertical grid resolutions (low vertical $CFL$ values) the present explicit approach should prove more computationally efficient.
+
+A final stability constraint for semi-implicit schemes with explicit horizontal diffusion (e.g. TRIM and ELCOM) is the viscous stability condition (derived for homogenous flows in [@Casu92])
+
+$$
+\Delta t \leq \frac{\Delta x^2 \Delta y^2}{2\nu (\Delta x^2 + \Delta y^2)}
+$$ {#eq-viscousStability}
+
+This is typically at least an order of magnitude less restrictive than the baroclinic stability condition.
+
+A constraint that becomes important when using large time step in a geophysical model is whether the velocity field can be considered Lipschitz at the grid and time scales applied: i.e. is the field sufficiently smooth for a numerical approximation [@Iser96]. In [@Smol92] the numerical Lipschitz constant $B$ is defined with the condition that it must be less than unity:
+
+$$
+B=\left | \left | \frac{\partial \nu}{dx} \right | \right |\Delta t < 1
+$$ {#eq-lipschitz}
+
+This was demonstrated to be a necessary condition in a multi-time-level semi-Lagrangian method to prevent trajectories from intersecting as they are traced back in time and space.  While the present Euler-Lagrange method tracks trajectories back only in space, the above Lipschitz condition heuristically applies as a fundamental statement of the necessary behavior of the velocity field to allow reasonable approximation by a numerical model.  As demonstrated in [@Smol92], a numerical method may remain stable at a high B, but the results will not be accurate.  This places a fundamental limit on the allowable time step that may be reasonably used in a model.  The importance of this point is that the maximum time step that can be used may be a function of the physics, rather than the stability of the numerical method.

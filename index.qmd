@@ -1,0 +1,11 @@
+# Welcome {.unnumbered}
+
+This is a draft of the ELCOM manual. It is being written using Quarto and will be published as a Quarto book.
+
+The ELCOM manual is a work in progress. It is being written by the ELCOM development team and is intended to be a comprehensive guide to using ELCOM for hydrodynamic and thermodynamic modeling of stratified water bodies.
+The manual will cover the following topics:
+
+- Introduction to ELCOM
+- Setting up an ELCOM simulation
+- Running an ELCOM simulation
+- Post-processing ELCOM simulation results

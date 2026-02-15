@@ -1,0 +1,48 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "ELCOM Manual"
+  description: "This is a draft of the ELCOM manual."
+  date: today
+  chapters:
+    - index.qmd
+    - part: "Overview"
+      chapters:
+        - 01-intro.qmd
+        - 02-notation.qmd
+    - part: "Science Description"
+      chapters:
+        - 03-sci-intro.qmd
+        - 04-sci-goveqns.qmd
+        - 05-sci-timestep.qmd
+        - 06-sci-method.qmd
+        - 07-sci-thermo.qmd
+        - 08-sci-mixing.qmd
+        - 09-sci-underflow.qmd
+        - 10-sci-destrat.qmd
+    - part: "Using ELCOM"
+      chapters:
+        - 11-getting-started.qmd
+        - 12-pre.qmd
+        - 13-elcom.qmd
+        - 14-running.qmd
+        - 15-output.qmd
+        - 16-developer.qmd
+    - part: "Examples"
+      chapters:
+        - 17-application.qmd
+        - 18-publications.qmd
+    - references.qmd
+
+bibliography: [book.bib, packages.bib]
+suppress-bibliography: true
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: book
+    include-in-header: preamble.tex
+    latex-engine: xelatex

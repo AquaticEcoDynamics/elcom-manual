@@ -1,0 +1,22 @@
+# Getting Started {#sec-getting-started}
+
+## Outline of a simulation run
+
+Setting up and running an ELCOM simulation requires the following steps:
+
+1. Prepare `bathymetry.dat` file that provides topography and grid information (see @sec-bathFile),
+2. Prepare `bc.dat` file that designates sets of cells for applying boundary conditions (see @sec-bcFile),
+3. Prepare `levee.dat` file that designates sets of cells for levee boundary conditions (see @sec-leveeFile),
+4. Prepare `update.dat` file that designates sets of cells for update boundary conditions (see @sec-updateFile),
+5. Run the pre-processor to produce `sparsedata.unf` and `usedata.unf` files,
+6. Configure the simulation `run_elcom` file (see @sec-runelcom),
+7. Specify output in a datablock file (`*.db`) for designating data output operations (see @sec-datablock),
+8. Prepare temporal boundary condition files (`*.dat`) for data applied to the boundary condition cells (see @sec-tempBCfiles),
+9. Prepare initial conditions files (see @sec-initfiles),
+10. Run the executable, directing the screen output to a file (see @sec-runexe),
+11. Post-process data (see @sec-postproc).
+
+## Accessing model binary files (model executable)
+
+Model files are accessed via the GitHub source repository, available here:
+

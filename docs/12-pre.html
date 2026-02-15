@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="This is a draft of the ELCOM manual.">
+
+<title>12&nbsp; Domain Pre-processing – ELCOM Manual</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./13-elcom.html" rel="next">
+<link href="./11-getting-started.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-70a47bd5681a7291082a5b9f83d58762.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./11-getting-started.html">Using ELCOM</a></li><li class="breadcrumb-item"><a href="./12-pre.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Domain Pre-processing</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">ELCOM Manual</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Overview</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Notation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Science Description</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-sci-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Overview</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-sci-goveqns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Governing Hydrodynamic Equations and Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-sci-timestep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Timestep limitations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-sci-method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Numerical Method</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-sci-thermo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Surface Thermodynamics and Mass Fluxes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-sci-mixing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Vertical Mixing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-sci-underflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Underflow Model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-sci-destrat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Artificial Destratification</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Using ELCOM</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-getting-started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-pre.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Domain Pre-processing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-elcom.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Configuring a Simulation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-running.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Running a Simulation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-output.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Output File Processing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-developer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Developer Information</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Examples</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-application.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Applications</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-publications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Publications</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#what-youll-need" id="toc-what-youll-need" class="nav-link active" data-scroll-target="#what-youll-need"><span class="header-section-number">12.1</span> What you’ll need</a></li>
+  <li><a href="#sec-bathFile" id="toc-sec-bathFile" class="nav-link" data-scroll-target="#sec-bathFile"><span class="header-section-number">12.2</span> Setting up the bathymetry file (<code>bathymetry.dat</code>)</a>
+  <ul class="collapse">
+  <li><a href="#physical-and-computational-space-coordinates" id="toc-physical-and-computational-space-coordinates" class="nav-link" data-scroll-target="#physical-and-computational-space-coordinates"><span class="header-section-number">12.2.1</span> Physical and computational space coordinates</a></li>
+  <li><a href="#file-header" id="toc-file-header" class="nav-link" data-scroll-target="#file-header"><span class="header-section-number">12.2.2</span> File header</a></li>
+  <li><a href="#size-of-input-bathymetry-data" id="toc-size-of-input-bathymetry-data" class="nav-link" data-scroll-target="#size-of-input-bathymetry-data"><span class="header-section-number">12.2.3</span> Size of input bathymetry data</a></li>
+  <li><a href="#land-cells" id="toc-land-cells" class="nav-link" data-scroll-target="#land-cells"><span class="header-section-number">12.2.4</span> Land cells</a></li>
+  <li><a href="#open-boundary-cells" id="toc-open-boundary-cells" class="nav-link" data-scroll-target="#open-boundary-cells"><span class="header-section-number">12.2.5</span> Open boundary cells</a></li>
+  <li><a href="#north-vector" id="toc-north-vector" class="nav-link" data-scroll-target="#north-vector"><span class="header-section-number">12.2.6</span> North vector</a></li>
+  <li><a href="#geographic-position" id="toc-geographic-position" class="nav-link" data-scroll-target="#geographic-position"><span class="header-section-number">12.2.7</span> Geographic position</a></li>
+  <li><a href="#horizontal-grid-spacing" id="toc-horizontal-grid-spacing" class="nav-link" data-scroll-target="#horizontal-grid-spacing"><span class="header-section-number">12.2.8</span> Horizontal grid spacing</a></li>
+  <li><a href="#non-uniform-horizontal-grid-spacing" id="toc-non-uniform-horizontal-grid-spacing" class="nav-link" data-scroll-target="#non-uniform-horizontal-grid-spacing"><span class="header-section-number">12.2.9</span> Non uniform horizontal grid spacing</a></li>
+  <li><a href="#layer-thickness" id="toc-layer-thickness" class="nav-link" data-scroll-target="#layer-thickness"><span class="header-section-number">12.2.10</span> Layer thickness</a></li>
+  <li><a href="#bathymetry-values" id="toc-bathymetry-values" class="nav-link" data-scroll-target="#bathymetry-values"><span class="header-section-number">12.2.11</span> Bathymetry values</a></li>
+  <li><a href="#bottom-drag-values-optional" id="toc-bottom-drag-values-optional" class="nav-link" data-scroll-target="#bottom-drag-values-optional"><span class="header-section-number">12.2.12</span> Bottom drag values (optional)</a></li>
+  <li><a href="#bottom-slope-values-optional" id="toc-bottom-slope-values-optional" class="nav-link" data-scroll-target="#bottom-slope-values-optional"><span class="header-section-number">12.2.13</span> Bottom Slope Values (Optional)</a></li>
+  </ul></li>
+  <li><a href="#sec-bcFile" id="toc-sec-bcFile" class="nav-link" data-scroll-target="#sec-bcFile"><span class="header-section-number">12.3</span> Setting up the boundary cell set file (<code>bc.dat</code>)</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">12.4</span> Introduction</a></li>
+  <li><a href="#boundary-cell-set-categories" id="toc-boundary-cell-set-categories" class="nav-link" data-scroll-target="#boundary-cell-set-categories"><span class="header-section-number">12.5</span> Boundary cell set categories</a></li>
+  <li><a href="#boundary-cell-set-face-direction" id="toc-boundary-cell-set-face-direction" class="nav-link" data-scroll-target="#boundary-cell-set-face-direction"><span class="header-section-number">12.6</span> Boundary cell set face direction</a></li>
+  <li><a href="#boundary-cell-set-keywords" id="toc-boundary-cell-set-keywords" class="nav-link" data-scroll-target="#boundary-cell-set-keywords"><span class="header-section-number">12.7</span> Boundary cell set keywords</a></li>
+  <li><a href="#sec-bcdat" id="toc-sec-bcdat" class="nav-link" data-scroll-target="#sec-bcdat"><span class="header-section-number">12.8</span> Organization of the boundary cell set file (<code>bc.dat</code>)</a></li>
+  <li><a href="#flow_multi_sides" id="toc-flow_multi_sides" class="nav-link" data-scroll-target="#flow_multi_sides"><span class="header-section-number">12.9</span> flow_multi_sides</a></li>
+  <li><a href="#flow_dynamic" id="toc-flow_dynamic" class="nav-link" data-scroll-target="#flow_dynamic"><span class="header-section-number">12.10</span> flow_dynamic</a></li>
+  <li><a href="#sec-leveeFile" id="toc-sec-leveeFile" class="nav-link" data-scroll-target="#sec-leveeFile"><span class="header-section-number">12.11</span> Setting up the levee file (<code>levee.dat</code>) (Optional)</a>
+  <ul class="collapse">
+  <li><a href="#introduction-1" id="toc-introduction-1" class="nav-link" data-scroll-target="#introduction-1"><span class="header-section-number">12.11.1</span> Introduction</a></li>
+  <li><a href="#levee-set-categories" id="toc-levee-set-categories" class="nav-link" data-scroll-target="#levee-set-categories"><span class="header-section-number">12.11.2</span> Levee set categories</a></li>
+  <li><a href="#organization-of-the-levee-set-file-levee.dat" id="toc-organization-of-the-levee-set-file-levee.dat" class="nav-link" data-scroll-target="#organization-of-the-levee-set-file-levee.dat"><span class="header-section-number">12.11.3</span> Organization of the levee set file (<code>levee.dat</code>)</a></li>
+  </ul></li>
+  <li><a href="#sec-updateFile" id="toc-sec-updateFile" class="nav-link" data-scroll-target="#sec-updateFile"><span class="header-section-number">12.12</span> Setting up the update file (<code>update.dat</code>) (Optional)</a>
+  <ul class="collapse">
+  <li><a href="#introduction-2" id="toc-introduction-2" class="nav-link" data-scroll-target="#introduction-2"><span class="header-section-number">12.12.1</span> Introduction</a></li>
+  <li><a href="#update-set-categories" id="toc-update-set-categories" class="nav-link" data-scroll-target="#update-set-categories"><span class="header-section-number">12.12.2</span> Update set categories</a></li>
+  <li><a href="#organization-of-the-update-set-file-update.dat" id="toc-organization-of-the-update-set-file-update.dat" class="nav-link" data-scroll-target="#organization-of-the-update-set-file-update.dat"><span class="header-section-number">12.12.3</span> Organization of the update set file (<code>update.dat</code>)</a></li>
+  </ul></li>
+  <li><a href="#running-the-pre-processor-with-run_pre.dat" id="toc-running-the-pre-processor-with-run_pre.dat" class="nav-link" data-scroll-target="#running-the-pre-processor-with-run_pre.dat"><span class="header-section-number">12.13</span> Running the pre-processor with <code>run_pre.dat</code></a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./11-getting-started.html">Using ELCOM</a></li><li class="breadcrumb-item"><a href="./12-pre.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Domain Pre-processing</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-pre" class="quarto-section-identifier"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Domain Pre-processing</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><br></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Overview">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Overview
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The ELCOM pre-processor converts the user’s three-dimensional data of lake bathymetry, boundary forcing sections, and grid structure into one-dimensional vectors used by ELCOM. It requires user-supplied text files (<code>bathymetry.dat</code>, <code>bc.dat</code>, and optionally <code>levee.dat</code> and <code>update.dat</code>) configured via a <code>run_pre.dat</code> file, and outputs two Fortran unformatted binary files: <code>sparsedata.unf</code> and <code>usedata.unf</code>.</p>
+</div>
+</div>
+<p><br></p>
+<section id="what-youll-need" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="what-youll-need"><span class="header-section-number">12.1</span> What you’ll need</h2>
+<p>To get started building a new model, the following files need to be prepared:</p>
+<ul>
+<li><code>bathymetry.dat</code> describes the bathymetry of the lake and grid configuration</li>
+<li><code>bc.dat</code> defines sets of cells where boundary conditions are applied</li>
+<li><code>levee.dat</code> allows the specification of levee cells — “solid walls” between two adjacent ELCOM cells (Optional)</li>
+<li><code>update.dat</code> allows the specification of update cells — to modify values (“force”) scalars attributes arbitrarily (Optional)</li>
+</ul>
+<p>These files are converted to two Fortran unformatted (binary) files: <code>sparsedata.unf</code> and <code>usedata.unf</code>. These may be renamed, but the user must track which are <code>sparsedata</code> and which are <code>usedata</code>.</p>
+</section>
+<section id="sec-bathFile" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="sec-bathFile"><span class="header-section-number">12.2</span> Setting up the bathymetry file (<code>bathymetry.dat</code>)</h2>
+<p>The bathymetry file allows the user to input the simulation domain geometry at the target resolution<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>The format is strict with respect to data amount and order. All items must be present. Comment lines can be added before bathymetry values, with each line containing at least two items. An item may be an integer, real number, or character string. Comments must begin with an exclamation point (<code>!</code>) and include at least two items. A common crash involves a Fortran error due to missing non-optional items or insufficient items per line.</p>
+<p>Below are valid formats:</p>
+<p>keyword data data keyword ! comment keyword keyword data(j=1 to y_columns)</p>
+<p>The keywords are ELCOM-defined words that indicate the type of user-provided data presented: (1) before the keyword, (2) after the keyword, or (3) on succeeding lines of the file.</p>
+<p>Additional comments may be provided after the keywords to help the user remember the keyword purpose (the code only reads the first two items on a line). Detailed information on the keywords and the format of the file are presented in the following sections.</p>
+<section id="physical-and-computational-space-coordinates" class="level3" data-number="12.2.1">
+<h3 data-number="12.2.1" class="anchored" data-anchor-id="physical-and-computational-space-coordinates"><span class="header-section-number">12.2.1</span> Physical and computational space coordinates</h3>
+<p>In the literature, bathymetry is generally presented as the vertical distance from some horizontal baseline (often a mean water height) and may be either positive downward or positive upward. The convention used in ELCOM is an <span class="math inline">\(({x,y,z})\)</span> space that follows the right-hand rule and has <span class="math inline">\(z\)</span> positive in the upward direction (<a href="#fig-coords" class="quarto-xref">Figure&nbsp;<span>12.1</span></a>).</p>
+<p>The user is free to choose any suitable <span class="math inline">\(z=0\)</span> baseline for the bathymetry as long as positive <span class="math inline">\(z\)</span> upward is maintained as the convention for measurement. The pre-processor will adjust the user-defined <span class="math inline">\(z=0\)</span> baseline to an internal code baseline that is suitable for the ELCOM simulation.</p>
+<p>For the most part, the user does not need to know or consider this internal baseline adjustment. However, some debugging or monitoring output is presented in terms of the code coordinate system rather than the user coordinate system, so care must be taken in interpreting debugging output that is intended for use by code developers.</p>
+<p>The position of the physical space origin <span class="math inline">\((x=0, y=0)\)</span> is set implicitly by the user through the layout of the bathymetry data in the file <code>bathymetry.dat</code>. This will be covered in more detail below. Physical space <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> values may not be negative (i.e., the <span class="math inline">\(x,y\)</span> origin must be in a corner of the domain).</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-coords" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-coords-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<embed src="images/coords.pdf" class="img-fluid quarto-figure quarto-figure-center" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-coords-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.1: Schematic of coordinate system
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>ELCOM performs its simulation on computational cells of a three-dimensional Cartesian mesh. The user needs to understand the layout of the mesh so that boundary condition cells can be properly identified. ELCOM allows non-uniform spacing in each of the horizontal dimensions (<span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>) and allows non-uniform spacing in the vertical (<span class="math inline">\(z\)</span>) direction. (Although non-uniform <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> grid spacings are now allowed, users must be aware that timestep limitations are set by the smallest grid size.)</p>
+<p><a href="#fig-pmesh" class="quarto-xref">Figure&nbsp;<span>12.2</span></a> shows a plan view (<span class="math inline">\(x\)</span>-<span class="math inline">\(y\)</span> plane) of a lake with a discrete (uniform) Cartesian mesh overlay. The computational domain is divided into “cells” whose centers are represented in <a href="#fig-pmesh" class="quarto-xref">Figure&nbsp;<span>12.2</span></a> by solid dots. Dashed lines represent the faces between the cells. Each cell center has an <span class="math inline">\((i,j,k)\)</span> coordinate that designates its location in discrete computational space. The <span class="math inline">\(i,j,k\)</span> values are the integer indices of a three-dimensional array.</p>
+<p>The right-hand rule is used, with <span class="math inline">\((i,j,k)\)</span> being non-zero, positive integer values; <span class="math inline">\(k = 1\)</span> is associated with the lowermost cell layer in the domain. The <span class="math inline">\((i,j)\)</span> pairs of a horizontal plane represent a matrix, so that by conventional mathematical notation the <span class="math inline">\((1,1)\)</span> position is always in the upper left corner. The <span class="math inline">\(i\)</span> index is the row index and increases <em>down</em> the page. The <span class="math inline">\(j\)</span> index is the column index and increases across the page. The <span class="math inline">\((i,j)\)</span> indices for corner cells are shown in <a href="#fig-pmesh" class="quarto-xref">Figure&nbsp;<span>12.2</span></a>.</p>
+<p>For convenience and consistency, the origin <span class="math inline">\((0,0)\)</span> of the <span class="math inline">\(x,y\)</span> (physical space) coordinates is taken to be at the <span class="math inline">\((1,1)\)</span> location in the computational space <span class="math inline">\(i,j\)</span> indices.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-pmesh" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pmesh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<embed src="images/pview_cart_mesh.pdf" class="img-fluid quarto-figure quarto-figure-center" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pmesh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.2: Plan view of Cartesian mesh
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Using the upper left corner as the origin may initially be confusing to users familiar with mirror-image storage (used by many graphics programs) where the <em>lower</em> left corner is stored in position <span class="math inline">\(i=1,j=1\)</span>. The problem with mirror-image storage is that a simple printout of bathymetry data always appears as an upside-down mirror image of the real world when viewed with a text processor or spreadsheet.</p>
+<p>The present convention gives the user a <em>What You See Is What You Get</em> view of the bathymetry simply by opening the file with a word processor or importing into a spreadsheet. This convention has been found to be intuitive for users who are not graphics experts. However, caution needs to be taken when converting raw bathymetry data from graphics programs that use a mirror-image standard. Likewise, the direction of the positive <span class="math inline">\(u\)</span> (<span class="math inline">\(x\)</span> direction) velocity is confusing, as it is positive down the page.</p>
+<p><a href="#fig-pbath" class="quarto-xref">Figure&nbsp;<span>12.3</span></a> shows the <em>physical</em> space outline of the lake as the border of the shaded area. The discrete outline of a lake is shown with a heavy solid line. In developing a <code>bathymetry.dat</code> file for an ELCOM simulation, the user is required to provide bathymetry values (i.e., vertical distance measured from the user’s <span class="math inline">\(z=0\)</span> baseline) for each of the cells within the discrete boundary of the lake. The region outside the lake boundary is defined as the “land” region.</p>
+<p>In <a href="#fig-pbath" class="quarto-xref">Figure&nbsp;<span>12.3</span></a>, the cell center dots have been replaced with numbers that represent the distance from the user’s <span class="math inline">\(z=0\)</span> baseline to the bottom of the lake. In this case, all of the “land” regions have been given a value of 99. Note that the boundary of the bathymetry data set shown in <a href="#fig-pbath" class="quarto-xref">Figure&nbsp;<span>12.3</span></a> has land values around the entire boundary.</p>
+<p>In general, it is required that either a land cell or open boundary cell surrounds the bathymetry data. For the purposes of the <code>bathymetry.dat</code> file, the user must provide bathymetry values for <em>all</em> cells in a rectangular array, including those cells that only contain land. ELCOM will only reserve computational memory for:</p>
+<ol type="1">
+<li>The cells which may contain water, and</li>
+<li>The first layer of land cells surrounding the water cells.</li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-pbath" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pbath-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<embed src="images/pview_bath.pdf" class="img-fluid quarto-figure quarto-figure-center" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pbath-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.3: Plan view of bathymetry data
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-emesh" class="quarto-xref">Figure&nbsp;<span>12.4</span></a> shows an elevation view (in the <span class="math inline">\(x\text{-}z\)</span> plane) of a lake with a Cartesian overlay. A continuous, <em>physical-space</em> lake bottom is shown as a dashed line, with the resulting discrete lake bottom shown as a solid line.</p>
+<p>ELCOM computes the bathymetry on the face of each cell (the dashed lines) from user-supplied bathymetry data at the cell centers (on the solid dots). In this figure, the user <span class="math inline">\(z=0\)</span> baseline is chosen as the top of the domain, so that all the bathymetry values should be negative. Note that the <span class="math inline">\(k=1\)</span> index of <span class="math inline">\(i,j,k\)</span> space corresponds with the lowermost layer, regardless of the user <em>z=0</em> baseline position.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-emesh" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-emesh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/eview_cart_mesh.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-emesh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.4: Elevation view of bathymetry data
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>An up-to-date copy of <code>bathymetry.dat</code> is included in the examples. This file can be used as a template for creating your own <code>bathymetry.dat</code> file. The judicious use of extra comment lines and comments after the keywords leads to a file that is much more readable. The <code>bathymetry.dat</code> file can be renamed, but the corresponding name in the <code>run_pre.dat</code> must also be changed.</p>
+<p>The remainder of this section will detail the use of each keyword in the <code>bathymetry.dat</code> file.</p>
+</section>
+<section id="file-header" class="level3" data-number="12.2.2">
+<h3 data-number="12.2.2" class="anchored" data-anchor-id="file-header"><span class="header-section-number">12.2.2</span> File header</h3>
+<p><strong>keyword =</strong> <code>FILE</code></p>
+<p>The first non-comment line of the <code>bathymetry.dat</code> file must begin with the keyword <code>FILE</code>. Thus, the first non-comment line <em>must</em> appear as shown:</p>
+<p>&nbsp;</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Keyword</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>FILE</code></td>
+<td><code>bathymetry.dat</code></td>
+</tr>
+</tbody>
+</table>
+<section id="description-lines" class="level4" data-number="12.2.2.1">
+<h4 data-number="12.2.2.1" class="anchored" data-anchor-id="description-lines"><span class="header-section-number">12.2.2.1</span> Description lines</h4>
+<p><strong>keywords =</strong> <code>TITLE</code>, <code>ANALYST</code>, <code>ORGANIZATION</code>, <code>COMMENT</code></p>
+<p>Several keywords are provided to allow the user to put identifying information at the top of the bathymetry file. This information is printed to the standard output at the start of the run to provide identification of the debugging output data. The format for the header lines is <code>'string'; keyword</code>, where the string must be a non-null character array enclosed in single quotation marks. If the string is left blank or not enclosed in quotes, the pre-processor will crash with a Fortran read error. The user must have only one <code>COMMENT</code> line. A typical set of header keywords is shown below.</p>
+<p>&nbsp;</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Value</th>
+<th>Keyword</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>'Lake Nowhere'</code></td>
+<td><code>TITLE</code></td>
+</tr>
+<tr class="even">
+<td><code>'J. Citizen'</code></td>
+<td><code>ANALYST</code></td>
+</tr>
+<tr class="odd">
+<td><code>'A Company'</code></td>
+<td><code>ORGANIZATION</code></td>
+</tr>
+<tr class="even">
+<td><code>'test run number 1'</code></td>
+<td><code>COMMENT</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="size-of-input-bathymetry-data" class="level3" data-number="12.2.3">
+<h3 data-number="12.2.3" class="anchored" data-anchor-id="size-of-input-bathymetry-data"><span class="header-section-number">12.2.3</span> Size of input bathymetry data</h3>
+<p><strong>keywords =</strong> <code>x_rows</code>, <code>y_columns</code>, <code>z_layers</code>, <code>n_max</code>, <code>n_maxBC</code></p>
+<p>In order to correctly read the bathymetry data from file <code>bathymetry.dat</code>, the user must tell the pre-processor the size of grid to expect. The value for <code>x_rows</code> is the number of rows in a two dimensional plan view of the bathymetry. The <code>y_columns</code> is the number of columns in the two-dimensional plan view. The number of layers in the vertical direction is identified with the keyword <code>z_layers</code>. The keyword <code>n_max</code> is used to set an estimate of the number of grid cells in the domain that are required for simulation (i.e.&nbsp;interior points plus the land points in one layer surrounding the interior). For most simulations, <code>n_max</code> can be set to 0, and the code will start with an estimate of <code>x_rows</code> × <code>y_columns</code> × <code>z_layers</code>. However, in some cases, this may create a temporary data array larger than can be processed using the available memory and the pre-processor will crash. The crash may produce a machine error message stating “out of memory,” or a more enigmatic “segmentation fault”. If insufficient memory is available, the user can estimate the actual number of grid points required for the simulation and rerun the preprocessor. Further reduction of the amount of memory used can be achieved by using the keyword <code>n_maxBC</code>. <code>n_maxBC</code> sets the maximum number of cells in any one boundary condition set. If <code>n_maxBC</code> is not specified or is set to 0 then the calculated <code>n_max</code> value is used.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Value</th>
+<th>Keyword</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>102</td>
+<td><code>x_rows</code></td>
+</tr>
+<tr class="even">
+<td>84</td>
+<td><code>y_columns</code></td>
+</tr>
+<tr class="odd">
+<td>22</td>
+<td><code>z_layers</code></td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td><code>n_max</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="land-cells" class="level3" data-number="12.2.4">
+<h3 data-number="12.2.4" class="anchored" data-anchor-id="land-cells"><span class="header-section-number">12.2.4</span> Land cells</h3>
+<p><strong>keyword =</strong> <code>land_value</code></p>
+<p>The land region is designated by a unique bathymetry value (defined using the keyword <code>land_value</code>) that is greater than any value found within the lake. The user is free to choose the <code>land_value</code> as any convenient number that meets this criterion. Thus, if the user chooses a <code>z=0</code> baseline at the very top of the domain, the <code>land_value</code> may be set to zero (and all the bathymetry values should be negative numbers). If the user chooses the bottom of the domain as the <em>z=0</em> baseline, then the <code>land_value</code> may be any positive number that is greater than the largest number appearing within the lake boundary (it is usually convenient to use 9999). In this latter case, all the bathymetry values will be positive numbers. Note that any cell whose bathymetry is not equal to the <code>land_value</code> is considered a cell within the domain; thus typographical errors can produce spurious interior cells of the domain. The user is not required to have a <code>z=0</code> baseline within the domain: it may be convenient to use an external reference such as sea level. This may result in the lowest point in the domain having a positive non-zero bathymetry value.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Value</th>
+<th>Keyword</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>9999</td>
+<td><code>land_value</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="open-boundary-cells" class="level3" data-number="12.2.5">
+<h3 data-number="12.2.5" class="anchored" data-anchor-id="open-boundary-cells"><span class="header-section-number">12.2.5</span> Open boundary cells</h3>
+<p><strong>keyword =</strong> <code>open_value</code></p>
+<p>Open boundary cells are boundaries with tidal forcing from an adjacent body of water that is not in the simulation domain. The user-defined bathymetry value that indicates an open boundary cell is defined with the keyword <code>open_value</code>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Value</th>
+<th>Keyword</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>8888</td>
+<td><code>open_value</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="north-vector" class="level3" data-number="12.2.6">
+<h3 data-number="12.2.6" class="anchored" data-anchor-id="north-vector"><span class="header-section-number">12.2.6</span> North vector</h3>
+<p><strong>keywords =</strong> <code>north_x</code>, <code>north_y</code></p>
+<p>The user may create a bathymetry data file with any orientation (i.e., there is no requirement that north be at the top of the page). Since wind forcing on the free surface requires a direction, the user must designate the north direction. The north vector is determined as shown in <a href="#fig-north" class="quarto-xref">Figure&nbsp;<span>12.5</span></a>. Note that the north vector is given in terms of a vector in physical (<span class="math inline">\(x,y,z\)</span>) space, not the discrete (<span class="math inline">\(i,j,k\)</span>) space. Because the origin is in the upper left corner, a standard “north up” data set has a north vector of (-1, 0).</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Value</th>
+<th>Keyword</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>-1.0</td>
+<td><code>north_x</code></td>
+</tr>
+<tr class="even">
+<td>0.5</td>
+<td><code>north_y</code></td>
+</tr>
+</tbody>
+</table>
+<div id="fig-north" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-north-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<embed src="images/north.pdf" class="img-fluid">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-north-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.5: Calculation of the north vector
+</figcaption>
+</figure>
+</div>
+<hr>
+</section>
+<section id="geographic-position" class="level3" data-number="12.2.7">
+<h3 data-number="12.2.7" class="anchored" data-anchor-id="geographic-position"><span class="header-section-number">12.2.7</span> Geographic position</h3>
+<p><strong>keywords =</strong> <code>latitude</code>, <code>longitude</code>, <code>altitude</code></p>
+<p>The user provides the geographic position of the simulation domain using the keywords <code>latitude</code>, <code>longitude</code> and <code>altitude</code>. Longitude and altitude have no effect on the simulation but longitude is used to geo-reference output data. The latitude is used to provide appropriate Coriolis forcing in the ELCOM simulation. North latitudes are entered as positive numbers while south latitudes are entered as negative numbers. Latitude and longitude refer to the <em>top,left</em> corner of the bathymetry file.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Value</th>
+<th>Keyword</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>-32.0</td>
+<td><code>latitude</code></td>
+</tr>
+<tr class="even">
+<td>9.46</td>
+<td><code>longitude</code></td>
+</tr>
+<tr class="odd">
+<td>0.0</td>
+<td><code>altitude</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="horizontal-grid-spacing" class="level3" data-number="12.2.8">
+<h3 data-number="12.2.8" class="anchored" data-anchor-id="horizontal-grid-spacing"><span class="header-section-number">12.2.8</span> Horizontal grid spacing</h3>
+<p><strong>keywords =</strong> <code>x_grid</code>, <code>y_grid</code></p>
+<p>The present version of ELCOM allows uniform or stretched grid spacing in the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> direction. Separate grid spacings are implemented in each horizontal dimension so that <span class="math inline">\(dx \neq dy\)</span> is valid. However, the user should be careful in implementing a solution grid with different <span class="math inline">\(dx\)</span> and <span class="math inline">\(dy\)</span> grid spacings since this can affect the solution accuracy. For uniform grids the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> grid spacings are designated with the keywords <code>x_grid</code> and <code>y_grid</code>. If a non-uniform (stretched) horizontal grid is used, a default value for <code>x_grid</code> and <code>y_grid</code> must still be defined.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Value</th>
+<th>Keyword</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>100.0</td>
+<td><code>x_grid</code></td>
+</tr>
+<tr class="even">
+<td>100.0</td>
+<td><code>y_grid</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="non-uniform-horizontal-grid-spacing" class="level3" data-number="12.2.9">
+<h3 data-number="12.2.9" class="anchored" data-anchor-id="non-uniform-horizontal-grid-spacing"><span class="header-section-number">12.2.9</span> Non uniform horizontal grid spacing</h3>
+<p><strong>keywords =</strong> <code>dx</code>, <code>dy</code> (optional)</p>
+<p>In the horizontal direction, ELCOM version 2.0.0 allows the user to design a grid whose dimension varies in space (i.e.&nbsp;<span class="math inline">\(dx = f[x]\)</span> and <span class="math inline">\(dy = f[y]\)</span>). Note that the <span class="math inline">\(dx\)</span> may not vary with <span class="math inline">\(y\)</span> or <span class="math inline">\(z\)</span> coordinates and <span class="math inline">\(dy\)</span> may not vary with <span class="math inline">\(x\)</span> or <span class="math inline">\(z\)</span> coordinates. In the <code>bathymetry.dat</code> file, stretched horizontal grid spacings are designated by the keywords <code>dx</code> and <code>dy</code>. <code>dx</code> and <code>dy</code> are defined in the <code>bathymetry.dat</code> in the order of increasing coordinate (i.e.&nbsp;from <span class="math inline">\(x=1\)</span> to <span class="math inline">\(x = x\_rows\)</span>).</p>
+<p>While the user is free to set the <span class="math inline">\(dx\)</span> and <span class="math inline">\(dy\)</span> values in an arbitrary manner, the accuracy and stability of the simulation method may be affected by the degree of non-uniformity of the grid. In general, the simulation method will perform best (i.e.&nbsp;with greatest accuracy) using a uniform grid. For non-uniform grids, the degradation of accuracy is a function of the rate at which the grid changes (see below for <span class="math inline">\(dz\)</span>).</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Value</th>
+<th>Keyword</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>100</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="even">
+<td>100</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="odd">
+<td>120</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="even">
+<td>132</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="odd">
+<td>145</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="even">
+<td>150</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="odd">
+<td>165</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="even">
+<td>171</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="odd">
+<td>188</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="even">
+<td>205</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="odd">
+<td>205</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="even">
+<td>205</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="odd">
+<td>205</td>
+<td><code>dx</code></td>
+</tr>
+<tr class="even">
+<td>205</td>
+<td><code>dx</code></td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Value</th>
+<th>Keyword</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>100</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="even">
+<td>100</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="odd">
+<td>120</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="even">
+<td>132</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="odd">
+<td>145</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="even">
+<td>150</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="odd">
+<td>165</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="even">
+<td>171</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="odd">
+<td>188</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="even">
+<td>205</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="odd">
+<td>205</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="even">
+<td>205</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="odd">
+<td>205</td>
+<td><code>dy</code></td>
+</tr>
+<tr class="even">
+<td>205</td>
+<td><code>dy</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="layer-thickness" class="level3" data-number="12.2.10">
+<h3 data-number="12.2.10" class="anchored" data-anchor-id="layer-thickness"><span class="header-section-number">12.2.10</span> Layer thickness</h3>
+<p><strong>keyword =</strong> <code>dz</code></p>
+<p>In the vertical direction, ELCOM allows the user to design a structure of horizontal layers whose thickness varies with depth (i.e.&nbsp;<span class="math inline">\(dz = f[z]\)</span>). Note that the layer thickness may not vary with <span class="math inline">\(x\)</span> or <span class="math inline">\(y\)</span> coordinates. In the <code>bathymetry.dat</code> file, the successive layer thicknesses (in descending order from the top of the domain) are designated by the keyword <code>dz</code>. While the user is free to set the <span class="math inline">\(dz\)</span> values in an arbitrary manner, the accuracy and stability of the simulation method may be affected by the degree of non-uniformity of the layers. In general, the simulation method will perform best (i.e.&nbsp;with greatest accuracy) using a grid with uniform <span class="math inline">\(dz\)</span>. For non-uniform <span class="math inline">\(dz\)</span>, the degradation of accuracy is a function of the rate at which the <span class="math inline">\(dz\)</span> changes. Thus, a grid that has a <span class="math inline">\(dz\)</span> that varies slowly will perform very well, while a grid with abrupt changes in grid size will be less accurate. For example, <a href="#fig-vgrid" class="quarto-xref">Figure&nbsp;<span>12.6</span></a> shows two possible configurations which provide vertical resolution of 0.5 metres in the upper portion of a lake and 2.0 metre resolution in the lower portion. Both use the same number of grid cells, but the <span class="math inline">\(dz\)</span> distribution on the left of <a href="#fig-vgrid" class="quarto-xref">Figure&nbsp;<span>12.6</span></a> will show better performance.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Value</th>
+<th>Keyword</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.5</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="even">
+<td>0.5</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="odd">
+<td>0.5</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="even">
+<td>0.51</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="odd">
+<td>0.54</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="even">
+<td>0.58</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="odd">
+<td>0.65</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="even">
+<td>0.75</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="odd">
+<td>0.90</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="even">
+<td>1.13</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="odd">
+<td>1.41</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="even">
+<td>1.65</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="odd">
+<td>1.88</td>
+<td><code>dz</code></td>
+</tr>
+<tr class="even">
+<td>2.0</td>
+<td><code>dz</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<div id="fig-vgrid" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vgrid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<embed src="images/vgrid.pdf" class="img-fluid">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vgrid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.6: Vertical grid spacings
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="bathymetry-values" class="level3" data-number="12.2.11">
+<h3 data-number="12.2.11" class="anchored" data-anchor-id="bathymetry-values"><span class="header-section-number">12.2.11</span> Bathymetry values</h3>
+<p><strong>keywords</strong> = <code>BATHYMETRY DATA</code></p>
+<p>The bathymetry values must be presented in the file <code>bathymetry.dat</code> following a line with the two keywords <code>BATHYMETRY DATA</code>. Each line of bathymetry values must contain exactly <code>y_columns</code> of data and there must be exactly <code>x_rows</code> of data lines following <code>BATHYMETRY DATA</code>. Each value on the line may be separated from the next by one or more spaces or tabs.</p>
+<p>Thus, for a domain with <code>x_rows</code> = 8 and <code>y_columns</code> = 13, and <code>land_value</code> = 99 (i.e., similar to <a href="#fig-pmesh" class="quarto-xref">Figure&nbsp;<span>12.2</span></a>), the bathymetry values would be entered into the <code>bathymetry.dat</code> file as shown:</p>
+<p><code>BATHYMETRY DATA</code></p>
+<pre><code>99  99  99   99   99   99   99   99   99   99   99   99   99
+99  99  -0.7 -0.5 99   99   99   99   99   99   99   99   99
+99  -0.4 -1.2 -1.3 -1.1 -1.4 -2.5 -2.7 -3.3 -0.7 99   99   99
+99  -1.1 -1.6 -2.2 -3.2 -3.8 -3.9 -4.1 -5.3 -5.7 -5.2 -2.4 99
+99  -0.5 -0.8 -1.2 -2.1 -2.2 -2.4 -3.2 -3.3 -4.1 -5.0 -1.8 99
+99  99  99   99   99   99   99   99   99   -1.7 -1.2 -0.7 99
+99  99  99   99   99   99   99   99   99   -0.7 -0.9 -0.3 99
+99  99  99   99   99   99   99   99   99   99   99   99   99</code></pre>
+</section>
+<section id="bottom-drag-values-optional" class="level3" data-number="12.2.12">
+<h3 data-number="12.2.12" class="anchored" data-anchor-id="bottom-drag-values-optional"><span class="header-section-number">12.2.12</span> Bottom drag values (optional)</h3>
+<p><strong>Keywords</strong>: <code>BTM_CD DATA</code></p>
+<p>Version 2.0.0 allows a variable bottom drag coefficient to be specified in the <code>bathymetry.dat</code> file. Each line of values must contain exactly <code>y_columns</code> of data and there must be exactly <code>x_rows</code> of data lines following <code>BTM_CD DATA</code>. Each value on the line may be separated from the next by one or more spaces.</p>
+<p>Thus, for the domain with <code>x_rows = 8</code> and <code>y_columns = 13</code>, the values would be entered into the <code>bathymetry.dat</code> file as shown:</p>
+<pre><code>BTM_CD DATA
+8 13 1e+16
+1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16
+1e+16 1e+16 0.002 0.002 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16
+1e+16 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 1e+16 1e+16 1e+16
+1e+16 0.003 0.003 0.003 0.003 0.003 0.003 0.003 0.003 0.003 0.003 0.003 1e+16
+1e+16 0.004 0.004 0.004 0.004 0.004 0.004 0.004 0.004 0.004 0.004 0.004 1e+16
+1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 0.004 0.004 0.004 1e+16
+1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 0.004 0.004 0.004 1e+16
+1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16</code></pre>
+</section>
+<section id="bottom-slope-values-optional" class="level3" data-number="12.2.13">
+<h3 data-number="12.2.13" class="anchored" data-anchor-id="bottom-slope-values-optional"><span class="header-section-number">12.2.13</span> Bottom Slope Values (Optional)</h3>
+<p><strong>Keywords:</strong> <code>SLOPE_X DATA</code>, <code>SLOPE_Y DATA</code></p>
+<p>To enable the 2D underflow model, bottom slope values must be included in the <code>bathymetry.dat</code> file. These values should follow a line containing either of the keywords <code>SLOPE_X DATA</code> or <code>SLOPE_Y DATA</code>.</p>
+<p>Each line of slope values must contain exactly <code>y_columns</code> entries, and there must be exactly <code>x_rows</code> lines of data following the keyword. Values on a line can be separated by one or more spaces or tabs.</p>
+<p>For instance, if the domain is defined with <code>x_rows = 8</code> and <code>y_columns = 13</code> (as shown earlier), the slope values would appear in the <code>bathymetry.dat</code> file as follows:</p>
+<section id="example-slope_x-data-format" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="example-slope_x-data-format">Example SLOPE_X DATA Format</h4>
+<pre><code>SLOPE_X DATA
+8 13 1e+16
+
+1e+16  1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16
+1e+16  1e+16 -0.006 -0.008 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16
+1e+16 -0.007 -0.004 -0.008 -0.021 -0.024 -0.019 -0.020 -0.026 -0.05 1e+16 1e+16 1e+16
+1e+16 -0.000 0.002 0.000 -0.005 -0.004 0.000 -0.002 0.000 -0.017 -0.025 -0.009 1e+16
+1e+16  0.005 0.008 0.011 0.016 0.019 0.0195 0.020 0.026 0.02 0.02 0.008 1e+16
+1e+16  1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 0.017 0.020 0.007 1e+16
+1e+16  1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 0.008 0.006 0.003 1e+16
+1e+16  1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16 1e+16</code></pre>
+</section>
+<section id="example-slope_y-data-format" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="example-slope_y-data-format">Example SLOPE_Y DATA Format</h4>
+<pre><code>SLOPE_Y DATA
+8 13 1e+16
+
+1e+16  1e+16  1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16
+1e+16  1e+16 -0.002   0.003   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16
+1e+16 -0.008 -0.004   0.000  -0.000  -0.007  -0.006  -0.004   0.01    0.016   1e+16   1e+16   1e+16
+1e+16 -0.008 -0.005  -0.008  -0.008  -0.003  -0.001  -0.007  -0.008   0.000   0.016   0.026   1e+16
+1e+16  1e+16  1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   0.017   0.005   0.006   1e+16
+1e+16  1e+16  1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16  -0.004   0.002   0.004   1e+16
+1e+16  1e+16  1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16   1e+16</code></pre>
+<hr>
+</section>
+</section>
+</section>
+<section id="sec-bcFile" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="sec-bcFile"><span class="header-section-number">12.3</span> Setting up the boundary cell set file (<code>bc.dat</code>)</h2>
+<p>An up-to-date copy of <code>bc.dat</code> is included in the examples.</p>
+</section>
+<section id="introduction" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="introduction"><span class="header-section-number">12.4</span> Introduction</h2>
+<p>The boundary cell set file designates logical grouping of grid cells over which boundary conditions are enforced in ELCOM. One set of points may have a river inflow, another set may have a dam offtake, another set may represent groundwater inflows, etc. Each set of boundary points is defined by a unique <em>reference number</em> (used also by ELCOM temporal boundary condition files), <em>type</em> (one of several keywords), <em>title</em> (user reference only), and a series of cell <em>i, j, k</em> coordinates. This file gives the user complete flexibility in the assignment of diverse and complex boundary conditions around a three-dimensional topography.</p>
+</section>
+<section id="boundary-cell-set-categories" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="boundary-cell-set-categories"><span class="header-section-number">12.5</span> Boundary cell set categories</h2>
+<p>The keywords for the boundary cell sets fall into seven categories, defined as follows:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 90%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Keyword</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>land</code></td>
+<td>Cell boundary which is considered to be land, on which a Dirichlet <code>no-slip</code> condition is imposed on all components of the velocity, and a Neumann <code>zero-gradient</code> condition is imposed on transported scalars.</td>
+</tr>
+<tr class="even">
+<td><code>slip</code></td>
+<td>Cell boundary which is considered to be land, but on which the velocity components tangential to the boundary have a Neumann <code>free-slip</code> condition applied, while the normal component of the velocity is a Dirichlet <code>no-flux</code> condition (this may be thought of more precisely as normal Dirichlet, tangential Neumann, or NDTN). A Neumann <code>zero-gradient</code> condition is imposed on transported scalars.</td>
+</tr>
+<tr class="odd">
+<td><code>flow</code></td>
+<td>Cell boundary through which an inflow or outflow will be imposed as a Dirichlet <code>fixed velocity</code> condition. This also enforces a Dirichlet condition on transported scalars.</td>
+</tr>
+<tr class="even">
+<td><code>section</code></td>
+<td>Cell boundary which is grouped into a set for application of an environmental forcing or scalar forcing boundary condition, but does not change the underlying form of the velocity boundary condition (e.g., the free surface may be divided into sections over which different wind conditions may be enforced - the type velocity boundary condition is not changed, but its magnitude is adjusted on different sections).</td>
+</tr>
+<tr class="odd">
+<td><code>open</code></td>
+<td>Cell boundary which is <code>open</code> to inflows and outflows from another body of water where the velocity is not fixed <em>a priori</em> (i.e., not a Dirichlet boundary) but is a function of the baroclinic and barotropic forcing near the boundary.</td>
+</tr>
+<tr class="even">
+<td><code>bubbler</code></td>
+<td>An interior cell on which a bubble plume destratification will be simulated.</td>
+</tr>
+<tr class="odd">
+<td><code>flow_*_dynamic</code></td>
+<td>Cell boundary through which flow is determined dynamically according to the head difference between two locations in the domain (implemented for horizontal culverts). The flow will be imposed as a Dirichlet <code>fixed velocity</code> condition and also enforces a Dirichlet condition on transported scalars.</td>
+</tr>
+</tbody>
+</table>
+<p>A boundary cell set consists of a collection of cell <em>faces</em> that are the boundaries between <em>interior</em> cell and <em>land</em> cells. The <code>land</code> boundary condition is the default for all faces of cells identified by the <code>land_value</code> in the <code>bathymetry.dat</code> file and for all boundary cell faces below the bathymetry data. As such, the user will rarely need to use a <code>land</code> boundary condition in the <code>bc.dat</code> file. For a lake without any inflows, outflows or special boundary conditions, the <code>bc.dat</code> file need not be present.</p>
+</section>
+<section id="boundary-cell-set-face-direction" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="boundary-cell-set-face-direction"><span class="header-section-number">12.6</span> Boundary cell set face direction</h2>
+<p>The cell faces of the boundaries are identified by the <code>(i, j, k)</code> coordinates of the interior cell and the direction from the cell center to the boundary. The conventions used are as follows:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 77%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Face code</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>xp</code></td>
+<td>the <em>y-z</em> cell face in the positive x direction from the cell center</td>
+</tr>
+<tr class="even">
+<td><code>yp</code></td>
+<td>the <em>x-z</em> cell face in the positive y direction from the cell center</td>
+</tr>
+<tr class="odd">
+<td><code>xm</code></td>
+<td>the <em>y-z</em> cell face in the negative x direction from the cell center</td>
+</tr>
+<tr class="even">
+<td><code>ym</code></td>
+<td>the <em>x-z</em> cell face in the negative y direction from the cell center</td>
+</tr>
+<tr class="odd">
+<td><code>top</code></td>
+<td>the <em>x-y</em> cell face above the cell</td>
+</tr>
+<tr class="even">
+<td><code>all_sides</code></td>
+<td>all possible side boundary faces (i.e., all <em>y-z</em> and <em>x-z</em> faces)</td>
+</tr>
+<tr class="odd">
+<td><code>all</code></td>
+<td>all possible side boundary faces plus the bottom boundary</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="boundary-cell-set-keywords" class="level2" data-number="12.7">
+<h2 data-number="12.7" class="anchored" data-anchor-id="boundary-cell-set-keywords"><span class="header-section-number">12.7</span> Boundary cell set keywords</h2>
+<p>The keywords used to identify boundary cell sets are a concatenation of the categories and the face direction. The valid keywords are listed below:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><code>land_xp</code></th>
+<th><code>flow_xp</code></th>
+<th><code>slip_xp</code></th>
+<th><code>section_xp</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>land_xm</code></td>
+<td><code>flow_xm</code></td>
+<td><code>slip_xm</code></td>
+<td><code>section_xm</code></td>
+</tr>
+<tr class="even">
+<td><code>land_yp</code></td>
+<td><code>flow_yp</code></td>
+<td><code>slip_yp</code></td>
+<td><code>section_yp</code></td>
+</tr>
+<tr class="odd">
+<td><code>land_ym</code></td>
+<td><code>flow_ym</code></td>
+<td><code>slip_ym</code></td>
+<td><code>section_ym</code></td>
+</tr>
+<tr class="even">
+<td><code>land_bottom</code></td>
+<td><code>flow_bottom</code></td>
+<td><code>slip_bottom</code></td>
+<td><code>section_bottom</code></td>
+</tr>
+<tr class="odd">
+<td><code>land_all_sides</code></td>
+<td><code>flow_all_sides</code></td>
+<td><code>slip_all_sides</code></td>
+<td><code>section_all_sides</code></td>
+</tr>
+<tr class="even">
+<td><code>land_all</code></td>
+<td><code>flow_all</code></td>
+<td><code>slip_all</code></td>
+<td><code>section_all</code></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td><code>section_top</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><code>bubbler</code></th>
+<th><code>bubbler_zbot</code></th>
+<th><code>bubbler_kbot</code></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>open_cell</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>flow_multi_sides</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>flow_xp_dynamic</code></td>
+<td><code>flow_xm_dynamic</code></td>
+<td><code>flow_yp_dynamic</code></td>
+<td><code>flow_ym_dynamic</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>NOTE:</strong> <code>bubbler_zbot</code> and <code>bubbler_kbot</code> allow the user to specify the height of a bubble plume diffuser as either some height in metres (<code>zbot</code>) or number of cells from the bottom.</p>
+</section>
+<section id="sec-bcdat" class="level2" data-number="12.8">
+<h2 data-number="12.8" class="anchored" data-anchor-id="sec-bcdat"><span class="header-section-number">12.8</span> Organization of the boundary cell set file (<code>bc.dat</code>)</h2>
+<p>At the top of the boundary cell set file (<code>bc.dat</code>), the user may put any number of comment lines. Each comment line must start with an exclamation point (<code>!</code>) and have at least 3 items on the line (i.e., two words or numbers separated from the exclamation point and each other by spaces or tabs). After the initial comments, the boundary cell set file consists of a series of definitions of boundary sets. Each set consists of a <em>set identification line</em> followed by one or more lines of <em>cell definitions</em>. Each line must have three items on it or the pre-processor will crash with a Fortran file read error. Blank lines are not allowed in the boundary cell set file.</p>
+<p>Each set identification line is of the form: <code>integer  keyword  title</code></p>
+<p>The first item, <code>integer</code>, is a <em>reference number</em> for the boundary cell set that is used in preparing temporal boundary condition data files for the ELCOM simulation run (see <a href="13-elcom.html#sec-tempBCfiles" class="quarto-xref"><span>Section 13.8.2</span></a>). Each boundary cell set must have a unique <code>integer</code> reference number. The <code>keyword</code> is one of the valid keywords listed in the boundary cell set keywords table above. The <code>title</code> is a user-designated name for the boundary condition set. The <code>title</code> may have more than one word, although only the first word will be used by the code.</p>
+<p>After the set identification line, there will be one or more lines of cell definitions. A cell definition consists of three sets of numbers in the general form: <code>i_{start}:i_{end}  j_{start}:j_{end}  k_{start}:k_{end}</code>. For all boundary condition types except <code>bubbler_zbot</code> and <code>bubbler_kbot</code> the <code>i</code>, <code>j</code>, and <code>k</code> are integer values of the cell positions in space for a rectangular box of cells on which the relevant boundary cell keyword will be applied. For <code>bubbler_zbot</code> the third column must be a single real which gives the height of the diffuser in metres above the lake bottom. For <code>bubbler_kbot</code> the third column must be a single integer which gives the number of cells the diffuser is above the lake bottom. An example of a simple boundary cell set definition might be</p>
+<pre class="plaintext"><code>  107  flow_xp  river_inflow
+   3:10  4:5  10:14</code></pre>
+<p>The preprocessor would designate as a single set, all positive x boundaries in the range <span class="math inline">\(3 \leq i \leq 10\)</span> and <span class="math inline">\(4 \leq j \leq 5\)</span> and <span class="math inline">\(10 \leq k \leq 14\)</span>. A boundary cell set may have multiple lines of cell definitions:</p>
+<pre class="plaintext"><code>  13  flow_bottom  groundwater_inflow
+    5:10   1:5    10:14
+    5:10   7:11   10:14
+    3:8   12:17   1:5</code></pre>
+<p>Note that each number pair in a cell definition must be in increasing order.</p>
+<p>There are two simpler cases for implementing boundary cell sets (1) where <span class="math inline">\(i, j\)</span> or <span class="math inline">\(k\)</span> is a single value rather than a range, (2) where all possible values in <span class="math inline">\(i, j\)</span> or <span class="math inline">\(k\)</span> are to be included. In the former case, only a single number needs to be provided (rather than a pair), in the latter case, only the colon (<code>:</code>) needs to be listed. For example, the cell set for an inflow boundary along a flat side where <span class="math inline">\(j = 2\)</span> might be written as:</p>
+<pre class="plaintext"><code>  214  slip_all  freeslip_domain
+    :  :  :</code></pre>
+<p>which enforces a free-slip boundary condition on all boundary faces (sides and bottom) of the domain.</p>
+<p>There is no error cross-checking within the pre-processor for cell faces which have been defined as belonging to more than one boundary cell set. In some cases, multiple definitions may be desirable. For example, one might define a river inflow which covers the entire depth of the river for purposes of the velocity boundary condition; and then define a separate section at the bottom of the river that is used to place a tracer. The bc.dat file might then contain</p>
+<pre class="plaintext"><code>  2791  flow_ym     river_inflow
+    3:15    2    :
+  73    section_ym  tracer_inflow
+    3:15    2    1:5</code></pre>
+<p>In other cases, multiple set definitions for a particular face can produce unintended results. For example, if we define an inflow boundary and a global definition of free-slip boundaries on all the cells:</p>
+<pre class="plaintext"><code>2791    flow_ym river_inflow
+    3:15    2   :
+214 slip_all    freeslip_domain
+    :   :   :</code></pre>
+<p>We then find that the cells (3:15, 2, : ) get defined both with imposed velocity (Dirichlet) boundary conditions and free-slip (normal-Dirichlet, tangential-Neumann) boundary conditions. Obviously this is inconsistent and the flow simulation cannot enforce both boundary conditions. Checking for which combinations of multiple definitions are consistent and which are not is an error capturing routine that is not yet implemented. Thus, the above boundary cell sets would be processed and provided to ELCOM. Within ELCOM, only one of the two boundary conditions will actually be enforced, but one cannot tell <em>a priori</em> which boundary condition it will be without detailed examination of source code. Note that the order the items are defined may affect the operation of an inconsistent definition. Thus if the above inconsistent definition were reversed and written as:</p>
+<pre class="plaintext"><code>214 slip_all    freeslip_domain
+    :   :   :
+2791    flow_ym river_inflow
+    3:15    2   :</code></pre>
+<p>The results in ELCOM may be different than the previous implementation — <em>they would be wrong in a different manner</em>. As a general rule, the user should not provide multiple definitions of velocity boundary conditions on a single cell face. The <code>land</code>, <code>flow</code> and <code>slip</code> keywords all affect the type of velocity boundary condition; it is incumbent on the user to be sure that the cell faces defined with these types do not have multiple definitions.</p>
+<p>The following table illustrates a <code>bc.dat</code> file with a few subtle uses of the boundary cell set definitions. A flow boundary has been declared on the x-minus faces of cells with <span class="math inline">\(i=2\)</span>. Thus, to get free-slip boundary conditions on all the other faces, we use the keyword <code>slip_all</code> for cells with <span class="math inline">\(i&gt;2\)</span>. Then to get free slip on the y-minus and y-plus faces at <span class="math inline">\(i=2\)</span> requires two more definitions (These are not inconsistent with the <code>flow_xm</code> definition since they are on different faces of the same cell). This file also shows the use of the <code>section_top</code> to segregate the free surface into different sets onto which different wind data can be enforced.</p>
+<pre class="plaintext"><code>! - - - -
+! - bc.dat file
+! - comment lines need three items
+34  flow_xm   outflow_number_1
+    2       :       :
+75  section_top  wind_region_a
+    :       1:10    :
+118 section_top  wind_region_b
+    :       11:21   :
+25  slip_all_sides  free_slip_section
+    3:34    :       :
+26  slip_ym free_slip_near_inflow_1
+    2:      :       :
+27  slip_yp free_slip_near_inflow_2
+    2:      :       :</code></pre>
+</section>
+<section id="flow_multi_sides" class="level2" data-number="12.9">
+<h2 data-number="12.9" class="anchored" data-anchor-id="flow_multi_sides"><span class="header-section-number">12.9</span> flow_multi_sides</h2>
+<p>In ELCOM version 2.1.1 a further bc set type was introduced (<code>flow_multi_sides</code>) which allows the user to specify one inflow which enters from multiple cells on multiple faces. This was primarily introduced to allow a meandering river channel to be specified as one boundary set and will be particularly useful when coupled with <code>INFLOW_DEPTH</code> boundary condition data. The format of <code>flow_multi_sides</code> in the boundary cell set file (<code>bc.dat</code>) is slightly different from other set types.</p>
+<p>Each <code>flow_multi_sides</code> set consists of a set identification line followed by one or more subsets of cell and face type definitions. Each line must have three items on it or the pre-processor will crash with a Fortran file read error. Blank lines are not allowed in the boundary cell set file.</p>
+<p>Each <code>flow_multi_sides</code> set identification line is the same as for all other set types, i.e.:</p>
+<p><code>reference number</code> <code>keyword</code> <code>title</code></p>
+<p>Where <code>keyword</code> must be <code>flow_multi_sides</code>. After the set identification line, there will be one or more subset definitions. Each subset consists of a <em>subset set identification line</em> followed by one or more lines of <em>cell definitions</em>.</p>
+<p>Each subset identification line is of the form: <code>reference number flow_multi_sides keyword.</code> The subset <code>reference number</code> for each subset must be the same as the <em>reference number</em> from the set identification line. The <code>keyword.</code> must be one of <code>flow_xp</code>, <code>flow_xm</code>, <code>flow_yp</code>, or <code>flow_y</code> and defines the inflow face or the subset of cells.</p>
+<p>Following each subset identification line are one or more lines of cell definitions. These cell definitions are the same as for an ordinary set type—i.e., of the general form <code>$i_{start}:i_{end} j_{start}:j_{end} k_{start}:k_{end}$</code>.</p>
+<p>An example of a <code>flow_multi_sides</code> boundary cell set definition might be:</p>
+<pre class="plaintext"><code>  111 flow_multi_sides    river_inflow
+  111 flow_multi_sides    flow_xm
+      2   3   10
+      3   3   9
+      4   3   8
+  111 flow_multi_sides    flow_ym
+      4   3   8
+      4   4   7
+      4   5   6
+  111 flow_multi_sides    flow_xm
+      4   5   6
+      5   5   5
+      6   5   4</code></pre>
+</section>
+<section id="flow_dynamic" class="level2" data-number="12.10">
+<h2 data-number="12.10" class="anchored" data-anchor-id="flow_dynamic"><span class="header-section-number">12.10</span> flow_dynamic</h2>
+<p>Dynamic boundary condition sets (<code>flow*_dynamic</code>) allow the user to specify the connection of two parts of the domain with a (horizontal) culvert. This functionality was recently introduced in ELCOM. A boundary condition set pair related to each of the ends of the culvert must be defined.</p>
+<p>The definition of a dynamic boundary condition pair set comprises four lines. The first and third lines have the same structure as the boundary condition identification line: a set reference number, one of the <code>keywords</code> (<code>flow_xm_dynamic</code>, <code>flow_xp_dynamic</code>, <code>flow_ym_dynamic</code>, or <code>flow_yp_dynamic</code>), and a user identifier. Each of these lines refers to one end of the culvert.</p>
+<p>The second and fourth lines follow the same structure as the cell definition lines of an ordinary set type. Each line refers to one end of the culvert. Only one <code>i</code> and one <code>j</code> value can be specified. Although multiple <code>k</code> values may be included, both ends must have the same <code>k</code> specification.</p>
+<p>An example of a <code>flow*_dynamic</code> boundary cell set definition might be:</p>
+<pre class="plaintext"><code>500     flow_xp_dynamic pipe_east_end
+        2   3   10
+600     flow_ym_dynamic pipe_north_end
+        4   3   10</code></pre>
+</section>
+<section id="sec-leveeFile" class="level2" data-number="12.11">
+<h2 data-number="12.11" class="anchored" data-anchor-id="sec-leveeFile"><span class="header-section-number">12.11</span> Setting up the levee file (<code>levee.dat</code>) (Optional)</h2>
+<section id="introduction-1" class="level3" data-number="12.11.1">
+<h3 data-number="12.11.1" class="anchored" data-anchor-id="introduction-1"><span class="header-section-number">12.11.1</span> Introduction</h3>
+<p>The levee set file designates any levees in the domain. Levees are solid boundaries between two adjacent cells. Pre-ELCOM implements levees by adding additional ghost cells adjacent to the levee. These ghost cells are colocated with the wet cells.</p>
+<p>The format of the levee set file is essentially the same as the <code>bc.dat</code> file. Each set of levee points is defined by a unique <em>reference number</em>, <em>type</em> (one of several keywords), <em>title</em> (user reference only), and a series of cell <code>(i, j, k)</code> coordinates.</p>
+</section>
+<section id="levee-set-categories" class="level3" data-number="12.11.2">
+<h3 data-number="12.11.2" class="anchored" data-anchor-id="levee-set-categories"><span class="header-section-number">12.11.2</span> Levee set categories</h3>
+<p>The cell faces of the levees are identified by the <code>(i, j, k)</code> coordinates of the interior cell and the direction from the cell center to the levee. The four valid keywords for the levee sets are as follows:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 82%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Keyword</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>levee_xp</code></td>
+<td>Levee on the <em>y-z</em> cell face in the positive x direction from the cell center</td>
+</tr>
+<tr class="even">
+<td><code>levee_yp</code></td>
+<td>Levee on the <em>x-z</em> cell face in the positive y direction from the cell center</td>
+</tr>
+<tr class="odd">
+<td><code>levee_xm</code></td>
+<td>Levee on the <em>y-z</em> cell face in the negative x direction from the cell center</td>
+</tr>
+<tr class="even">
+<td><code>levee_ym</code></td>
+<td>Levee on the <em>x-z</em> cell face in the negative y direction from the cell center</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="organization-of-the-levee-set-file-levee.dat" class="level3" data-number="12.11.3">
+<h3 data-number="12.11.3" class="anchored" data-anchor-id="organization-of-the-levee-set-file-levee.dat"><span class="header-section-number">12.11.3</span> Organization of the levee set file (<code>levee.dat</code>)</h3>
+<p>At the top of the <code>levee.dat</code> file, the user may include any number of comment lines. Each comment line must begin with an exclamation point <code>!</code> and contain at least three items (i.e., two words or numbers separated from the <code>!</code> and from each other by spaces).</p>
+<p>After the initial comments, the file contains a series of levee set definitions. Each set consists of a <em>set identification line</em> followed by one or more <em>cell definition lines</em>. Each line must have three items; otherwise, the pre-processor will fail with a Fortran file read error. Blank lines are not allowed.</p>
+<p>Each set identification line is of the form: <code>integer keyword title</code>.</p>
+<ul>
+<li><code>integer</code>: a <em>reference number</em> unique to each levee set</li>
+<li><code>keyword</code>: one of the valid keywords listed above</li>
+<li><code>title</code>: a user-designated name for the levee set (only the first word is used by the code)</li>
+</ul>
+<p>Each cell definition consists of three fields in the form: <code>i_start:i_end j_start:j_end :</code> Here, <code>i</code> and <code>j</code> are integer values specifying a rectangular box of cells. The third field must be a colon (<code>:</code>), indicating that the levee acts on all <code>z</code> values.</p>
+<p>An example of a simple levee set definition might be:</p>
+<pre class="plaintext"><code>107  levee_xp  levee_bank
+     3  4:15  :</code></pre>
+</section>
+</section>
+<section id="sec-updateFile" class="level2" data-number="12.12">
+<h2 data-number="12.12" class="anchored" data-anchor-id="sec-updateFile"><span class="header-section-number">12.12</span> Setting up the update file (<code>update.dat</code>) (Optional)</h2>
+<section id="introduction-2" class="level3" data-number="12.12.1">
+<h3 data-number="12.12.1" class="anchored" data-anchor-id="introduction-2"><span class="header-section-number">12.12.1</span> Introduction</h3>
+<p>The update set file defines update cells in the domain. These cells allow scalar values to be modified arbitrarily at run-time using Update boundary condition files (see <a href="13-elcom.html#sec-updateBCfiles" class="quarto-xref"><span>Section 13.8.4</span></a>). The format of this file is essentially the same as the <code>bc.dat</code> file.</p>
+<p>Each set is defined by a unique <em>reference number</em>, <em>type</em> (keyword), <em>title</em> (user reference), and a series of <code>(i, j, k)</code> cell coordinates.</p>
+</section>
+<section id="update-set-categories" class="level3" data-number="12.12.2">
+<h3 data-number="12.12.2" class="anchored" data-anchor-id="update-set-categories"><span class="header-section-number">12.12.2</span> Update set categories</h3>
+<p>Update cells are identified by their <code>(i, j, k)</code> coordinates. The valid keywords for update sets are:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 81%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Keyword</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>update</code></td>
+<td>Scalar values are set to those in the Update boundary condition files</td>
+</tr>
+<tr class="even">
+<td><code>update_add</code></td>
+<td>Scalar values are increased by the values in the Update boundary files</td>
+</tr>
+<tr class="odd">
+<td><code>update_max</code></td>
+<td>Scalar values are set to the maximum of current and file value</td>
+</tr>
+<tr class="even">
+<td><code>update_scale</code></td>
+<td>Scalar values are multiplied by the file value</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="organization-of-the-update-set-file-update.dat" class="level3" data-number="12.12.3">
+<h3 data-number="12.12.3" class="anchored" data-anchor-id="organization-of-the-update-set-file-update.dat"><span class="header-section-number">12.12.3</span> Organization of the update set file (<code>update.dat</code>)</h3>
+<p>Comment lines may appear at the top of the file. Each comment must begin with <code>!</code> and include at least three items. No blank lines are allowed in the file.</p>
+<p>Each update set includes a <em>set identification line</em> followed by one or more <em>cell definition lines</em>. Each line must have exactly three items to avoid pre-processor errors.</p>
+<p>Each set identification line is of the form: <code>integer keyword title</code>.</p>
+<ul>
+<li><code>integer</code>: a unique <em>reference number</em></li>
+<li><code>keyword</code>: one of the valid update keywords</li>
+<li><code>title</code>: a user-designated name (only the first word is used by the code)</li>
+</ul>
+<p>Each cell definition is of the form: <code>i_start:i_end j_start:j_end k_start:k_end</code> Here, <code>i</code>, <code>j</code>, and <code>k</code> define a rectangular box of update cells.</p>
+<p>An example of a simple update set definition might be:</p>
+<pre class="plaintext"><code>12  update  tracer_release
+  3  4:15  2:4</code></pre>
+</section>
+</section>
+<section id="running-the-pre-processor-with-run_pre.dat" class="level2" data-number="12.13">
+<h2 data-number="12.13" class="anchored" data-anchor-id="running-the-pre-processor-with-run_pre.dat"><span class="header-section-number">12.13</span> Running the pre-processor with <code>run_pre.dat</code></h2>
+<p>An up-to-date copy of <code>run_pre.dat</code> is included in the examples.</p>
+<p>The <code>run_pre.dat</code> file is a text file that contains the names and paths of the user-supplied input files and the pre-processor output files. The required input files are:</p>
+<ul>
+<li><code>bathymetry.dat</code>: describes lake bathymetry and grid configuration</li>
+<li><code>bc.dat</code>: defines boundary cell sets</li>
+</ul>
+<p>Optionally, it may also include:</p>
+<ul>
+<li><code>update.dat</code></li>
+<li><code>levee.dat</code></li>
+</ul>
+<p>The pre-processor outputs two unformatted Fortran binary files:</p>
+<ul>
+<li><code>sparsedata.unf</code></li>
+<li><code>usedata.unf</code></li>
+</ul>
+<p>These files may be renamed by the user, but they must be tracked carefully to distinguish between <code>sparsedata</code> and <code>usedata</code>.</p>
+<p>Once the <code>run_pre.dat</code> file is in place with correct file paths and names, the pre-processor is executed with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pre_elcom.exe</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>The pre-processor cannot interpolate between coarse/fine grids — this must be done manually beforehand.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./11-getting-started.html" class="pagination-link" aria-label="Getting Started">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Getting Started</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./13-elcom.html" class="pagination-link" aria-label="Configuring a Simulation">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Configuring a Simulation</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

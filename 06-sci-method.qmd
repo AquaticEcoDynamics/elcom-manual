@@ -1,0 +1,300 @@
+# Numerical Method {#sec-method}
+
+## Overview
+
+The governing equations are discretized on a Cartesian solution grid in a staggered formulation where single velocity components are defined on each face and scalars are defined at the cell centers. In discrete equations, the cell faces are represented by subscripts such as $i+1/2$, while the centers are represented with integer $(i,j,k)$ values. The notation of @Casu92 is used in the following description. For the discrete form of equations, we will use subscripts to represent the position in discrete $(i,j,k)$ space. Let $U_{i,j}^{n+1}$ represent the water column vector of time $n+1$ velocity values at position $(i,j)$, that exist in the time $n*$ solution space for all $k$ that satisfy
+
+$$
+b_{i,j}\leq\left|\sum_{m=1}^{k_{max}}\Delta z_{i,j,m}^n\right| \leq \eta_{i,j}
+$$ {#eq-solution-space}
+
+where $b_{i,j}$ is the height of the bottom of the domain at point $(i,j)$, $\eta_{i,j}$ is the height of the free surface, and $k_{max}$ is the maximum number of grid cells in the vertical direction. Similar definitions are applied for other vector quantities in this manual.
+
+## Semi-implicit Formulation for Momentum
+
+The fundamental semi-implicit evolution of the velocity field can be discretized on the $\eta*$ solution space in a manner similar to the TRIM approach as:
+
+$$
+U_{i+1/2,j}^{n+1}=A_{i+1/2,j}^{n}G_{i+1/2,j}^{n}-g\frac{\delta t}{\delta x} \left [\theta_1 \left (\eta_{i+1,j}^{n+1}-\eta_{i,j}^{n+1} \right ) + (1-\theta_1) \left (\eta_{i,j}^{n+1}-\eta_{i+1,j}^{n+1} \right ) \right ]
+$$ {#eq-momU}
+
+$$
+V_{i,j+1/2}^{n+1}=A_{i,j+1/2}^{n}G_{i,j+1/2}^{n}-g\frac{\delta t}{\delta y} \left [\theta_1 \left (\eta_{i,j+1}^{n+1}-\eta_{i,j}^{n+1} \right ) + (1-\theta_1) \left (\eta_{i,j}^{n+1}-\eta_{i,j+1}^{n+1} \right ) \right ]
+$$ {#eq-momV}
+
+where $G$ is an explicit source term vector, $\theta_{1}$ is the "implicitness" of the free surface (the generalized implicitness option for $0.5 < \theta_{1} < 1.0$ is not coded in ELCOM version 2). The default semi-implicit scheme in ELCOM is a backwards-Euler discretization (i.e. $\theta_{1} =1$) of the free surface evolution that is formally 1st order accurate in time.
+
+It has been demonstrated [@Casu94] that the backwards Euler method for solution of the hydrostatic momentum equations can be extended to the general two-level scheme of @eq-momU and @eq-momV that is formally second-order accurate (when $\theta_1=1$). However, in coarse grid modeling, this increase in numerical accuracy does not always result in an increase in model skill. In general, many lake and estuary simulations are conducted where the barotropic mode will be solved with CFL conditions that may range from 5 to 10 or greater. Under these conditions, semi-implicit discretizations may be stable, but the "fidelity" of the representation of the flow physics is a function of the type of flow under consideration. The character of the truncation error is critical to understanding the performance of the method. With the 1st order method, the lead error term is 2nd order and results in damping of waves on the free surface. With the 2nd order method, the leading error term is dispersive and results in numerical waves on the free surface which propagate across the domain; typically causing a linear barotropic wave to evolve into a steep-fronted bore, causing high velocities in localized areas as the surface wave is affected by topography. Thus, the first order method results in good representation of the shape of the free surface and the local barotropic velocities, but shows excessive damping of the inertial response of the free surface. In contrast, the second order method maintains the energy in the surface wave form with minimal numerical dissipation, but has a poor representation of the wave form. In a hydrostatic solution, the dispersive waves cause spurious local forcing throughout the water column and are detrimental to the skill of the solution. In contrast, the excessive damping of the surface wave causes a decrease in the large scale motions associated with the barotropic response when the wind relaxes, i.e. the "ringing" of the barotropic mode is damped. In general, a strongly forced system is better modeled with the backwards Euler scheme as the wave energy beyond two or three periods is often irrelevant to the first-order physics.
+
+Using any two-level implicit discretization [@Casu92], or any explicit discretization technique, the A matrix can be represented as:
+
+$$
+A=\begin{bmatrix}
+b_n+\gamma_k & c_n & 0 & 0 & 0\\
+a_{n-1} & b_{n-1} & c_{n-1} & 0 & 0 \\
+0 & a_{n-2} & b_{n-2} & c_{n-2} & 0 \\
+\vdots & \vdots & \vdots & \vdots & \vdots  \\
+0 & 0 & a_{2} & b_{2} & c_{2}  \\
+0 & 0 & 0 &a_{1} & b_{1}+\gamma_1
+\end{bmatrix}
+$$ {#eq-Amatrix}
+
+The $\gamma$ terms in $A$ are set by boundary conditions, while the $a$, $b$ and $c$ terms are:
+
+$$
+b_k=-a_k+\Delta z_k - c_k
+$$ {#eq-bk}
+
+$$
+a_k=-\theta_2\left.\frac{\nu_3\Delta t}{\Delta z}  \right |_{k+1/2}
+$$ {#eq-ak}
+
+$$
+c_k=-\theta_2\left.\frac{\nu_3\Delta t}{\Delta z}  \right |_{k-1/2}
+$$ {#eq-ck}
+
+The $\theta_2$ coefficient is determined by the choice of numerical discretization techniques. For $\theta_2=1$ the vertical viscous term is discretized using a backwards Euler technique. For the mixed-layer model used in ELCOM $\theta_2=0$ and the discretization is explicit with $A$ zero for all terms off the main diagonal.
+
+The source terms $G$ in @eq-momU and @eq-momV can be represented as:
+
+$$
+G_{i+1/2,j}=L(\tilde U_{i+1/2,j})-\Delta t \left \{ B_{i+1/2,j}^n + D_x(\tilde U)_{i+1/2,j} + D_y(\tilde U)_{i+1/2,j} - f\tilde V_{i+1/2,j} \right \}
+$$ {#eq-sourceU}
+
+$$
+G_{i,j+1/2}=L(\tilde V_{i,j+1/2})-\Delta t \left \{ B_{i,j+1/2}^n + D_x(\tilde V)_{i,j+1/2} + D_y(\tilde V)_{i,j+1/2} - f\tilde U_{i,j+1/2} \right \}
+$$ {#eq-sourceV}
+
+The $L()$ operator represents advective discretization, $B()$ represents baroclinic discretization, $D()$ represents horizontal turbulent diffusion discretization. In ELCOM vertical diffusion is computed using a vertical mixing model. The mixing model is represented as an operator such that:
+
+$$
+\tilde U_{i,j,k} = M(U_{i,j,k}^n)
+$$ {#eq-mixing-operator}
+
+The mixing operator $M()$ is described in detail in @sec-mixing.
+
+## Horizontal Diffusion Discretization
+
+While the original TRIM approach [@Casu92] applied the discretization of the horizontal diffusive terms at the pathline origin, the additional complexity was not found to provide any significant advantage in the accuracy of the present method. Therefore, the horizontal diffusion terms ($D_{x}$, $D_{y}$) from @eq-sourceU and @eq-sourceV are discretized using a second-order stencil such that
+
+$$
+D_x(\phi_{i,j,k}^n)=\frac{\nu}{\Delta x^2}(\phi_{i+1,j,k}^n-2\phi_{i,j,k}^n+\phi_{i-1,j,k}^n)
+$$ {#eq-horiz-diff}
+
+## Baroclinic Discretization
+
+The baroclinic term B in the x direction is discretized as:
+
+$$
+B_{i+1/2,j,k}^n=\frac{g}{\rho_0 \Delta x}\left \{\sum_{m=k}^F\rho_{i+1,j,m}^\prime - \sum_{m=k}^F\rho_{i,j,m}^\prime \right \}
+$$ {#eq-baroclinic}
+
+where $k = F$ is the cell containing the free surface. Similar expressions for diffusion and baroclinic terms are obtained for the $y$ direction. The elimination of the vertical diffusion terms in the transport of momentum and scalars equations allows the present scheme to dispense with the tridiagonal matrix inversion for each horizontal velocity component and transported scalar required for each $(i,j)$ water column in the TRIM scheme.
+
+## Free Surface Discretization
+
+The free surface evolution equation can be discretized as:
+
+$$
+\eta_{i,j}^{n+1}=
+\begin{array}{l}
+\eta_{i,j}^n-\theta_1 \left [ \frac{\Delta t}{\Delta x}\delta_x \{(\Delta Z^n)^T U^{n+1}\}- \frac{\Delta t}{\Delta y}\delta_y \{(\Delta Z^n)^T V^{n+1}\}
+ \right ] \\
+-(1-\theta_1) \left [ \frac{\Delta t}{\Delta x}\delta_x \{(\Delta Z^n)^T U^{n}\}- \frac{\Delta t}{\Delta y}\delta_y \{(\Delta Z^n)^T V^{n}\}\right ]
+\end{array}
+$$ {#eq-freeSurf}
+
+where $\Delta Z$ is a vector of the vertical grid spacing, and the operators $\delta_x$ and $\delta_y$ indicate discrete differences, e.g.
+
+$$
+\delta_x(\phi)=\phi_{i+1/2}-\phi_{i-1/2}
+$$ {#eq-delta-x}
+
+Substitution of @eq-momU and @eq-momV into @eq-freeSurf provides a pentadiagonal system of equations for the time $n+1$ free surface height that is readily solved using a conjugate gradient method. The approach adopted for conjugate gradient solution in ELCOM is similar to TRIM, as detailed in @Casu92.
+
+## Advective Discretization
+
+One of the difficulties of numerical modelling at geophysical scales is the wide range of flow conditions that may be present. In particular, internal waves may intermittently produce strong vertical motions over relatively small regions. Where resolution of internal waves is deemed important, the choice of numerical method is driven by the need for accuracy and stability in a small portion of the overall flow field. While many explicit spatial discretization methods are stable for $CFL < O(1)$, their accuracy in 3D computations for $CFL > O(0.5)$ is generally poor when the flow direction is not aligned with the grid.
+
+The drawback of the quadratic method is that it is computationally expensive. However, for low $CFL$ regions ($CFL < 0.1$), the solution of a quadratic semi-Lagrangian method is dominated by terms in the same seven-point upwind stencil that is obtained by using quadratic upwind discretization. This similarity can be exploited to reduce the computational requirement in regions of low $CFL$ without significantly reducing the accuracy of the overall solution method. The concept of applying different schemes in different regions can be generalized into the concept of a "hybrid" numerical method. A general hybrid method is one where different solution schemes are applied in different flow regions based upon a criteria measured in the flow field. For our purposes, the criteria is the $CFL$, and we apply one discretization technique for low $CFL$, and a different technique for high $CFL$.
+
+The present hybrid method has been tested to two levels, using quadratic semi-Lagrangian discretization for regions where ($0 < CFL < 2$). The upper limit cutoff is the maximum CFL that can be computed using a quadratic SL method without requiring the additional computational expense of adjusting the stencil region. As a practical matter, the accuracy of computations for $CFL > 2$ is questionable, so the upper limit is not an unreasonable requirement. For regions with $CFL > 2$, the method applies linear semi-Lagrangian discretization (i.e. the approach used in TRIM) to minimize the computational effort of repositioning the stencil.
+
+### Linear semi-Lagrangian methods
+
+For a stratified flow, semi-Lagrangian methods are desirable in that they are both accurate and stable in the regime where $0.1 < CFL < 1$. As a further advantage, they retain their stability in higher CFL regimes, although their accuracy suffers at high $CFL$ values unless the flow streamlines are well resolved by the grid. However, in stratified flows, the ability to provide stable solutions for $CFL > 1$ in the horizontal direction is of secondary importance in the selection of a numerical method. The maximum time step is generally limited by either (1) the baroclinic wave propagation speed in the region of strongest stratification, or (2) the maximum acceptable numerical diffusion in scalar transport. The former requires wave $CFL < 1$ for stability, while the latter limitation is a matter of grid resolution and the length of time over which model results are required.
+
+The semi-Lagrangian form of advection is obtained by finding the approximate point in continuous space (the "Lagrange" point) which would be advected to a discrete point ($i,j,k$) by the velocity field ($U,V,W$) over the time step $\Delta t$. That is, the particle position ($i,j,k$) is numerically marched back along the streamlines represented by the velocity field $U,V,W$. The $U,V,W$ field may be obtained from single or multiple time levels, depending upon the accuracy and computational complexity desired. A detailed review of semi-Lagrangian techniques is found in @Stan91. In a linear, single-time level semi-Lagrangian method, the Lagrange point is found using
+
+$$
+\delta_x=-U\Delta t
+$$ {#eq-deltax}
+
+$$
+\delta_y=-V\Delta t
+$$ {#eq-deltay}
+
+$$
+\delta_z=-W\Delta t
+$$ {#eq-deltaz}
+
+The value of a variable $\phi$ at the Lagrange point is found using a trilinear upwind interpolation:
+
+$$
+\phi_L=
+\begin{array}{l}
+\frac{\delta_x}{\Delta_x}\frac{\delta_y}{\Delta_y}\frac{\delta_z}{\Delta_z}\phi_{i-1,j-1,k-1}
+\\
++\left ( 1-\frac{\delta_x}{\Delta_x}\right )\frac{\delta_y}{\Delta_y}\frac{\delta_z}{\Delta_z}\phi_{i,j-1,k-1}
+\\
++\frac{\delta_x}{\Delta_x}\left ( 1-\frac{\delta_y}{\Delta_y}\right )\frac{\delta_z}{\Delta_z}\phi_{i-1,j,k-1}
+\\
++\frac{\delta_x}{\Delta_x}\frac{\delta_y}{\Delta_y}\left ( 1-\frac{\delta_z}{\Delta_z}\right )\phi_{i-1,j-1,k}
+\\
++\frac{\delta_x}{\Delta_x}\left ( 1-\frac{\delta_y}{\Delta_y}\right )\left ( 1-\frac{\delta_z}{\Delta_z}\right )\phi_{i-1,j,k}
+\\
++\left ( 1-\frac{\delta_x}{\Delta_x}\right )\frac{\delta_y}{\Delta_y}\left ( 1-\frac{\delta_z}{\Delta_z}\right )\phi_{i,j-1,k}
+\\
++\left ( 1-\frac{\delta_x}{\Delta_x}\right )\left ( 1-\frac{\delta_y}{\Delta_y}\right )\frac{\delta_z}{\Delta_z}\phi_{i,j,k-1}
+\\
++\left ( 1-\frac{\delta_x}{\Delta_x}\right )\left ( 1-\frac{\delta_y}{\Delta_y}\right ) \left ( 1-\frac{\delta_z}{\Delta_z}\right )\phi_{i,j,k}
+\end{array}
+$$ {#eq-trilinear}
+
+The above constitutes an eight-point stencil for a semi-Lagrangian method with linear interpolation. As the flow field approaches a uniform 1D flow, the linear semi-Lagrangian technique reduces to a linear upwind method for $CFL < 1$. Indeed, it is perhaps easier to think of the semi-Lagrangian method as a 3D linear upwind stencil that is successively repositioned for high $CFL$ conditions. It follows that linear semi-Lagrange method exhibits the unacceptable levels of numerical diffusion that are characteristic of linear upwind methods. This can be ameliorated by using a quadratic method for interpolation of values at the Lagrange point.
+
+### Quadratic semi-Lagrangian methods
+
+The quadratic semi-Lagrange method extends the 8-point upwind stencil with trilinear interpolation (used in TRIM) to a 27-point upwind stencil using quadratic Lagrange polynomial interpolation. In the notation of @Casu92, the operator interpolates the velocity field (on the x face) to the position $(i+1/2-a,j-b,k-d)$, where $a$, $b$ and $d$ are real numbers that represent displacements from the $(i+1/2,j,k)$ position. This is an estimate of the origination of the pathline of a particle moving through the time $n$ velocity field that ends at the position $(i+1/2,j,k)$ after time $\Delta t$. A similar notation is used for the $y$ faces at $j+1/2$. It is convenient to denote the pathline origination point by a superscript $(p)$ so that the advective operators $L()$ in @eq-momU and @eq-momV:
+
+$$
+L(\tilde U_{i+1/2,j,k})=\tilde U_{i+1/2-a,j-b,k-d}=\tilde U^{(p)}
+$$ {#eq-pathline}
+
+The process of computing the pathline origin in 2D for bilinear interpolation is discussed in @Casu92 and is illustrated in @fig-2delm for 2D quadratic Lagrange interpolation. For Lagrange interpolation on non-uniform grids it is convenient to consider the physical space coordinates ($x$, $y$, $z$) that correspond to the ($i$,$j$,$k$) computational indices. Three-dimensional quadratic Lagrange interpolation to find the value of $U^{(p)}$ at any point ($x^{(p)}$, $y^{(p)}$, $z^{(p)}$) is computed in three steps illustrated in @fig-3delm requiring 9 vertical interpolations of the form
+
+$$
+\hat U_{i+\gamma,j+\zeta}=l_{i+\gamma,j+\zeta}^0 U_{i+\gamma,j+\zeta,k}+l_{i+\gamma,j+\zeta}^1 U_{i+\gamma,j+\zeta,k\pm1}+l_{i+\gamma,j+\zeta}^2 U_{i+\gamma,j+\zeta,k\pm2}
+$$ {#eq-vert-interp}
+
+where the $(i,j)$ subscripts denote the position of the vertical line to be interpolated, while $\gamma$ and $\zeta$ are $\pm\{0,1,2\}$, with the sign determined by the upwind direction of the stencil (as is the sign for the $k$ increment in the $U$ position subscripts). The Lagrange polynomial coefficients for each $(i,j)$ line are computed from the standard Lagrange coefficient formula [e.g. @Alkh86]:
+
+$$
+l^m=\prod_{\substack{\zeta=0 \\ \zeta \neq m}}^2 \frac{z^{(p)}-z_{k\pm\zeta}}{z_{k\pm m}-z_{k\pm\zeta}}
+$$ {#eq-lagrangecoeffs}
+
+where $z^{(p)}$ is the vertical coordinate of the interpolated point and the sign is determined to obtain an upwind stencil. The vertical interpolations are followed by 3 horizontal interpolations in the $y$ direction of the form
+
+$$
+\overline U_{i+\gamma}=l^0_{i+\gamma,j}\hat U_{i+\gamma,j}+l^1_{i+\gamma,j\pm1}\hat U_{i+\gamma,j\pm1}+l^2_{i+\gamma,j\pm2}\hat U_{i+\gamma,j\pm2}
+$$ {#eq-lagrange2}
+
+Finally, a single interpolation in the $x$ direction is applied as
+
+$$
+U^{(p)}=l^0\overline U_i+l^1\overline U_{i\pm1}+l^2\overline U_{i\pm2}
+$$ {#eq-lagrange3}
+
+The Lagrange coefficients in @eq-lagrange2 and @eq-lagrange3 are computed using @eq-lagrangecoeffs with $y$ or $x$ substituted for $z$ as appropriate. The quadratic stencil used for the Euler-Lagrange interpolation is advantageous as it reduces artificial damping of internal waves that occurs with an 8-node linear stencil; thus improving the ability of the method to resolve the free motions of a stratified basin. While this improvement is necessary for modeling stratified lakes, it is probably of lesser importance in estuarine modeling where forced motions dominate the flow physics. The extra computational requirements of the quadratic stencil are somewhat ameliorated by the ability to compute source terms for flows in the range $1 < CFL < 2$ without repositioning the stencil.
+
+![Two-dimensional illustration of Euler-Lagrange streamline computation using quadratic Lagrange interpolation. Velocity vector $A$, with components $U_{A}$ and $V_{A}$, is used to track particle path from position ($i,j$) back to the base of vector $B$ using the momentum sub-time step $dt$. Velocity vector $B$ is computed from the nine grid nodes upwind of the velocity vector at position $(i,j)$. Vector $B$ is used to track the particle path back to the base of velocity vector $C$, which is again interpolated from the surrounding nine grid nodes. This is repeated $n$ times where $n \, dt = \Delta t$. If a vector base position is not contained within the nine upwind grid nodes, the upwind stencil must be repositioned. In the present code, linear interpolation is used for the rare instances when repositioning is necessary. The final vector is the result of the Euler-Lagrange operator in @eq-sourceU, i.e. $L(U_{i,j}) = U_{(i-a,j-b)}$. The number of sub-time steps ($n$) may be set arbitrarily, with high values providing greater accuracy and higher computational cost. Note that $n=1$ everywhere corresponds to quadratic upwind discretization and has poor accuracy characteristics unless the $CFL_{a} \ll 1$. As a general rule, the minimum $n$ is set as a local function of the grid and flow field such that $U\frac{dt}{\Delta x} < 1$.](images/fig4_1.pdf){#fig-2delm}
+
+![Schematic of three-dimensional quadratic Lagrange interpolation with successive interpolations in the $k$, $j$, then $i$ directions. For clarity, this illustration shows interpolation for a uniform grid, however the method can be applied to non-uniform grids without any further adaptation.](images/fig4_2.pdf){#fig-3delm}
+
+## Scalar Transport
+
+Scalar transport is (arguably) the most critical piece of the hydrodynamic numerical algorithm for strongly stratified flows. If the scalar transport is not sufficiently accurate, we cannot obtain correct evolution of the density field and internal wave motions. In ELCOM, a conservative third-order scalar transport method is applied. Use of conservative methods has been found critical to stratified lake and estuary models as the distribution of density feeds back into the momentum equation through the baroclinic term. Non-conservation results in loss of momentum in baroclinic forcing such that internal waves are dissipated too rapidly and strong gradients that drive underflows may simply cease to exist. Using non-conservative methods, loss of mass and deterioration of sharp gradients at salinity and temperature fronts degrades the skill of the model.
+
+A three-stage numerical algorithm for transport of a scalar concentration $C$ can be defined as:
+
+$$
+\tilde C = M(C^n)+S^{(C)}
+$$ {#eq-transport1}
+
+$$
+C^* = \tilde C -\Delta t\frac{\partial}{\partial x_j}(\tilde C U_j)
+$$ {#eq-transport2}
+
+$$
+C^{n+1}=C^* -\Delta t\frac{\partial}{\partial x_\alpha}\left ( \kappa \frac{\partial C^*}{\partial x_\alpha} \right )+O(\Delta t)^2
+$$ {#eq-transport3}
+
+As with the momentum mixing and source terms, the mixing operator in @eq-transport1 represents vertical mixing by the Reynolds stress term and is discussed in detail in a subsequent section on the vertical mixing model. The $S^{(C)}$ in @eq-transport1 represents scalar sources (e.g. heat transfer across the free surface into the wind-mixed layer). @eq-transport2 is advection of the scalar field by the resolved flow field, and @eq-transport3 is horizontal diffusion by turbulent motions. For clarity in the above and the following, advection, i.e. @eq-transport2, is defined over time step $\Delta t$. However, when $\max(CFL_{a}) > 1$, the sub-time step $\delta t$ is used, where $m\delta t = \Delta t$ and @eq-transport2 is iterated $m$ times. In the following derivations, substitution of $\delta t$ for $\Delta t$ and $n+m\Delta t$ for $n+1$ makes the equations reflect the sub-time step iteration process.
+
+In differential notation, a conservative form of the transport equation is:
+
+$$
+\frac{\partial}{\partial t}\int_\Omega C \, d\Omega+\int_{A_x}CU \, dA_x+\int_{A_y}CV \, dA_y+\int_{A_z}CW \, dA_z=S^{(C)}
+$$ {#eq-conservative-transport}
+
+where $\Omega$ is a control volume and $A_{x}$, $A_{y}$, $A_{z}$ are surface areas of the control volume faces. For clarity in the discrete form, it will be useful to omit the $(i,j,k)$ subscript notation for any centered variable so that $C_{i,j,k}$ is written simply as $C$, and $C_{i,j+1/2,k}$ is written as $C_{j+1/2}$. The discrete advected scalar concentration field ($C^*$) written as a flux-conservative advection over the $n*$ set of cells is:
+
+$$
+C^*=\tilde C \frac{\Delta Z^n}{\Delta Z^{n+1}}-\frac{\Delta t}{\Delta X\Delta Y\Delta Z^{n+1}}\{\delta_x{Q}+\delta_y{Q}+\delta_z{Q} \}
+$$ {#eq-discrete-advection}
+
+where operators of the form $\delta_x$ are defined in @eq-deltax. $Q$ is the scalar flux through the cell faces, defined on the $n*$ cell set for the $i+1/2$ face as:
+
+$$
+Q_{i+1/2}=\left ( \Delta y\Delta Z^{n+1}U^{n+1/2}\tilde C\right )_{i+1/2}
+$$ {#eq-scalar-flux}
+
+Similar definitions apply on the $j+1/2$ and $k+1/2$ faces. There is no flux through the uppermost face of the cell containing the free surface, so $Q_{i,j,F+1/2} = 0$, where $k=F$ is the cell containing the free surface. It follows that $\Delta Z^{n+1}_{i,j,F}-\Delta Z^{n}_{i,j,F}=\Delta tW^{n+1}_{i,j,F+1/2}$ and $C_{i,j,F+1/2}=C_{i,j,F}$. For any cell $(i,j,F)$ in the $n*$ set:
+
+$$
+C_{i,j,F+1/2}=C_{i,j,F} = \frac{\Delta t}{\Delta z^{n+1}} \delta_z(W^{n+1}_{i,j,F+1/2} C_{i,j,F+1/2})
+$$
+
+Thus, for all cells in the $n*$ set (including free surface cells):
+
+$$
+C^*=\tilde C - \frac{\Delta t}{\Delta x} \delta_x(U^{n+1}\tilde C)- \frac{\Delta t}{\Delta y} \delta_y(V^{n+1}\tilde C)- \frac{\Delta t}{\Delta z^{n+1}} \delta_z(W^{n+1}\tilde C)
+$$ {#eq-all-cells}
+
+Since the scalar concentrations are updated at the cell centers, it is necessary to define a method of interpolation for cell face values such as $\delta_x(UC)$. The ULTIMATE flux-limiting filter applied with third-order QUICKEST interpolation [@Leon91] performs particularly well in maintaining monotonic scalar fields while limiting numerical diffusion. Implementation in 2D and demonstration of its effectiveness in estuarine flows has been documented by @Lin97. The conservative ULTIMATE QUICKEST method is limited to $CFL_{a} < 1$ in all coordinate directions. The present semi-implicit scheme remains stable at higher CFL (providing $CFL_{b}$ does not exceed unity), so the ULTIMATE QUICKEST algorithm must be computed successively over sub-time steps such that the maximum $CFL_{a}$ is less than one in each sub-time step. In practice, coarse resolution models of strongly stratified basins will have the defining time step limitation based on the baroclinic mode in the momentum solution and $CFL_{a} > 1$ may never occur.
+
+The recent evaluation of transport schemes by @Gros98 did not directly examine the ULTIMATE limiter applied to a QUICKEST approach; however, their results did show that effective results for a 2D model of South San Francisco Bay could be obtained with either the QUICKEST approach or Roe's superbee limiter applied to a Lax-Wendroff method. As Lax-Wendroff is a second-order discretization, it is likely that the ULTIMATE limiter applied to third-order QUICKEST would have been at least as effective as the schemes they tested. The present use of an explicit discretization approach contrasts with the vertical-implicit approach taken in the recent adaptation of TRIM by @Gros98. The advantage of the latter is that it is stable for scalar transport solutions at $CFL > 1$, whereas the present method requires sub-time step iterations of the scalar transport routines when high CFL's are encountered. Thus the approach of @Gros98 is preferable for a fine vertical grid resolution while the present method should prove more computationally efficient at coarse grid resolution.
+
+### Scalar horizontal diffusion
+
+The horizontal diffusion terms in @eq-transportScalars are discretized to obtain the time '$n+1$' scalar field over the solution space '$n*$':
+
+$$
+C_{i,j,k}^{n+1}=\tilde C_{i,j,k} + D_x(\tilde C_{i,j,k})+ D_y(\tilde C_{i,j,k})
+$$ {#eq-scalar-horiz-diff}
+
+where $D_{x}$ and $D_{y}$ are finite-difference operators for the second derivative. As with the velocity solution, any time $n+1$ locations that are not in the time $n*$ solution space are updated using the concentration of neighbour cells.
+
+## Sidewall and Bottom Boundary Conditions
+
+The momentum introduced into a lake by wind forcing is dissipated in the boundary layers of the lake and turbulent processes in the interior. In 2D depth-averaged models the Chezy-Manning bottom stress formulation has been applied to account for the dissipation in the entire water column. This is particularly useful in providing a method of calibrating depth-averaged coastal/estuarine models to reproduce a given set of tidal data. In a 3D model with stratification, detailed field data for calibrating a bottom friction coefficient is generally not available. Furthermore, without the transfer of basin-scale internal-wave energy to subgrid-scale waves, it is questionable as to whether any boundary condition model in the literature can capture actual boundary dynamics and predict the correct location and timing of dissipation and vertical fluxes. Sidewall boundary conditions (i.e. vertical solid boundaries) are often modeled as free-slip to effect simpler implementation in a numerical method [@Casu92]. However, the lack of sidewall drag prevents vertical vorticity from being produced at boundaries. As lakes typically have regions of steep slopes and longshore currents (due to Kelvin waves), the neglect of sidewall drag may not be a suitable simplification in modeling basin-scale motions.
+
+There remains much work to be done in developing appropriate bottom and sidewall boundary conditions in coarse grid models. ELCOM provides three basic forms of boundary conditions: (1) no-slip, (2) free-slip, and (3) specified stress.
+
+## Wind Momentum Model
+
+The momentum input of the wind is typically modeled [e.g. @Casu92] using a stress boundary condition at the free surface:
+
+$$
+\nu \left.  \frac{\partial u}{\partial x} \right |_{z=\eta}=u_*^2
+$$ {#eq-wind-stress}
+
+where $\nu$ is an eddy viscosity and $u_{*}^{2}$ is the wind stress. This boundary condition requires solution of vertical viscosity/diffusion terms of the form
+
+$$
+\frac{\partial}{\partial x_3}\left \{ \nu \frac{\partial U_\alpha}{\partial x_3} \right \}; \quad \frac{\partial}{\partial x_3}\left \{ \kappa \frac{\partial C}{\partial x_3} \right \}
+$$ {#eq-vert-visc-diff}
+
+in place of the Reynolds stress terms in the momentum and scalar transport equations, terms that are modeled in ELCOM using the 3D mixed-layer model. As demonstrated by @Glor95, the formulation chosen for eddy viscosity has a dramatic influence on the development of pressure-driven upwind flows in a wind-forced homogenous system. Using an eddy-viscosity/diffusivity approach in a stratified system, the depth, downwind velocity, and velocity shear in the wind-mixed layer are functions of the values used for eddy viscosity and diffusivity above the thermocline. The resulting prediction of mixed-layer depth using a coarse vertical grid resolution is generally unsatisfactory. Even at fine resolutions, the capability of $k$-$\epsilon$ and algebraic stress models may be suspect on the basis of the 1D results of @Mart85. As the purpose of the eddy-viscosity term is to model the introduction of momentum into the wind-mixed layer, we can substitute a model for predicting the wind-mixed layer depth and a model for the distribution of momentum over the depth. The wind-mixed layer is the mixed layer that includes the free surface, with depth ($h$) of the wind-mixed layer computed in a discrete form as:
+
+$$
+h_{i,j}=\sum_{m=k_a(i,j,k_\eta)}^{k_b(i,j,k_\eta)}\Delta Z_{i,j,m}
+$$ {#eq-wml-depth}
+
+where $k_{a}$ and $k_{b}$ are the lower and upper grid cell indices of the discrete wind-mixed layer in the water column $(i,j)$ that has free surface grid cell $k_{\eta}$. To first order, we can approximate the introduction of wind momentum as a uniform distribution over the mixed layer [@Imbe90]:
+
+$$
+\left. \frac{dU}{dt} \right|_{i,j,k} =  \frac{\left.{u_*^2} \right|_{i,j,k}}{\left.{h} \right|_{i,j}};\quad \eta-h<\sum_{m=1}^k\Delta z_m<\eta
+$$ {#eq-wind}
+
+where $\eta$ is the free surface height in water column $(i,j)$. @eq-wind is applied separately in the $x$ and $y$ directions to provide a direct increase in the velocity field in the wind-mixed layer before solution of the Navier-Stokes equations.

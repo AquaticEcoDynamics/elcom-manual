@@ -1,0 +1,76 @@
+# Running a Simulation {#sec-running}
+
+## Running ELCOM {#sec-runexe}
+
+ELCOM is executed at the command line by typing `elcom.exe` within the directory *where the `run_elcom.dat` and all the appropriate input data files* are located. The monitoring/debugging output is sent to the standard output of the computer (the display terminal on most computers). Unless the simulation run is very short, it is recommended that the user redirect the output to a file with a execution redirection such as:
+
+```
+elcom.exe >& run_output.txt
+```
+
+## Save and Restart output files
+
+Save and Restart output files are Fortran unformatted (binary) files that contain run configuration information used to allow the user to restart ELCOM runs from a certain point. As described in the `run_elcom.dat` section, the kernel name and output frequency of save and restart files are defined in the `run_elcom.dat` file.
+
+The save files are created starting at the time step specified by the value assigned to the `run_elcom.dat` keyword `start_output_save`, and subsequently at intervals defined by `iter_out_save`. The file name of the save files begins with the user-specified kernel, given by `restart_save_file`, appended by a time stamp, and appended by `.unf`.
+
+The restart files are created at intervals defined by `iter_out_restart`, starting from the first time step. Subsequent restart files overwrite existing restart files. The file name of the restart files begins with the user-specified kernel, given by `restart_out_file`, appended by `.unf`. All start and restart files are written in the outfiles directory specified in the `run_elcom.dat` file.
+
+To restart an ELCOM simulation using a save or restart file, the user must place a copy of the desired save or restart file in the infiles directory as specified in the `run_elcom.dat` file. In the `run_elcom.dat` file the name of the desired save or restart file must be assigned to the `restart_infile` keyword, and keyword `irestart` must be assigned the value `1`.
+
+## Culvert Outputs - Dynamic Boundary Conditions
+
+In the current implementation, the flow rates and scalars calculated for each pipe in each of the pairs of dynamic boundary condition sets are output to an `ASCII` file located in the `outfile_txt_dir` directory.
+
+The output files are named `culvert_bcset_[$set$].out`, where `$set$` is each of the dynamic boundary condition sets present in the simulation.
+
+The format of the files is as follows. 16 header lines explain the format of the file.
+
+```
+ % number of pipes in set = n (repeats n times)
+ % set ref 1 (repeats n times)
+ % set ref 2 (repeats n times)
+ % pipe heights 1 to n
+ % pipe diameters 1 to n
+ % number of scalars (repeats n times)
+ % names of scalars (repeats n times)
+ % Then, for each time step
+ % time step (repeats n times)
+ % height set upstream
+ % height set downstream (repeats n times)
+ % total flow (repeats n times)
+ % shift in set (repeats n times)
+ % regime pipe 1 to n
+ % flow pipe 1 to n
+ % each scalars flowing through the culverts (repeats n times)
+```
+
+The percentage symbols at the beginning of each text line were used to make it easier to load the numeric data into a Matlab environment.
+
+The next 7 lines give the set and pipe information.
+
+- **First line** gives the number of pipes (`n`) in the dynamic boundary condition output set. The information repeats `n` times for easier loading into Matlab.
+- **Second line** gives the first defined set reference number in the dynamic boundary condition output set `ref 1`. The information repeats `n` times.
+- **Third line** gives the second defined set reference number in the dynamic boundary condition output set `ref 2`. The information repeats `n` times.
+- **Fourth line** gives the bottom height for each of the pipes in the boundary condition set.
+- **Fifth line** gives the pipe diameter for each of the pipes in the dynamic boundary condition output set.
+- **Sixth line** gives the number of transportable scalars used in the simulation. The information repeats `n` times.
+- **Seventh line** gives the names of transportable scalars used in the simulation. The information repeats `n` times and the line is preceded by a percentage symbol.
+
+Then, for each time step in the simulation, `7 + number of scalars` lines are output.
+
+- **First line** gives the time step of the output `t`. The information repeats `n` times.
+
+```
+ % flow pipe 1 to n
+ % each scalar flowing through the culverts (repeats n times)
+```
+
+- **Second line** gives the water height in the upstream cell of the dynamic boundary condition set at time step `t`. Repeats `n` times.
+- **Third line** gives the water height in the downstream cell of the dynamic boundary condition set at time step `t`. Repeats `n` times.
+- **Fourth line** gives the sum of the flow in all the pipes in the dynamic boundary condition set at time step `t`. Repeats `n` times.
+- **Fifth line** tells if there was a shift in the direction of the flow. A value `1` means there was a shift (flow is from cells defined in reference set `ref 2` to `ref 1`), and a value `0` means no shift. Repeats `n` times.
+- **Sixth line** gives the flow regime in each of the pipes (see the science manual for a description of flow regimes).
+- **Seventh line** gives the flow in each of the pipes.
+
+Then, `number of scalars` lines are output for each of the transportable scalars defined in the header.

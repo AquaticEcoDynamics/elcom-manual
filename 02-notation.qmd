@@ -1,0 +1,161 @@
+# Notation {#sec-notation}
+
+@tbl-notation summarises the variable notation used throughout the ELCOM science chapters. Where a symbol is used with different meanings in different contexts, the primary usage is listed. An asterisk (\*) indicates that the description or units are context-dependent or unclear.
+
+| Symbol | Description | Units | Chapters |
+|----------|-------------|-------|----------|
+| **Greek** | | | |
+| $\alpha$ | Entrainment coefficient (destratification); also horizontal index ($\alpha = 1,2$) | \* | [4](04-sci-goveqns.qmd), [6](06-sci-method.qmd), [10](10-sci-destrat.qmd) |
+| $\beta$ | Averaging parameter (underflow model, $= 2$ for Superbee) | - | [4](04-sci-goveqns.qmd), [9](09-sci-underflow.qmd) |
+| $\gamma_k$ | Boundary condition terms in tridiagonal matrix | \* | [6](06-sci-method.qmd) |
+| $\delta_x$, $\delta_y$, $\delta_z$ | Discrete difference operators | \* | [6](06-sci-method.qmd) |
+| $\delta t$ | Sub-time step for scalar transport | s | [6](06-sci-method.qmd) |
+| $\Delta t$ | Computational time step | s | [5](05-sci-timestep.qmd), [6](06-sci-method.qmd), [7](07-sci-thermo.qmd), [8](08-sci-mixing.qmd), [9](09-sci-underflow.qmd) |
+| $\Delta x$, $\Delta y$ | Horizontal grid spacing | m | [5](05-sci-timestep.qmd), [6](06-sci-method.qmd), [9](09-sci-underflow.qmd) |
+| $\Delta z$, $dz$ | Vertical grid spacing / cell thickness | m | [4](04-sci-goveqns.qmd), [6](06-sci-method.qmd), [7](07-sci-thermo.qmd), [8](08-sci-mixing.qmd), [9](09-sci-underflow.qmd), [10](10-sci-destrat.qmd) |
+| $\epsilon_{\alpha\beta}$ | Alternating (Levi-Civita) tensor | - | [4](04-sci-goveqns.qmd) |
+| $\epsilon_a$ | Emissivity of air | - | [7](07-sci-thermo.qmd) |
+| $\epsilon_B$ | Background potential energy correction threshold | - | [8](08-sci-mixing.qmd) |
+| $\epsilon_w$ | Emissivity of the water surface ($= 0.96$) | - | [7](07-sci-thermo.qmd) |
+| $\eta$ | Free surface height | m | [4](04-sci-goveqns.qmd), [6](06-sci-method.qmd) |
+| $\eta_a$ | Light attenuation coefficient | m$^{-1}$ | [7](07-sci-thermo.qmd) |
+| $\eta_f$ | Mixing fraction | - | [8](08-sci-mixing.qmd) |
+| $\theta_1$ | Implicitness parameter for the free surface | - | [6](06-sci-method.qmd) |
+| $\theta_2$ | Implicitness parameter for vertical viscosity | - | [6](06-sci-method.qmd) |
+| $\kappa$, $\kappa_1$, $\kappa_2$, $\kappa_3$ | Scalar diffusivity (horizontal/vertical components) | m$^2$ s$^{-1}$ | [4](04-sci-goveqns.qmd), [6](06-sci-method.qmd) |
+| $\nu$, $\nu_1$, $\nu_2$, $\nu_3$ | Eddy viscosity (horizontal/vertical components) | m$^2$ s$^{-1}$ | [4](04-sci-goveqns.qmd), [5](05-sci-timestep.qmd), [6](06-sci-method.qmd) |
+| $\nu_{jk}$ | Eddy viscosity tensor | m$^2$ s$^{-1}$ | [4](04-sci-goveqns.qmd) |
+| $\rho$ | Density of water | kg m$^{-3}$ | [4](04-sci-goveqns.qmd), [6](06-sci-method.qmd), [7](07-sci-thermo.qmd), [8](08-sci-mixing.qmd), [9](09-sci-underflow.qmd), [10](10-sci-destrat.qmd) |
+| $\rho_0$ | Reference density | kg m$^{-3}$ | [4](04-sci-goveqns.qmd), [6](06-sci-method.qmd), [8](08-sci-mixing.qmd), [10](10-sci-destrat.qmd) |
+| $\rho^\prime$ | Density perturbation from reference | kg m$^{-3}$ | [4](04-sci-goveqns.qmd), [6](06-sci-method.qmd) |
+| $\rho_a$, $\rho_{air}$ | Density of air | kg m$^{-3}$ | [4](04-sci-goveqns.qmd), [7](07-sci-thermo.qmd), [8](08-sci-mixing.qmd) |
+| $\rho_{amb}$ | Ambient water density | kg m$^{-3}$ | [9](09-sci-underflow.qmd), [10](10-sci-destrat.qmd) |
+| $\rho_j$ | Density of jet water | kg m$^{-3}$ | [10](10-sci-destrat.qmd) |
+| $\rho_l$ | Density of the cell being mixed | kg m$^{-3}$ | [8](08-sci-mixing.qmd) |
+| $\rho_{ml}$ | Density of the mixed layer | kg m$^{-3}$ | [8](08-sci-mixing.qmd) |
+| $\rho_P$ | Density of entrained plume water | kg m$^{-3}$ | [10](10-sci-destrat.qmd) |
+| $\sigma$ | Stefan-Boltzmann constant ($= 5.67 \times 10^{-8}$) | W m$^{-2}$ K$^{-4}$ | [7](07-sci-thermo.qmd) |
+| $\phi$ | General scalar variable | \* | [6](06-sci-method.qmd) |
+| $\Omega$ | Control volume | m$^3$ | [6](06-sci-method.qmd) |
+| **Latin** | | | |
+| $A$ | Tridiagonal matrix for semi-implicit momentum | - | [6](06-sci-method.qmd) |
+| $A_x$, $A_y$, $A_z$ | Surface areas of control volume faces | m$^2$ | [6](06-sci-method.qmd) |
+| $a_k$, $b_k$, $c_k$ | Tridiagonal matrix coefficients | \* | [6](06-sci-method.qmd) |
+| $a$, $a^\prime$ | Sharpening / smoothing filter coefficients | - | [8](08-sci-mixing.qmd) |
+| $B$ | Buoyancy flux (destratification) | m$^4$ s$^{-3}$ | [10](10-sci-destrat.qmd) |
+| $B$ | Baroclinic source term (numerical method) | \* | [6](06-sci-method.qmd) |
+| $B$ | Numerical Lipschitz constant (timestep limitations) | - | [5](05-sci-timestep.qmd) |
+| $B_{air}$ | Buoyancy flux of air bubbles | m$^4$ s$^{-3}$ | [10](10-sci-destrat.qmd) |
+| $B_i$ | Combined buoyancy flux in layer $i$ | m$^4$ s$^{-3}$ | [10](10-sci-destrat.qmd) |
+| $b$ | Jet/plume radius | m | [10](10-sci-destrat.qmd) |
+| $b_0$ | Initial jet radius | m | [10](10-sci-destrat.qmd) |
+| $b_1$ | Plume constant ($= 4.7$) | - | [10](10-sci-destrat.qmd) |
+| $b_{i,j}$ | Height of the bottom of the domain at position $(i,j)$ | m | [6](06-sci-method.qmd) |
+| $C$ | Scalar concentration | \* | [4](04-sci-goveqns.qmd), [6](06-sci-method.qmd), [8](08-sci-mixing.qmd) |
+| $C$ | Cloud cover fraction ($0 \le C \le 1$) (thermodynamics) | - | [7](07-sci-thermo.qmd) |
+| $C_{10}$ | Wind drag coefficient at 10 m reference height | - | [4](04-sci-goveqns.qmd) |
+| $C_b$ | Bottom drag mixing coefficient ($= 2.2$) | - | [8](08-sci-mixing.qmd) |
+| $C_C$ | Convective mixing coefficient ($= 0.2$) | - | [8](08-sci-mixing.qmd) |
+| $C_D$ | Bottom drag coefficient | - | [7](07-sci-thermo.qmd), [9](09-sci-underflow.qmd) |
+| $C_D^{wind}$ | Wind drag coefficient | - | [8](08-sci-mixing.qmd) |
+| $C_K$ | Bottom production parameterisation constant (underflow) | - | [9](09-sci-underflow.qmd) |
+| $C_L$ | Latent heat transfer coefficient ($= 1.3 \times 10^{-3}$) | - | [7](07-sci-thermo.qmd) |
+| $C_n$ | Wind mixing coefficient ($= 1.33$) | - | [8](08-sci-mixing.qmd) |
+| $C_P$ | Specific heat of air at constant pressure ($= 1003$) | J kg$^{-1}$ K$^{-1}$ | [7](07-sci-thermo.qmd) |
+| $C_S$ | Sensible heat transfer coefficient ($= 1.3 \times 10^{-3}$); also shear mixing coefficient ($= 0.15$) | - | [7](07-sci-thermo.qmd), [8](08-sci-mixing.qmd), [9](09-sci-underflow.qmd) |
+| $C_{TT}$ | Turbulent timescale coefficient ($= 50.0$) | - | [8](08-sci-mixing.qmd) |
+| $C_\epsilon$ | Dissipation coefficient ($= 1.15$); also emissivity coefficient ($= 9.37 \times 10^{-6}$) | \* | [7](07-sci-thermo.qmd), [8](08-sci-mixing.qmd) |
+| $CFL$ | Courant-Friedrichs-Lewy number | - | [5](05-sci-timestep.qmd), [6](06-sci-method.qmd) |
+| $CFL_a$ | Advective CFL number | - | [5](05-sci-timestep.qmd), [6](06-sci-method.qmd) |
+| $CFL_b$ | Baroclinic CFL number | - | [5](05-sci-timestep.qmd), [6](06-sci-method.qmd) |
+| $D$ | Effective depth | m | [5](05-sci-timestep.qmd) |
+| $D_x$, $D_y$ | Horizontal diffusion operators | \* | [6](06-sci-method.qmd) |
+| $d$ | Day number in the year | - | [7](07-sci-thermo.qmd) |
+| $d_X$, $d_Y$ | Grid cell dimensions | m | [7](07-sci-thermo.qmd) |
+| $dz_l$ | Thickness of the cell being mixed | m | [8](08-sci-mixing.qmd) |
+| $dz_{ml}$ | Mixed layer thickness | m | [8](08-sci-mixing.qmd) |
+| $E$ | Entrainment coefficient (underflow model) | - | [9](09-sci-underflow.qmd) |
+| $E_b$ | Background potential energy | J | [8](08-sci-mixing.qmd) |
+| $E_{drag}$ | TKE from bottom drag | \* | [8](08-sci-mixing.qmd) |
+| $E_M$ | Residual mixing energy | \* | [8](08-sci-mixing.qmd) |
+| $E_{req}$ | TKE required for mixing | \* | [8](08-sci-mixing.qmd) |
+| $E_{shear}$ | TKE from shear production | \* | [8](08-sci-mixing.qmd) |
+| $E_{wind}$ | TKE from wind stirring | \* | [8](08-sci-mixing.qmd) |
+| $e_a$ | Vapour pressure of air | Pa | [7](07-sci-thermo.qmd) |
+| $e_s$ | Saturation vapour pressure at water surface temperature | Pa | [7](07-sci-thermo.qmd) |
+| $F$ | Index of the cell containing the free surface | - | [6](06-sci-method.qmd) |
+| $F_F$, $F_B$, $F_R$, $F_L$ | Volume fluxes through front, back, right, left cell faces | \* | [9](09-sci-underflow.qmd) |
+| $F_m$ | Mixing fraction (Ri derivation) | - | [8](08-sci-mixing.qmd) |
+| $f$ | Coriolis parameter | s$^{-1}$ | [4](04-sci-goveqns.qmd), [6](06-sci-method.qmd), [9](09-sci-underflow.qmd) |
+| $G$ | Explicit source term vector (momentum equations) | \* | [6](06-sci-method.qmd) |
+| $g$ | Gravitational acceleration | m s$^{-2}$ | [4](04-sci-goveqns.qmd), [6](06-sci-method.qmd), [8](08-sci-mixing.qmd), [9](09-sci-underflow.qmd), [10](10-sci-destrat.qmd) |
+| $g^\prime$ | Reduced gravity | m s$^{-2}$ | [5](05-sci-timestep.qmd), [8](08-sci-mixing.qmd), [9](09-sci-underflow.qmd) |
+| $H$ | Underflow height | m | [9](09-sci-underflow.qmd) |
+| $H_{insert}$ | Salinity insertion height (underflow coupling) | m | [9](09-sci-underflow.qmd) |
+| $h$ | Depth of the wind-mixed layer | m | [4](04-sci-goveqns.qmd), [6](06-sci-method.qmd) |
+| $i$, $j$, $k$ | Grid cell indices in $x$, $y$, $z$ directions | - | [4](04-sci-goveqns.qmd), [6](06-sci-method.qmd), [7](07-sci-thermo.qmd), [8](08-sci-mixing.qmd), [9](09-sci-underflow.qmd), [10](10-sci-destrat.qmd) |
+| $J$ | Pump thrust | N | [10](10-sci-destrat.qmd) |
+| $k_a$, $k_b$ | Lower/upper grid cell indices of the discrete mixed layer | - | [6](06-sci-method.qmd) |
+| $k_{max}$ | Maximum number of vertical grid cells | - | [6](06-sci-method.qmd) |
+| $k_\eta$ | Free surface grid cell index | - | [6](06-sci-method.qmd) |
+| $L()$ | Advective discretization operator | \* | [6](06-sci-method.qmd) |
+| $L_E$, $L_V$ | Latent heat of evaporation / vaporisation ($= 2.453 \times 10^{6}$) | J kg$^{-1}$ | [7](07-sci-thermo.qmd) |
+| $L_R$ | Plume aspect ratio ($= 0.1$) | - | [10](10-sci-destrat.qmd) |
+| $l$ | Sharpening length scale (filter) | m | [8](08-sci-mixing.qmd) |
+| $l^\prime$ | Smoothing length scale (filter) | m | [8](08-sci-mixing.qmd) |
+| $l^m$ | Lagrange polynomial coefficients | - | [6](06-sci-method.qmd) |
+| $M()$ | Mixing operator | \* | [6](06-sci-method.qmd) |
+| $n$ | Time level index; also number of sub-time steps | - | [6](06-sci-method.qmd), [9](09-sci-underflow.qmd) |
+| $nz$ | Number of vertical layers | - | [10](10-sci-destrat.qmd) |
+| $P$ | Atmospheric pressure | Pa | [7](07-sci-thermo.qmd), [10](10-sci-destrat.qmd) |
+| $P_{air}$ | Air pressure | Pa | [10](10-sci-destrat.qmd) |
+| $P_{diff}$ | Pressure at the level of the diffuser | Pa | [10](10-sci-destrat.qmd) |
+| $PE$ | Potential energy | \* | [8](08-sci-mixing.qmd) |
+| $Q$ | Scalar flux through cell face | \* | [6](06-sci-method.qmd) |
+| $Q_0$ | Initial volume flux of jet | m$^3$ s$^{-1}$ | [10](10-sci-destrat.qmd) |
+| $Q_{air}$ | Free-air flow rate of the compressor | m$^3$ s$^{-1}$ | [10](10-sci-destrat.qmd) |
+| $Q_{diff}$ | Diffuser air flow rate | m$^3$ s$^{-1}$ | [10](10-sci-destrat.qmd) |
+| $Q_P$ | Entrained water flow rate (plume) | m$^3$ s$^{-1}$ | [10](10-sci-destrat.qmd) |
+| $Q_{lh}$ | Latent heat flux | W m$^{-2}$ | [7](07-sci-thermo.qmd) |
+| $Q_{lw}$ | Net longwave radiation flux | W m$^{-2}$ | [7](07-sci-thermo.qmd) |
+| $Q_{lw(emitted)}$ | Longwave radiation emitted from water surface | W m$^{-2}$ | [7](07-sci-thermo.qmd) |
+| $Q_{lw(incident)}$ | Incident longwave radiation | W m$^{-2}$ | [7](07-sci-thermo.qmd) |
+| $Q_{non-pen}$ | Total non-penetrative energy flux at the surface | W m$^{-2}$ | [7](07-sci-thermo.qmd) |
+| $Q_{sh}$ | Sensible heat flux | W m$^{-2}$ | [7](07-sci-thermo.qmd) |
+| $Q_{sw}$ | Net shortwave radiation penetrating the water surface | W m$^{-2}$ | [7](07-sci-thermo.qmd) |
+| $R$ | Pump/jet radius | m | [10](10-sci-destrat.qmd) |
+| $Ri$ | Bulk Richardson number | - | [8](08-sci-mixing.qmd), [9](09-sci-underflow.qmd) |
+| $r$ | Rainfall rate | m s$^{-1}$ | [7](07-sci-thermo.qmd) |
+| $r_a^{(lw)}$ | Longwave albedo ($= 0.03$) | - | [7](07-sci-thermo.qmd) |
+| $r_a^{(sw)}$ | Shortwave albedo | - | [7](07-sci-thermo.qmd) |
+| $S$ | Salinity; also velocity shear (mixing model) | \* | [8](08-sci-mixing.qmd), [9](09-sci-underflow.qmd) |
+| $S^{(C)}$ | Scalar source term | \* | [6](06-sci-method.qmd) |
+| $S_c$ | Scalar source term (governing equations) | \* | [4](04-sci-goveqns.qmd) |
+| $S_k$ | Series value before filter application | \* | [8](08-sci-mixing.qmd) |
+| $S_x$, $S_y$ | Bottom slopes in $x$ and $y$ directions | - | [9](09-sci-underflow.qmd) |
+| $S_{amb}$ | Ambient salinity (underflow model) | psu | [9](09-sci-underflow.qmd) |
+| $T$ | Temperature | $^\circ$C or K | [7](07-sci-thermo.qmd) |
+| $T_a$ | Air temperature | $^\circ$C or K | [7](07-sci-thermo.qmd) |
+| $T_s$, $T_w$ | Water surface temperature | $^\circ$C or K | [7](07-sci-thermo.qmd) |
+| $T_{conv}$ | Timescale for convective overturn | s | [8](08-sci-mixing.qmd) |
+| $T_{turb}$ | Timescale for turbulent mixing | s | [8](08-sci-mixing.qmd) |
+| $TKE$ | Turbulent kinetic energy | \* | [8](08-sci-mixing.qmd) |
+| $TKE_A$ | TKE available for mixing | \* | [8](08-sci-mixing.qmd) |
+| $TKE_{mixed}$ | Total TKE if fully mixed | \* | [8](08-sci-mixing.qmd) |
+| $t$ | Time | s | [4](04-sci-goveqns.qmd), [5](05-sci-timestep.qmd), [6](06-sci-method.qmd), [7](07-sci-thermo.qmd), [8](08-sci-mixing.qmd), [9](09-sci-underflow.qmd), [10](10-sci-destrat.qmd) |
+| $U$, $V$, $W$ | Velocity components in $x$, $y$, $z$ directions | m s$^{-1}$ | [4](04-sci-goveqns.qmd), [6](06-sci-method.qmd), [8](08-sci-mixing.qmd), [9](09-sci-underflow.qmd) |
+| $U_a$ | Wind speed at 10 m reference height | m s$^{-1}$ | [7](07-sci-thermo.qmd) |
+| $U_{amb}$, $V_{amb}$ | Ambient velocities (underflow model) | m s$^{-1}$ | [9](09-sci-underflow.qmd) |
+| $U_f$, $V_f$ | Front propagation velocities (underflow model) | m s$^{-1}$ | [9](09-sci-underflow.qmd) |
+| $U_l$, $V_l$ | Velocity of the cell being mixed | m s$^{-1}$ | [8](08-sci-mixing.qmd) |
+| $U_{ml}$, $V_{ml}$ | Velocity of the mixed layer | m s$^{-1}$ | [8](08-sci-mixing.qmd) |
+| $u_*$ | Wind shear velocity | m s$^{-1}$ | [4](04-sci-goveqns.qmd), [6](06-sci-method.qmd), [8](08-sci-mixing.qmd) |
+| $u_i^\prime$ | Sub-time-scale velocity fluctuations | m s$^{-1}$ | [4](04-sci-goveqns.qmd) |
+| $W_\alpha$, $W_\beta$ | Wind velocity components | m s$^{-1}$ | [4](04-sci-goveqns.qmd) |
+| $w$ | Vertical velocity in jet | m s$^{-1}$ | [10](10-sci-destrat.qmd) |
+| $w_0$ | Initial vertical velocity at pump | m s$^{-1}$ | [10](10-sci-destrat.qmd) |
+| $X_f$ | Front propagation distance (underflow model) | m | [9](09-sci-underflow.qmd) |
+| $x_1$, $x_2$, $x_3$ | Spatial coordinates | m | [4](04-sci-goveqns.qmd), [6](06-sci-method.qmd) |
+| $z$ | Vertical coordinate / depth below water surface | m | [4](04-sci-goveqns.qmd), [6](06-sci-method.qmd), [7](07-sci-thermo.qmd), [8](08-sci-mixing.qmd), [9](09-sci-underflow.qmd), [10](10-sci-destrat.qmd) |
+
+: Summary of ELCOM variable notation. {#tbl-notation}

@@ -8,7 +8,7 @@
 
 <meta name="description" content="This is a draft of the ELCOM manual.">
 
-<title>1&nbsp; Introduction – ELCOM Manual</title>
+<title>10&nbsp; Artificial Destratification – ELCOM Manual</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,8 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./02-notation.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./11-getting-started.html" rel="next">
+<link href="./09-sci-underflow.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -72,6 +72,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -84,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-intro.html">Overview</a></li><li class="breadcrumb-item"><a href="./01-intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-sci-intro.html">Science Description</a></li><li class="breadcrumb-item"><a href="./10-sci-destrat.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Artificial Destratification</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -126,7 +155,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-intro.html" class="sidebar-item-text sidebar-link active">
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
@@ -191,7 +220,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./10-sci-destrat.html" class="sidebar-item-text sidebar-link">
+  <a href="./10-sci-destrat.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Artificial Destratification</span></span></a>
   </div>
 </li>
@@ -283,17 +312,28 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-elcom-model" id="toc-the-elcom-model" class="nav-link active" data-scroll-target="#the-elcom-model"><span class="header-section-number">1.1</span> The ELCOM model</a></li>
-  <li><a href="#conventions-and-definitions" id="toc-conventions-and-definitions" class="nav-link" data-scroll-target="#conventions-and-definitions"><span class="header-section-number">1.2</span> Conventions and definitions</a></li>
+  <li><a href="#sec-destrat-intro" id="toc-sec-destrat-intro" class="nav-link active" data-scroll-target="#sec-destrat-intro"><span class="header-section-number">10.1</span> Overview</a></li>
+  <li><a href="#bubble-plumes" id="toc-bubble-plumes" class="nav-link" data-scroll-target="#bubble-plumes"><span class="header-section-number">10.2</span> Bubble Plumes</a>
+  <ul class="collapse">
+  <li><a href="#initialisation" id="toc-initialisation" class="nav-link" data-scroll-target="#initialisation"><span class="header-section-number">10.2.1</span> Initialisation</a></li>
+  <li><a href="#subsequent-entrainment" id="toc-subsequent-entrainment" class="nav-link" data-scroll-target="#subsequent-entrainment"><span class="header-section-number">10.2.2</span> Subsequent entrainment</a></li>
+  <li><a href="#detrainment" id="toc-detrainment" class="nav-link" data-scroll-target="#detrainment"><span class="header-section-number">10.2.3</span> Detrainment</a></li>
+  </ul></li>
+  <li><a href="#pumpsjets" id="toc-pumpsjets" class="nav-link" data-scroll-target="#pumpsjets"><span class="header-section-number">10.3</span> Pumps/Jets</a>
+  <ul class="collapse">
+  <li><a href="#initialisation-1" id="toc-initialisation-1" class="nav-link" data-scroll-target="#initialisation-1"><span class="header-section-number">10.3.1</span> Initialisation</a></li>
+  <li><a href="#subsequent-entrainment-1" id="toc-subsequent-entrainment-1" class="nav-link" data-scroll-target="#subsequent-entrainment-1"><span class="header-section-number">10.3.2</span> Subsequent entrainment</a></li>
+  <li><a href="#detrainment-1" id="toc-detrainment-1" class="nav-link" data-scroll-target="#detrainment-1"><span class="header-section-number">10.3.3</span> Detrainment</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-intro.html">Overview</a></li><li class="breadcrumb-item"><a href="./01-intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-sci-intro.html">Science Description</a></li><li class="breadcrumb-item"><a href="./10-sci-destrat.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Artificial Destratification</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-intro" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></h1>
+<h1 class="title"><span id="sec-destrat" class="quarto-section-identifier"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Artificial Destratification</span></span></h1>
 </div>
 
 
@@ -310,76 +350,100 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="the-elcom-model" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="the-elcom-model"><span class="header-section-number">1.1</span> The ELCOM model</h2>
-<p>ELCOM (Estuary and Lake Computer Model) is a numerical modeling tool that applies hydrodynamic and thermodynamic models to simulate the temporal behavior of stratified water bodies with environmental forcing.</p>
-<p>The hydrodynamic simulation method solves the unsteady, viscous Navier-Stokes equations for incompressible flow using the hydrostatic assumption for pressure. Modeled and simulated processes include baroclinic and barotropic responses, rotational effects, tidal forcing, wind stresses, surface thermal forcing, inflows, outflows, and transport of salt, heat and passive scalars.</p>
-<p>Through coupling with the CAEDYM (Computational Aquatic Ecosystem DYnamics Model) water quality module, ELCOM can be used to simulate three-dimensional transport and interactions of flow physics, biology and chemistry.</p>
-<p>The hydrodynamic algorithms in ELCOM are based on the Euler-Lagrange method for advection of momentum with a conjugate-gradient solution for the free-surface height (Casulli and Cheng, 1992). Passive and active scalars (i.e., tracers, salinity and temperature) are advected using a conservative ULTIMATE QUICKEST discretization (Leonard 1991).</p>
+<section id="sec-destrat-intro" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="sec-destrat-intro"><span class="header-section-number">10.1</span> Overview</h2>
+<p>ELCOM provides algorithms for two types of destratification devices: Bubble plumes and jets. Both devices act vertically on a column of water and work by calculating the entrainment of water from each cell into the jet or plume.</p>
+<p>Water insertion and entrainment is carried out by creating a temporary column of water with <span class="math inline">\(nz + nn\)</span> layers. The layers consist of the original <span class="math inline">\(nz\)</span> layers each slightly smaller than its usual <span class="math inline">\(dz\)</span> due to entrainment into the plume and 1 inserted layer for a jet or one inserted layer for each time the bubble plume detrains. The <span class="math inline">\(dz\)</span> of the inserted layer is given by the insertion volume divided by the column area. Once the plume calculations have been carried out the standard z layer configuration is enforced onto the temporary column. This leads to some numerical diffusion (<a href="#fig-insertion" class="quarto-xref">Figure&nbsp;<span>10.1</span></a>).</p>
+<div id="fig-insertion" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-insertion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<embed src="images/insertion.pdf" class="img-fluid">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-insertion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.1: Schematic of bubble plume or jet entrainment and insertion.
+</figcaption>
+</figure>
+</div>
 </section>
-<section id="conventions-and-definitions" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="conventions-and-definitions"><span class="header-section-number">1.2</span> Conventions and definitions</h2>
-<p>In this document, a number of conventions will be used. For clarity, the computational domain will generally be referred to as a “lake”. However, the simulation method is designed for applicability to estuaries and coastal ocean environments.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 19%">
-<col style="width: 80%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Term</th>
-<th>Definition</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><em>x,y,z</em> space</td>
-<td>Full Cartesian space which covers all of the bathymetry</td>
-</tr>
-<tr class="even">
-<td><em>i,j,k</em> space</td>
-<td>Discrete integer space of computational cells which covers all bathymetry</td>
-</tr>
-<tr class="odd">
-<td>land</td>
-<td>A computational cell that cannot contain water</td>
-</tr>
-<tr class="even">
-<td>open</td>
-<td>A cell used for an open boundary condition</td>
-</tr>
-<tr class="odd">
-<td>interior</td>
-<td>A cell that may contain water</td>
-</tr>
-<tr class="even">
-<td>x_rows</td>
-<td>Number of grid cells in the x direction</td>
-</tr>
-<tr class="odd">
-<td>y_columns</td>
-<td>Number of grid cells in the y direction</td>
-</tr>
-<tr class="even">
-<td>z_layers</td>
-<td>Number of grid cells in the vertical (z) direction</td>
-</tr>
-<tr class="odd">
-<td>land_value</td>
-<td>Number used in the bathymetry file to represent land cells</td>
-</tr>
-<tr class="even">
-<td>open_value</td>
-<td>Number used in the bathymetry file to represent open boundary cells</td>
-</tr>
-<tr class="odd">
-<td>dx, dy, dz</td>
-<td>Grid spacing in x, y, z directions (can be uniform or non-uniform, in meters)</td>
-</tr>
-</tbody>
-</table>
+<section id="bubble-plumes" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="bubble-plumes"><span class="header-section-number">10.2</span> Bubble Plumes</h2>
+<p>The bubble plume destratification in ELCOM is based on the routine in DYRESM. The model uses the simple buoyant plume equations, and assumes the plumes are circular and multiple plumes in any grid cell are non-interacting. Air is pumped to depth, and released into the water column via a diffuser. The bubbles rise, entraining ambient water. When the upwards buoyancy flux due to the air bubbles is equal to the downwards force (due to gravity) of the entrained ambient water, the bubble plume sheds the entrained water. This water is immediately routed to its neutrally buoyant level, without entrainment.</p>
+<p>The bubble plume then begins to entrain ambient water again, until it reaches the surface where any entrained water is shed, and again routed to its neutrally buoyant level.</p>
+<section id="initialisation" class="level3" data-number="10.2.1">
+<h3 data-number="10.2.1" class="anchored" data-anchor-id="initialisation"><span class="header-section-number">10.2.1</span> Initialisation</h3>
+<p>The bubbler is initialised by first computing the upwards buoyancy flux due to the air, as <span class="citation" data-cites="Fisc79">(Fischer et al. 1979, eqn 9.7)</span></p>
+<p><span id="eq-bair"><span class="math display">\[
+B_{air}=gQ_{diff}
+\tag{10.1}\]</span></span></p>
+<p>Note that the air flow rate MUST be that at the level of the diffuser, not the free-air flow rate of the compressor. The correction can be made by assuming that air is an ideal gas and is adiabatically compressed according to <span class="citation" data-cites="Wall77">(Wallace and Hobbs 1977, p89)</span></p>
+<p><span id="eq-qdiff"><span class="math display">\[
+Q_{diff}=Q_{air}\left(\frac{P_{air}}{P_{diff}} \right)^{0.71}
+\tag{10.2}\]</span></span></p>
+<p>where <span class="math inline">\(Q_{air}\)</span> is the free air flow rate of the compressor, <span class="math inline">\(P_{air}\)</span> is the air pressure (usually taken as 101.3 kPa), <span class="math inline">\(P_{diff}\)</span> the pressure at the level of the diffuser due to both the atmosphere and the depth of water, and <span class="math inline">\(Q_{diff}\)</span> the diffuser air flow rate.</p>
+<p>Once the value of <span class="math inline">\(Q_{diff}\)</span> is passed into the model, it is divided by the number of ports (or clusters) to determine the flow rate per port. All subsequent calculations are done on a per port basis, then multiplied by the total number of ports to get the total effect of the destratification system.</p>
+<p>The flow rate of entrained water is computed as <span class="citation" data-cites="Fisc79">(Fischer et al. 1979, eqns 9.28, 9.30, 9.107)</span></p>
+<p><span id="eq-qp"><span class="math display">\[
+Q_{P}=\alpha\frac{6\pi}{5}b_{1}L_{R}B^{1/3}z^{5/3}
+\tag{10.3}\]</span></span></p>
+<p>where <span class="math inline">\(B\)</span> is the buoyancy flux [m<span class="math inline">\(^4\)</span>/s<span class="math inline">\(^3\)</span>], <span class="math inline">\(z\)</span> is the bottom layer thickness [m], <span class="math inline">\(b_1\)</span> is a constant (<span class="math inline">\(=4.7\)</span>, <span class="citation" data-cites="Fisc79">Fischer et al. (1979)</span> p329), <span class="math inline">\(L_R\)</span> is the plume aspect ratio (plume radius to plume length, assumed to be a constant of 0.1), and <span class="math inline">\(\alpha\)</span> is an entrainment coefficient.</p>
+</section>
+<section id="subsequent-entrainment" class="level3" data-number="10.2.2">
+<h3 data-number="10.2.2" class="anchored" data-anchor-id="subsequent-entrainment"><span class="header-section-number">10.2.2</span> Subsequent entrainment</h3>
+<p>The first step is to compute the flow rate of air, which will increase due to decreasing pressure leading to adiabatic expansion of the bubbles. The new flow rate (due to adiabatic expansion) in layer <span class="math inline">\(k\)</span> can be calculated as</p>
+<p><span id="eq-qi"><span class="math display">\[
+Q_{i}=Q_{i-1}\left(\frac{P_{i-1}}{P_i} \right)^{0.71}
+\tag{10.4}\]</span></span></p>
+<p>where layer (<span class="math inline">\(k-1\)</span>) refers to the layer below, and pressure <span class="math inline">\(P\)</span> has units of Pascals.</p>
+<p>The combined buoyancy flux of the air bubbles and entrained water is calculated as</p>
+<p><span id="eq-bi"><span class="math display">\[
+B_{i}=gQ_{i}-g\left(\frac{\rho_{i}-\rho_P}{\rho_{i}} \right)Q_P
+\tag{10.5}\]</span></span></p>
+<p>where <span class="math inline">\(\rho_{i}\)</span> is the density of the current layer, and <span class="math inline">\(Q_P\)</span> is the flow rate of the entrained volume. The second term is the reduction in buoyancy flux due to the entrained water the plume is dragging with it.</p>
+<p>The flow rate of the entrained volume in layer <span class="math inline">\(i\)</span> is calculated as</p>
+<p><span id="eq-qp-layer"><span class="math display">\[
+Q_{P}=\alpha\frac{6\pi}{5}b_{1}L_{R}B^{1/3}\left(z_i^{5/3}-z_{i-1}^{5/3}\right)
+\tag{10.6}\]</span></span></p>
+</section>
+<section id="detrainment" class="level3" data-number="10.2.3">
+<h3 data-number="10.2.3" class="anchored" data-anchor-id="detrainment"><span class="header-section-number">10.2.3</span> Detrainment</h3>
+<p>When the combined buoyancy flux becomes negative, the entrained water detrains from the air plume. It is then routed to its neutrally buoyant level instantaneously.</p>
+<p>The plume characteristics are then reset, and the air continues to rise and begins entraining water again.</p>
+<p>Water insertion and entrainment is carried out as described above (<a href="#sec-destrat-intro" class="quarto-xref"><span>Section 10.1</span></a>).</p>
+</section>
+</section>
+<section id="pumpsjets" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="pumpsjets"><span class="header-section-number">10.3</span> Pumps/Jets</h2>
+<p>The jet model uses the simple jet equations, and assumes the plumes are circular and multiple plumes in any grid cell are non-interacting. Unlike bubble plumes pumps may act up or down the water column. As the jet moves away from the pump it entrains ambient water. When the momentum flux of the jet reaches zero the entrained water is immediately routed to its neutrally buoyant level, without entrainment.</p>
+<section id="initialisation-1" class="level3" data-number="10.3.1">
+<h3 data-number="10.3.1" class="anchored" data-anchor-id="initialisation-1"><span class="header-section-number">10.3.1</span> Initialisation</h3>
+<p>The jet is initialised by first computing the momentum flux exiting the pump. The vertical velocity at the pump is given by</p>
+<p><span id="eq-w0"><span class="math display">\[
+w_0=\frac{2J}{\pi \rho_0 R}
+\tag{10.7}\]</span></span></p>
+<p>where <span class="math inline">\(J\)</span> is the thrust of the pump in Newtons and <span class="math inline">\(R\)</span> is the radius of the pump. The initial radius of the jet, <span class="math inline">\(b_0\)</span>, is set to the radius of the pump. The initial volume flux is therefore</p>
+<p><span id="eq-q0"><span class="math display">\[
+Q_{0}=\pi b_0^2 w_0
+\tag{10.8}\]</span></span></p>
+<p>The water for this volume flux is removed from cells above the pump if the pump is pumping down and below the pump if it is pumping up. The water is removed equally from all cells a distance equal to <span class="math inline">\(R\)</span>.</p>
+</section>
+<section id="subsequent-entrainment-1" class="level3" data-number="10.3.2">
+<h3 data-number="10.3.2" class="anchored" data-anchor-id="subsequent-entrainment-1"><span class="header-section-number">10.3.2</span> Subsequent entrainment</h3>
+<p>The entrainment into the jet is calculated by explicitly solving the conservation of volume equation</p>
+<p><span id="eq-jet-vol"><span class="math display">\[
+\frac{\partial (\pi b^2 w)}{\partial z}=2\pi b w
+\tag{10.9}\]</span></span></p>
+<p>The conservation of momentum equation is then solved to calculate the vertical velocity</p>
+<p><span id="eq-jet-mom"><span class="math display">\[
+\frac{\partial \left(\frac{\pi}{2} b^2 w^2\right)}{\partial z}=\pi b g\frac{\rho_j-\rho_{amb}}{\rho_0}
+\tag{10.10}\]</span></span></p>
+<p>where <span class="math inline">\(\rho_j\)</span> is the density of the water in the jet and <span class="math inline">\(\rho_{amb}\)</span> is the density of the cell.</p>
+</section>
+<section id="detrainment-1" class="level3" data-number="10.3.3">
+<h3 data-number="10.3.3" class="anchored" data-anchor-id="detrainment-1"><span class="header-section-number">10.3.3</span> Detrainment</h3>
+<p>When the momentum flux becomes negative, the entrained water detrains from the jet. It is then routed to its neutrally buoyant level instantaneously. Water insertion and entrainment is carried out as described above (<a href="#sec-destrat-intro" class="quarto-xref"><span>Section 10.1</span></a>).</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -785,13 +849,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Welcome">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome</span>
+      <a href="./09-sci-underflow.html" class="pagination-link" aria-label="Underflow Model">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Underflow Model</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./02-notation.html" class="pagination-link" aria-label="Notation">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Notation</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./11-getting-started.html" class="pagination-link" aria-label="Getting Started">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Getting Started</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

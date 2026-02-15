@@ -1,0 +1,10 @@
+# Developer Information {#sec-developer}
+
+This page is under development.
+
+## Implementation language
+
+ELCOM is implemented in Fortran 90 (with F95 extensions) so that three-dimensional space can be mapped into a single vector for fast operation using array-processing techniques.
+
+Only the computational cells that contain water are represented in the single vector so that memory usage is minimized. This allows Fortran 90 compiler parallelization and vectorization without platform-specific modification of the code. A future extension of ELCOM will include dynamic pressure effects to account for nonlinear dynamics of internal waves that may be lost due to the hydrostatic approximation.
+

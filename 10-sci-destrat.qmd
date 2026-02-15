@@ -1,0 +1,113 @@
+# Artificial Destratification {#sec-destrat}
+
+## Overview {#sec-destrat-intro}
+
+ELCOM provides algorithms for two types of destratification devices: Bubble plumes and jets. Both devices act vertically on a column of water and work by calculating the entrainment of water from each cell into the jet or plume.
+
+Water insertion and entrainment is carried out by creating a temporary column of water with $nz + nn$ layers. The layers consist of the original $nz$ layers each slightly smaller than its usual $dz$ due to entrainment into the plume and 1 inserted layer for a jet or one inserted layer for each time the bubble plume detrains. The $dz$ of the inserted layer is given by the insertion volume divided by the column area. Once the plume calculations have been carried out the standard z layer configuration is enforced onto the temporary column. This leads to some numerical diffusion (@fig-insertion).
+
+![Schematic of bubble plume or jet entrainment and insertion.](images/insertion.pdf){#fig-insertion}
+
+## Bubble Plumes
+
+The bubble plume destratification in ELCOM is based on the routine in DYRESM. The model uses the simple buoyant plume equations, and assumes the plumes are circular and multiple plumes in any grid cell are non-interacting. Air is pumped to depth, and released into the water column via a diffuser. The bubbles rise, entraining ambient water. When the upwards buoyancy flux due to the air bubbles is equal to the downwards force (due to gravity) of the entrained ambient water, the bubble plume sheds the entrained water. This water is immediately routed to its neutrally buoyant level, without entrainment.
+
+The bubble plume then begins to entrain ambient water again, until it reaches the surface where any entrained water is shed, and again routed to its neutrally buoyant level.
+
+### Initialisation
+
+The bubbler is initialised by first computing the upwards buoyancy flux due to the air, as [@Fisc79, eqn 9.7]
+
+$$
+B_{air}=gQ_{diff}
+$$ {#eq-bair}
+
+Note that the air flow rate MUST be that at the level of the diffuser, not the free-air flow rate of the compressor. The correction can be made by assuming that air is an ideal gas and is adiabatically compressed according to [@Wall77, p89]
+
+$$
+Q_{diff}=Q_{air}\left(\frac{P_{air}}{P_{diff}} \right)^{0.71}
+$$ {#eq-qdiff}
+
+where $Q_{air}$ is the free air flow rate of the compressor, $P_{air}$ is the air pressure (usually taken as 101.3 kPa), $P_{diff}$ the pressure at the level of the diffuser due to both the atmosphere and the depth of water, and $Q_{diff}$ the diffuser air flow rate.
+
+Once the value of $Q_{diff}$ is passed into the model, it is divided by the number of ports (or clusters) to determine the flow rate per port. All subsequent calculations are done on a per port basis, then multiplied by the total number of ports to get the total effect of the destratification system.
+
+The flow rate of entrained water is computed as [@Fisc79, eqns 9.28, 9.30, 9.107]
+
+$$
+Q_{P}=\alpha\frac{6\pi}{5}b_{1}L_{R}B^{1/3}z^{5/3}
+$$ {#eq-qp}
+
+where $B$ is the buoyancy flux [m$^4$/s$^3$], $z$ is the bottom layer thickness [m], $b_1$ is a constant ($=4.7$, @Fisc79 p329), $L_R$ is the plume aspect ratio (plume radius to plume length, assumed to be a constant of 0.1), and $\alpha$ is an entrainment coefficient.
+
+### Subsequent entrainment
+
+The first step is to compute the flow rate of air, which will increase due to decreasing pressure leading to adiabatic expansion of the bubbles. The new flow rate (due to adiabatic expansion) in layer $k$ can be calculated as
+
+$$
+Q_{i}=Q_{i-1}\left(\frac{P_{i-1}}{P_i} \right)^{0.71}
+$$ {#eq-qi}
+
+where layer ($k-1$) refers to the layer below, and pressure $P$ has units of Pascals.
+
+The combined buoyancy flux of the air bubbles and entrained water is calculated as
+
+$$
+B_{i}=gQ_{i}-g\left(\frac{\rho_{i}-\rho_P}{\rho_{i}} \right)Q_P
+$$ {#eq-bi}
+
+where $\rho_{i}$ is the density of the current layer, and $Q_P$ is the flow rate of the entrained volume. The second term is the reduction in buoyancy flux due to the entrained water the plume is dragging with it.
+
+The flow rate of the entrained volume in layer $i$ is calculated as
+
+$$
+Q_{P}=\alpha\frac{6\pi}{5}b_{1}L_{R}B^{1/3}\left(z_i^{5/3}-z_{i-1}^{5/3}\right)
+$$ {#eq-qp-layer}
+
+### Detrainment
+
+When the combined buoyancy flux becomes negative, the entrained water detrains from the air plume. It is then routed to its neutrally buoyant level instantaneously.
+
+The plume characteristics are then reset, and the air continues to rise and begins entraining water again.
+
+Water insertion and entrainment is carried out as described above (@sec-destrat-intro).
+
+## Pumps/Jets
+
+The jet model uses the simple jet equations, and assumes the plumes are circular and multiple plumes in any grid cell are non-interacting. Unlike bubble plumes pumps may act up or down the water column. As the jet moves away from the pump it entrains ambient water. When the momentum flux of the jet reaches zero the entrained water is immediately routed to its neutrally buoyant level, without entrainment.
+
+### Initialisation
+
+The jet is initialised by first computing the momentum flux exiting the pump. The vertical velocity at the pump is given by
+
+$$
+w_0=\frac{2J}{\pi \rho_0 R}
+$$ {#eq-w0}
+
+where $J$ is the thrust of the pump in Newtons and $R$ is the radius of the pump. The initial radius of the jet, $b_0$, is set to the radius of the pump. The initial volume flux is therefore
+
+$$
+Q_{0}=\pi b_0^2 w_0
+$$ {#eq-q0}
+
+The water for this volume flux is removed from cells above the pump if the pump is pumping down and below the pump if it is pumping up. The water is removed equally from all cells a distance equal to $R$.
+
+### Subsequent entrainment
+
+The entrainment into the jet is calculated by explicitly solving the conservation of volume equation
+
+$$
+\frac{\partial (\pi b^2 w)}{\partial z}=2\pi b w
+$$ {#eq-jet-vol}
+
+The conservation of momentum equation is then solved to calculate the vertical velocity
+
+$$
+\frac{\partial \left(\frac{\pi}{2} b^2 w^2\right)}{\partial z}=\pi b g\frac{\rho_j-\rho_{amb}}{\rho_0}
+$$ {#eq-jet-mom}
+
+where $\rho_j$ is the density of the water in the jet and $\rho_{amb}$ is the density of the cell.
+
+### Detrainment
+
+When the momentum flux becomes negative, the entrained water detrains from the jet. It is then routed to its neutrally buoyant level instantaneously. Water insertion and entrainment is carried out as described above (@sec-destrat-intro).

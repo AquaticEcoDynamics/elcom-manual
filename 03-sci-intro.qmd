@@ -1,0 +1,17 @@
+# Overview {#sec-sci-intro}
+
+ELCOM (Estuary, Lake and Coastal Ocean Model) is a three-dimensional hydrodynamics model for lakes and reservoirs, and is used to predict the variation of water temperature and salinity in space and time. The model forms the three-dimensional hydrodynamics driver to the CAEDYM water quality model.
+
+Heat exchange through the water's surface is governed by standard bulk transfer models found in the literature (e.g., [@Amor80; @Imbe81; @Jacq83]). The energy transfer across the free surface is separated into nonpenetrative components of long-wave radiation, sensible heat transfer, and evaporative heat loss, complemented by penetrative shortwave radiation. Nonpenetrative effects are introduced as sources of temperature in the surface-mixed layer, whereas penetrative effects are introduced as source terms in one or more grid layers on the basis of an exponential decay and an extinction coefficient (Beer's law).
+
+ELCOM computes a model time step in a staged approach consisting of
+
+1. introduction of surface heating/ cooling in the surface layer
+2. mixing of scalar concentrations and momentum using a mixed-layer model
+3. introduction of wind energy as a momentum source in the wind-mixed layer
+4. solution of the free-surface evolution and velocity field
+5. horizontal diffusion of momentum
+6. advection of scalars, and
+7. horizontal diffusion of scalars
+
+The fundamental numerical scheme is adapted from the TRIM approach of [@Casu92] with modifications for accuracy, scalar conservation, numerical diffusion, and implementation of a mixed-layer turbulence closure. The solution grid uses varying width orthoganal cells. The grid stencil is the Arakawa C-grid: Velocities are defined on cell faces with the free-surface height and scalar concentrations on cell centers. The free-surface height in each column of grid cells moves vertically through grid layers as required by the free-surface evolution equation. Replacement of the standard vertical turbulent diffusion equation with a mixed-layer model eliminates the tridiagonal matrix inversion for each horizontal velocity component and transported scalar required for each grid water column in the original TRIM scheme. This provides computational efficiency and allows sharper gradients to be maintained with coarse grid resolution.

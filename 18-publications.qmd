@@ -1,0 +1,137 @@
+# Publications {#sec-publications}
+
+The following tables list published and grey-literature studies that have used ELCOM (and relevant derivative versions) for hydrodynamic and water quality modelling. This is not intended to be exhaustive but provides a representative overview of applications across lakes, reservoirs, estuaries, and coastal waters.
+
+## Journal Publications
+
+::: {style="font-size: 0.8em;"}
+
+```{=html}
+<style>
+#tbl-publications th:nth-child(1), #tbl-publications td:nth-child(1) { width: 15%; }
+#tbl-publications th:nth-child(2), #tbl-publications td:nth-child(2) { width: 75%; }
+#tbl-publications th:nth-child(3), #tbl-publications td:nth-child(3) { width: 10%; white-space: nowrap; }
+#tbl-grey-literature th:nth-child(1), #tbl-grey-literature td:nth-child(1) { width: 90%; }
+#tbl-grey-literature th:nth-child(2), #tbl-grey-literature td:nth-child(2) { width: 10%; white-space: nowrap; }
+</style>
+```
+
+| Citation | Reference | Application |
+|:---------|:----------|:------------|
+| Hodges et al. (2000) | Hodges, B.R., Imberger, J., Saggio, A. & Winters, K.B. Modeling basin-scale internal waves in a stratified lake. *Limnology and Oceanography*, 45(7), 1603–1620. | Lake |
+| Dallimore et al. (2003) | Dallimore, C.J., Hodges, B.R. & Imberger, J. Coupling an underflow model to a 3D hydrodynamic model. *Journal of Hydraulic Engineering*, 129(10), 748–757. | Lake |
+| Laval et al. (2003) | Laval, B.E., Imberger, J. & Hodges, B.R. Modeling circulation in lakes: Spatial and temporal variations. *Limnology and Oceanography*, 48(3), 983–994. | Lake |
+| Romero et al. (2004) | Romero, J.R., Antenucci, J.P. & Imberger, J. One- and three-dimensional biogeochemical simulations of two differing reservoirs. *Ecological Modelling*, 174(1-2), 143–160. | Reservoir |
+| Hipsey et al. (2004) | Hipsey, M.R., Antenucci, J.P., Brookes, J.D., Burch, M.D., Regel, R.H. & Linden, L. A three dimensional model of Cryptosporidium dynamics in lakes and reservoirs: a new tool for risk management. *International Journal of River Basin Management*, 2(3), 181–197. | Reservoir |
+| León et al. (2005) | León, L.F., Imberger, J., Smith, R.E., Hecky, R.E., Lam, D.C. & Schertzer, W.M. Modeling as a tool for nutrient management in Lake Erie: a hydrodynamics study. *Journal of Great Lakes Research*, 31, 309–318. | Lake |
+| Gómez-Giraldo et al. (2006) | Gómez-Giraldo, A., Imberger, J. & Antenucci, J.P. Spatial structure of the dominant basin-scale internal waves in Lake Kinneret. *Limnology and Oceanography*, 51(1), 229–246. | Lake |
+| Morillo et al. (2006) | Morillo, S., Imberger, J. & Antenucci, J.P. Modifying the residence time and dilution capacity of a reservoir by altering internal flow-paths. *International Journal of River Basin Management*, 4(4), 255–271. | Reservoir |
+| León et al. (2007) | León, L.F., Lam, D.C.L., Schertzer, W.M., Swayne, D.A. & Imberger, J. Towards coupling a 3D hydrodynamic lake model with the Canadian regional climate model: simulation on Great Slave Lake. *Environmental Modelling & Software*, 22(6), 787–796. | Lake |
+| Spillman et al. (2007) | Spillman, C.M., Imberger, J., Hamilton, D.P., Hipsey, M.R. & Romero, J.R. Modelling the effects of Po River discharge, internal nutrient cycling and hydrodynamics on biogeochemistry of the Northern Adriatic Sea. *Journal of Marine Systems*, 68(1-2), 167–200. | Coastal |
+| Spillman et al. (2008) | Spillman, C.M., Hamilton, D.P., Hipsey, M.R. & Imberger, J. A spatially resolved model of seasonal variations in phytoplankton and clam (*Tapes philippinarum*) biomass in Barbamarco Lagoon, Italy. *Estuarine, Coastal and Shelf Science*, 79(2), 187–203. | Estuary |
+| Hipsey et al. (2008) | Hipsey, M.R., Antenucci, J.P. & Brookes, J.D. A generic, process-based model of microbial pollution in aquatic systems. *Water Resources Research*, 44(7), W07408. | Estuary |
+| Furnans et al. (2008) | Furnans, J., Imberger, J. & Hodges, B.R. Including drag and inertia in drifter modelling. *Environmental Modelling & Software*, 23(6), 714–728. | Lake |
+| Marti & Imberger (2008) | Marti, C.L. & Imberger, J. Exchange between littoral and pelagic waters in a stratified lake due to wind-induced motions: Lake Kinneret, Israel. *Hydrobiologia*, 603(1), 25–51. | Lake |
+| Morillo et al. (2008) | Morillo, S., Imberger, J., Antenucci, J.P. & Woods, P.F. Influence of wind and lake morphometry on the interaction between two rivers entering a stratified lake. *Journal of Hydraulic Engineering*, 134(11), 1579–1589. | Lake |
+| Chung et al. (2008) | Chung, S.W., Lee, H.S., Ryoo, J.I., Ryu, I.G. & Oh, D.G. 3D modeling of turbid density flow induced into Daecheong Reservoir with ELCOM-CAEDYM. *Journal of Korea Water Resources Association*, 41(12), 1187–1198. | Reservoir |
+| Chung et al. (2009) | Chung, S.W., Hipsey, M.R. & Imberger, J. Modelling the propagation of turbid density inflows into a stratified lake: Daecheong Reservoir, Korea. *Environmental Modelling & Software*, 24(12), 1467–1482. | Reservoir |
+| Morillo et al. (2009) | Morillo, S., Imberger, J., Antenucci, J.P. & Copetti, D. Using impellers to distribute local nutrient loadings in a stratified lake: Lake Como, Italy. *Journal of Hydraulic Engineering*, 135(7), 564–574. | Lake |
+| Huang et al. (2010) | Huang, A., Rao, Y.R., Lu, Y. & Zhao, J. Hydrodynamic modeling of Lake Ontario: An intercomparison of three models. *Journal of Geophysical Research: Oceans*, 115, C12076. | Lake |
+| Missaghi & Hondzo (2010) | Missaghi, S. & Hondzo, M. Evaluation and application of a three-dimensional water quality model in a shallow lake with complex morphometry. *Ecological Modelling*, 221(11), 1512–1525. | Lake |
+| Okely et al. (2010a) | Okely, P., Imberger, J. & Shimizu, K. Evaluation and application of a three-dimensional water quality model in a shallow lake with complex morphometry. *Ecological Modelling*, 221(2), 181–197. | Lake |
+| Okely et al. (2010b) | Okely, P., Imberger, J. & Shimizu, K. Particle dispersal due to interplay of motions in the surface layer of a small reservoir. *Limnology and Oceanography*, 55(2), 589–603. | Reservoir |
+| Rinke et al. (2010) | Rinke, K., Yeates, P. & Rothhaupt, K.-O. A simulation study of the feedback of phytoplankton on thermal structure via light extinction. *Freshwater Biology*, 55(8), 1674–1693. | Lake |
+| Vilhena et al. (2010) | Vilhena, L.C., Hillmer, I. & Imberger, J.R. The role of climate change in the occurrence of algal blooms: Lake Burragorang, Australia. *Limnology and Oceanography*, 55(3), 1188–1200. | Reservoir |
+| Chung & Lee (2011) | Chung, S.W. & Lee, H.S. Analysis of *Microcystis* bloom in Daecheong Reservoir using ELCOM-CAEDYM. *Journal of Korean Society on Water Environment*, 27(1), 73–87. | Reservoir |
+| Chung et al. (2011) | Chung, S.W., Lee, J.H. & Ryu, I.G. A coupled three-dimensional hydrodynamic and water quality modeling of Yongdam Reservoir using ELCOM-CAEDYM. *Journal of Korean Society on Water Environment*, 27(4), 413–424. | Reservoir |
+| León et al. (2011) | León, L.F., Smith, R.E.H., Hipsey, M.R., Bocaniov, S.A., Higgins, S.N., Hecky, R.E., Antenucci, J.P., Guildford, S.J. & Ozersky, T. Application of a 3D hydrodynamic-biological model for seasonal and spatial dynamics of water quality and phytoplankton in Lake Erie. *Journal of Great Lakes Research*, 37(1), 41–53. | Lake |
+| Marti et al. (2011) | Marti, C.L., Mills, R. & Imberger, J. Pathways of multiple inflows into a stratified reservoir: Thomson Reservoir, Australia. *Advances in Water Resources*, 34(5), 551–561. | Reservoir |
+| Ng et al. (2011) | Ng, S.M.Y., Antenucci, J.P., Hipsey, M.R., Tibor, G. & Zohary, T. Physical controls on the spatial evolution of a dinoflagellate bloom in a large lake. *Limnology and Oceanography*, 56(6), 2265–2281. | Lake |
+| Kopasakis et al. (2012a) | Kopasakis, K.I., Georgoulas, A.N., Angelidis, P.B. & Kotsovinos, N.E. Simulation of the long term fate of water and pollutants, transported from the Dardanelles plume into the North Aegean Sea. *Applied Ocean Research*, 37, 145–161. | Coastal |
+| Kopasakis et al. (2012b) | Kopasakis, K.I., Georgoulas, A.N., Angelidis, P.B. & Kotsovinos, N.E. Numerical modeling of the long-term transport, dispersion, and accumulation of Black Sea pollutants into the North Aegean coastal waters. *Estuaries and Coasts*, 35(6), 1530–1550. | Coastal |
+| León et al. (2012a) | León, L.F., Smith, R.E., Malkin, S.Y., Depew, D., Hipsey, M.R., Antenucci, J.P., Higgins, S.N., Hecky, R.E. & Rao, R.Y. Nested 3D modeling of the spatial dynamics of nutrients and phytoplankton in a Lake Ontario nearshore zone. *Journal of Great Lakes Research*, 38, 171–183. | Lake |
+| León et al. (2012b) | León, L.F., Antenucci, J.P., Rao, Y.R. & McCrimmon, C. Summary performance of the Estuary and Lake Computer Model (ELCOM): application in the Laurentian and other Great Lakes. *Water Quality Research Journal*, 47(3-4), 252–267. | Lake |
+| Oveisy et al. (2012) | Oveisy, A., Boegman, L. & Imberger, J. Three-dimensional simulation of lake and ice dynamics during winter. *Limnology and Oceanography*, 57(1), 43–57. | Lake |
+| Valerio et al. (2012) | Valerio, G., Pilotti, M., Marti, C.L. & Imberger, J.R. The structure of basin-scale internal waves in a stratified lake in response to lake bathymetry and wind spatial and temporal distribution: Lake Iseo, Italy. *Limnology and Oceanography*, 57(3), 772–786. | Lake |
+| Zhao et al. (2012) | Zhao, J., Rao, Y.R. & Wassenaar, L.I. Numerical modeling of hydrodynamics and tracer dispersion during ice-free period in Lake Winnipeg. *Journal of Great Lakes Research*, 38(Suppl. 3), 147–157. | Lake |
+| Antenucci et al. (2013) | Antenucci, J.P., Tan, K.M., Eikaas, H.S. & Imberger, J. The importance of transport processes and spatial gradients on in situ estimates of lake metabolism. *Hydrobiologia*, 700(1), 9–21. | Lake |
+| Botelho et al. (2013) | Botelho, D.A., Barry, M.E., Collecutt, G.C., Brook, J. & Wiltshire, D. Linking near- and far-field hydrodynamic models for simulation of desalination plant brine discharges. *Water Science and Technology*, 67(6), 1194–1207. | Coastal |
+| Vilhena et al. (2013) | Vilhena, L.C., Marti, C.L. & Imberger, J. The importance of nonlinear internal waves in a deep subalpine lake: Lake Iseo, Italy. *Limnology and Oceanography*, 58(5), 1871–1891. | Lake |
+| Bocaniov et al. (2014) | Bocaniov, S.A., Smith, R.E.H., Spillman, C.M., Hipsey, M.R. & León, L.F. The nearshore shunt and the decline of the phytoplankton spring bloom in the Laurentian Great Lakes. *Hydrobiologia*, 731(1), 151–172. | Lake |
+| Chung et al. (2014) | Chung, S.W., Imberger, J., Hipsey, M.R. & Lee, H.S. The influence of physical and physiological processes on the spatial heterogeneity of a *Microcystis* bloom in a stratified reservoir. *Ecological Modelling*, 289, 133–149. | Reservoir |
+| Hipsey et al. (2014) | Hipsey, M.R., Salmon, S.U. & Mosley, L.M. A three-dimensional hydro-geochemical model to assess lake acidification risk. *Environmental Modelling & Software*, 61, 433–457. | Lake |
+| Machado & Imberger (2014) | Machado, D.A. & Imberger, J. Modeling the impact of natural and anthropogenic nutrient sources on phytoplankton dynamics in a shallow coastal domain, Western Australia. *Environmental Fluid Mechanics*, 14(1), 87–111. | Coastal |
+| Preston et al. (2014) | Preston, A., Hannoun, I.A., List, E.J., Rackley, I. & Tietjen, T. Three-dimensional management model for Lake Mead, Nevada, Part 1: Model calibration and validation. *Lake and Reservoir Management*, 30(3), 285–302. | Reservoir |
+| Silva et al. (2014a) | Silva, C.P., Marti, C.L. & Imberger, J. Horizontal transport, mixing and retention in a large, shallow estuary: Río de la Plata. *Environmental Fluid Mechanics*, 14(5), 1173–1197. | Estuary |
+| Silva et al. (2014b) | Silva, C.P., Marti, C.L. & Imberger, J. Physical and biological controls of algal blooms in the Río de la Plata. *Environmental Fluid Mechanics*, 14(5), 1199–1228. | Estuary |
+| Silva et al. (2014c) | Silva, C.P., Marti, C.L. & Imberger, J. Mitigating the effects of high biomass algal blooms on the drinking water intakes of the city of Buenos Aires, Argentina. *Journal of Hydraulic Research*, 52(5), 705–719. | Estuary |
+| Rao et al. (2014) | Rao, Y.R., Howell, T., Watson, S.B. & Charlton, M.N. Three-dimensional modeling of the effects of changes in meteorological forcing on the thermal structure of Lake Erie. *Journal of Great Lakes Research*, 40(4), 827–838. | Lake |
+| Weinberger & Vetter (2014) | Weinberger, S. & Vetter, M. Internal waves and mixing in a mid-sized reservoir: Rappbode Reservoir, Germany. *Limnologica*, 49, 52–61. | Reservoir |
+| Abell & Hamilton (2015) | Abell, J.M. & Hamilton, D.P. Biogeochemical processes and phytoplankton nutrient limitation in the inflow transition zone of a large eutrophic lake during a summer rain event. *Ecohydrology*, 8(2), 243–262. | Lake |
+| Rossel & de la Fuente (2015) | Rossel, V. & de la Fuente, A. Assessing the link between environmental flow, hydropeaking operation and water quality of reservoirs. *Ecological Engineering*, 85, 26–38. | Reservoir |
+| Schwalb et al. (2015) | Schwalb, A.N., Bouffard, D., Boegman, L., León, L., Winter, J.G., Molot, L.A. & Smith, R.E.H. 3D modelling of dreissenid mussel impacts on phytoplankton in a large lake supports the nearshore shunt hypothesis and the importance of wind-driven hydrodynamics. *Aquatic Sciences*, 77(1), 95–114. | Lake |
+| West & Lam (2015) | West, J.J. & Lam, D.C.L. A model of the three-dimensional hydrodynamics, transport and flushing in the Bay of Quinte. *Journal of Great Lakes Research*, 41(Suppl. 2), 34–48. | Estuary |
+| Gibbs et al. (2016) | Gibbs, M., Abell, J. & Hamilton, D. Wind forced circulation and sediment disturbance in a temperate lake. *New Zealand Journal of Marine and Freshwater Research*, 50(2), 209–227. | Lake |
+| Marti et al. (2016) | Marti, C.L., Imberger, J., Garibaldi, L. & Leoni, B. Using time scales to characterize phytoplankton assemblages in a deep subalpine lake during the thermal stratification period: Lake Iseo, Italy. *Water Resources Research*, 52(2), 1762–1780. | Lake |
+| Matthews et al. (2016) | Matthews, D.A., O'Donnell, S.M., Effler, S.W., Owens, E.M., Hurteau, C.A. & Prestigiacomo, A.R. Density, salinity, and entry depths of municipal wastewater in an urban lake. *Water Environment Research*, 88(11), 2059–2069. | Lake |
+| Valipour et al. (2016) | Valipour, R., León, L.F., Depew, D.C., Dove, A. & Rao, Y.R. High-resolution modeling of sediment-nutrient dynamics in Lake Erie. *Journal of Great Lakes Research*, 42(4), 1241–1254. | Lake |
+| Missaghi et al. (2017) | Missaghi, S., Hondzo, M. & Herb, W. Prediction of lake water temperature, dissolved oxygen, and fish habitat under changing climate. *Climatic Change*, 141(4), 747–757. | Lake |
+| Vilas et al. (2017a) | Vilas, M.P., Marti, C.L., Adams, M.P., Oldham, C.E. & Hipsey, M.R. Invasive macrophytes control the spatial and temporal patterns of temperature and dissolved oxygen in a shallow lake: a proposed feedback mechanism of macrophyte loss. *Frontiers in Plant Science*, 8, 2097. | Lake |
+| Vilas et al. (2017b) | Vilas, M.P., Adams, M.P., Oldham, C.E., Marti, C.L. & Hipsey, M.R. Fragment dispersal and plant-induced dieback explain irregular ring-shaped pattern formation in a clonal submerged macrophyte. *Ecological Modelling*, 363, 111–121. | Lake |
+| Weigel et al. (2017) | Weigel, D.E., Vilhena, L.C., Woods, P., Tonina, D., Tranmer, A., Benjankar, R., Marti, C.L. & Goodwin, P. Aquatic habitat response to climate-driven hydrologic regimes and water operations in a montane reservoir in the Pacific Northwest, USA. *Aquatic Sciences*, 79(4), 953–966. | Reservoir |
+| Woodward et al. (2017) | Woodward, B.L., Marti, C.L., Imberger, J., Hipsey, M.R. & Oldham, C.E. Wind and buoyancy driven horizontal exchange in shallow embayments of a tropical reservoir: Lake Argyle, Western Australia. *Limnology and Oceanography*, 62(4), 1636–1657. | Reservoir |
+| Bocaniov & Scavia (2018) | Bocaniov, S.A. & Scavia, D. Nutrient loss rates in relation to transport time scales in a large shallow lake (Lake St. Clair, USA–Canada): insights from a three-dimensional model. *Water Resources Research*, 54(6), 3825–3840. | Lake |
+| Flores-Vidal et al. (2018) | Flores-Vidal, X., González-Montes, S., Zertuche-Chanes, R., Rodríguez-Padilla, I., Marti, C.L., Imberger, J., Mejía-Trejo, A., Durazo-Arvizu, R. & Navarro-Olache, L. Three-dimensional exchange flows in a semi-enclosed bay: numerical simulations and high frequency radar observations. *Estuarine, Coastal and Shelf Science*, 210, 26–35. | Coastal |
+| Zamani et al. (2018) | Zamani, B., Koch, M., Hodges, B.R. & Fakheri-Fard, A. Pre-impoundment assessment of the limnological processes and eutrophication in a reservoir using three-dimensional modeling: Abolabbas Reservoir, Iran. *Journal of Applied Water Engineering and Research*, 6(1), 48–61. | Reservoir |
+| Copetti et al. (2020) | Copetti, D., Guyennon, N. & Buzzi, F. Generation and dispersion of chemical and biological gradients in a large-deep multi-basin lake (Lake Como, north Italy): the joint effect of external drivers and internal wave motions. *Science of The Total Environment*, 749, 141587. | Lake |
+| Zamani et al. (2020) | Zamani, B., Koch, M. & Hodges, B.R. Comparison of results from two 3D hydrodynamic models in simulating physical processes of a reservoir with complex morphology: Maroon Reservoir. *Water*, 12(3), 814. | Reservoir |
+| Zachopoulos et al. (2020) | Zachopoulos, K., Kokkos, N. & Sylaios, G. Salt wedge intrusion modeling along the lower reaches of a Mediterranean river. *Regional Studies in Marine Science*, 39, 101467. | Estuary |
+| Zinkowska-Chełminiak et al. (2020) | Zinkowska-Chełminiak, A., et al. Phytoplankton production in relation to simulated hydro- and thermodynamics during a hydrological wet year — Goczałkowice Reservoir (Poland) case study. *Ecological Indicators*, 119, 106839. | Reservoir |
+| Dresti et al. (2021) | Dresti, C., Fenocchi, A. & Copetti, D. Modelling physical and ecological processes in medium-to-large deep European perialpine lakes: a review. *Journal of Limnology*, 80(3). | Lake |
+| Nakhaei et al. (2021) | Nakhaei, N., Boegman, L., Mehdizadeh, M. & Loewen, M. Three-dimensional biogeochemical modeling of eutrophication in Edmonton stormwater ponds. *Ecological Modelling*, 456, 109684. | Stormwater pond |
+| Nyman et al. (2021) | Nyman, P., Yeates, P., Langhans, C., Noske, P.J., Peleg, N., Schärer, C., Lane, P.N., Haydon, S. & Sheridan, G.J. Probability and consequence of postfire erosion for treatability of water in an unfiltered supply system. *Water Resources Research*, 57(1), e2019WR026185. | Reservoir |
+| Ulańczyk et al. (2021) | Ulańczyk, R., Kliś, C., Łozowski, B., Babczyńska, A., Woźnica, A., Długosz, J. & Wilk-Woźniak, E. Phytoplankton production in relation to simulated hydro- and thermodynamics during a hydrological wet year — Goczałkowice Reservoir (Poland) case study. *Ecological Indicators*, 121, 106991. | Reservoir |
+| Yang et al. (2022) | Yang, P., Chua, L.H., Irvine, K.N., Nguyen, M.T. & Low, E.W. Impacts of a floating photovoltaic system on temperature and water quality in a shallow tropical reservoir. *Limnology*, 23(3), 441–454. | Reservoir |
+| Elbagoury et al. (2023) | Elbagoury, D.H., Boegman, L. & Rao, Y.R. Modeling river plume dynamics in a large wind-forced embayment. *Journal of Hydraulic Engineering*, 149(4), 05023001. | Coastal embayment |
+| Ghane & Boegman (2023) | Ghane, A. & Boegman, L. The dissolved oxygen budget of a small Canadian Shield lake during winter. *Limnology and Oceanography*, 68(1), 265–283. | Lake |
+| Lin et al. (2023) | Lin, S., Boegman, L., Jabbari, A., Valipour, R. & Zhao, Y. Observation and parameterization of bottom shear stress and sediment resuspension in a large shallow lake. *Earth and Space Science*, 10(6), e2022EA002786. | Lake |
+| Rao et al. (2023) | Rao, Y.R., Valipour, R., Fong, P., Binding, C., Zastepa, A. & Pascoe, T. Application of a three-dimensional ecological model to develop nutrient management plans for Lake of the Woods. *Journal of Great Lakes Research*, 49(1), 97–111. | Lake |
+| Wang et al. (2023) | Wang, Q., Nakhaei, N. & Boegman, L. Calibration versus computation: comparison between 1D and 3D phytoplankton simulations in western Lake Erie. *Aquatic Ecosystem Health & Management*, 26(4), 76–86. | Lake |
+| Kim & Chung (2025) | Kim, D. & Chung, S.W. Enhancing harmful algal bloom predictions through integrated modeling of turbidity and nutrient dynamics in monsoon climate reservoirs. *Journal of Environmental Management*, 381, 125291. | Reservoir |
+| Yajima & Yoshioka (2025) | Yajima, H. & Yoshioka, Y. Response of interconnected estuarine lakes to sea-level rise and large hydrological structures. *Journal of Hydrology: Regional Studies*, 59, 102432. | Estuary |
+| van der Nagel et al. (2025) | van der Nagel, C., Clements, E., Wilkerson, C., Hannoun, D. & Tietjen, T. Impact of drought on de facto reuse and water quality in Lake Mead: insights from hydrodynamic modeling versus machine learning. *Environmental Modelling & Software*, 106649. | Reservoir |
+| Stewart et al. (2025) | Stewart, S.D., Hamilton, D.P., Baisden, W.T., Verburg, P., Muraoka, K., Roberts, D.C., Hicks, B.J., Duggan, I.C. & Donovan-Pereira, N. Hypolimnetic nutrient subsidies to surface waters of a large lake: a coupled hydrodynamic modelling and nitrogen isotope field assessment. *Ecosystems*, 28(5), 52. | Lake |
+| Zachopoulos et al. (2026) | Zachopoulos, K., Kokkos, N., Elmasides, C., Melidis, P. & Sylaios, G. A coupled hydrodynamic–energy production model for optimal salinity gradient energy plant siting in the Strymon River estuary, Greece. *Applied Sciences*, 16(3), 1332. | Estuary |
+
+: Journal publications using ELCOM or ELCOM-CAEDYM. {#tbl-publications}
+
+:::
+
+## Reports and Conference Papers
+
+::: {style="font-size: 0.8em;"}
+
+| Reference | Application |
+|-----------|-------------|
+| Hodges, B.R. (2000). Numerical Techniques in CWR-ELCOM. Centre for Water Research, University of Western Australia, Technical Report WP 1422-BH. | Technical report |
+| Hodges, B.R. & Dallimore, C. (2006). *Estuary, Lake and Coastal Ocean Model: ELCOM Science Manual v2.2.* Centre for Water Research, University of Western Australia. | Technical manual |
+| Hodges, B.R. & Dallimore, C. (2006). *Estuary, Lake and Coastal Ocean Model: ELCOM User Guide.* Centre for Water Research, University of Western Australia. | User guide |
+| Hannoun, I., List, E.J., Kavanagh, K.B., Chiang, W.L., Ding, L., Preston, A., Karafa, D. & Rackley, I. (2006). Use of ELCOM and CAEDYM for water quality simulation in Boulder Basin. In *WEFTEC 2006* (pp. 3943–3970). Water Environment Federation. | Reservoir |
+| Franco Velásquez, J.D. (2011). Modelación de la estructura térmica de un embalse ramificado mediante el análisis de los procesos físicos gobernantes: aplicación al embalse multipropósito Riogrande (in Spanish). Doctoral dissertation. | Reservoir |
+| Hipsey, M.R., Salmon, S., Mosley, L., Barnett, L. & Frizenschaf, J. (2011). Development of a 3-D hydro-geochemical model to assess water quality and acidification risk in the Murray Lower Lakes, South Australia. *MSSANZ*, Perth. | Lake |
+| León, L.F., Lam, D.C.L., Schertzer, W.M. & Swayne, D.A. (2006). Lake Erie hypoxia simulations with ELCOM-CAEDYM. *Proc. 3rd Biennial Meeting of the International Environmental Modelling and Software Society (IEMSs)*, Burlington, Vermont. | Lake |
+| Njuguna, H., Romero, J.R. & Khisa, P. (2006). The effect of turbid inflows into Winam Gulf, Lake Victoria: a 3D modeling study with ELCOM-CAEDYM. In: Odada, E. & Olago, D.O. (Eds.) *Proceedings of the 11th World Lakes Conference*, Vol. 2, 90–94, Nairobi, Kenya. | Lake |
+| Yeates, P.S., Okely, P.N., Dallimore, C., Antenucci, J., Hipsey, M. & Imberger, J. (2007). Three-dimensional modelling of a seawater desalination plant discharge into Cockburn Sound, Western Australia. *Proc. 4th International Conference on Asian and Pacific Coasts (APAC 2007)*, 811–814. | Coastal embayment |
+| Harris, J.E., Antenucci, J.P., Okely, P.N., Mills, R. & Yeates, P.S. (2009). Three-dimensional hydrodynamic modelling of a coastal embayment for multiple use industrial discharge and infrastructure development. In *Proceedings of the International Congress on Modelling and Simulation (MODSIM09)*, Cairns, Australia (pp. 4163–4169). | Coastal embayment |
+| Hidalgo, M.A. (2009). Hydrodynamic modeling of the incidence of artificial destratification in the San Roque reservoir, Córdoba (in Spanish). Thesis, FCEFyN-UNC, Universidad Nacional de Córdoba. | Reservoir |
+| Imam, Y.E., Laval, B., Lim, D. & Slate, G. (2009). Summertime inter-hypolimnetic thermal differences in a small multibasin lake. In *Proceedings of the 13th International Workshop on Physical Processes in Natural Waters*, Palermo, Italy (pp. 1–4). | Lake |
+| Merma, M. (2023). Hydrodynamics and discharge of the Taboada emissary in the Bay of Callao. Master's Thesis, National University of San Marcos, Lima, Peru. | Coastal |
+| Ng, S.M.Y. (2011). Physical and biological controls on the spatial distribution of phytoplankton in a large lake. PhD Thesis, University of Western Australia. | Lake |
+| Scanlon, J.A. (2010). Effects of grid resolution in a three-dimensional hydrostatic model: modeling field observations. Thesis, Iowa State University. | Lake |
+| Silva, C.P. (2014). Understanding transport and mixing processes to mitigate detrimental effects of algal blooms in a large shallow estuary. PhD Thesis, University of Western Australia. | Estuary |
+| Zhang, Z. (2011). Three-dimensional modeling of wave-driven physical and biogeochemical processes in lakes and coral reefs. PhD Thesis, University of Western Australia. | Lake |
+| Woodward, B. (2025). Wind and buoyancy driven horizontal exchange in shallow embayments of a tropical lake: sensitivity to surface meteorology and presence of macrophytes. PhD Thesis, University of Western Australia. | Lake |
+
+: Reports and conference papers related to ELCOM or ELCOM-CAEDYM. {#tbl-grey-literature}
+
+:::

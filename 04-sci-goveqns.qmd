@@ -1,0 +1,80 @@
+# Governing Hydrodynamic Equations and Models {#sec-goveqns}
+
+The governing equations and fundamental models used for three-dimensional transport and surface thermodynamics in ELCOM are summarized below. The transport equations are the unsteady Reynolds-averaged Navier-Stokes (RANS) and scalar transport equations using the Boussinesq approximation and neglecting the non-hydrostatic pressure terms. The free surface evolution is governed by an evolution equation developed by a vertical integration of the continuity equation applied to the Reynolds-averaged kinematic boundary condition.
+
+The equations in the table are:
+
+*Transport of Momentum:*
+$$
+\begin{aligned}
+\frac{\partial U_\alpha}{\partial t}+U_j\frac{\partial U_\alpha}{\partial x_j} &= -g\left\{ \frac{\partial \eta}{\partial x_\alpha} + \frac{1}{\rho_0}\frac{\partial}{\partial x_a} \int_z^\eta \rho^\prime dz \right\} \\
+&\quad +\frac{\partial}{\partial x_1} \left\{ \nu_1\frac{\partial U_\alpha}{\partial x_1}\right\}+\frac{\partial}{\partial x_2} \left\{ \nu_2\frac{\partial U_\alpha}{\partial x_2}\right\}+\frac{\partial}{\partial x_3} \left\{ \nu_3\frac{\partial U_\alpha}{\partial x_3}\right\} \\
+&\quad -\epsilon_{\alpha\beta}fU_\beta
+\end{aligned}
+$$ {#eq-momentum}
+
+*Continuity:*
+$$
+\frac{\partial U_j}{\partial x_j}=0
+$$ {#eq-continuity}
+
+*Momentum Boundary Conditions - Free Surface:*
+$$
+\frac{\partial U_\alpha}{\partial x_3}=0
+$$ {#eq-freeSurfBC}
+
+*Momentum Boundary Conditions - Bottom and Sides:*
+$$
+U_i=0
+$$ {#eq-botSidesBC}
+
+*Transport of Scalars:*
+$$
+\frac{\partial C}{\partial t}+\frac{\partial }{\partial x_j}(CU_j)=\frac{\partial}{\partial x_1} \left\{ \kappa_1\frac{\partial C}{\partial x_1}\right\}+\frac{\partial}{\partial x_2} \left\{ \kappa_2\frac{\partial C}{\partial x_2}\right\}+\frac{\partial}{\partial x_3} \left\{ \kappa_3\frac{\partial C}{\partial x_3}\right\}+S_c
+$$ {#eq-transportScalars}
+
+*Scalar Boundary Conditions:*
+$$
+\frac{\partial C_\alpha}{\partial x_j}=0
+$$ {#eq-scalarBC}
+
+*Free-Surface Evolution:*
+$$
+\frac{\partial \eta}{\partial t}=-\frac{\partial }{\partial x_\alpha}\int_0^\eta u_\alpha dz
+$$ {#eq-surfEvol}
+
+*Free-Surface wind shear:*
+$$
+\left ( u_* \right )^2_\alpha=C_{10}\frac{\rho_{air}}{\rho_{water}} \left( W_\beta W_\beta\right)^{1/2}W_\alpha
+$$ {#eq-surfWind}
+
+*Momentum input by wind:*
+$$
+\frac{\partial U_\alpha}{\partial t}=\frac{(U_*)^2_\alpha}{h}
+$$ {#eq-momWind}
+
+: Summary of Governing Hydrodynamic equations used in ELCOM. {#tbl-goveqns}
+
+The unsteady RANS equations are developed by filtering the unsteady Navier-Stokes equations over a time period that is long relative to sub-grid scale processes, but small relative to the unsteady grid-scale processes that are of interest. In an unsteady RANS numerical method the time scale of the averaging is the time step used in advancement of the evolution equations. Thus, the maximum time step for a given grid resolution is fundamentally limited by the grid scale physics, regardless of the numerical method. This is an important point that is lost when "unconditionally stable" numerical methods are discussed*: the stability of the method at a large time step is irrelevant if the size of the time step implies a temporal averaging scale that encompasses grid-scale motions.*
+
+In most numerical approaches, the sub-time scale nonlinear terms $\overline{u_i^\prime u_j^\prime}$ are represented by an eddy viscosity $\nu_{jk}$ defined in a tensor form as:
+
+$$
+\nu_{jk}\frac{\partial u_i}{\partial x_k}=\delta_{jk}\nu\frac{\partial u_i}{\partial x_k}-\overline{u_i^\prime u_j^\prime}
+$$ {#eq-eddyViscosity}
+
+where $\delta$ is the molecular viscosity, $u_i^\prime$ are the sub-time-scale velocity fluctuations, and the overbar indicates the Reynolds-averaging filter. The off-diagonal eddy-viscosity terms are generally set to zero and the molecular viscosity is ignored so that we obtain:
+
+$$
+\nu_1\frac{\partial u_i}{\partial x_1}=\overline{u_i^\prime u_1^\prime};\quad \nu_2\frac{\partial u_i}{\partial x_2}=\overline{u_i^\prime u_2^\prime};\quad \nu_3\frac{\partial u_i}{\partial x_3}=\overline{u_i^\prime u_3^\prime}
+$$ {#eq-eddyViscComponents}
+
+In ELCOM, eddy-viscosity is used to represent the horizontal turbulence closure. In the vertical direction, ELCOM can apply either a vertical eddy viscosity or a mixed-layer model discussed in @sec-mixing.
+
+The free-surface evolution is governed by vertical integration of the continuity equation for incompressible flow from the bottom (b) of the water column to the free surface (h) applied to the kinematic boundary condition [e.g. @Kowa93]. To derive the Reynolds-averaged free-surface evolution the Reynolds-averaging filter must be applied to the kinematic boundary condition, resulting in
+
+$$
+\frac{\partial \eta}{\partial t}=U_3-U_\alpha \frac{\partial \eta}{\partial x_\alpha}-\frac{\partial}{\partial x_\alpha}(\overline{u_\alpha^\prime h^\prime})
+$$ {#eq-surfEvolRA}
+
+Note that the sub-time scale correlation term $(\overline{u_\alpha^\prime h^\prime})$ has not been discussed in the literature as the Reynolds-averaging filter has not been rigorously applied to boundary conditions; the equivalent term in large-eddy simulation is discussed in [@Hodg99]. The modeling of this term remains an unexplored area of free-surface flows; thus we are forced to assume that it is either small or only of local importance. In the former case it is readily neglected. In the latter case, the present use of implicit discretization of the free-surface solution is numerically diffusive at high barotropic CFL conditions, so local barotropic effects are not well-resolved. Thus, neglecting the subtime-scale nonlinear effects is justified by our focus on basin-scale baroclinic motions. However, we can speculate that the nonlinear correlation $(\overline{u_\alpha h_\alpha})$ might be both large and non-local where nonlinear sub-basin-scale surface waves enter shallow or restricted waters. The neglect of this term is predicated on the assumption that sub-time scale nonlinear effects do not significantly effect the local mean free-surface height. In general, this is a good assumption for the resolution typically achieved in simulations of lakes and estuaries, and will be used herein. The free surface boundary condition is an approximate form of the dynamic boundary condition that neglects: dynamic pressure, local horizontal variation of the wind, updrafts, downdrafts and surface tension. This is appropriate for lake simulations using the hydrostatic approximation.

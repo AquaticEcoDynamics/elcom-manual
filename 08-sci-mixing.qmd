@@ -1,0 +1,340 @@
+# Vertical Mixing {#sec-mixing}
+
+## Overview
+
+ELCOM models the vertical Reynolds stress terms (and thus the turbulent fluxes) in momentum and transport equations with a 3D mixed-layer approach derived from the mixing energy budgets developed for 1D lake modeling [@Imbe81; @Spig86; @Imbe90]. Whereas 1D mixed-layer models are typically Lagrangian, regridding the vertical domain to match the number of mixed regions in the water column, the present 3D method uses an Eulerian fixed-grid framework as Lagrangian 3D methods typically obtain highly skewed grid cells when horizontal gradients in mixing occur. The present model applies a separate 1D mixed-layer model to each water column to provide vertical turbulent transport, whereas 3D transport of TKE is used to provide the dynamic effect of 3D motions on the TKE available for vertical mixing.
+
+## Energy Terms in the Mixed Layer Model
+
+To understand the present mixed-layer approach, it is useful to qualitatively define some of the energy fluxes. First, we can characterize four energy terms:
+
+1. The TKE available for mixing, $TKE_A$
+2. The TKE required for mixing, $E_{req}$
+3. The TKE dissipated, $E_{\epsilon}$ and
+4. The residual mixing energy, $E_M$.
+
+Of these, only the last, which is effectively the sum of the others at the end of the mixing algorithm, is considered a transported variable. Second, it is useful to characterize two types of mixing events in a stratified fluid:
+
+1. Convective mixing of unstable density gradients that decreases the potential energy of the fluid and releases TKE
+2. Mixing of stable density gradients that dissipates TKE and increases potential energy.
+
+The former is one of the TKE sources for mixing ($TKE_A$), whereas the latter is exactly the local energy required to mix ($E_{req}$). These two density gradient terms are computed from the vertical buoyancy scale, with the magnitude of a negative value providing the convective contribution to $TKE_A$ and a positive value providing $E_{req}$. The distinction between the positive and negative forms of the buoyancy scale is critical to the model, as an unstable density gradient will always create $TKE_A$, whereas a stable gradient ($E_{req} > 0$) will consume $TKE_A$ only when $TKE_A \ge E_{req}$. Finally, we need a definition for a 'mixed layer'; this is taken to be a set of vertically contiguous grid cells that share the same density, scalar concentrations, and grid-scale velocity. According to this definition, the discrete version of a linear stratification with seven grid cells shown in @fig-unstable(a) is a system with seven mixed layers, whereas the system in @fig-unstable(c) has the same number of vertical grid cells but only four mixed layers. Note that in this mixed-layer model, the layers do not have a dynamical existence outside the mixing algorithm and do not carry forward from time step to time step. That is, when the mixing routine is called, the layers are computed from the present density structure and mixing energy without explicit reference to any prior layer structure.
+
+![Development of a mixed layer due to surface cooling and unstable stratification. (a) Stable stratification at start of time step; (b) surface cooling creates unstable density profile; (c) unstable grid cells have been mixed.](images/unstableMixing.pdf){#fig-unstable}
+
+The present approach is considerably simpler than many 1D models [e.g. @Spig86] in that differential equations coupling layer thickness, entrainment rates, and heat transfer through the surface are not used. The fundamental presumption of our modeling approach is that the vertical grid resolution for practical 3D lake models is too coarse to adequately compute the solution of differential equations for mixed-layer evolution or heat transfer with gradient boundary conditions. Indeed, the need to model with coarse vertical grid resolution was the impetus for abandoning the vertical eddy-diffusion differential equations generally used for mixing. The surface thermodynamics in ELCOM enter the system as discrete changes to the temperature structure in the upper grid cells rather than as boundary conditions on transport or mixing equations. At the beginning of a time step, nonpenetrative heat flux (e.g., long-wave radiation, convective heat transfer) is added to the uppermost grid cell while solar radiation is added to the water column using exponential decay over depth. The heat transfer changes the density stratification, either providing $TKE_A$ (unstable density gradients produced by net cooling) or increasing $E_{req}$ (stable stratification produced by net warming). Once the new density field is calculated, the mixing process is modeled on a layer-by-layer basis through each $(i, j)$ water column by comparing the available mixing energy ($TKE_A$) from convective overturns, shear production, wind stirring, and TKE storage ($E_{M}$) to the potential energy increase ($E_{req}$) required to mix a grid cell up into the mixed layer above itself. This mixing process is explained in the following section.
+
+## A Mixing Timestep
+
+A mixing model timestep for each column of water can be broken down into the following steps:
+
+1. Calculate wind energy input, $E_{wind}$
+2. If the TBBL boundary condition is being used calculate bottom energy input, $E_{drag}$
+3. For each column cycle from surface cell to bottom cell
+4. Calculate generation of TKE by shear, $E_{shear}$
+5. Calculate energy required for mixing, $E_{req}$
+6. Calculate total energy available if two cells were totally mixed, $TKE_{mixed}$
+7. Calculate time estimate for total mixing $T_{TKE}$
+8. If unstable calculate time estimate based on convective overturn $T_{conv}$
+9. Calculate mixing fraction $\eta_{f}$
+10. If there is enough energy then mix cells
+11. End of cycle from surface cell to bottom cell
+12. Dissipate excess mixing energy
+
+### Wind Energy {#sec-wind-energy}
+
+Wind generation of TKE is parameterised as
+
+$$
+E_{wind} =  \frac{1}{2} C_n^{3} \, dt \, u_{*}^{3}
+$$ {#eq-wind-tke}
+
+where $u_{*}$ is the wind shear velocity given by
+
+$$
+u_{*} = \sqrt{\frac{C_D^{wind}\rho_{air}}{\rho_0}}U_{wind}
+$$ {#eq-ustar}
+
+and the mixing coefficient $C_n$ is set to 1.33. The wind energy for each column is added to the available TKE of the surface cell.
+
+$$
+TKE_{surf}=TKE_{surf}+E_{wind}
+$$ {#eq-tke-surf}
+
+### Bottom Energy {#sec-bottom-energy}
+
+If the DEFAULT_BC is set to TBBL then TKE is also generated due to drag on the bottom. This energy is parameterised as
+
+$$
+E_{drag} = C_{b}(|u_{bot}|+|v_{bot}|)^{3/2} \, dt
+$$ {#eq-bottom-drag}
+
+the mixing coefficient $C_b$ is set to 2.2. The bottom energy for each column is added to the available TKE of the bottom cell.
+
+$$
+TKE_{bot}=TKE_{bot}+E_{drag}
+$$ {#eq-tke-bot}
+
+### Begin Cycle from Surface to Bottom {#sec-cycle}
+
+Once the external energy sources have been added to the surface and bottom cells the main mixing routine is called. This routine loops from the surface cell to the bottom cell and generates the mixing layers for the column.
+
+The loop first sets the surface cell ($k_{surf}$) to a mixed layer and attempts to mix the cell $k_{surf}-1$ into this mixed layer. If there is enough energy to mix the cells and $\Delta t$ is large enough for the cell to be fully mixed ($\eta_f = 1$) then the cells are mixed, $k_{surf}-1$ is added to the mixed layer and then we attempt to mix $k_{surf}-2$ with the mixed layer. If there is not enough energy for mixing to occur or $\eta_f < 1$ then the mixed layer is closed, ($k_{surf} - 1$) is set to a mixed layer and energy budgets are computed for $k_{surf}-2$. If there is enough energy for mixing to occur but the mixing fraction is $<1$ then partial mixing occurs.
+
+### Shear Energy {#sec-shear-energy}
+
+Shear generation of TKE is parameterised as
+
+$$
+E_{shear}=\frac{1}{2}C_{S}S^{2}dz_l
+$$ {#eq-shear}
+
+the mixing coefficient $C_s$ is set to 0.15 and $S$ is the shear defined as
+
+$$
+S^{2}=(U_{ml}-U_{l})^{2}+(V_{ml}-V_{l})^{2}
+$$ {#eq-shear-def}
+
+subscripts $ml$ refer to values in the mixed layer and subscripts $l$ refer to the cell directly below the mixed layer, i.e. the cell that we are checking to see if it will become part of the mixed layer. Shear energy is stored in the cell that is being mixed into the mixed layer.
+
+### Potential Energy {#sec-potential-energy}
+
+The energy required to mix the current cell into the mixed layer is given by
+
+$$
+E_{req}=-g^\prime \, dz_{l} \, dz_{ml}
+$$ {#eq-ereq}
+
+where the reduced gravity term is given by
+
+$$
+g^\prime=\frac{1}{2}g(\rho_{ml}-\rho_{l})\frac{(dz_{ml} \, dz_{l})}{\rho_{ml}(dz_{ml}+dz_{l})\rho_{l}}
+$$ {#eq-gprime}
+
+$dz_{ml}$ is the mixed layer depth given by the sum of all the $dz$ of cells in the mixed layer.
+
+### Total Available TKE Energy {#sec-total-tke}
+
+To determine a timescale for the mixing we first determine the total amount of energy if the cell of interest is completely mixed into the mixing layer. If the density profile is unstable then energy generated from convective overturns is added. The total $TKE$ is then
+
+$$
+TKE_{mixed}=
+\begin{cases}
+TKE_{ml}+TKE_{l}+E_{shear} & \text{if } E_{req}\ge 0 \\
+TKE_{ml}+TKE_{l}+E_{shear}-C_{C}E_{req} & \text{if } E_{req}< 0
+\end{cases}
+$$ {#eq-tke-mixed}
+
+the mixing coefficient $C_c$ is set to 0.2. The $TKE$ of the mixed layer ($TKE_{ml}$) and the cell ($TKE_{l}$) include energy from wind stirring and bottom drag as detailed above.
+
+### Timescale for Mixing due to Turbulence {#sec-timescale-turb}
+
+To try and limit the time step dependence on mixing we introduce a timescale for the mixing to occur. If this timescale is larger than the timestep used then partial mixing occurs. The time scale due to turbulent mixing is given by
+
+$$
+T_{turb}=C_{TT} \, dz_{l}\sqrt{\frac{C_{s}(dz_{ml}+dz_{l})}{2 \, TKE_{mixed}}}
+$$ {#eq-t-turb}
+
+the coefficient $C_{TT}$ is set to 50.0.
+
+### Timescale for Mixing due to Convective Overturn {#sec-timescale-conv}
+
+If the density profile is unstable then we introduce a timescale for overturning.
+
+$$
+T_{conv}=C_{TC} \, dz_{l}\sqrt{\frac{dz_{l}}{g^\prime}}
+$$ {#eq-t-conv}
+
+If the time scale for overturning is shorter than the timescale for mixing due to turbulence then we use this timescale to calculate our mixing fraction.
+
+### Calculate Mixing Fraction {#sec-mixing-fraction}
+
+The mixing fraction is simply the timestep $\Delta t$ divided by the shorter of the two timescales. The mixing fraction is limited to 1.0.
+
+$$
+\eta_{f}=\min\left(\frac{\Delta t}{\min(T_{TKE},T_{conv})},1.0 \right)
+$$ {#eq-eta-f}
+
+### Energy Budget {#sec-energy-budget}
+
+Before any mixing takes place the mixing routine checks to see if there is sufficient $TKE$ available to overcome the potential energy. If $TKE_{mixed} \ge \eta_f E_{req}$ the mixing takes place using the calculated mixing fraction. If $TKE_{mixed}<E_{req}$ no mixing occurs, the available $TKE$ is dissipated completely and the mixed layer is closed. For complete mixing any excess $TKE$ (i.e. $TKE_{mixed}-E_{req}$) is stored in the mixed layer and is included in the energy budget for the next layer. For partial mixing excess $TKE$ is stored proportionally by volume in the mixed layer and the cell being mixed.
+
+### Mixing of Cell into Mixed Layer {#sec-cell-mixing}
+
+The mixing of cells depends on whether the cells are fully or partially mixed. If $\eta_{f} = 1$ all scalar and velocity values within the mixed layer are equal. Scalar concentrations are mixed by volume such that
+
+$$
+C_{ml}^{\prime}=\frac{C_{ml} \, dz_{ml}+C_l \, dz_l}{dz_{ml}+dz_l}
+$$ {#eq-scalar-mix}
+
+where $C_{ml}$ is the scalar concentration of the mixed layer and $C_l$ is the scalar concentration of the cell being mixed. The prime indicates the value after mixing.
+
+Velocities are mixed by mass such that
+
+$$
+U_{ml}^{\prime}=\frac{\rho_{ml}U_{ml} \, dz_{ml}+\rho_{l}U_l \, dz_l}{\rho_{ml} \, dz_{ml}+\rho_{l} \, dz_l}
+$$ {#eq-mixByMass}
+
+For partial mixing only the cell being mixed and the cell at the bottom of the mixed layer are modified.
+
+$$
+C_k=
+\begin{cases}
+C_{ml} & k=k_l+2:k_{ml-top} \\
+(1-\eta_f )C_{ml}+\eta_f \frac{C_{ml} \, dz_{k}+C_l \, dz_l}{dz_{k}+dz_l} & k=k_l+1 \\
+(1-\eta_f )C_{l}+\eta_f\frac{C_{ml} \, dz_{k+1}+C_l \, dz_l}{dz_{k+1}+dz_l} & k=k_l
+\end{cases}
+$$ {#eq-partial-mix}
+
+where $C_k$ is the concentration of layer $k$ in the column, $k_l$ refers to the layer of the cell being mixed and $k_{ml-top}$ is the layer of the top of the mixed layer. An analogous expression to @eq-mixByMass is used for partial mixing of velocity.
+
+### End of Cycle
+
+Once the bottom cell is reached the cycle is concluded.
+
+### Dissipation of Energy {#sec-dissipation}
+
+After the mixing of cells has concluded excess energy is dissipated according to
+
+$$
+TKE=TKE-\frac{1}{2}C_{\epsilon} \Delta t \left (\frac{TKE}{dz} \right )^{3/2}
+$$ {#eq-dissipation}
+
+where the dissipation coefficient $C_{\epsilon}$ is set to 1.15. Any $TKE$ left after dissipation is then transported by the scalar transport routine before becoming available for mixing in the following timestep.
+
+## Ri Derivation
+
+We are attempting to mix a cell below the mixed layer (of thickness $\Delta z_l$) into the mixed layer (of thickness $\Delta z_{ml}$).
+
+Mixing fraction $F_m$ is defined as the fraction of the lower cell that is to be mixed into the mixed layer.
+
+The combined potential energy of the mixed layer and the cell to be mixed before mixing is given by
+
+$$
+PE=g\rho_l \Delta z_l \frac{\Delta z_l}{2}+g\rho_{ml} \Delta z_{ml} \left ( \Delta z_l+\frac{\Delta z_{ml}}{2} \right )
+$$ {#eq-PEbefore}
+
+The combined potential energy of the mixed layer and the cell to be mixed after mixing is given by
+
+$$
+PE^*=g\rho_l^* \Delta z_l \frac{\Delta z_l}{2}+g\rho_{ml}^* \Delta z_{ml} \left ( \Delta z_l+\frac{\Delta z_{ml}}{2} \right )
+$$
+
+where the $*$ superscripts indicate values after mixing. If we note that
+
+$$
+\rho_{ml}^*= \frac{\Delta z_{ml}\rho_{ml}+F_m\Delta z_{l}\rho_{l}}{\Delta z_{ml}+F_m\Delta z_{l}}
+$$
+
+and
+
+$$
+\rho_{l}^*= (1-F_m)\rho_{l}+F_m\rho_{ml}^*
+$$
+
+$$
+\rho_{l}^*= (1-F_m)\rho_{l}+\frac{F_m\Delta z_{ml}\rho_{ml}+F_m^2\Delta z_{l}\rho_{l}}{\Delta z_{ml}+F_m\Delta z_{l}}
+$$
+
+Then
+
+$$
+PE^*=g\left[ (1-F_m)\rho_{l}+\frac{F_m\Delta z_{ml}\rho_{ml}+F_m^2\Delta z_{l}\rho_{l}}{\Delta z_{ml}+F_m\Delta z_{l}} \right] \Delta z_l \frac{\Delta z_{l}}{2}+g\left[  \frac{\Delta z_{ml}\rho_{ml}+F_m\Delta z_{l}\rho_{l}}{\Delta z_{ml}+F_m\Delta z_{l}}\right] \Delta z_{ml} \left ( \Delta z_l+\frac{\Delta z_{ml}}{2} \right )
+$$
+
+$$
+PE^*=
+\frac{g}{\Delta z_{ml}+F_m\Delta z_{l}}\left[
+\begin{array}{l}
+\left[ (1-F_m)\rho_{l}(\Delta z_{ml}+F_m\Delta z_{l})+F_m\Delta z_{ml}\rho_{ml}+F_m^2\Delta z_{l}\rho_{l} \right] \Delta z_l \frac{\Delta z_{l}}{2}
+\\
++\left[  \Delta z_{ml}\rho_{ml}+F_m\Delta z_{l}\rho_{l}\right] \Delta z_{ml} \left ( \Delta z_l+\frac{\Delta z_{ml}}{2} \right )
+\end{array}
+\right]
+$$
+
+$$
+PE^*=
+\frac{g}{\Delta z_{ml}+F_m\Delta z_{l}}\left[
+\begin{array}{l}
+\left[ (\rho_{l}-F_m\rho_{l})(\Delta z_{ml}+F_m\Delta z_{l})+F_m\Delta z_{ml}\rho_{ml}+F_m^2\Delta z_{l}\rho_{l} \right] \Delta z_l \frac{\Delta z_{l}}{2}
+\\
++\left[  \Delta z_{ml}\Delta z_{ml}\rho_{ml}+F_m\Delta z_{l}\Delta z_{ml}\rho_{l}\right]  \left ( \Delta z_l+\frac{\Delta z_{ml}}{2} \right )
+\end{array}
+\right]
+$$
+
+$$
+PE^*=
+\frac{g}{\Delta z_{ml}+F_m\Delta z_{l}}\left[
+\begin{array}{l}
+\left[ \rho_{l}\Delta z_{ml}-F_m\rho_{l}\Delta z_{ml}+\rho_{l}F_m\Delta z_{l}-F_m^2\rho_{l}\Delta z_{l}+F_m\Delta z_{ml}\rho_{ml}+F_m^2\Delta z_{l}\rho_{l} \right] \Delta z_l \frac{\Delta z_{l}}{2}
+\\
++\left[  \Delta z_{ml}\Delta z_{ml}\rho_{ml}+F_m\Delta z_{l}\Delta z_{ml}\rho_{l}\right]  \left ( \Delta z_l+\frac{\Delta z_{ml}}{2} \right )
+\end{array}
+\right]
+$$
+
+$$
+PE^*=
+\frac{g}{\Delta z_{ml}+F_m\Delta z_{l}}\left[
+\begin{array}{l}
+\left[ \rho_{l}\Delta z_{ml}-F_m\rho_{l}\Delta z_{ml}+\rho_{l}F_m\Delta z_{l}+F_m\Delta z_{ml}\rho_{ml} \right] \Delta z_l \frac{\Delta z_{l}}{2}
+\\
++\left[  \Delta z_{ml}\Delta z_{ml}\rho_{ml}+F_m\Delta z_{l}\Delta z_{ml}\rho_{l}\right]  \left ( \Delta z_l+\frac{\Delta z_{ml}}{2} \right )
+\end{array}
+\right]
+$$
+
+$$
+PE^*=
+\frac{g}{\Delta z_{ml}+F_m\Delta z_{l}}\left[
+\begin{array}{l}
+\frac{1}{2}\rho_{l}\Delta z_{l}^2\Delta z_{ml}
+-\frac{1}{2}F_m\rho_{l}\Delta z_{l}^2\Delta z_{ml}
++\frac{1}{2}F_m\rho_{l}\Delta z_{l}^3
++\frac{1}{2}F_m\rho_{ml}\Delta z_{l}^2\Delta z_{ml}
+\\
++\rho_{ml}\Delta z_l\Delta z_{ml}^2
++\frac{1}{2}\rho_{ml}\Delta z_{ml}^3
++F_m\rho_{l}\Delta z_{l}^2\Delta z_{ml}
++\frac{1}{2}F_m\rho_{l}\Delta z_{l}\Delta z_{ml}^2
+\end{array}
+\right]
+$$
+
+$$
+PE^*=
+\frac{g}{\Delta z_{ml}+F_m\Delta z_{l}}\left[
+\begin{array}{l}
+\frac{1}{2}\rho_{l}\Delta z_{l}^2\Delta z_{ml}
++\frac{1}{2}F_m\rho_{l}\Delta z_{l}^2\Delta z_{ml}
++\frac{1}{2}F_m\rho_{l}\Delta z_{l}^3
++\frac{1}{2}F_m\rho_{ml}\Delta z_{l}^2\Delta z_{ml}
+\\
++\rho_{ml}\Delta z_l\Delta z_{ml}^2
++\frac{1}{2}\rho_{ml}\Delta z_{ml}^3
++\frac{1}{2}F_m\rho_{l}\Delta z_{l}\Delta z_{ml}^2
+\end{array}
+\right]
+$$
+
+## Numerical Diffusion Filter {#sec-filter}
+
+This section describes a technique for maintaining vertical density stratification over seasonal timescales. The technique involves estimating the numerical diffusion of mass occurring in each time-step and applying a compensating correction to the density field. Since advection does not change background potential energy, $E_b$ [@Wint95], it follows that changes in $E_b$ during advection must be entirely due to numerical diffusion (in the absence of inflows/outflows). As ELCOM employs an operator splitting solution of the scalar transport equation, $E_b$ can be calculated before and after advection to quantify numerical diffusion of mass. This method has two shortcomings: 1) The measure is global, thus it does not provide a spatial distribution of diffusion. 2) The current implementation does not allow inflows/outflows that affect $E_b$. The first drawback is inherent in the methodology and can only be addressed in an approximate manner, while the second drawback could be exactly removed by quantifying the buoyancy flux of inflows/outflows. In this section we concentrate on the first problem by developing a method to approximately redistribute $E_b$ for domains with no inflows/outflows. The problems associated with inflows/outflows remain a subject for further research. The contribution of this section is a methodology for using $E_b$ to reconstruct a density field that minimizes numerical diffusion. Mathematically, we desire a correction technique that satisfies:
+
+$$
+\frac{\{E_b^+\} - E_b^-}{E_b^-} < \epsilon_B
+$$ {#eq-eb-criterion}
+
+at each time-step. $E_b^-$ and $E_b^+$ are the background potential energy before and after the transport calculation respectively. The curly braces above and hereinafter represent the application of a correction technique. The threshold $\epsilon_B$ is based on the capabilities of the method and represents the minimum expected reduction in numerical diffusion. In a numerical simulation of a lake, density stratification varies smoothly and monotonically with depth and, to first order, can be characterized as two weakly stratified regions (an epilimnion and a hypolimnion), separated by a strongly stratified metalimnion. The observed effect of numerical diffusion is thickening of the metalimnion. Thus, the cumulative effect is similar to vertical diffusion from the metalimnion. To first order, mitigating numerical diffusion is achieved through an anti-diffusion vertical mass flux, which is applied herein using a sharpening filter acting vertically on the density profile in each water column.
+
+The sharpening filter was previously developed to enhance field instrument response [@Fozd85]. It is a three point recursive filter based on the inverse Z-transform of a linear response to a Heaviside step function, and is represented as follows:
+
+$$
+\{S_k\} = \frac{1-a^\prime}{1-a}(S_k-S_{k-1})+a^\prime \{S_{k-1}\}
+$$ {#eq-sharpening}
+
+where $a= e^{-\Delta z / l}$, $a^\prime= e^{-\Delta z / l^\prime}$, $\Delta z$ is the vertical grid spacing, $l$ and $l^\prime$ are sharpening and smoothing length scales respectively, $k$ is a grid cell index, $S_k$ is a series value before application of the filter, $\{S_k\}$ is a series value after application of the filter. To simulate the bi-directionality of diffusion in one dimension the filter is applied both upwards and downwards.
+
+One problem with the original sharpening filter is gradient amplification at boundaries, which creates artificial minima and maxima. Where such extrema are unstable density gradients, they must be mixed in a hydrostatic model. Where such extrema are stable density gradients, they increase the TKE required for mixing. The cumulative effects are maximum and minimum values of density beyond the original values, and distortion of mixing dynamics. To correct this effect, an endpoint limiter and gradient preservation are applied after filtering. The gradient before filtering is calculated for both the top and bottom of each water column. After filtering, top and bottom gradients are restored to pre-filter values. After gradient correction any new extrema are restored to pre-filtering values. Applying this endpoint gradient preservation and extrema limiter adversely affects mass conservation and raises the minimum practical threshold, $\epsilon_B$. Since changes per time-step are extremely small, a simple mass correction is applied to evenly remove the change in mass incurred by the filtering. The change in mass due to filtering is divided by the number of cells containing less than average mass. That change in mass per cell is then subtracted from cells containing less than average mass. By applying mass correction before the extrema limiting, no new extrema are created, and the mass redistribution has the effect of further sharpening the overall stratification.

@@ -8,7 +8,7 @@
 
 <meta name="description" content="This is a draft of the ELCOM manual.">
 
-<title>1&nbsp; Introduction – ELCOM Manual</title>
+<title>4&nbsp; Governing Hydrodynamic Equations and Models – ELCOM Manual</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,8 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./02-notation.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./05-sci-timestep.html" rel="next">
+<link href="./03-sci-intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -72,6 +72,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -84,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-intro.html">Overview</a></li><li class="breadcrumb-item"><a href="./01-intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-sci-intro.html">Science Description</a></li><li class="breadcrumb-item"><a href="./04-sci-goveqns.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Governing Hydrodynamic Equations and Models</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -126,7 +155,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-intro.html" class="sidebar-item-text sidebar-link active">
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
@@ -155,7 +184,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-sci-goveqns.html" class="sidebar-item-text sidebar-link">
+  <a href="./04-sci-goveqns.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Governing Hydrodynamic Equations and Models</span></span></a>
   </div>
 </li>
@@ -278,22 +307,15 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#the-elcom-model" id="toc-the-elcom-model" class="nav-link active" data-scroll-target="#the-elcom-model"><span class="header-section-number">1.1</span> The ELCOM model</a></li>
-  <li><a href="#conventions-and-definitions" id="toc-conventions-and-definitions" class="nav-link" data-scroll-target="#conventions-and-definitions"><span class="header-section-number">1.2</span> Conventions and definitions</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-intro.html">Overview</a></li><li class="breadcrumb-item"><a href="./01-intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-sci-intro.html">Science Description</a></li><li class="breadcrumb-item"><a href="./04-sci-goveqns.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Governing Hydrodynamic Equations and Models</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-intro" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></h1>
+<h1 class="title"><span id="sec-goveqns" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Governing Hydrodynamic Equations and Models</span></span></h1>
 </div>
 
 
@@ -310,77 +332,57 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="the-elcom-model" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="the-elcom-model"><span class="header-section-number">1.1</span> The ELCOM model</h2>
-<p>ELCOM (Estuary and Lake Computer Model) is a numerical modeling tool that applies hydrodynamic and thermodynamic models to simulate the temporal behavior of stratified water bodies with environmental forcing.</p>
-<p>The hydrodynamic simulation method solves the unsteady, viscous Navier-Stokes equations for incompressible flow using the hydrostatic assumption for pressure. Modeled and simulated processes include baroclinic and barotropic responses, rotational effects, tidal forcing, wind stresses, surface thermal forcing, inflows, outflows, and transport of salt, heat and passive scalars.</p>
-<p>Through coupling with the CAEDYM (Computational Aquatic Ecosystem DYnamics Model) water quality module, ELCOM can be used to simulate three-dimensional transport and interactions of flow physics, biology and chemistry.</p>
-<p>The hydrodynamic algorithms in ELCOM are based on the Euler-Lagrange method for advection of momentum with a conjugate-gradient solution for the free-surface height (Casulli and Cheng, 1992). Passive and active scalars (i.e., tracers, salinity and temperature) are advected using a conservative ULTIMATE QUICKEST discretization (Leonard 1991).</p>
-</section>
-<section id="conventions-and-definitions" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="conventions-and-definitions"><span class="header-section-number">1.2</span> Conventions and definitions</h2>
-<p>In this document, a number of conventions will be used. For clarity, the computational domain will generally be referred to as a “lake”. However, the simulation method is designed for applicability to estuaries and coastal ocean environments.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 19%">
-<col style="width: 80%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Term</th>
-<th>Definition</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><em>x,y,z</em> space</td>
-<td>Full Cartesian space which covers all of the bathymetry</td>
-</tr>
-<tr class="even">
-<td><em>i,j,k</em> space</td>
-<td>Discrete integer space of computational cells which covers all bathymetry</td>
-</tr>
-<tr class="odd">
-<td>land</td>
-<td>A computational cell that cannot contain water</td>
-</tr>
-<tr class="even">
-<td>open</td>
-<td>A cell used for an open boundary condition</td>
-</tr>
-<tr class="odd">
-<td>interior</td>
-<td>A cell that may contain water</td>
-</tr>
-<tr class="even">
-<td>x_rows</td>
-<td>Number of grid cells in the x direction</td>
-</tr>
-<tr class="odd">
-<td>y_columns</td>
-<td>Number of grid cells in the y direction</td>
-</tr>
-<tr class="even">
-<td>z_layers</td>
-<td>Number of grid cells in the vertical (z) direction</td>
-</tr>
-<tr class="odd">
-<td>land_value</td>
-<td>Number used in the bathymetry file to represent land cells</td>
-</tr>
-<tr class="even">
-<td>open_value</td>
-<td>Number used in the bathymetry file to represent open boundary cells</td>
-</tr>
-<tr class="odd">
-<td>dx, dy, dz</td>
-<td>Grid spacing in x, y, z directions (can be uniform or non-uniform, in meters)</td>
-</tr>
-</tbody>
-</table>
+<p>The governing equations and fundamental models used for three-dimensional transport and surface thermodynamics in ELCOM are summarized below. The transport equations are the unsteady Reynolds-averaged Navier-Stokes (RANS) and scalar transport equations using the Boussinesq approximation and neglecting the non-hydrostatic pressure terms. The free surface evolution is governed by an evolution equation developed by a vertical integration of the continuity equation applied to the Reynolds-averaged kinematic boundary condition.</p>
+<p>The equations in the table are:</p>
+<p><em>Transport of Momentum:</em> <span id="eq-momentum"><span class="math display">\[
+\begin{aligned}
+\frac{\partial U_\alpha}{\partial t}+U_j\frac{\partial U_\alpha}{\partial x_j} &amp;= -g\left\{ \frac{\partial \eta}{\partial x_\alpha} + \frac{1}{\rho_0}\frac{\partial}{\partial x_a} \int_z^\eta \rho^\prime dz \right\} \\
+&amp;\quad +\frac{\partial}{\partial x_1} \left\{ \nu_1\frac{\partial U_\alpha}{\partial x_1}\right\}+\frac{\partial}{\partial x_2} \left\{ \nu_2\frac{\partial U_\alpha}{\partial x_2}\right\}+\frac{\partial}{\partial x_3} \left\{ \nu_3\frac{\partial U_\alpha}{\partial x_3}\right\} \\
+&amp;\quad -\epsilon_{\alpha\beta}fU_\beta
+\end{aligned}
+\tag{4.1}\]</span></span></p>
+<p><em>Continuity:</em> <span id="eq-continuity"><span class="math display">\[
+\frac{\partial U_j}{\partial x_j}=0
+\tag{4.2}\]</span></span></p>
+<p><em>Momentum Boundary Conditions - Free Surface:</em> <span id="eq-freeSurfBC"><span class="math display">\[
+\frac{\partial U_\alpha}{\partial x_3}=0
+\tag{4.3}\]</span></span></p>
+<p><em>Momentum Boundary Conditions - Bottom and Sides:</em> <span id="eq-botSidesBC"><span class="math display">\[
+U_i=0
+\tag{4.4}\]</span></span></p>
+<p><em>Transport of Scalars:</em> <span id="eq-transportScalars"><span class="math display">\[
+\frac{\partial C}{\partial t}+\frac{\partial }{\partial x_j}(CU_j)=\frac{\partial}{\partial x_1} \left\{ \kappa_1\frac{\partial C}{\partial x_1}\right\}+\frac{\partial}{\partial x_2} \left\{ \kappa_2\frac{\partial C}{\partial x_2}\right\}+\frac{\partial}{\partial x_3} \left\{ \kappa_3\frac{\partial C}{\partial x_3}\right\}+S_c
+\tag{4.5}\]</span></span></p>
+<p><em>Scalar Boundary Conditions:</em> <span id="eq-scalarBC"><span class="math display">\[
+\frac{\partial C_\alpha}{\partial x_j}=0
+\tag{4.6}\]</span></span></p>
+<p><em>Free-Surface Evolution:</em> <span id="eq-surfEvol"><span class="math display">\[
+\frac{\partial \eta}{\partial t}=-\frac{\partial }{\partial x_\alpha}\int_0^\eta u_\alpha dz
+\tag{4.7}\]</span></span></p>
+<p><em>Free-Surface wind shear:</em> <span id="eq-surfWind"><span class="math display">\[
+\left ( u_* \right )^2_\alpha=C_{10}\frac{\rho_{air}}{\rho_{water}} \left( W_\beta W_\beta\right)^{1/2}W_\alpha
+\tag{4.8}\]</span></span></p>
+<p><em>Momentum input by wind:</em> <span id="eq-momWind"><span class="math display">\[
+\frac{\partial U_\alpha}{\partial t}=\frac{(U_*)^2_\alpha}{h}
+\tag{4.9}\]</span></span></p>
+<p>: Summary of Governing Hydrodynamic equations used in ELCOM. {#tbl-goveqns}</p>
+<p>The unsteady RANS equations are developed by filtering the unsteady Navier-Stokes equations over a time period that is long relative to sub-grid scale processes, but small relative to the unsteady grid-scale processes that are of interest. In an unsteady RANS numerical method the time scale of the averaging is the time step used in advancement of the evolution equations. Thus, the maximum time step for a given grid resolution is fundamentally limited by the grid scale physics, regardless of the numerical method. This is an important point that is lost when “unconditionally stable” numerical methods are discussed<em>: the stability of the method at a large time step is irrelevant if the size of the time step implies a temporal averaging scale that encompasses grid-scale motions.</em></p>
+<p>In most numerical approaches, the sub-time scale nonlinear terms <span class="math inline">\(\overline{u_i^\prime u_j^\prime}\)</span> are represented by an eddy viscosity <span class="math inline">\(\nu_{jk}\)</span> defined in a tensor form as:</p>
+<p><span id="eq-eddyViscosity"><span class="math display">\[
+\nu_{jk}\frac{\partial u_i}{\partial x_k}=\delta_{jk}\nu\frac{\partial u_i}{\partial x_k}-\overline{u_i^\prime u_j^\prime}
+\tag{4.10}\]</span></span></p>
+<p>where <span class="math inline">\(\delta\)</span> is the molecular viscosity, <span class="math inline">\(u_i^\prime\)</span> are the sub-time-scale velocity fluctuations, and the overbar indicates the Reynolds-averaging filter. The off-diagonal eddy-viscosity terms are generally set to zero and the molecular viscosity is ignored so that we obtain:</p>
+<p><span id="eq-eddyViscComponents"><span class="math display">\[
+\nu_1\frac{\partial u_i}{\partial x_1}=\overline{u_i^\prime u_1^\prime};\quad \nu_2\frac{\partial u_i}{\partial x_2}=\overline{u_i^\prime u_2^\prime};\quad \nu_3\frac{\partial u_i}{\partial x_3}=\overline{u_i^\prime u_3^\prime}
+\tag{4.11}\]</span></span></p>
+<p>In ELCOM, eddy-viscosity is used to represent the horizontal turbulence closure. In the vertical direction, ELCOM can apply either a vertical eddy viscosity or a mixed-layer model discussed in <a href="08-sci-mixing.html" class="quarto-xref"><span>Chapter 8</span></a>.</p>
+<p>The free-surface evolution is governed by vertical integration of the continuity equation for incompressible flow from the bottom (b) of the water column to the free surface (h) applied to the kinematic boundary condition <span class="citation" data-cites="Kowa93">(e.g. Kowalik and Murty 1993)</span>. To derive the Reynolds-averaged free-surface evolution the Reynolds-averaging filter must be applied to the kinematic boundary condition, resulting in</p>
+<p><span id="eq-surfEvolRA"><span class="math display">\[
+\frac{\partial \eta}{\partial t}=U_3-U_\alpha \frac{\partial \eta}{\partial x_\alpha}-\frac{\partial}{\partial x_\alpha}(\overline{u_\alpha^\prime h^\prime})
+\tag{4.12}\]</span></span></p>
+<p>Note that the sub-time scale correlation term <span class="math inline">\((\overline{u_\alpha^\prime h^\prime})\)</span> has not been discussed in the literature as the Reynolds-averaging filter has not been rigorously applied to boundary conditions; the equivalent term in large-eddy simulation is discussed in <span class="citation" data-cites="Hodg99">(Hodges and Street 1999)</span>. The modeling of this term remains an unexplored area of free-surface flows; thus we are forced to assume that it is either small or only of local importance. In the former case it is readily neglected. In the latter case, the present use of implicit discretization of the free-surface solution is numerically diffusive at high barotropic CFL conditions, so local barotropic effects are not well-resolved. Thus, neglecting the subtime-scale nonlinear effects is justified by our focus on basin-scale baroclinic motions. However, we can speculate that the nonlinear correlation <span class="math inline">\((\overline{u_\alpha h_\alpha})\)</span> might be both large and non-local where nonlinear sub-basin-scale surface waves enter shallow or restricted waters. The neglect of this term is predicated on the assumption that sub-time scale nonlinear effects do not significantly effect the local mean free-surface height. In general, this is a good assumption for the resolution typically achieved in simulations of lakes and estuaries, and will be used herein. The free surface boundary condition is an approximate form of the dynamic boundary condition that neglects: dynamic pressure, local horizontal variation of the wind, updrafts, downdrafts and surface tension. This is appropriate for lake simulations using the hydrostatic approximation.</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -785,13 +787,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Welcome">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome</span>
+      <a href="./03-sci-intro.html" class="pagination-link" aria-label="Overview">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Overview</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./02-notation.html" class="pagination-link" aria-label="Notation">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Notation</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./05-sci-timestep.html" class="pagination-link" aria-label="Timestep limitations">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Timestep limitations</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

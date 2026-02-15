@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="This is a draft of the ELCOM manual.">
+
+<title>6&nbsp; Numerical Method – ELCOM Manual</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./07-sci-thermo.html" rel="next">
+<link href="./05-sci-timestep.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-70a47bd5681a7291082a5b9f83d58762.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-sci-intro.html">Science Description</a></li><li class="breadcrumb-item"><a href="./06-sci-method.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Numerical Method</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">ELCOM Manual</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Overview</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Notation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Science Description</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-sci-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Overview</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-sci-goveqns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Governing Hydrodynamic Equations and Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-sci-timestep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Timestep limitations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-sci-method.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Numerical Method</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-sci-thermo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Surface Thermodynamics and Mass Fluxes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-sci-mixing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Vertical Mixing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-sci-underflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Underflow Model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-sci-destrat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Artificial Destratification</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Using ELCOM</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-getting-started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-pre.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Domain Pre-processing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-elcom.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Configuring a Simulation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-running.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Running a Simulation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-output.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Output File Processing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-developer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Developer Information</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Examples</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-application.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Applications</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-publications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Publications</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">6.1</span> Overview</a></li>
+  <li><a href="#semi-implicit-formulation-for-momentum" id="toc-semi-implicit-formulation-for-momentum" class="nav-link" data-scroll-target="#semi-implicit-formulation-for-momentum"><span class="header-section-number">6.2</span> Semi-implicit Formulation for Momentum</a></li>
+  <li><a href="#horizontal-diffusion-discretization" id="toc-horizontal-diffusion-discretization" class="nav-link" data-scroll-target="#horizontal-diffusion-discretization"><span class="header-section-number">6.3</span> Horizontal Diffusion Discretization</a></li>
+  <li><a href="#baroclinic-discretization" id="toc-baroclinic-discretization" class="nav-link" data-scroll-target="#baroclinic-discretization"><span class="header-section-number">6.4</span> Baroclinic Discretization</a></li>
+  <li><a href="#free-surface-discretization" id="toc-free-surface-discretization" class="nav-link" data-scroll-target="#free-surface-discretization"><span class="header-section-number">6.5</span> Free Surface Discretization</a></li>
+  <li><a href="#advective-discretization" id="toc-advective-discretization" class="nav-link" data-scroll-target="#advective-discretization"><span class="header-section-number">6.6</span> Advective Discretization</a>
+  <ul class="collapse">
+  <li><a href="#linear-semi-lagrangian-methods" id="toc-linear-semi-lagrangian-methods" class="nav-link" data-scroll-target="#linear-semi-lagrangian-methods"><span class="header-section-number">6.6.1</span> Linear semi-Lagrangian methods</a></li>
+  <li><a href="#quadratic-semi-lagrangian-methods" id="toc-quadratic-semi-lagrangian-methods" class="nav-link" data-scroll-target="#quadratic-semi-lagrangian-methods"><span class="header-section-number">6.6.2</span> Quadratic semi-Lagrangian methods</a></li>
+  </ul></li>
+  <li><a href="#scalar-transport" id="toc-scalar-transport" class="nav-link" data-scroll-target="#scalar-transport"><span class="header-section-number">6.7</span> Scalar Transport</a>
+  <ul class="collapse">
+  <li><a href="#scalar-horizontal-diffusion" id="toc-scalar-horizontal-diffusion" class="nav-link" data-scroll-target="#scalar-horizontal-diffusion"><span class="header-section-number">6.7.1</span> Scalar horizontal diffusion</a></li>
+  </ul></li>
+  <li><a href="#sidewall-and-bottom-boundary-conditions" id="toc-sidewall-and-bottom-boundary-conditions" class="nav-link" data-scroll-target="#sidewall-and-bottom-boundary-conditions"><span class="header-section-number">6.8</span> Sidewall and Bottom Boundary Conditions</a></li>
+  <li><a href="#wind-momentum-model" id="toc-wind-momentum-model" class="nav-link" data-scroll-target="#wind-momentum-model"><span class="header-section-number">6.9</span> Wind Momentum Model</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-sci-intro.html">Science Description</a></li><li class="breadcrumb-item"><a href="./06-sci-method.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Numerical Method</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-method" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Numerical Method</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">6.1</span> Overview</h2>
+<p>The governing equations are discretized on a Cartesian solution grid in a staggered formulation where single velocity components are defined on each face and scalars are defined at the cell centers. In discrete equations, the cell faces are represented by subscripts such as <span class="math inline">\(i+1/2\)</span>, while the centers are represented with integer <span class="math inline">\((i,j,k)\)</span> values. The notation of <span class="citation" data-cites="Casu92">Casulli and Cheng (1992)</span> is used in the following description. For the discrete form of equations, we will use subscripts to represent the position in discrete <span class="math inline">\((i,j,k)\)</span> space. Let <span class="math inline">\(U_{i,j}^{n+1}\)</span> represent the water column vector of time <span class="math inline">\(n+1\)</span> velocity values at position <span class="math inline">\((i,j)\)</span>, that exist in the time <span class="math inline">\(n*\)</span> solution space for all <span class="math inline">\(k\)</span> that satisfy</p>
+<p><span id="eq-solution-space"><span class="math display">\[
+b_{i,j}\leq\left|\sum_{m=1}^{k_{max}}\Delta z_{i,j,m}^n\right| \leq \eta_{i,j}
+\tag{6.1}\]</span></span></p>
+<p>where <span class="math inline">\(b_{i,j}\)</span> is the height of the bottom of the domain at point <span class="math inline">\((i,j)\)</span>, <span class="math inline">\(\eta_{i,j}\)</span> is the height of the free surface, and <span class="math inline">\(k_{max}\)</span> is the maximum number of grid cells in the vertical direction. Similar definitions are applied for other vector quantities in this manual.</p>
+</section>
+<section id="semi-implicit-formulation-for-momentum" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="semi-implicit-formulation-for-momentum"><span class="header-section-number">6.2</span> Semi-implicit Formulation for Momentum</h2>
+<p>The fundamental semi-implicit evolution of the velocity field can be discretized on the <span class="math inline">\(\eta*\)</span> solution space in a manner similar to the TRIM approach as:</p>
+<p><span id="eq-momU"><span class="math display">\[
+U_{i+1/2,j}^{n+1}=A_{i+1/2,j}^{n}G_{i+1/2,j}^{n}-g\frac{\delta t}{\delta x} \left [\theta_1 \left (\eta_{i+1,j}^{n+1}-\eta_{i,j}^{n+1} \right ) + (1-\theta_1) \left (\eta_{i,j}^{n+1}-\eta_{i+1,j}^{n+1} \right ) \right ]
+\tag{6.2}\]</span></span></p>
+<p><span id="eq-momV"><span class="math display">\[
+V_{i,j+1/2}^{n+1}=A_{i,j+1/2}^{n}G_{i,j+1/2}^{n}-g\frac{\delta t}{\delta y} \left [\theta_1 \left (\eta_{i,j+1}^{n+1}-\eta_{i,j}^{n+1} \right ) + (1-\theta_1) \left (\eta_{i,j}^{n+1}-\eta_{i,j+1}^{n+1} \right ) \right ]
+\tag{6.3}\]</span></span></p>
+<p>where <span class="math inline">\(G\)</span> is an explicit source term vector, <span class="math inline">\(\theta_{1}\)</span> is the “implicitness” of the free surface (the generalized implicitness option for <span class="math inline">\(0.5 &lt; \theta_{1} &lt; 1.0\)</span> is not coded in ELCOM version 2). The default semi-implicit scheme in ELCOM is a backwards-Euler discretization (i.e.&nbsp;<span class="math inline">\(\theta_{1} =1\)</span>) of the free surface evolution that is formally 1st order accurate in time.</p>
+<p>It has been demonstrated <span class="citation" data-cites="Casu94">(Casulli and Cattani 1994)</span> that the backwards Euler method for solution of the hydrostatic momentum equations can be extended to the general two-level scheme of <a href="#eq-momU" class="quarto-xref">Equation&nbsp;<span>6.2</span></a> and <a href="#eq-momV" class="quarto-xref">Equation&nbsp;<span>6.3</span></a> that is formally second-order accurate (when <span class="math inline">\(\theta_1=1\)</span>). However, in coarse grid modeling, this increase in numerical accuracy does not always result in an increase in model skill. In general, many lake and estuary simulations are conducted where the barotropic mode will be solved with CFL conditions that may range from 5 to 10 or greater. Under these conditions, semi-implicit discretizations may be stable, but the “fidelity” of the representation of the flow physics is a function of the type of flow under consideration. The character of the truncation error is critical to understanding the performance of the method. With the 1st order method, the lead error term is 2nd order and results in damping of waves on the free surface. With the 2nd order method, the leading error term is dispersive and results in numerical waves on the free surface which propagate across the domain; typically causing a linear barotropic wave to evolve into a steep-fronted bore, causing high velocities in localized areas as the surface wave is affected by topography. Thus, the first order method results in good representation of the shape of the free surface and the local barotropic velocities, but shows excessive damping of the inertial response of the free surface. In contrast, the second order method maintains the energy in the surface wave form with minimal numerical dissipation, but has a poor representation of the wave form. In a hydrostatic solution, the dispersive waves cause spurious local forcing throughout the water column and are detrimental to the skill of the solution. In contrast, the excessive damping of the surface wave causes a decrease in the large scale motions associated with the barotropic response when the wind relaxes, i.e.&nbsp;the “ringing” of the barotropic mode is damped. In general, a strongly forced system is better modeled with the backwards Euler scheme as the wave energy beyond two or three periods is often irrelevant to the first-order physics.</p>
+<p>Using any two-level implicit discretization <span class="citation" data-cites="Casu92">(Casulli and Cheng 1992)</span>, or any explicit discretization technique, the A matrix can be represented as:</p>
+<p><span id="eq-Amatrix"><span class="math display">\[
+A=\begin{bmatrix}
+b_n+\gamma_k &amp; c_n &amp; 0 &amp; 0 &amp; 0\\
+a_{n-1} &amp; b_{n-1} &amp; c_{n-1} &amp; 0 &amp; 0 \\
+0 &amp; a_{n-2} &amp; b_{n-2} &amp; c_{n-2} &amp; 0 \\
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots  \\
+0 &amp; 0 &amp; a_{2} &amp; b_{2} &amp; c_{2}  \\
+0 &amp; 0 &amp; 0 &amp;a_{1} &amp; b_{1}+\gamma_1
+\end{bmatrix}
+\tag{6.4}\]</span></span></p>
+<p>The <span class="math inline">\(\gamma\)</span> terms in <span class="math inline">\(A\)</span> are set by boundary conditions, while the <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> and <span class="math inline">\(c\)</span> terms are:</p>
+<p><span id="eq-bk"><span class="math display">\[
+b_k=-a_k+\Delta z_k - c_k
+\tag{6.5}\]</span></span></p>
+<p><span id="eq-ak"><span class="math display">\[
+a_k=-\theta_2\left.\frac{\nu_3\Delta t}{\Delta z}  \right |_{k+1/2}
+\tag{6.6}\]</span></span></p>
+<p><span id="eq-ck"><span class="math display">\[
+c_k=-\theta_2\left.\frac{\nu_3\Delta t}{\Delta z}  \right |_{k-1/2}
+\tag{6.7}\]</span></span></p>
+<p>The <span class="math inline">\(\theta_2\)</span> coefficient is determined by the choice of numerical discretization techniques. For <span class="math inline">\(\theta_2=1\)</span> the vertical viscous term is discretized using a backwards Euler technique. For the mixed-layer model used in ELCOM <span class="math inline">\(\theta_2=0\)</span> and the discretization is explicit with <span class="math inline">\(A\)</span> zero for all terms off the main diagonal.</p>
+<p>The source terms <span class="math inline">\(G\)</span> in <a href="#eq-momU" class="quarto-xref">Equation&nbsp;<span>6.2</span></a> and <a href="#eq-momV" class="quarto-xref">Equation&nbsp;<span>6.3</span></a> can be represented as:</p>
+<p><span id="eq-sourceU"><span class="math display">\[
+G_{i+1/2,j}=L(\tilde U_{i+1/2,j})-\Delta t \left \{ B_{i+1/2,j}^n + D_x(\tilde U)_{i+1/2,j} + D_y(\tilde U)_{i+1/2,j} - f\tilde V_{i+1/2,j} \right \}
+\tag{6.8}\]</span></span></p>
+<p><span id="eq-sourceV"><span class="math display">\[
+G_{i,j+1/2}=L(\tilde V_{i,j+1/2})-\Delta t \left \{ B_{i,j+1/2}^n + D_x(\tilde V)_{i,j+1/2} + D_y(\tilde V)_{i,j+1/2} - f\tilde U_{i,j+1/2} \right \}
+\tag{6.9}\]</span></span></p>
+<p>The <span class="math inline">\(L()\)</span> operator represents advective discretization, <span class="math inline">\(B()\)</span> represents baroclinic discretization, <span class="math inline">\(D()\)</span> represents horizontal turbulent diffusion discretization. In ELCOM vertical diffusion is computed using a vertical mixing model. The mixing model is represented as an operator such that:</p>
+<p><span id="eq-mixing-operator"><span class="math display">\[
+\tilde U_{i,j,k} = M(U_{i,j,k}^n)
+\tag{6.10}\]</span></span></p>
+<p>The mixing operator <span class="math inline">\(M()\)</span> is described in detail in <a href="08-sci-mixing.html" class="quarto-xref"><span>Chapter 8</span></a>.</p>
+</section>
+<section id="horizontal-diffusion-discretization" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="horizontal-diffusion-discretization"><span class="header-section-number">6.3</span> Horizontal Diffusion Discretization</h2>
+<p>While the original TRIM approach <span class="citation" data-cites="Casu92">(Casulli and Cheng 1992)</span> applied the discretization of the horizontal diffusive terms at the pathline origin, the additional complexity was not found to provide any significant advantage in the accuracy of the present method. Therefore, the horizontal diffusion terms (<span class="math inline">\(D_{x}\)</span>, <span class="math inline">\(D_{y}\)</span>) from <a href="#eq-sourceU" class="quarto-xref">Equation&nbsp;<span>6.8</span></a> and <a href="#eq-sourceV" class="quarto-xref">Equation&nbsp;<span>6.9</span></a> are discretized using a second-order stencil such that</p>
+<p><span id="eq-horiz-diff"><span class="math display">\[
+D_x(\phi_{i,j,k}^n)=\frac{\nu}{\Delta x^2}(\phi_{i+1,j,k}^n-2\phi_{i,j,k}^n+\phi_{i-1,j,k}^n)
+\tag{6.11}\]</span></span></p>
+</section>
+<section id="baroclinic-discretization" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="baroclinic-discretization"><span class="header-section-number">6.4</span> Baroclinic Discretization</h2>
+<p>The baroclinic term B in the x direction is discretized as:</p>
+<p><span id="eq-baroclinic"><span class="math display">\[
+B_{i+1/2,j,k}^n=\frac{g}{\rho_0 \Delta x}\left \{\sum_{m=k}^F\rho_{i+1,j,m}^\prime - \sum_{m=k}^F\rho_{i,j,m}^\prime \right \}
+\tag{6.12}\]</span></span></p>
+<p>where <span class="math inline">\(k = F\)</span> is the cell containing the free surface. Similar expressions for diffusion and baroclinic terms are obtained for the <span class="math inline">\(y\)</span> direction. The elimination of the vertical diffusion terms in the transport of momentum and scalars equations allows the present scheme to dispense with the tridiagonal matrix inversion for each horizontal velocity component and transported scalar required for each <span class="math inline">\((i,j)\)</span> water column in the TRIM scheme.</p>
+</section>
+<section id="free-surface-discretization" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="free-surface-discretization"><span class="header-section-number">6.5</span> Free Surface Discretization</h2>
+<p>The free surface evolution equation can be discretized as:</p>
+<p><span id="eq-freeSurf"><span class="math display">\[
+\eta_{i,j}^{n+1}=
+\begin{array}{l}
+\eta_{i,j}^n-\theta_1 \left [ \frac{\Delta t}{\Delta x}\delta_x \{(\Delta Z^n)^T U^{n+1}\}- \frac{\Delta t}{\Delta y}\delta_y \{(\Delta Z^n)^T V^{n+1}\}
+\right ] \\
+-(1-\theta_1) \left [ \frac{\Delta t}{\Delta x}\delta_x \{(\Delta Z^n)^T U^{n}\}- \frac{\Delta t}{\Delta y}\delta_y \{(\Delta Z^n)^T V^{n}\}\right ]
+\end{array}
+\tag{6.13}\]</span></span></p>
+<p>where <span class="math inline">\(\Delta Z\)</span> is a vector of the vertical grid spacing, and the operators <span class="math inline">\(\delta_x\)</span> and <span class="math inline">\(\delta_y\)</span> indicate discrete differences, e.g.</p>
+<p><span id="eq-delta-x"><span class="math display">\[
+\delta_x(\phi)=\phi_{i+1/2}-\phi_{i-1/2}
+\tag{6.14}\]</span></span></p>
+<p>Substitution of <a href="#eq-momU" class="quarto-xref">Equation&nbsp;<span>6.2</span></a> and <a href="#eq-momV" class="quarto-xref">Equation&nbsp;<span>6.3</span></a> into <a href="#eq-freeSurf" class="quarto-xref">Equation&nbsp;<span>6.13</span></a> provides a pentadiagonal system of equations for the time <span class="math inline">\(n+1\)</span> free surface height that is readily solved using a conjugate gradient method. The approach adopted for conjugate gradient solution in ELCOM is similar to TRIM, as detailed in <span class="citation" data-cites="Casu92">Casulli and Cheng (1992)</span>.</p>
+</section>
+<section id="advective-discretization" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="advective-discretization"><span class="header-section-number">6.6</span> Advective Discretization</h2>
+<p>One of the difficulties of numerical modelling at geophysical scales is the wide range of flow conditions that may be present. In particular, internal waves may intermittently produce strong vertical motions over relatively small regions. Where resolution of internal waves is deemed important, the choice of numerical method is driven by the need for accuracy and stability in a small portion of the overall flow field. While many explicit spatial discretization methods are stable for <span class="math inline">\(CFL &lt; O(1)\)</span>, their accuracy in 3D computations for <span class="math inline">\(CFL &gt; O(0.5)\)</span> is generally poor when the flow direction is not aligned with the grid.</p>
+<p>The drawback of the quadratic method is that it is computationally expensive. However, for low <span class="math inline">\(CFL\)</span> regions (<span class="math inline">\(CFL &lt; 0.1\)</span>), the solution of a quadratic semi-Lagrangian method is dominated by terms in the same seven-point upwind stencil that is obtained by using quadratic upwind discretization. This similarity can be exploited to reduce the computational requirement in regions of low <span class="math inline">\(CFL\)</span> without significantly reducing the accuracy of the overall solution method. The concept of applying different schemes in different regions can be generalized into the concept of a “hybrid” numerical method. A general hybrid method is one where different solution schemes are applied in different flow regions based upon a criteria measured in the flow field. For our purposes, the criteria is the <span class="math inline">\(CFL\)</span>, and we apply one discretization technique for low <span class="math inline">\(CFL\)</span>, and a different technique for high <span class="math inline">\(CFL\)</span>.</p>
+<p>The present hybrid method has been tested to two levels, using quadratic semi-Lagrangian discretization for regions where (<span class="math inline">\(0 &lt; CFL &lt; 2\)</span>). The upper limit cutoff is the maximum CFL that can be computed using a quadratic SL method without requiring the additional computational expense of adjusting the stencil region. As a practical matter, the accuracy of computations for <span class="math inline">\(CFL &gt; 2\)</span> is questionable, so the upper limit is not an unreasonable requirement. For regions with <span class="math inline">\(CFL &gt; 2\)</span>, the method applies linear semi-Lagrangian discretization (i.e.&nbsp;the approach used in TRIM) to minimize the computational effort of repositioning the stencil.</p>
+<section id="linear-semi-lagrangian-methods" class="level3" data-number="6.6.1">
+<h3 data-number="6.6.1" class="anchored" data-anchor-id="linear-semi-lagrangian-methods"><span class="header-section-number">6.6.1</span> Linear semi-Lagrangian methods</h3>
+<p>For a stratified flow, semi-Lagrangian methods are desirable in that they are both accurate and stable in the regime where <span class="math inline">\(0.1 &lt; CFL &lt; 1\)</span>. As a further advantage, they retain their stability in higher CFL regimes, although their accuracy suffers at high <span class="math inline">\(CFL\)</span> values unless the flow streamlines are well resolved by the grid. However, in stratified flows, the ability to provide stable solutions for <span class="math inline">\(CFL &gt; 1\)</span> in the horizontal direction is of secondary importance in the selection of a numerical method. The maximum time step is generally limited by either (1) the baroclinic wave propagation speed in the region of strongest stratification, or (2) the maximum acceptable numerical diffusion in scalar transport. The former requires wave <span class="math inline">\(CFL &lt; 1\)</span> for stability, while the latter limitation is a matter of grid resolution and the length of time over which model results are required.</p>
+<p>The semi-Lagrangian form of advection is obtained by finding the approximate point in continuous space (the “Lagrange” point) which would be advected to a discrete point (<span class="math inline">\(i,j,k\)</span>) by the velocity field (<span class="math inline">\(U,V,W\)</span>) over the time step <span class="math inline">\(\Delta t\)</span>. That is, the particle position (<span class="math inline">\(i,j,k\)</span>) is numerically marched back along the streamlines represented by the velocity field <span class="math inline">\(U,V,W\)</span>. The <span class="math inline">\(U,V,W\)</span> field may be obtained from single or multiple time levels, depending upon the accuracy and computational complexity desired. A detailed review of semi-Lagrangian techniques is found in <span class="citation" data-cites="Stan91">Staniforth and Cote (1991)</span>. In a linear, single-time level semi-Lagrangian method, the Lagrange point is found using</p>
+<p><span id="eq-deltax"><span class="math display">\[
+\delta_x=-U\Delta t
+\tag{6.15}\]</span></span></p>
+<p><span id="eq-deltay"><span class="math display">\[
+\delta_y=-V\Delta t
+\tag{6.16}\]</span></span></p>
+<p><span id="eq-deltaz"><span class="math display">\[
+\delta_z=-W\Delta t
+\tag{6.17}\]</span></span></p>
+<p>The value of a variable <span class="math inline">\(\phi\)</span> at the Lagrange point is found using a trilinear upwind interpolation:</p>
+<p><span id="eq-trilinear"><span class="math display">\[
+\phi_L=
+\begin{array}{l}
+\frac{\delta_x}{\Delta_x}\frac{\delta_y}{\Delta_y}\frac{\delta_z}{\Delta_z}\phi_{i-1,j-1,k-1}
+\\
++\left ( 1-\frac{\delta_x}{\Delta_x}\right )\frac{\delta_y}{\Delta_y}\frac{\delta_z}{\Delta_z}\phi_{i,j-1,k-1}
+\\
++\frac{\delta_x}{\Delta_x}\left ( 1-\frac{\delta_y}{\Delta_y}\right )\frac{\delta_z}{\Delta_z}\phi_{i-1,j,k-1}
+\\
++\frac{\delta_x}{\Delta_x}\frac{\delta_y}{\Delta_y}\left ( 1-\frac{\delta_z}{\Delta_z}\right )\phi_{i-1,j-1,k}
+\\
++\frac{\delta_x}{\Delta_x}\left ( 1-\frac{\delta_y}{\Delta_y}\right )\left ( 1-\frac{\delta_z}{\Delta_z}\right )\phi_{i-1,j,k}
+\\
++\left ( 1-\frac{\delta_x}{\Delta_x}\right )\frac{\delta_y}{\Delta_y}\left ( 1-\frac{\delta_z}{\Delta_z}\right )\phi_{i,j-1,k}
+\\
++\left ( 1-\frac{\delta_x}{\Delta_x}\right )\left ( 1-\frac{\delta_y}{\Delta_y}\right )\frac{\delta_z}{\Delta_z}\phi_{i,j,k-1}
+\\
++\left ( 1-\frac{\delta_x}{\Delta_x}\right )\left ( 1-\frac{\delta_y}{\Delta_y}\right ) \left ( 1-\frac{\delta_z}{\Delta_z}\right )\phi_{i,j,k}
+\end{array}
+\tag{6.18}\]</span></span></p>
+<p>The above constitutes an eight-point stencil for a semi-Lagrangian method with linear interpolation. As the flow field approaches a uniform 1D flow, the linear semi-Lagrangian technique reduces to a linear upwind method for <span class="math inline">\(CFL &lt; 1\)</span>. Indeed, it is perhaps easier to think of the semi-Lagrangian method as a 3D linear upwind stencil that is successively repositioned for high <span class="math inline">\(CFL\)</span> conditions. It follows that linear semi-Lagrange method exhibits the unacceptable levels of numerical diffusion that are characteristic of linear upwind methods. This can be ameliorated by using a quadratic method for interpolation of values at the Lagrange point.</p>
+</section>
+<section id="quadratic-semi-lagrangian-methods" class="level3" data-number="6.6.2">
+<h3 data-number="6.6.2" class="anchored" data-anchor-id="quadratic-semi-lagrangian-methods"><span class="header-section-number">6.6.2</span> Quadratic semi-Lagrangian methods</h3>
+<p>The quadratic semi-Lagrange method extends the 8-point upwind stencil with trilinear interpolation (used in TRIM) to a 27-point upwind stencil using quadratic Lagrange polynomial interpolation. In the notation of <span class="citation" data-cites="Casu92">Casulli and Cheng (1992)</span>, the operator interpolates the velocity field (on the x face) to the position <span class="math inline">\((i+1/2-a,j-b,k-d)\)</span>, where <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> and <span class="math inline">\(d\)</span> are real numbers that represent displacements from the <span class="math inline">\((i+1/2,j,k)\)</span> position. This is an estimate of the origination of the pathline of a particle moving through the time <span class="math inline">\(n\)</span> velocity field that ends at the position <span class="math inline">\((i+1/2,j,k)\)</span> after time <span class="math inline">\(\Delta t\)</span>. A similar notation is used for the <span class="math inline">\(y\)</span> faces at <span class="math inline">\(j+1/2\)</span>. It is convenient to denote the pathline origination point by a superscript <span class="math inline">\((p)\)</span> so that the advective operators <span class="math inline">\(L()\)</span> in <a href="#eq-momU" class="quarto-xref">Equation&nbsp;<span>6.2</span></a> and <a href="#eq-momV" class="quarto-xref">Equation&nbsp;<span>6.3</span></a>:</p>
+<p><span id="eq-pathline"><span class="math display">\[
+L(\tilde U_{i+1/2,j,k})=\tilde U_{i+1/2-a,j-b,k-d}=\tilde U^{(p)}
+\tag{6.19}\]</span></span></p>
+<p>The process of computing the pathline origin in 2D for bilinear interpolation is discussed in <span class="citation" data-cites="Casu92">Casulli and Cheng (1992)</span> and is illustrated in <a href="#fig-2delm" class="quarto-xref">Figure&nbsp;<span>6.1</span></a> for 2D quadratic Lagrange interpolation. For Lagrange interpolation on non-uniform grids it is convenient to consider the physical space coordinates (<span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>, <span class="math inline">\(z\)</span>) that correspond to the (<span class="math inline">\(i\)</span>,<span class="math inline">\(j\)</span>,<span class="math inline">\(k\)</span>) computational indices. Three-dimensional quadratic Lagrange interpolation to find the value of <span class="math inline">\(U^{(p)}\)</span> at any point (<span class="math inline">\(x^{(p)}\)</span>, <span class="math inline">\(y^{(p)}\)</span>, <span class="math inline">\(z^{(p)}\)</span>) is computed in three steps illustrated in <a href="#fig-3delm" class="quarto-xref">Figure&nbsp;<span>6.2</span></a> requiring 9 vertical interpolations of the form</p>
+<p><span id="eq-vert-interp"><span class="math display">\[
+\hat U_{i+\gamma,j+\zeta}=l_{i+\gamma,j+\zeta}^0 U_{i+\gamma,j+\zeta,k}+l_{i+\gamma,j+\zeta}^1 U_{i+\gamma,j+\zeta,k\pm1}+l_{i+\gamma,j+\zeta}^2 U_{i+\gamma,j+\zeta,k\pm2}
+\tag{6.20}\]</span></span></p>
+<p>where the <span class="math inline">\((i,j)\)</span> subscripts denote the position of the vertical line to be interpolated, while <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\zeta\)</span> are <span class="math inline">\(\pm\{0,1,2\}\)</span>, with the sign determined by the upwind direction of the stencil (as is the sign for the <span class="math inline">\(k\)</span> increment in the <span class="math inline">\(U\)</span> position subscripts). The Lagrange polynomial coefficients for each <span class="math inline">\((i,j)\)</span> line are computed from the standard Lagrange coefficient formula <span class="citation" data-cites="Alkh86">(e.g. Al-Khafaji and Tooley 1986)</span>:</p>
+<p><span id="eq-lagrangecoeffs"><span class="math display">\[
+l^m=\prod_{\substack{\zeta=0 \\ \zeta \neq m}}^2 \frac{z^{(p)}-z_{k\pm\zeta}}{z_{k\pm m}-z_{k\pm\zeta}}
+\tag{6.21}\]</span></span></p>
+<p>where <span class="math inline">\(z^{(p)}\)</span> is the vertical coordinate of the interpolated point and the sign is determined to obtain an upwind stencil. The vertical interpolations are followed by 3 horizontal interpolations in the <span class="math inline">\(y\)</span> direction of the form</p>
+<p><span id="eq-lagrange2"><span class="math display">\[
+\overline U_{i+\gamma}=l^0_{i+\gamma,j}\hat U_{i+\gamma,j}+l^1_{i+\gamma,j\pm1}\hat U_{i+\gamma,j\pm1}+l^2_{i+\gamma,j\pm2}\hat U_{i+\gamma,j\pm2}
+\tag{6.22}\]</span></span></p>
+<p>Finally, a single interpolation in the <span class="math inline">\(x\)</span> direction is applied as</p>
+<p><span id="eq-lagrange3"><span class="math display">\[
+U^{(p)}=l^0\overline U_i+l^1\overline U_{i\pm1}+l^2\overline U_{i\pm2}
+\tag{6.23}\]</span></span></p>
+<p>The Lagrange coefficients in <a href="#eq-lagrange2" class="quarto-xref">Equation&nbsp;<span>6.22</span></a> and <a href="#eq-lagrange3" class="quarto-xref">Equation&nbsp;<span>6.23</span></a> are computed using <a href="#eq-lagrangecoeffs" class="quarto-xref">Equation&nbsp;<span>6.21</span></a> with <span class="math inline">\(y\)</span> or <span class="math inline">\(x\)</span> substituted for <span class="math inline">\(z\)</span> as appropriate. The quadratic stencil used for the Euler-Lagrange interpolation is advantageous as it reduces artificial damping of internal waves that occurs with an 8-node linear stencil; thus improving the ability of the method to resolve the free motions of a stratified basin. While this improvement is necessary for modeling stratified lakes, it is probably of lesser importance in estuarine modeling where forced motions dominate the flow physics. The extra computational requirements of the quadratic stencil are somewhat ameliorated by the ability to compute source terms for flows in the range <span class="math inline">\(1 &lt; CFL &lt; 2\)</span> without repositioning the stencil.</p>
+<div id="fig-2delm" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2delm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<embed src="images/fig4_1.pdf" class="img-fluid">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2delm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.1: Two-dimensional illustration of Euler-Lagrange streamline computation using quadratic Lagrange interpolation. Velocity vector <span class="math inline">\(A\)</span>, with components <span class="math inline">\(U_{A}\)</span> and <span class="math inline">\(V_{A}\)</span>, is used to track particle path from position (<span class="math inline">\(i,j\)</span>) back to the base of vector <span class="math inline">\(B\)</span> using the momentum sub-time step <span class="math inline">\(dt\)</span>. Velocity vector <span class="math inline">\(B\)</span> is computed from the nine grid nodes upwind of the velocity vector at position <span class="math inline">\((i,j)\)</span>. Vector <span class="math inline">\(B\)</span> is used to track the particle path back to the base of velocity vector <span class="math inline">\(C\)</span>, which is again interpolated from the surrounding nine grid nodes. This is repeated <span class="math inline">\(n\)</span> times where <span class="math inline">\(n \, dt = \Delta t\)</span>. If a vector base position is not contained within the nine upwind grid nodes, the upwind stencil must be repositioned. In the present code, linear interpolation is used for the rare instances when repositioning is necessary. The final vector is the result of the Euler-Lagrange operator in <a href="#eq-sourceU" class="quarto-xref">Equation&nbsp;<span>6.8</span></a>, i.e.&nbsp;<span class="math inline">\(L(U_{i,j}) = U_{(i-a,j-b)}\)</span>. The number of sub-time steps (<span class="math inline">\(n\)</span>) may be set arbitrarily, with high values providing greater accuracy and higher computational cost. Note that <span class="math inline">\(n=1\)</span> everywhere corresponds to quadratic upwind discretization and has poor accuracy characteristics unless the <span class="math inline">\(CFL_{a} \ll 1\)</span>. As a general rule, the minimum <span class="math inline">\(n\)</span> is set as a local function of the grid and flow field such that <span class="math inline">\(U\frac{dt}{\Delta x} &lt; 1\)</span>.
+</figcaption>
+</figure>
+</div>
+<div id="fig-3delm" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-3delm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<embed src="images/fig4_2.pdf" class="img-fluid">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-3delm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.2: Schematic of three-dimensional quadratic Lagrange interpolation with successive interpolations in the <span class="math inline">\(k\)</span>, <span class="math inline">\(j\)</span>, then <span class="math inline">\(i\)</span> directions. For clarity, this illustration shows interpolation for a uniform grid, however the method can be applied to non-uniform grids without any further adaptation.
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="scalar-transport" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="scalar-transport"><span class="header-section-number">6.7</span> Scalar Transport</h2>
+<p>Scalar transport is (arguably) the most critical piece of the hydrodynamic numerical algorithm for strongly stratified flows. If the scalar transport is not sufficiently accurate, we cannot obtain correct evolution of the density field and internal wave motions. In ELCOM, a conservative third-order scalar transport method is applied. Use of conservative methods has been found critical to stratified lake and estuary models as the distribution of density feeds back into the momentum equation through the baroclinic term. Non-conservation results in loss of momentum in baroclinic forcing such that internal waves are dissipated too rapidly and strong gradients that drive underflows may simply cease to exist. Using non-conservative methods, loss of mass and deterioration of sharp gradients at salinity and temperature fronts degrades the skill of the model.</p>
+<p>A three-stage numerical algorithm for transport of a scalar concentration <span class="math inline">\(C\)</span> can be defined as:</p>
+<p><span id="eq-transport1"><span class="math display">\[
+\tilde C = M(C^n)+S^{(C)}
+\tag{6.24}\]</span></span></p>
+<p><span id="eq-transport2"><span class="math display">\[
+C^* = \tilde C -\Delta t\frac{\partial}{\partial x_j}(\tilde C U_j)
+\tag{6.25}\]</span></span></p>
+<p><span id="eq-transport3"><span class="math display">\[
+C^{n+1}=C^* -\Delta t\frac{\partial}{\partial x_\alpha}\left ( \kappa \frac{\partial C^*}{\partial x_\alpha} \right )+O(\Delta t)^2
+\tag{6.26}\]</span></span></p>
+<p>As with the momentum mixing and source terms, the mixing operator in <a href="#eq-transport1" class="quarto-xref">Equation&nbsp;<span>6.24</span></a> represents vertical mixing by the Reynolds stress term and is discussed in detail in a subsequent section on the vertical mixing model. The <span class="math inline">\(S^{(C)}\)</span> in <a href="#eq-transport1" class="quarto-xref">Equation&nbsp;<span>6.24</span></a> represents scalar sources (e.g.&nbsp;heat transfer across the free surface into the wind-mixed layer). <a href="#eq-transport2" class="quarto-xref">Equation&nbsp;<span>6.25</span></a> is advection of the scalar field by the resolved flow field, and <a href="#eq-transport3" class="quarto-xref">Equation&nbsp;<span>6.26</span></a> is horizontal diffusion by turbulent motions. For clarity in the above and the following, advection, i.e. <a href="#eq-transport2" class="quarto-xref">Equation&nbsp;<span>6.25</span></a>, is defined over time step <span class="math inline">\(\Delta t\)</span>. However, when <span class="math inline">\(\max(CFL_{a}) &gt; 1\)</span>, the sub-time step <span class="math inline">\(\delta t\)</span> is used, where <span class="math inline">\(m\delta t = \Delta t\)</span> and <a href="#eq-transport2" class="quarto-xref">Equation&nbsp;<span>6.25</span></a> is iterated <span class="math inline">\(m\)</span> times. In the following derivations, substitution of <span class="math inline">\(\delta t\)</span> for <span class="math inline">\(\Delta t\)</span> and <span class="math inline">\(n+m\Delta t\)</span> for <span class="math inline">\(n+1\)</span> makes the equations reflect the sub-time step iteration process.</p>
+<p>In differential notation, a conservative form of the transport equation is:</p>
+<p><span id="eq-conservative-transport"><span class="math display">\[
+\frac{\partial}{\partial t}\int_\Omega C \, d\Omega+\int_{A_x}CU \, dA_x+\int_{A_y}CV \, dA_y+\int_{A_z}CW \, dA_z=S^{(C)}
+\tag{6.27}\]</span></span></p>
+<p>where <span class="math inline">\(\Omega\)</span> is a control volume and <span class="math inline">\(A_{x}\)</span>, <span class="math inline">\(A_{y}\)</span>, <span class="math inline">\(A_{z}\)</span> are surface areas of the control volume faces. For clarity in the discrete form, it will be useful to omit the <span class="math inline">\((i,j,k)\)</span> subscript notation for any centered variable so that <span class="math inline">\(C_{i,j,k}\)</span> is written simply as <span class="math inline">\(C\)</span>, and <span class="math inline">\(C_{i,j+1/2,k}\)</span> is written as <span class="math inline">\(C_{j+1/2}\)</span>. The discrete advected scalar concentration field (<span class="math inline">\(C^*\)</span>) written as a flux-conservative advection over the <span class="math inline">\(n*\)</span> set of cells is:</p>
+<p><span id="eq-discrete-advection"><span class="math display">\[
+C^*=\tilde C \frac{\Delta Z^n}{\Delta Z^{n+1}}-\frac{\Delta t}{\Delta X\Delta Y\Delta Z^{n+1}}\{\delta_x{Q}+\delta_y{Q}+\delta_z{Q} \}
+\tag{6.28}\]</span></span></p>
+<p>where operators of the form <span class="math inline">\(\delta_x\)</span> are defined in <a href="#eq-deltax" class="quarto-xref">Equation&nbsp;<span>6.15</span></a>. <span class="math inline">\(Q\)</span> is the scalar flux through the cell faces, defined on the <span class="math inline">\(n*\)</span> cell set for the <span class="math inline">\(i+1/2\)</span> face as:</p>
+<p><span id="eq-scalar-flux"><span class="math display">\[
+Q_{i+1/2}=\left ( \Delta y\Delta Z^{n+1}U^{n+1/2}\tilde C\right )_{i+1/2}
+\tag{6.29}\]</span></span></p>
+<p>Similar definitions apply on the <span class="math inline">\(j+1/2\)</span> and <span class="math inline">\(k+1/2\)</span> faces. There is no flux through the uppermost face of the cell containing the free surface, so <span class="math inline">\(Q_{i,j,F+1/2} = 0\)</span>, where <span class="math inline">\(k=F\)</span> is the cell containing the free surface. It follows that <span class="math inline">\(\Delta Z^{n+1}_{i,j,F}-\Delta Z^{n}_{i,j,F}=\Delta tW^{n+1}_{i,j,F+1/2}\)</span> and <span class="math inline">\(C_{i,j,F+1/2}=C_{i,j,F}\)</span>. For any cell <span class="math inline">\((i,j,F)\)</span> in the <span class="math inline">\(n*\)</span> set:</p>
+<p><span class="math display">\[
+C_{i,j,F+1/2}=C_{i,j,F} = \frac{\Delta t}{\Delta z^{n+1}} \delta_z(W^{n+1}_{i,j,F+1/2} C_{i,j,F+1/2})
+\]</span></p>
+<p>Thus, for all cells in the <span class="math inline">\(n*\)</span> set (including free surface cells):</p>
+<p><span id="eq-all-cells"><span class="math display">\[
+C^*=\tilde C - \frac{\Delta t}{\Delta x} \delta_x(U^{n+1}\tilde C)- \frac{\Delta t}{\Delta y} \delta_y(V^{n+1}\tilde C)- \frac{\Delta t}{\Delta z^{n+1}} \delta_z(W^{n+1}\tilde C)
+\tag{6.30}\]</span></span></p>
+<p>Since the scalar concentrations are updated at the cell centers, it is necessary to define a method of interpolation for cell face values such as <span class="math inline">\(\delta_x(UC)\)</span>. The ULTIMATE flux-limiting filter applied with third-order QUICKEST interpolation <span class="citation" data-cites="Leon91">(Leonard 1991)</span> performs particularly well in maintaining monotonic scalar fields while limiting numerical diffusion. Implementation in 2D and demonstration of its effectiveness in estuarine flows has been documented by <span class="citation" data-cites="Lin97">Lin and Falconer (1997)</span>. The conservative ULTIMATE QUICKEST method is limited to <span class="math inline">\(CFL_{a} &lt; 1\)</span> in all coordinate directions. The present semi-implicit scheme remains stable at higher CFL (providing <span class="math inline">\(CFL_{b}\)</span> does not exceed unity), so the ULTIMATE QUICKEST algorithm must be computed successively over sub-time steps such that the maximum <span class="math inline">\(CFL_{a}\)</span> is less than one in each sub-time step. In practice, coarse resolution models of strongly stratified basins will have the defining time step limitation based on the baroclinic mode in the momentum solution and <span class="math inline">\(CFL_{a} &gt; 1\)</span> may never occur.</p>
+<p>The recent evaluation of transport schemes by <span class="citation" data-cites="Gros98">Gross et al. (1998)</span> did not directly examine the ULTIMATE limiter applied to a QUICKEST approach; however, their results did show that effective results for a 2D model of South San Francisco Bay could be obtained with either the QUICKEST approach or Roe’s superbee limiter applied to a Lax-Wendroff method. As Lax-Wendroff is a second-order discretization, it is likely that the ULTIMATE limiter applied to third-order QUICKEST would have been at least as effective as the schemes they tested. The present use of an explicit discretization approach contrasts with the vertical-implicit approach taken in the recent adaptation of TRIM by <span class="citation" data-cites="Gros98">Gross et al. (1998)</span>. The advantage of the latter is that it is stable for scalar transport solutions at <span class="math inline">\(CFL &gt; 1\)</span>, whereas the present method requires sub-time step iterations of the scalar transport routines when high CFL’s are encountered. Thus the approach of <span class="citation" data-cites="Gros98">Gross et al. (1998)</span> is preferable for a fine vertical grid resolution while the present method should prove more computationally efficient at coarse grid resolution.</p>
+<section id="scalar-horizontal-diffusion" class="level3" data-number="6.7.1">
+<h3 data-number="6.7.1" class="anchored" data-anchor-id="scalar-horizontal-diffusion"><span class="header-section-number">6.7.1</span> Scalar horizontal diffusion</h3>
+<p>The horizontal diffusion terms in <a href="04-sci-goveqns.html#eq-transportScalars" class="quarto-xref">Equation&nbsp;<span>4.5</span></a> are discretized to obtain the time ‘<span class="math inline">\(n+1\)</span>’ scalar field over the solution space ‘<span class="math inline">\(n*\)</span>’:</p>
+<p><span id="eq-scalar-horiz-diff"><span class="math display">\[
+C_{i,j,k}^{n+1}=\tilde C_{i,j,k} + D_x(\tilde C_{i,j,k})+ D_y(\tilde C_{i,j,k})
+\tag{6.31}\]</span></span></p>
+<p>where <span class="math inline">\(D_{x}\)</span> and <span class="math inline">\(D_{y}\)</span> are finite-difference operators for the second derivative. As with the velocity solution, any time <span class="math inline">\(n+1\)</span> locations that are not in the time <span class="math inline">\(n*\)</span> solution space are updated using the concentration of neighbour cells.</p>
+</section>
+</section>
+<section id="sidewall-and-bottom-boundary-conditions" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="sidewall-and-bottom-boundary-conditions"><span class="header-section-number">6.8</span> Sidewall and Bottom Boundary Conditions</h2>
+<p>The momentum introduced into a lake by wind forcing is dissipated in the boundary layers of the lake and turbulent processes in the interior. In 2D depth-averaged models the Chezy-Manning bottom stress formulation has been applied to account for the dissipation in the entire water column. This is particularly useful in providing a method of calibrating depth-averaged coastal/estuarine models to reproduce a given set of tidal data. In a 3D model with stratification, detailed field data for calibrating a bottom friction coefficient is generally not available. Furthermore, without the transfer of basin-scale internal-wave energy to subgrid-scale waves, it is questionable as to whether any boundary condition model in the literature can capture actual boundary dynamics and predict the correct location and timing of dissipation and vertical fluxes. Sidewall boundary conditions (i.e.&nbsp;vertical solid boundaries) are often modeled as free-slip to effect simpler implementation in a numerical method <span class="citation" data-cites="Casu92">(Casulli and Cheng 1992)</span>. However, the lack of sidewall drag prevents vertical vorticity from being produced at boundaries. As lakes typically have regions of steep slopes and longshore currents (due to Kelvin waves), the neglect of sidewall drag may not be a suitable simplification in modeling basin-scale motions.</p>
+<p>There remains much work to be done in developing appropriate bottom and sidewall boundary conditions in coarse grid models. ELCOM provides three basic forms of boundary conditions: (1) no-slip, (2) free-slip, and (3) specified stress.</p>
+</section>
+<section id="wind-momentum-model" class="level2" data-number="6.9">
+<h2 data-number="6.9" class="anchored" data-anchor-id="wind-momentum-model"><span class="header-section-number">6.9</span> Wind Momentum Model</h2>
+<p>The momentum input of the wind is typically modeled <span class="citation" data-cites="Casu92">(e.g. Casulli and Cheng 1992)</span> using a stress boundary condition at the free surface:</p>
+<p><span id="eq-wind-stress"><span class="math display">\[
+\nu \left.  \frac{\partial u}{\partial x} \right |_{z=\eta}=u_*^2
+\tag{6.32}\]</span></span></p>
+<p>where <span class="math inline">\(\nu\)</span> is an eddy viscosity and <span class="math inline">\(u_{*}^{2}\)</span> is the wind stress. This boundary condition requires solution of vertical viscosity/diffusion terms of the form</p>
+<p><span id="eq-vert-visc-diff"><span class="math display">\[
+\frac{\partial}{\partial x_3}\left \{ \nu \frac{\partial U_\alpha}{\partial x_3} \right \}; \quad \frac{\partial}{\partial x_3}\left \{ \kappa \frac{\partial C}{\partial x_3} \right \}
+\tag{6.33}\]</span></span></p>
+<p>in place of the Reynolds stress terms in the momentum and scalar transport equations, terms that are modeled in ELCOM using the 3D mixed-layer model. As demonstrated by <span class="citation" data-cites="Glor95">Glorioso and Davies (1995)</span>, the formulation chosen for eddy viscosity has a dramatic influence on the development of pressure-driven upwind flows in a wind-forced homogenous system. Using an eddy-viscosity/diffusivity approach in a stratified system, the depth, downwind velocity, and velocity shear in the wind-mixed layer are functions of the values used for eddy viscosity and diffusivity above the thermocline. The resulting prediction of mixed-layer depth using a coarse vertical grid resolution is generally unsatisfactory. Even at fine resolutions, the capability of <span class="math inline">\(k\)</span>-<span class="math inline">\(\epsilon\)</span> and algebraic stress models may be suspect on the basis of the 1D results of <span class="citation" data-cites="Mart85">Martin (1985)</span>. As the purpose of the eddy-viscosity term is to model the introduction of momentum into the wind-mixed layer, we can substitute a model for predicting the wind-mixed layer depth and a model for the distribution of momentum over the depth. The wind-mixed layer is the mixed layer that includes the free surface, with depth (<span class="math inline">\(h\)</span>) of the wind-mixed layer computed in a discrete form as:</p>
+<p><span id="eq-wml-depth"><span class="math display">\[
+h_{i,j}=\sum_{m=k_a(i,j,k_\eta)}^{k_b(i,j,k_\eta)}\Delta Z_{i,j,m}
+\tag{6.34}\]</span></span></p>
+<p>where <span class="math inline">\(k_{a}\)</span> and <span class="math inline">\(k_{b}\)</span> are the lower and upper grid cell indices of the discrete wind-mixed layer in the water column <span class="math inline">\((i,j)\)</span> that has free surface grid cell <span class="math inline">\(k_{\eta}\)</span>. To first order, we can approximate the introduction of wind momentum as a uniform distribution over the mixed layer <span class="citation" data-cites="Imbe90">(Imberger and Patterson 1990)</span>:</p>
+<p><span id="eq-wind"><span class="math display">\[
+\left. \frac{dU}{dt} \right|_{i,j,k} =  \frac{\left.{u_*^2} \right|_{i,j,k}}{\left.{h} \right|_{i,j}};\quad \eta-h&lt;\sum_{m=1}^k\Delta z_m&lt;\eta
+\tag{6.35}\]</span></span></p>
+<p>where <span class="math inline">\(\eta\)</span> is the free surface height in water column <span class="math inline">\((i,j)\)</span>. <a href="#eq-wind" class="quarto-xref">Equation&nbsp;<span>6.35</span></a> is applied separately in the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> directions to provide a direct increase in the velocity field in the wind-mixed layer before solution of the Navier-Stokes equations.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./05-sci-timestep.html" class="pagination-link" aria-label="Timestep limitations">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Timestep limitations</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./07-sci-thermo.html" class="pagination-link" aria-label="Surface Thermodynamics and Mass Fluxes">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Surface Thermodynamics and Mass Fluxes</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

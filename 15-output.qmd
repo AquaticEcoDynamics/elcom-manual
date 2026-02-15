@@ -1,0 +1,64 @@
+# Output File Processing {#sec-output}
+
+
+## Post-Processing {#sec-postproc}
+
+Output files from ELCOM can be processed in a number of ways.
+
+### Conversion of datablock file to NETCDF
+
+The datablock output files are named and configured through the `datablock.db` file. ELCOM produces Fortran unformatted (binary) files as specified by the datablock output configuration. In general, one datablock output file contains one or more data types (e.g. velocity, temperature) applied to a set of points at a specified time interval. These files can be reprocessed into NETCDF files using the command-line program `dbconv.exe`.
+
+The program `dbconv.exe` is used for converting datablock unformatted binary files created by ELCOM to NETCDF files which can then be processed and viewed in a program such as Matlab. The `dbconv.exe` executable should be placed either in the working directory or as recommended in the `/bin` directory which is in the operating system's search path. `dbconv` is run through a configuration file called `run_dbconv.dat`.
+
+The `run_dbconv.dat` file contains 9 lines as follows:
+
+```
+ Comment line, up to 64 characters
+ .unf file name and path
+ sparsedata.unf file name and path
+ .nc netcdf output file name and path
+ Start time step, -1 for beginning
+ End time step, -1 for end of file
+ Overwriting of .nc file? -  clobber for overwriting, no_clobber for no overwriting
+ Output mapping info to text file? -  map for writing, no_map for no overwriting
+ Output diagnosics to monitor?  -  echo to output to monitor, no_echo to not output to monitor
+```
+
+An example `run_dbconv.dat` file would be:
+
+```
+ Example dbconv
+ unfiles/curtain.unf
+ infiles/sparsedata.unf
+ ncfiles/curtain.nc
+ -1
+ -1
+ clobber
+ no_map
+ no_echo
+```
+
+Once the `run_dbconv.dat` file is correctly configured, `dbconv` can be executed at the command line by typing:
+
+```
+dbconv.exe run_dbconv.dat
+```
+
+**Notes:**
+
+- `run_dbconv.dat` can have any file name, however the correct file name must be invoked at run time.
+- The `run_dbconv.dat` can only be configured for one file at a time.
+
+For batch processing of several `.unf` files, it is recommended that a `run_dbconv.dat` file be created for each `.unf` to be converted and `dbconv.exe` be invoked for each `run_dbconv.dat` using a batch file.
+
+
+## Valid Scalar Output Options {#sec-validScalars}
+
+| Scalar Keyword      | Units     | Description                                                                 |
+|---------------------|-----------|-----------------------------------------------------------------------------|
+| `SALINITY`          | PSU       | salinity (*practical salinity units which can be treated as parts per thousand within the numerical resolution of the model*) |
+| `WTR_TEMP`          | degC      | water temperature for inflowing water                                      |
+| `TRACER_1` - `TRACER_10` | concentration | tracer input                                                          |
+| `<AED>`          | concentration | AED Scalars                                                        |
+| `<CAEDYM>`          | concentration | CAEDYM Scalars                                                        |

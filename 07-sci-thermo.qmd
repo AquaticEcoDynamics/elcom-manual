@@ -1,0 +1,200 @@
+# Surface Thermodynamics and Mass Fluxes {#sec-thermo}
+
+## Overview
+
+The surface exchanges include heating due to short wave radiation penetration into the lake and the fluxes at the surface due to evaporation, sensible heat (i.e. convection of heat from the water surface to the atmosphere) and long wave radiation.
+
+Short wave radiation (280nm to 2800nm) is usually measured directly. Long wave radiation (greater than 2800nm) emitted from clouds and atmospheric water vapour can be measured directly or calculated from cloud cover, air temperature and humidity. The reflection coefficient, or albedo, of short wave radiation varies from lake to lake and depends on the angle of the sun, the lake colour and the surface wave state.
+
+## Surface Energy Fluxes
+
+### Solar (shortwave) radiation flux
+
+Shortwave radiation can be divided into four components. ELCOM 2.2 assumes the following percentages for each component
+
+- Photosynthetically Active Radiation (PAR) 45%
+- Near Infrared (NIR) 41%
+- Ultra Violet A (UVA) 3.5%
+- Ultra Violet B (UVB) 0.5%
+
+The distance the radiation penetrates into the water column is dependent on the extinction component for each band-width. ELCOM allows users to set the extinction coefficient for each band in the run_elcom.dat file but has the following default values
+
+- Photosynthetically Active Radiation (PAR) $0.25 \; m^{-1}$
+- Near Infrared (NIR) $1 \; m^{-1}$
+- Ultra Violet A (UVA) $1 \; m^{-1}$
+- Ultra Violet B (UVB) $2.5 \; m^{-1}$
+
+If water quality is being simulated via CAEDYM then the PAR extinction coefficient is calculated by CAEDYM.
+
+The depth of penetration of short wave radiation depends on the net short wave radiation that penetrates the water surface and the extinction coefficient. The equations given in TVA (eq 2.48 and 2.37) and Jacquet (eq A5.2) for the net solar radiation penetrating the water can be written as:
+
+$$
+Q_{sw}=Q_{sw(total)}(1-r_{a}^{(sw)})
+$$ {#eq-qsw}
+
+where $Q_{sw(total)}$ is the short wave radiation that reaches the surface of the water, $Q_{sw}$ is the net short wave radiation penetrating the water surface, and $r_{a}^{(sw)}$ is the shortwave albedo of the water surface given by:
+
+$$
+r_{a}^{(sw)}=
+\begin{cases}
+\overline{R}_a^{(sw)}+a_{(sw)}\sin\left ( \frac{2\pi d}{D}-\frac{\pi}{2} \right ) & \text{Sth Hemisphere} \\
+\overline{R}_a^{(sw)} & \text{Equator} \\
+\overline{R}_a^{(sw)}+a_{(sw)}\sin\left ( \frac{2\pi d}{D}+\frac{\pi}{2} \right ) & \text{Nth Hemisphere}
+\end{cases}
+$$ {#eq-albedo}
+
+and $\overline{R}_a^{(sw)} = 0.08$, $a_{(sw)}= 0.02$, $D$ is the standard number of days in a year ($=365$) and $d$ is the day number in the year.
+
+Short-wave radiation in each band penetrates according to the Beer-Lambert law, such that
+
+$$
+Q(z)=Q_{sw}e^{-\eta_a z}
+$$ {#eq-beer}
+
+where $z$ is the depth below the water surface and $\eta_a$ is the attenuation coefficient for each band.
+
+Thus, the shortwave energy per unit area entering layer $k$ through its upper face is
+
+$$
+\Delta Q_k = Q_k-Q_{k-1}
+$$ {#eq-deltaQ}
+
+or
+
+$$
+\Delta Q_k = Q_k(1-e^{\eta_a\Delta Z_k})
+$$ {#eq-deltaQ2}
+
+For heating purposes, it is assumed that all of the $\Delta Q$'s are converted to heat.
+
+If there is excess short wave energy at the bottom of a column of water ELCOM reflects a portion of the energy back into the domain (currently 90% in Version 2.2). This energy is allowed to propagate back up through the water column according to the Beer-Lambert law.
+
+## Long Wave Energy Flux
+
+Longwave radiation is calculated by one of three methods, depending on the input data. Three input measures are allowed: incident long wave radiation, net long wave radiation, and cloud cover.
+
+### Incident long wave radiation
+
+Using incident long wave radiation requires accounting for albedo and long wave radiation emitted from the water surface. The long wave radiation penetrating the water surface is then
+
+$$
+Q_{lw}=(1-r_a^{(lw)})Q_{lw(incident)}
+$$ {#eq-qlw-incident}
+
+where $r_a^{(lw)}$ is the albedo for long wave radiation, which is taken as a constant = 0.03 [@Hend86].
+
+Long wave radiation emitted from the water surface is given by [@Tenn72, eqn 3.5]
+
+$$
+Q_{lw(emitted)}=\epsilon_w \sigma T_w^4
+$$ {#eq-lw-emitted}
+
+where $\epsilon_w$ is the emissivity of the water surface (=0.96), $\sigma$ is the Stefan-Boltzmann constant ($\sigma =5.6697 \times 10^{-8} \; W \, m^{-2} \, K^{-4}$), and $T_w$ is the absolute temperature of the water surface (i.e. the temperature of the surface layer).
+
+The net longwave radiation energy density deposited into the surface layer for the period $\Delta t$ is therefore
+
+$$
+Q_{lw}=(1-r_a^{(lw)})Q_{lw(incident)}-\epsilon_w \sigma T_w^4
+$$ {#eq-qlw-net-incident}
+
+### Net long wave radiation
+
+Using net long wave radiation requires accounting for albedo at the water surface. The long wave radiation energy density deposited into the surface layer for the period $\Delta t$ is therefore
+
+$$
+Q_{lw}=(1-r_a^{(lw)})Q_{lw(nett)}
+$$ {#eq-qlw-nett}
+
+### Cloud cover
+
+Long wave radiation can also be estimated from atmospheric conditions, using cloud cover fraction ($0 \le C \le 1$). The net long wave radiation energy density incident on the water surface can be estimated as
+
+$$
+Q_{lw(rad)}=(1-r_a^{(lw)})Q_{lw(air)}
+$$ {#eq-qlw-rad}
+
+where [@Tenn72, eqn 3.14; @Fisc79, eqn 6.21]
+
+$$
+Q_{lw(air)}=(1+0.17C^2)\epsilon_a(T_a) \sigma T_a^4
+$$ {#eq-qlw-air}
+
+the subscript $a$ referring to properties of the air. @Swin63 showed that
+
+$$
+\epsilon_a(T_a) = C_\epsilon T_a^2
+$$ {#eq-emissivity-air}
+
+where $C_\epsilon = 9.37 \times 10^{-6} \; K^{-2}$. As previously, the long wave emitted is
+
+$$
+Q_{lw(emitted)}=\epsilon_w \sigma T_w^4
+$$ {#eq-lw-emitted2}
+
+The net long wave radiation is therefore
+
+$$
+Q_{lw}=(1-r_a^{(lw)})(1+0.17C^2)\epsilon_a(T_a) \sigma T_a^4-\epsilon_w \sigma T_w^4
+$$ {#eq-qlw-cloud}
+
+## Sensible Heat Flux
+
+The sensible heat loss from the surface of the lake for the period $\Delta t$ may be written as [@Fisc79, eqn 6.19]
+
+$$
+Q_{sh}=C_s \rho_a C_P U_a (T_a-T_s)\Delta t
+$$ {#eq-sensible}
+
+where $C_S$ is the sensible heat transfer coefficient for wind speed at 10 m reference height above the water surface ($= 1.3 \times 10^{-3}$), $\rho_a$ the density of air in kg m$^{-3}$, $C_P$ the specific heat of air at constant pressure ($= 1003 \; J \, kg^{-1} \, K^{-1}$), $U_{a}$ is the wind speed at the 'standard' reference height of 10 m in m s$^{-1}$, with temperatures either **both** in Celsius or **both** in Kelvin.
+
+## Latent Heat Flux
+
+The evaporative heat flux is given by [@Fisc79, eqn 6.20]
+
+$$
+Q_{lh}=\min \left ( 0,\frac{0.622}{P}C_L \rho_a L_E U_a (e_a-e_s(T_s)) \Delta t \right )
+$$ {#eq-latent}
+
+where $P$ is the atmospheric pressure in pascals, $C_{L}$ is the latent heat transfer coefficient ($= 1.3 \times 10^{-3}$) for wind speed at the reference height of 10 m, $\rho_{a}$ the density of air in kg m$^{-3}$, $L_{E}$ the latent heat of evaporation of water ($= 2.453 \times 10^{6} \; J \, kg^{-1}$), $U_{a}$ is the wind speed in m s$^{-1}$ at the reference height of 10 m, $e_{a}$ the vapour pressure of the air, and $e_{s}$ the saturation vapour pressure at the water surface temperature $T_{S}$; both vapour pressures are measured in pascals. The condition that $Q_{lh} \le 0$, is so that no condensation effects are considered.
+
+The saturated vapour pressure $e_{s}$ is calculated via the Magnus-Tetens formula [@Tenn72, eqn 4.1]:
+
+$$
+e_s(T_s)=100 \exp\left [ 2.3026 \left (\frac{7.5T_s}{T_s+237.3}+0.758 \right ) \right]
+$$ {#eq-magnus}
+
+where $T_{s}$ is in degrees Celsius and $e_{s}$ is in pascals.
+
+Thus, the total non-penetrative energy density deposited in the surface layer during the period $\Delta t$ is given by
+
+$$
+Q_{non-pen}=Q_{lw}+Q_{sh}+Q_{lh}
+$$ {#eq-nonpen}
+
+## Surface Mass Fluxes
+
+### Latent heat mass flux density
+
+The change in mass in the surface layer cells (layer number $N$) due to latent heat flux is calculated as
+
+$$
+\Delta M_N^{lh}=\frac{-Q_{lh}d_X d_Y}{L_V}
+$$ {#eq-mass-latent}
+
+where $d_{X}$ and $d_{Y}$ are the grid size of the surface layer cell and $L_{V}$ is the latent heat of vaporisation for water.
+
+### Rainfall
+
+It is assumed that the temperature of the rain is the same as that of the surface cell. The salinity and water quality are set to zero. The change in surface layer mass is
+
+$$
+\Delta M_N^{rain}=\rho_{rain} d_X d_Y r \Delta t
+$$ {#eq-mass-rain}
+
+where $r$ is the rainfall in m s$^{-1}$.
+
+## Atmospheric Stability and Surface Exchange
+
+One factor known to cause variability in the heat and momentum transfer described above is air column stability and water roughness [@Imbe90]. This has the effect of altering the exchange coefficients $C_{S}$, $C_{L}$ and $C_{D}$.
+
+If the meteorological sensors are located within the internal boundary layer over the surface of the lake, and data is collected at sub-daily intervals, it is appropriate to consider the effect of air column stability on surface exchange. ELCOM uses the iterative procedure of @Hick75 to compute these values, as described in @Imbe90 (p329). The user is referred to these references for more information.

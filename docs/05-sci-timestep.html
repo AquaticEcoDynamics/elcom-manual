@@ -8,7 +8,7 @@
 
 <meta name="description" content="This is a draft of the ELCOM manual.">
 
-<title>1&nbsp; Introduction – ELCOM Manual</title>
+<title>5&nbsp; Timestep limitations – ELCOM Manual</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,8 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./02-notation.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./06-sci-method.html" rel="next">
+<link href="./04-sci-goveqns.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -72,6 +72,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -84,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-intro.html">Overview</a></li><li class="breadcrumb-item"><a href="./01-intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-sci-intro.html">Science Description</a></li><li class="breadcrumb-item"><a href="./05-sci-timestep.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Timestep limitations</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -126,7 +155,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-intro.html" class="sidebar-item-text sidebar-link active">
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
@@ -161,7 +190,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-sci-timestep.html" class="sidebar-item-text sidebar-link">
+  <a href="./05-sci-timestep.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Timestep limitations</span></span></a>
   </div>
 </li>
@@ -278,22 +307,15 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#the-elcom-model" id="toc-the-elcom-model" class="nav-link active" data-scroll-target="#the-elcom-model"><span class="header-section-number">1.1</span> The ELCOM model</a></li>
-  <li><a href="#conventions-and-definitions" id="toc-conventions-and-definitions" class="nav-link" data-scroll-target="#conventions-and-definitions"><span class="header-section-number">1.2</span> Conventions and definitions</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-intro.html">Overview</a></li><li class="breadcrumb-item"><a href="./01-intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-sci-intro.html">Science Description</a></li><li class="breadcrumb-item"><a href="./05-sci-timestep.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Timestep limitations</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-intro" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></h1>
+<h1 class="title"><span id="sec-timestep" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Timestep limitations</span></span></h1>
 </div>
 
 
@@ -310,77 +332,29 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="the-elcom-model" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="the-elcom-model"><span class="header-section-number">1.1</span> The ELCOM model</h2>
-<p>ELCOM (Estuary and Lake Computer Model) is a numerical modeling tool that applies hydrodynamic and thermodynamic models to simulate the temporal behavior of stratified water bodies with environmental forcing.</p>
-<p>The hydrodynamic simulation method solves the unsteady, viscous Navier-Stokes equations for incompressible flow using the hydrostatic assumption for pressure. Modeled and simulated processes include baroclinic and barotropic responses, rotational effects, tidal forcing, wind stresses, surface thermal forcing, inflows, outflows, and transport of salt, heat and passive scalars.</p>
-<p>Through coupling with the CAEDYM (Computational Aquatic Ecosystem DYnamics Model) water quality module, ELCOM can be used to simulate three-dimensional transport and interactions of flow physics, biology and chemistry.</p>
-<p>The hydrodynamic algorithms in ELCOM are based on the Euler-Lagrange method for advection of momentum with a conjugate-gradient solution for the free-surface height (Casulli and Cheng, 1992). Passive and active scalars (i.e., tracers, salinity and temperature) are advected using a conservative ULTIMATE QUICKEST discretization (Leonard 1991).</p>
-</section>
-<section id="conventions-and-definitions" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="conventions-and-definitions"><span class="header-section-number">1.2</span> Conventions and definitions</h2>
-<p>In this document, a number of conventions will be used. For clarity, the computational domain will generally be referred to as a “lake”. However, the simulation method is designed for applicability to estuaries and coastal ocean environments.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 19%">
-<col style="width: 80%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Term</th>
-<th>Definition</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><em>x,y,z</em> space</td>
-<td>Full Cartesian space which covers all of the bathymetry</td>
-</tr>
-<tr class="even">
-<td><em>i,j,k</em> space</td>
-<td>Discrete integer space of computational cells which covers all bathymetry</td>
-</tr>
-<tr class="odd">
-<td>land</td>
-<td>A computational cell that cannot contain water</td>
-</tr>
-<tr class="even">
-<td>open</td>
-<td>A cell used for an open boundary condition</td>
-</tr>
-<tr class="odd">
-<td>interior</td>
-<td>A cell that may contain water</td>
-</tr>
-<tr class="even">
-<td>x_rows</td>
-<td>Number of grid cells in the x direction</td>
-</tr>
-<tr class="odd">
-<td>y_columns</td>
-<td>Number of grid cells in the y direction</td>
-</tr>
-<tr class="even">
-<td>z_layers</td>
-<td>Number of grid cells in the vertical (z) direction</td>
-</tr>
-<tr class="odd">
-<td>land_value</td>
-<td>Number used in the bathymetry file to represent land cells</td>
-</tr>
-<tr class="even">
-<td>open_value</td>
-<td>Number used in the bathymetry file to represent open boundary cells</td>
-</tr>
-<tr class="odd">
-<td>dx, dy, dz</td>
-<td>Grid spacing in x, y, z directions (can be uniform or non-uniform, in meters)</td>
-</tr>
-</tbody>
-</table>
+<p>Both TRIM and ELCOM are unconditionally stable for purely barotropic flows; that is, they will produce stable numerical results for any size of time step. However, for stratified flows, both methods use explicit discretization of the baroclinic terms in the momentum equation leading to a time step constraint based on the internal wave Courant-Friedrichs-Lewy condition (<span class="math inline">\(CFL\)</span>) such that</p>
+<p><span id="eq-baroclinicCFL"><span class="math display">\[
+(g^\prime D)^{1/2}\frac{\Delta t}{\Delta x}&lt;\sqrt{2}
+\tag{5.1}\]</span></span></p>
+<p>is required. The left-hand side is defined as the baroclinic <span class="math inline">\(CFL\)</span> number (<span class="math inline">\(CFL_b\)</span>), where <span class="math inline">\(g^\prime\)</span> is the reduced gravity due to stratification, the effective depth is <span class="math inline">\(D\)</span>, <span class="math inline">\(\sqrt{g^\prime D}\)</span> is an approximation of the wave speed of an internal wave. This baroclinic stability condition is generally the most restrictive condition in a density-stratified flow. The importance of the internal wave speed can be seen in a simple scaling analysis: Typical lake stratifications provide a modified gravity of <span class="math inline">\(g^\prime \sim O (10^{-2})\)</span> m s<span class="math inline">\(^{-2}\)</span> while lake depths <span class="math inline">\(D\)</span> are <span class="math inline">\(O(10)\)</span> m to <span class="math inline">\(O(10^2)\)</span> m. Internal waves propagate at <span class="math inline">\(C \sim \sqrt{g^\prime D}\)</span>, giving wave speeds of <span class="math inline">\(O(1)\)</span> m s<span class="math inline">\(^{-1}\)</span>. Maximum horizontal water velocities in a lake are typically <span class="math inline">\(O(10^{-1})\)</span> m s<span class="math inline">\(^{-1}\)</span>, and the desired horizontal grid size is <span class="math inline">\(O (10^{2})\)</span> m.</p>
+<p>The maximum allowable time step for a limiting <span class="math inline">\(CFL\)</span> condition is:</p>
+<p><span id="eq-maxTimestep"><span class="math display">\[
+\Delta t &lt; \frac{CFL\Delta x}{U}
+\tag{5.2}\]</span></span></p>
+<p>If <span class="math inline">\(U\)</span> is taken as the horizontal water velocity, the maximum allowable time step for a limiting <span class="math inline">\(CFL\)</span> of one is <span class="math inline">\(O(10^{3})\)</span> s. If <span class="math inline">\(U\)</span> is taken as the internal wave speed, the maximum allowable time step for a limiting <span class="math inline">\(CFL\)</span> of one is <span class="math inline">\(O (10^{2})\)</span> s. Thus, in the horizontal direction, the internal wave speed rather than the flow velocity controls the maximum allowable time step and high <span class="math inline">\(CFL\)</span> capability in the horizontal direction is generally unnecessary. However, in the vertical direction, there is a definite advantage to a numerical scheme that is stable for <span class="math inline">\(CFL &gt; 1\)</span>. Practical vertical grid resolutions are typically <span class="math inline">\(O(10^{-1})\)</span> m to <span class="math inline">\(O(10)\)</span> m depending on the lake morphology and available computational power. Internal wave motions can produce vertical velocities of <span class="math inline">\(O(10^{-2})\)</span> m s<span class="math inline">\(^{-1}\)</span>, so fine grid resolutions with a <span class="math inline">\(CFL\)</span> limit of one can result in an unacceptable time step limitations of <span class="math inline">\(O(10)\)</span> s.</p>
+<p>Scalar transport in ELCOM uses an explicit approach has an advective Courant-Friedrichs-Lewy condition (<span class="math inline">\(CFL_{a}\)</span>) such that <span class="math inline">\(u \frac{\Delta t}{\delta x} &lt; 1\)</span> is required. This condition does not effect the time step of the momentum solution (<span class="math inline">\(\Delta t\)</span>), but instead is used to compute sub-time step (<span class="math inline">\(\Delta t\)</span>) for the scalar transport solution. The implicit scheme of <span class="citation" data-cites="Gros98">(Gross et al. 1998)</span> does not have <span class="math inline">\(CFL\)</span> limitation for vertical velocity and is therefore preferable where fine grid resolution is used in the vertical direction and high vertical <span class="math inline">\(CFL\)</span> values are expected. At coarse vertical grid resolutions (low vertical <span class="math inline">\(CFL\)</span> values) the present explicit approach should prove more computationally efficient.</p>
+<p>A final stability constraint for semi-implicit schemes with explicit horizontal diffusion (e.g.&nbsp;TRIM and ELCOM) is the viscous stability condition (derived for homogenous flows in <span class="citation" data-cites="Casu92">(Casulli and Cheng 1992)</span>)</p>
+<p><span id="eq-viscousStability"><span class="math display">\[
+\Delta t \leq \frac{\Delta x^2 \Delta y^2}{2\nu (\Delta x^2 + \Delta y^2)}
+\tag{5.3}\]</span></span></p>
+<p>This is typically at least an order of magnitude less restrictive than the baroclinic stability condition.</p>
+<p>A constraint that becomes important when using large time step in a geophysical model is whether the velocity field can be considered Lipschitz at the grid and time scales applied: i.e.&nbsp;is the field sufficiently smooth for a numerical approximation <span class="citation" data-cites="Iser96">(Iserles 1996)</span>. In <span class="citation" data-cites="Smol92">(Smolarkiewicz and Pudykiewicz 1992)</span> the numerical Lipschitz constant <span class="math inline">\(B\)</span> is defined with the condition that it must be less than unity:</p>
+<p><span id="eq-lipschitz"><span class="math display">\[
+B=\left | \left | \frac{\partial \nu}{dx} \right | \right |\Delta t &lt; 1
+\tag{5.4}\]</span></span></p>
+<p>This was demonstrated to be a necessary condition in a multi-time-level semi-Lagrangian method to prevent trajectories from intersecting as they are traced back in time and space. While the present Euler-Lagrange method tracks trajectories back only in space, the above Lipschitz condition heuristically applies as a fundamental statement of the necessary behavior of the velocity field to allow reasonable approximation by a numerical model. As demonstrated in <span class="citation" data-cites="Smol92">(Smolarkiewicz and Pudykiewicz 1992)</span>, a numerical method may remain stable at a high B, but the results will not be accurate. This places a fundamental limit on the allowable time step that may be reasonably used in a model. The importance of this point is that the maximum time step that can be used may be a function of the physics, rather than the stability of the numerical method.</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -785,13 +759,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Welcome">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome</span>
+      <a href="./04-sci-goveqns.html" class="pagination-link" aria-label="Governing Hydrodynamic Equations and Models">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Governing Hydrodynamic Equations and Models</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./02-notation.html" class="pagination-link" aria-label="Notation">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Notation</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./06-sci-method.html" class="pagination-link" aria-label="Numerical Method">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Numerical Method</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
